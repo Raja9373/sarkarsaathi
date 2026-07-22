@@ -1,33 +1,30 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><title>Blog - SarkarSaathi</title><script src="https://cdn.tailwindcss.com"></script></head>
-<body class="bg-[#0f172a] text-white">
-<header class="p-3 border-b border-orange-500/20 flex justify-between items-center max-w-7xl mx-auto">
-<a href="index.html" class="font-bold text-xl"><span class="text-orange-400">Sarkar</span>Saathi.org</a>
-<div class="flex bg-gray-800 rounded-full p-1"><button id="btn-hi" onclick="setLang('hi')" class="px-3 py-1 rounded-full text-xs bg-orange-500">हिंदी</button><button id="btn-en" onclick="setLang('en')" class="px-3 py-1 rounded-full text-xs text-gray-400">EN</button></div>
-</header>
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><title>Blogs - SarkarSaathi</title><script src="https://cdn.tailwindcss.com"></script></head><body class="bg-[#0f172a] text-white">
+<header class="p-3 border-b border-orange-500/20 flex justify-between items-center"><a href="index.html" class="font-bold text-xl"><span class="text-orange-400">Sarkar</span>Saathi.org</a><div class="flex bg-gray-800 rounded-full p-1"><button id="btn-hi" onclick="setLang('hi')" class="px-4 py-1 rounded-full text-xs bg-orange-500">हिंदी</button><button id="btn-en" onclick="setLang('en')" class="px-4 py-1 rounded-full text-xs text-gray-400">EN</button></div></header>
 <main class="max-w-3xl mx-auto p-6">
-<h1 class="text-2xl font-bold">Blogs - 5 Articles</h1>
-<p class="text-xs text-gray-400 mt-2">Click karo aur pura 500 words ka guide padho</p>
+<h1 id="mainTitle" class="text-2xl font-bold">Blogs - 5 Articles</h1>
+<p class="text-xs text-gray-400 mt-1">Click karo aur pura 500 words guide padho / Click and read full 500 words guide</p>
 <div id="list-hi" class="mt-6 grid gap-3">
-<a href="blogs/aadhaar-mobile.html" class="block bg-gray-800 p-5 rounded-xl hover:border-orange-500 border border-gray-700"><h3 class="font-bold">Aadhaar me Mobile Kaise Jode 2026</h3><p class="text-xs text-gray-400 mt-2">Online aur Offline dono tarike, Rs.50 fees, 72 hours me update</p><p class="text-orange-400 text-xs mt-2">Read →</p></a>
-<a href="blogs/pan-kho-jaye.html" class="block bg-gray-800 p-5 rounded-xl border border-gray-700"><h3 class="font-bold">PAN Kho Jaye Toh Kya Kare</h3><p class="text-xs text-gray-400 mt-2">Duplicate PAN 7 din me, e-PAN download</p><p class="text-orange-400 text-xs mt-2">Read →</p></a>
-<a href="blogs/bijli-bill-delhi.html" class="block bg-gray-800 p-5 rounded-xl border border-gray-700"><h3 class="font-bold">Delhi Bijli Bill Kaise Dekhe</h3><p class="text-xs text-gray-400 mt-2">BSES, Tata Power, 200 unit free</p><p class="text-orange-400 text-xs mt-2">Read →</p></a>
-<a href="blogs/voter-id-naam.html" class="block bg-gray-800 p-5 rounded-xl border border-gray-700"><h3 class="font-bold">Voter ID me Naam Kaise Jode</h3><p class="text-xs text-gray-400 mt-2">Form 6, BLO verification</p><p class="text-orange-400 text-xs mt-2">Read →</p></a>
-<a href="blogs/ration-card-status.html" class="block bg-gray-800 p-5 rounded-xl border border-gray-700"><h3 class="font-bold">Ration Card Status Kaise Check Kare</h3><p class="text-xs text-gray-400 mt-2">NFSA List 2026, APL BPL AAY</p><p class="text-orange-400 text-xs mt-2">Read →</p></a>
+<a href="blogs/aadhaar-mobile.html" class="block bg-gray-800 p-5 rounded-xl border border-gray-700 hover:border-orange-500"><h3 class="font-bold">Aadhaar me Mobile Kaise Jode 2026</h3><p class="text-xs text-gray-400 mt-1">Online Offline Rs.50 72 hours</p></a>
+<a href="blogs/pan-kho-jaye.html" class="block bg-gray-800 p-5 rounded-xl border border-gray-700"><h3 class="font-bold">PAN Kho Jaye Toh Kya Kare</h3><p class="text-xs text-gray-400 mt-1">Duplicate 7 din e-PAN</p></a>
+<a href="blogs/bijli-bill-delhi.html" class="block bg-gray-800 p-5 rounded-xl border border-gray-700"><h3 class="font-bold">Delhi Bijli Bill Kaise Dekhe</h3><p class="text-xs text-gray-400 mt-1">BSES Tata Power 200 unit free</p></a>
+<a href="blogs/voter-id-naam.html" class="block bg-gray-800 p-5 rounded-xl border border-gray-700"><h3 class="font-bold">Voter ID me Naam Kaise Jode</h3><p class="text-xs text-gray-400 mt-1">Form 6 BLO</p></a>
+<a href="blogs/ration-card-status.html" class="block bg-gray-800 p-5 rounded-xl border border-gray-700"><h3 class="font-bold">Ration Card Status Kaise Check Kare</h3><p class="text-xs text-gray-400 mt-1">NFSA APL BPL AAY</p></a>
 </div>
 <div id="list-en" class="mt-6 grid gap-3 hidden">
-<a href="blogs/aadhaar-mobile.html" class="block bg-gray-800 p-5 rounded-xl border border-gray-700"><h3 class="font-bold">How to Link Mobile in Aadhaar 2026</h3><p class="text-xs text-gray-400 mt-2">Online & Offline both methods, Rs.50 fee, update in 72 hours</p><p class="text-orange-400 text-xs mt-2">Read →</p></a>
-<a href="blogs/pan-kho-jaye.html" class="block bg-gray-800 p-5 rounded-xl border border-gray-700"><h3 class="font-bold">What to Do If PAN Lost</h3><p class="text-xs text-gray-400 mt-2">Duplicate PAN in 7 days, e-PAN download</p><p class="text-orange-400 text-xs mt-2">Read →</p></a>
-<a href="blogs/bijli-bill-delhi.html" class="block bg-gray-800 p-5 rounded-xl border border-gray-700"><h3 class="font-bold">How to Check Delhi Electricity Bill</h3><p class="text-xs text-gray-400 mt-2">BSES, Tata Power, 200 unit free</p><p class="text-orange-400 text-xs mt-2">Read →</p></a>
-<a href="blogs/voter-id-naam.html" class="block bg-gray-800 p-5 rounded-xl border border-gray-700"><h3 class="font-bold">How to Add Name in Voter ID</h3><p class="text-xs text-gray-400 mt-2">Form 6, BLO verification</p><p class="text-orange-400 text-xs mt-2">Read →</p></a>
-<a href="blogs/ration-card-status.html" class="block bg-gray-800 p-5 rounded-xl border border-gray-700"><h3 class="font-bold">How to Check Ration Card Status</h3><p class="text-xs text-gray-400 mt-2">NFSA List 2026, APL BPL AAY</p><p class="text-orange-400 text-xs mt-2">Read →</p></a>
+<a href="blogs/aadhaar-mobile.html" class="block bg-gray-800 p-5 rounded-xl border border-gray-700"><h3 class="font-bold">How to Link Mobile in Aadhaar 2026</h3><p class="text-xs text-gray-400 mt-1">Online Offline Rs.50 72 hours</p></a>
+<a href="blogs/pan-kho-jaye.html" class="block bg-gray-800 p-5 rounded-xl border border-gray-700"><h3 class="font-bold">What to Do If PAN Lost</h3><p class="text-xs text-gray-400 mt-1">Duplicate 7 days e-PAN</p></a>
+<a href="blogs/bijli-bill-delhi.html" class="block bg-gray-800 p-5 rounded-xl border border-gray-700"><h3 class="font-bold">How to Check Delhi Electricity Bill</h3><p class="text-xs text-gray-400 mt-1">BSES Tata Power 200 unit free</p></a>
+<a href="blogs/voter-id-naam.html" class="block bg-gray-800 p-5 rounded-xl border border-gray-700"><h3 class="font-bold">How to Add Name in Voter ID</h3><p class="text-xs text-gray-400 mt-1">Form 6 BLO</p></a>
+<a href="blogs/ration-card-status.html" class="block bg-gray-800 p-5 rounded-xl border border-gray-700"><h3 class="font-bold">How to Check Ration Card Status</h3><p class="text-xs text-gray-400 mt-1">NFSA APL BPL AAY</p></a>
 </div>
 </main>
 <script>
 function setLang(l){
-document.getElementById('btn-hi').className=l==='hi'?'px-3 py-1 rounded-full text-xs bg-orange-500':'px-3 py-1 rounded-full text-xs text-gray-400';
-document.getElementById('btn-en').className=l==='en'?'px-3 py-1 rounded-full text-xs bg-orange-500':'px-3 py-1 rounded-full text-xs text-gray-400';
+document.getElementById('btn-hi').className=l==='hi'?'px-4 py-1 rounded-full text-xs bg-orange-500':'px-4 py-1 rounded-full text-xs text-gray-400';
+document.getElementById('btn-en').className=l==='en'?'px-4 py-1 rounded-full text-xs bg-orange-500':'px-4 py-1 rounded-full text-xs text-gray-400';
 document.getElementById('list-hi').classList.toggle('hidden',l!=='hi');
 document.getElementById('list-en').classList.toggle('hidden',l!=='en');
+document.getElementById('mainTitle').innerText=l==='hi'?'ब्लॉग्स - 5 लेख':'Blogs - 5 Articles';
 }
 </script>
 </body></html>
