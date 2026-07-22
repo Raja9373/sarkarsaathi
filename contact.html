@@ -1,0 +1,24 @@
+<!DOCTYPE html><html><head><meta charset='UTF-8'><meta name='viewport' content='width=device-width'><title>Contact</title><script src='https://cdn.tailwindcss.com'></script></head><body class='bg-[#0f172a] text-white'><header class='p-3 border-b flex justify-between'><a href='index.html' class='font-bold text-orange-400'>SarkarSaathi.org</a></header><main class='max-w-3xl mx-auto p-6'>
+<div class="flex justify-end mb-4"><div class="flex bg-gray-800 rounded-full p-1"><button id="btn-hi" onclick="setLang('hi')" class="px-3 py-1 rounded-full text-xs bg-orange-500">हिंदी</button><button id="btn-en" onclick="setLang('en')" class="px-3 py-1 rounded-full text-xs text-gray-400">EN</button></div></div>
+<h1 class="text-2xl font-bold">Contact Us / संपर्क करें</h1>
+<div id="hi" class="mt-4"><p class="text-sm text-gray-300">आप हमसे contact@sarkarsaathi.org पर संपर्क कर सकते हैं। Pro Email Verified। 24 घंटे में जवाब। Owner: Alok Mohan Sharma, Delhi.</p>
+<form action="https://formsubmit.co/alokmohansharma.delhi@gmail.com" method="POST" class="mt-6 space-y-3 bg-gray-800 p-5 rounded-xl">
+<input type="hidden" name="_subject" value="SarkarSaathi Contact"><input type="hidden" name="_captcha" value="false">
+<input name="name" required placeholder="आपका नाम" class="w-full p-3 rounded bg-gray-700 text-white">
+<input name="email" type="email" required placeholder="आपका ईमेल" class="w-full p-3 rounded bg-gray-700 text-white">
+<textarea name="message" required placeholder="आपका संदेश" class="w-full p-3 rounded bg-gray-700 h-28 text-white"></textarea>
+<button class="w-full bg-orange-500 p-3 rounded font-bold">भेजें</button>
+</form>
+</div>
+<div id="en" class="mt-4 hidden"><p class="text-sm text-gray-300">You can contact us at contact@sarkarsaathi.org - Pro Email Verified, Forwarded to alokmohansharma.delhi@gmail.com - Reply in 24 hours. Owner: Alok Mohan Sharma, Delhi.</p>
+<form action="https://formsubmit.co/alokmohansharma.delhi@gmail.com" method="POST" class="mt-6 space-y-3 bg-gray-800 p-5 rounded-xl">
+<input type="hidden" name="_subject" value="SarkarSaathi Contact"><input type="hidden" name="_captcha" value="false">
+<input name="name" required placeholder="Your Name" class="w-full p-3 rounded bg-gray-700 text-white">
+<input name="email" type="email" required placeholder="Your Email" class="w-full p-3 rounded bg-gray-700 text-white">
+<textarea name="message" required placeholder="Your Message" class="w-full p-3 rounded bg-gray-700 h-28 text-white"></textarea>
+<button class="w-full bg-orange-500 p-3 rounded font-bold">Send Message</button>
+</form>
+</div>
+<script>function setLang(l){document.getElementById('btn-hi').className=l==='hi'?'px-3 py-1 rounded-full text-xs bg-orange-500':'px-3 py-1 rounded-full text-xs text-gray-400';document.getElementById('btn-en').className=l==='en'?'px-3 py-1 rounded-full text-xs bg-orange-500':'px-3 py-1 rounded-full text-xs text-gray-400';document.getElementById('hi').classList.toggle('hidden',l!=='hi');document.getElementById('en').classList.toggle('hidden',l!=='en');}</script>
+<p class="mt-6 text-xs"><a href="index.html" class="text-orange-400">Home</a></p>
+</main></body></html>

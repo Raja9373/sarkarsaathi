@@ -1,0 +1,29 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><title>Blogs - SarkarSaathi.org</title><script src="https://cdn.tailwindcss.com"></script></head><body class="bg-[#0f172a] text-white">
+<header class="p-3 border-b border-orange-500/20 flex justify-between items-center"><a href="index.html" class="font-bold text-xl"><span class="text-orange-400">Sarkar</span>Saathi.org</a><div class="flex bg-gray-800 rounded-full p-1"><button id="btn-hi" onclick="setLang('hi')" class="px-4 py-1 rounded-full text-xs bg-orange-500">हिंदी</button><button id="btn-en" onclick="setLang('en')" class="px-4 py-1 rounded-full text-xs text-gray-400">EN</button></div></header>
+<main class="max-w-3xl mx-auto p-6">
+<h1 id="mainTitle" class="text-2xl font-bold">Blogs - 5 Articles</h1>
+<div id="list-hi" class="mt-6 grid gap-3">
+<a href="blogs/aadhaar-mobile.html" class="block bg-gray-800 p-5 rounded-xl border">Aadhaar me Mobile Kaise Jode 2026 - 500 Words</a>
+<a href="blogs/pan-kho-jaye.html" class="block bg-gray-800 p-5 rounded-xl border">PAN Kho Jaye Toh Kya Kare - 500 Words</a>
+<a href="blogs/bijli-bill-delhi.html" class="block bg-gray-800 p-5 rounded-xl border">Delhi Bijli Bill Kaise Dekhe - 500 Words</a>
+<a href="blogs/voter-id-naam.html" class="block bg-gray-800 p-5 rounded-xl border">Voter ID me Naam Kaise Jode - 500 Words</a>
+<a href="blogs/ration-card-status.html" class="block bg-gray-800 p-5 rounded-xl border">Ration Card Status - 500 Words</a>
+</div>
+<div id="list-en" class="mt-6 grid gap-3 hidden">
+<a href="blogs/aadhaar-mobile.html" class="block bg-gray-800 p-5 rounded-xl border">How to Link Mobile in Aadhaar 2026</a>
+<a href="blogs/pan-kho-jaye.html" class="block bg-gray-800 p-5 rounded-xl border">What to Do If PAN Lost</a>
+<a href="blogs/bijli-bill-delhi.html" class="block bg-gray-800 p-5 rounded-xl border">How to Check Delhi Electricity Bill</a>
+<a href="blogs/voter-id-naam.html" class="block bg-gray-800 p-5 rounded-xl border">How to Add Name in Voter ID</a>
+<a href="blogs/ration-card-status.html" class="block bg-gray-800 p-5 rounded-xl border">How to Check Ration Card Status</a>
+</div>
+</main>
+<script>
+function setLang(l){
+document.getElementById('btn-hi').className=l==='hi'?'px-4 py-1 rounded-full text-xs bg-orange-500':'px-4 py-1 rounded-full text-xs text-gray-400';
+document.getElementById('btn-en').className=l==='en'?'px-4 py-1 rounded-full text-xs bg-orange-500':'px-4 py-1 rounded-full text-xs text-gray-400';
+document.getElementById('list-hi').classList.toggle('hidden',l!=='hi');
+document.getElementById('list-en').classList.toggle('hidden',l!=='en');
+document.getElementById('mainTitle').innerText=l==='hi'?'ब्लॉग्स - 5 लेख':'Blogs - 5 Articles';
+}
+</script>
+</body></html>
