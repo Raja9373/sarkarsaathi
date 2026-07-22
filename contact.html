@@ -1,25 +1,15 @@
-<!DOCTYPE html>
-<html lang="hi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Contact Us - SarkarSaathi.org</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"SarkarSaathi.org","url":"https://www.sarkarsaathi.org","logo":"https://www.sarkarsaathi.org/logo.svg","contactPoint":{"@type":"ContactPoint","email":"contact@sarkarsaathi.org","contactType":"customer support"}, "founders":[{"@type":"Person","name":"Alok Mohan Sharma"}]}</script>
-</head>
-<body class="bg-[#0f172a] text-white font-sans">
-<header class="sticky top-0 z-50 bg-[#0f172a]/95 backdrop-blur border-b border-orange-500/20 p-3 flex justify-between items-center">
-<a href="index.html" class="flex items-center gap-2"><img src="logo.svg" class="h-8"><span class="font-bold text-orange-400">SarkarSaathi.org</span></a>
-<nav class="flex gap-3 text-[11px]"><a href="about.html" class="hover:text-orange-400">About</a><a href="privacy.html" class="hover:text-orange-400">Privacy</a><a href="contact.html" class="hover:text-orange-400">Contact</a><a href="disclaimer.html" class="hover:text-orange-400">Disclaimer</a><a href="blogs.html" class="hover:text-orange-400">Blog</a></nav>
-</header>
-<main class="max-w-4xl mx-auto p-6">
-<h1 class="text-3xl font-bold">Contact Us</h1>
-<p class="mt-4 text-gray-300">Aap humse contact@sarkarsaathi.org par sampark kar sakte hai. 24 ghante me jawab milega. Owner: Alok Mohan Sharma, Delhi.</p>
-<form action="https://formsubmit.co/alokmohansharma.delhi@gmail.com" method="POST" class="mt-6 space-y-3 bg-gray-800 p-6 rounded-xl">
-<input type="hidden" name="_subject" value="SarkarSaathi Contact"><input type="hidden" name="_captcha" value="false">
-<input name="name" required placeholder="Naam" class="w-full p-3 rounded bg-gray-700">
-<input name="email" type="email" required placeholder="Email" class="w-full p-3 rounded bg-gray-700">
-<textarea name="message" required placeholder="Message" class="w-full p-3 rounded bg-gray-700 h-32"></textarea>
-<button class="w-full bg-orange-500 p-3 rounded font-bold">Send Message</button>
-</form>
-<p class="mt-6 text-xs text-gray-500">Pro Email Active: contact@sarkarsaathi.org → alokmohansharma.delhi@gmail.com (Cloudflare Forwarding Active)</p>
-</main>
-<footer class="p-8 bg-black text-center text-xs text-gray-500 mt-12">© 2026 SarkarSaathi.org | contact@sarkarsaathi.org | Owner: Alok Mohan Sharma & Maddy | Delhi, India | Private Site - Not Govt.</footer>
-</body></html>
+<!DOCTYPE html><html lang="hi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>संपर्क - SarkarSaathi</title><script src="https://cdn.tailwindcss.com"></script></head><body class="bg-[#0f172a] text-white"><header class="p-3 border-b border-orange-500/20 flex justify-between"><a href="index.html" class="font-bold text-orange-400">SarkarSaathi.org</a><nav class="flex gap-3 text-xs"><a href="index.html">Home</a><a href="about.html">About</a><a href="privacy.html">Privacy</a><a href="contact.html">Contact</a><a href="blogs.html">Blog</a></nav></header><main class="max-w-3xl mx-auto p-6"><h1 class="text-2xl font-bold mb-4">संपर्क / Contact</h1>
+<div class="flex justify-end mb-4"><div class="flex bg-gray-800 rounded-full p-1 border border-gray-700"><button id="btn-hi" onclick="setLang('hi')" class="px-4 py-1 rounded-full text-xs font-bold bg-orange-500">हिंदी</button><button id="btn-en" onclick="setLang('en')" class="px-4 py-1 rounded-full text-xs font-bold text-gray-400">EN</button></div></div>
+<div id="content-hi" class="leading-7 text-gray-300"><h2 class="font-bold">संपर्क करे</h2><p class="mt-3">Email: contact@sarkarsaathi.org (Pro Email Active, Cloudflare Verified) - 24 घंटे में जवाब। Owner: Alok Mohan Sharma, Delhi.</p><form action="https://formsubmit.co/alokmohansharma.delhi@gmail.com" method="POST" class="mt-4 space-y-3 bg-gray-800 p-5 rounded-xl"><input type="hidden" name="_subject" value="SarkarSaathi Contact"><input type="hidden" name="_captcha" value="false"><input name="name" required placeholder="नाम" class="w-full p-3 rounded bg-gray-700"><input name="email" type="email" required placeholder="ईमेल" class="w-full p-3 rounded bg-gray-700"><textarea name="message" required placeholder="संदेश" class="w-full p-3 rounded bg-gray-700 h-28"></textarea><button class="w-full bg-orange-500 p-3 rounded font-bold">भेजें</button></form></div>
+<div id="content-en" class="leading-7 text-gray-300 hidden"><h2 class="font-bold">Contact Us</h2><p class="mt-3">Email: contact@sarkarsaathi.org (Pro Email Active, Cloudflare Verified) - Reply in 24 hours. Owner: Alok Mohan Sharma, Delhi.</p><form action="https://formsubmit.co/alokmohansharma.delhi@gmail.com" method="POST" class="mt-4 space-y-3 bg-gray-800 p-5 rounded-xl"><input type="hidden" name="_subject" value="SarkarSaathi Contact"><input type="hidden" name="_captcha" value="false"><input name="name" required placeholder="Name" class="w-full p-3 rounded bg-gray-700"><input name="email" type="email" required placeholder="Email" class="w-full p-3 rounded bg-gray-700"><textarea name="message" required placeholder="Message" class="w-full p-3 rounded bg-gray-700 h-28"></textarea><button class="w-full bg-orange-500 p-3 rounded font-bold">Send</button></form></div>
+<script>
+let lang='hi';
+function setLang(l){
+lang=l;
+document.getElementById('btn-hi').className=l==='hi'?'px-4 py-1 rounded-full text-xs font-bold bg-orange-500':'px-4 py-1 rounded-full text-xs font-bold text-gray-400';
+document.getElementById('btn-en').className=l==='en'?'px-4 py-1 rounded-full text-xs font-bold bg-orange-500':'px-4 py-1 rounded-full text-xs font-bold text-gray-400';
+document.getElementById('content-hi').classList.toggle('hidden', l!=='hi');
+document.getElementById('content-en').classList.toggle('hidden', l!=='en');
+}
+</script>
+</main></body></html>
