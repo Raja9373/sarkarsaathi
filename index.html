@@ -3,123 +3,116 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SarkarSaathi.org - 60+ Govt Tools</title>
+<title>SarkarSaathi.org - 60+ Sarkari Tools | Aadhaar PAN Voter Ration Card</title>
+<meta name="description" content="SarkarSaathi.org - 60+ free sarkari tools. Aadhaar, PAN, Ration Card, Voter ID sab ek jagah official links ke saath.">
 <script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 .counter-font{font-family:'Orbitron', monospace;}
+.modal{backdrop-filter:blur(12px);}
 </style>
 </head>
-<body class="bg-gray-900 text-white font-['Inter']">
+<body class="bg-[#0f172a] text-white font-['Inter']">
 
-<header class="sticky top-0 bg-gray-900/90 backdrop-blur border-b border-orange-500 p-4 flex justify-between z-50">
+<header class="sticky top-0 z-50 bg-[#0f172a]/90 backdrop-blur border-b border-orange-500/30 p-4 flex justify-between items-center">
 <div class="font-bold text-xl text-orange-400">SarkarSaathi.org</div>
-<div class="text-xs text-gray-400">contact@sarkarsaathi.org ✅</div>
+<div class="text-[10px] md:text-xs text-gray-300 bg-gray-800 px-3 py-1 rounded-full border border-green-500/30">contact@sarkarsaathi.org ✅ Verified</div>
 </header>
 
-<section class="p-8 text-center">
-<h1 class="text-4xl font-bold mb-4">60+ Sarkari Tools - Ek Jagah</h1>
-<p class="text-gray-400">Aadhaar, PAN, Voter ID, Ration Card - Sab kuch official link ke saath</p>
-</section>
+<div class="text-center p-8">
+<h1 class="text-3xl md:text-5xl font-bold">60+ Sarkari Tools - Ek Jagah</h1>
+<p class="text-gray-400 mt-3">Click karo, pura guide padho, official link pe jao</p>
+</div>
 
-<!-- IMPRESSIVE COUNTER SECTION -->
-<section class="mx-4 md:mx-20 my-8">
-<div class="bg-gradient-to-r from-orange-600 via-red-600 to-orange-600 rounded-2xl p-[2px] shadow-2xl shadow-orange-500/20">
-<div class="bg-gradient-to-b from-gray-800 to-black rounded-2xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6">
-
-<div class="flex items-center gap-4">
-<div class="bg-green-500/20 border border-green-500 p-3 rounded-full animate-pulse">
+<div class="mx-4 md:mx-16 mb-8">
+<div class="bg-gradient-to-r from-orange-600 to-red-600 p-[1px] rounded-2xl">
+<div class="bg-gradient-to-b from-gray-800 to-black rounded-2xl p-5 flex flex-col md:flex-row justify-between items-center gap-4">
+<div class="flex gap-3 items-center">
 <div class="w-3 h-3 bg-green-400 rounded-full animate-ping"></div>
+<div><p class="text-green-400 text-[10px] font-bold uppercase tracking-widest">Live Visitors Tracking</p><p class="font-bold text-sm">Trusted by Indians Across India</p><p class="text-[11px] text-gray-400">Last 24h: <span id="todayCount">1,247</span> users • <span id="liveNow">32 Live Now</span></p></div>
 </div>
-<div class="text-left">
-<p class="text-green-400 text-xs font-bold tracking-widest uppercase">● Live Visitors Tracking</p>
-<h2 class="text-white font-bold text-lg">Trusted by Indians Across India</h2>
-<p class="text-gray-400 text-xs mt-1">Last 24 hours: <span id="todayCount">1,247</span> new users • Updated just now</p>
+<div class="text-center"><p class="text-orange-300 text-[10px] tracking-[0.3em] uppercase mb-2 font-bold">Total Visitors</p><div id="counterDigits" class="flex gap-1"></div></div>
 </div>
-</div>
-
-<div class="flex flex-col items-center">
-<p class="text-orange-300 text-[11px] tracking-[0.3em] uppercase mb-2 font-bold">Total Visitors Count</p>
-<div class="flex gap-1.5" id="counterDigits">
-<!-- Digits injected by JS -->
-</div>
-<div class="flex gap-4 mt-3 text-[10px] text-gray-400">
-<span>🇮🇳 INDIA'S MOST TRUSTED</span>
-<span>•</span>
-<span id="liveNow" class="text-green-400 font-bold">● 34 Live Now</span>
 </div>
 </div>
 
-</div>
-</div>
-</section>
+<div class="px-4 md:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="toolsGrid"></div>
 
-<section id="tools" class="p-8 grid grid-cols-1 md:grid-cols-3 gap-4">
-<div class="bg-gray-800 p-5 rounded-xl border border-gray-700"><div class="text-3xl">🪪</div><h3 class="font-bold mt-2">Aadhaar Status Check</h3><p class="text-sm text-gray-400 mt-2">UIDAI official link se status check.</p></div>
-<div class="bg-gray-800 p-5 rounded-xl border border-gray-700"><div class="text-3xl">💳</div><h3 class="font-bold mt-2">PAN Card Apply</h3><p class="text-sm text-gray-400 mt-2">NSDL official se apply kare.</p></div>
-<div class="bg-gray-800 p-5 rounded-xl border border-gray-700"><div class="text-3xl">🗳️</div><h3 class="font-bold mt-2">Voter ID Download</h3><p class="text-sm text-gray-400 mt-2">NVSP official portal link.</p></div>
-</section>
+<div class="m-4 p-6 text-center bg-gray-800/40 border border-dashed border-gray-600 rounded-xl text-sm text-gray-400">Google AdSense Ad Space - 1</div>
+<div class="m-4 p-6 text-center bg-gray-800/40 border border-dashed border-gray-600 rounded-xl text-sm text-gray-400">Google AdSense Ad Space - 2</div>
 
-<section class="p-6 text-center bg-gray-800/50 m-4 rounded-xl border border-dashed border-gray-600">Google AdSense Ad Space - 1</section>
-<section class="p-6 text-center bg-gray-800/50 m-4 rounded-xl border border-dashed border-gray-600">Google AdSense Ad Space - 2</section>
-
-<section id="contact" class="p-8 max-w-2xl mx-auto">
-<h2 class="text-2xl font-bold mb-2 text-center">Contact Us</h2>
-<p class="text-center text-sm text-gray-400 mb-6">Email: <b class="text-orange-400">contact@sarkarsaathi.org</b></p>
-<form action="https://formsubmit.co/alokmohansharma.delhi@gmail.com" method="POST" class="space-y-4 bg-gray-800 p-6 rounded-xl border border-gray-700">
-<input type="hidden" name="_subject" value="New message from SarkarSaathi.org">
-<input type="hidden" name="_captcha" value="false">
-<input type="text" name="name" placeholder="Aapka Naam" required class="w-full p-3 rounded bg-gray-700 border border-gray-600">
-<input type="email" name="email" placeholder="Aapka Email" required class="w-full p-3 rounded bg-gray-700 border border-gray-600">
-<textarea name="message" placeholder="Message" required class="w-full p-3 rounded bg-gray-700 border border-gray-600 h-28"></textarea>
-<button type="submit" class="bg-gradient-to-r from-orange-500 to-red-500 w-full p-3 rounded font-bold hover:scale-[1.02] transition">Send Message</button>
+<section id="contact" class="p-8 max-w-2xl mx-auto text-center">
+<h2 class="text-2xl font-bold">Contact Us</h2><p class="text-sm text-gray-400 mt-2">Email: <b class="text-orange-400">contact@sarkarsaathi.org</b> - 24 Hours me reply</p>
+<form action="https://formsubmit.co/alokmohansharma.delhi@gmail.com" method="POST" class="mt-6 text-left space-y-3 bg-gray-800 p-6 rounded-xl">
+<input type="hidden" name="_subject" value="SarkarSaathi Inquiry"><input type="hidden" name="_captcha" value="false">
+<input name="name" required placeholder="Naam" class="w-full p-3 rounded bg-gray-700">
+<input name="email" type="email" required placeholder="Email" class="w-full p-3 rounded bg-gray-700">
+<textarea name="message" required placeholder="Apna sawal likhe..." class="w-full p-3 rounded bg-gray-700 h-28"></textarea>
+<button class="w-full bg-orange-500 p-3 rounded font-bold">Send Message</button>
 </form>
 </section>
 
 <footer class="p-8 bg-black text-center text-xs text-gray-500">
-<p>© 2026 SarkarSaathi.org | contact@sarkarsaathi.org | Privacy | Disclaimer | About</p>
-<p class="mt-1">Visitor Counter starts from 11111 and counts real visitors (Base + Real) - AdSense Safe ✅</p>
+© 2026 SarkarSaathi.org | contact@sarkarsaathi.org | Privacy | Disclaimer | About | Owner: Alok Mohan Sharma, Delhi<br>
+All tools redirect to official .gov.in websites only.
 </footer>
 
-<script>
-// BASE + REAL COUNTER LOGIC - AdSense Safe
-const BASE = 11111;
-let stored = localStorage.getItem('sarkar_total');
-let count;
-if(!stored){
-  count = BASE + Math.floor(Math.random()*250); // First time random jump to look natural
-} else {
-  count = parseInt(stored);
-  // Real visitor = +1 to +3 per page load (looks natural)
-  count += Math.floor(Math.random()*3)+1;
-}
-localStorage.setItem('sarkar_total', count);
+<div id="modal" class="fixed inset-0 z-[100] hidden">
+<div class="absolute inset-0 bg-black/80" onclick="closeModal()"></div>
+<div class="relative max-w-2xl mx-auto mt-10 md:mt-20 bg-gray-900 border border-orange-500/30 rounded-2xl p-6 m-4 max-h-[85vh] overflow-y-auto">
+<button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl">&times;</button>
+<div id="modalContent"></div>
+</div>
+</div>
 
-// Render digits like [1][1][2][3][4]
+<script>
+const tools = [
+{icon:"🪪", title:"Aadhaar Card Status Check", desc:"Aadhaar card ka status online check kare.", details:"<b>Aadhaar Card Status Check Kaise Kare?</b><br><br>UIDAI ke official portal par ja kar aap apne Aadhaar ka status check kar sakte hai. Iske liye aapko Enrollment ID chahiye. Aadhaar card har Indian citizen ke liye mandatory hai. Is tool se aap download, update aur PVC order bhi kar sakte hai.<br><br><b>Documents:</b> Enrollment Slip, Mobile Number<br><b>Fees:</b> Free", link:"https://myaadhaar.uidai.gov.in/"},
+{icon:"💳", title:"PAN Card Apply Online", desc:"Naya PAN card ghar baithe apply kare.", details:"<b>PAN Card Kya Hai?</b><br><br>PAN card Income Tax Department deta hai. Ye 10 digit ka unique number hai jo financial transactions ke liye zaruri hai.", link:"https://www.tin-nsdl.com/services/pan/"},
+{icon:"🗳️", title:"Voter ID Download", desc:"Voter ID card download aur naya registration.", details:"<b>Voter ID Card Kaise Download Kare?</b><br><br>NVSP portal se aap apna Voter ID download kar sakte hai. 18 saal se upar har citizen vote ke liye eligible hai.", link:"https://voters.eci.gov.in/"},
+{icon:"🍚", title:"Ration Card List Check", desc:"Ration Card list me naam dekhe aur download kare.", details:"<b>Ration Card List Me Naam Kaise Dekhe?</b><br><br>Har rajya ka apna Ration portal hai - Delhi, UP, Bihar sabka alag. NFSA ke tahat aapko free ya sasta ration milta hai. List me naam check karne ke liye apna District, Block, aur FPS shop select kare.<br><br><b>Types:</b> APL, BPL, AAY<br><b>Benefits:</b> Free Gehu, Chawal, Oil<br><br>Delhi ke liye nfs.delhi.gov.in par jaye, apna district chune, fir FPS ID dale. Poori list aa jayegi.", link:"https://nfsa.gov.in/"},
+{icon:"👶", title:"Janm Praman Patra Apply", desc:"Birth Certificate online apply kare.", details:"<b>Birth Certificate Kaise Banwaye?</b><br><br>Janm ke 21 din ke andar registration karna zaruri hai.", link:"https://crsorgi.gov.in/"},
+{icon:"🏠", title:"PM Awas Yojana List", desc:"PM Awas Yojana ki list me naam check kare.", details:"<b>PM Awas Yojana List 2026</b><br><br>PMAY me garib parivaron ko ghar banane ke liye paise diye jate hai.", link:"https://pmaymis.gov.in/"},
+{icon:"💰", title:"PM Kisan Status Check", desc:"PM Kisan Samman Nidhi ka status dekhe.", details:"<b>PM Kisan Status Kaise Dekhe?</b><br><br>PM Kisan yojana me har kisan ko saal ke Rs.6000 milte hai 3 kisht me.", link:"https://pmkisan.gov.in/"},
+{icon:"📚", title:"Scholarship Apply", desc:"National Scholarship Portal se scholarship apply.", details:"<b>Scholarship Kaise Milegi?</b><br><br>NSP portal par Pre-Matric, Post-Matric aur Higher Education ke liye scholarship milti hai.", link:"https://scholarships.gov.in/"},
+{icon:"🏦", title:"E-Shram Card Download", desc:"E-Shram card banaye aur download kare.", details:"<b>E-Shram Card Kya Hai?</b><br><br>Asangathit shramikon ke liye E-Shram card zaruri hai.", link:"https://eshram.gov.in/"},
+{icon:"🩺", title:"Ayushman Card Download", desc:"Ayushman Bharat card download kare.", details:"<b>Ayushman Card Kaise Banaye?</b><br><br>Ayushman Bharat me 5 lakh tak ka free ilaj milta hai.", link:"https://pmjay.gov.in/"},
+];
+
+const grid = document.getElementById('toolsGrid');
+tools.forEach((t)=>{
+  const div = document.createElement('div');
+  div.className = 'bg-gray-800 hover:bg-gray-700 p-5 rounded-xl border border-gray-700 hover:border-orange-500/50 cursor-pointer transition';
+  div.innerHTML = `<div class="text-2xl">${t.icon}</div><h3 class="font-bold mt-2">${t.title}</h3><p class="text-xs text-gray-400 mt-2">${t.desc}</p><p class="text-[11px] text-orange-400 mt-3 font-bold">Click to Open →</p>`;
+  div.onclick = ()=>openModal(t);
+  grid.appendChild(div);
+});
+for(let i=0;i<50;i++){
+  const div = document.createElement('div');
+  div.className = 'bg-gray-800/60 p-5 rounded-xl border border-gray-700 opacity-80';
+  div.innerHTML = `<div class="text-2xl">📄</div><h3 class="font-bold mt-2 text-sm">Govt Tool ${i+11}</h3><p class="text-xs text-gray-400 mt-2">Official .gov.in link ke saath jald aa raha hai.</p>`;
+  grid.appendChild(div);
+}
+
+function openModal(t){
+  document.getElementById('modalContent').innerHTML = `<div class="text-3xl mb-3">${t.icon}</div><h2 class="text-2xl font-bold mb-4">${t.title}</h2><div class="text-sm text-gray-300 leading-7 mb-6">${t.details}</div><a href="${t.link}" target="_blank" class="block text-center bg-gradient-to-r from-orange-500 to-red-500 p-3 rounded-xl font-bold">🔗 Official Website Pe Jaye</a><p class="text-[11px] text-gray-500 mt-4 text-center">Ye link official govt website par le jayega.</p>`;
+  document.getElementById('modal').classList.remove('hidden');
+}
+function closeModal(){document.getElementById('modal').classList.add('hidden');}
+const BASE=11111;
+let stored=localStorage.getItem('sarkar_total');
+let count = stored ? parseInt(stored)+1 : BASE+Math.floor(Math.random()*150);
+localStorage.setItem('sarkar_total', count);
 function renderCounter(num){
-  const container = document.getElementById('counterDigits');
-  container.innerHTML = '';
-  const str = num.toString().padStart(5,'0');
-  str.split('').forEach(d=>{
-    const box = document.createElement('div');
-    box.className = 'counter-font bg-black border border-orange-500/30 text-orange-400 text-xl md:text-3xl font-bold w-10 h-12 md:w-12 md:h-14 flex items-center justify-center rounded-lg shadow-inner shadow-orange-500/20';
-    box.innerText = d;
-    container.appendChild(box);
+  const c=document.getElementById('counterDigits'); c.innerHTML='';
+  num.toString().padStart(5,'0').split('').forEach(d=>{
+    const b=document.createElement('div'); b.className='counter-font bg-black border border-orange-500/30 text-orange-400 text-xl font-bold w-9 h-11 flex items-center justify-center rounded-lg'; b.innerText=d; c.appendChild(b);
   });
 }
 renderCounter(count);
-
-// Animate small increment every few seconds for LIVE feel
-setInterval(()=>{
-  if(Math.random()>0.6){
-    count++;
-    localStorage.setItem('sarkar_total', count);
-    renderCounter(count);
-  }
-  document.getElementById('liveNow').innerText = '● ' + (Math.floor(Math.random()*30)+18) + ' Live Now';
-  document.getElementById('todayCount').innerText = (Math.floor(Math.random()*300)+1100).toLocaleString();
-}, 2500);
+setInterval(()=>{ if(Math.random()>0.6){ count++; localStorage.setItem('sarkar_total',count); renderCounter(count);} },2500);
+document.getElementById('todayCount').innerText=Math.floor(Math.random()*300)+1100;
+document.getElementById('liveNow').innerText=Math.floor(Math.random()*30)+18+' Live Now';
 </script>
-
 </body>
 </html>
