@@ -1,2 +1,0 @@
-mkdir sarkarsaathi
-cd sarkarsaathi
