@@ -1,2 +1,1 @@
-# SarkarSaathi.org v3.3 - All Tools Fixed
-Clean build - search, blogs, finders, calculators all working.
+# SarkarSaathi.org v6 Final - Clean 8 files, No doubles, Blackscreen fixed, Bidirectional PIN/IFSC/SWIFT, Correct categories
