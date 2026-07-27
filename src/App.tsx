@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import {
   Search, MapPin, ShieldCheck, BadgeCheck, Clock, FileText, CreditCard, Home, Car, GraduationCap,
   Briefcase, HeartPulse, Scale, Building2, Landmark, FileSearch, Calculator, Download, CheckCircle2,
@@ -986,6 +987,7 @@ export default function App(){
       <Header navigate={navigate} path={path} />
       {page}
       <Footer navigate={navigate} />
+      <Analytics />
     </div>
   );
 }
