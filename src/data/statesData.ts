@@ -1,0 +1,60 @@
+import { StateInfo } from '../types';
+
+export const STATES_LIST: StateInfo[] = [
+  {
+    id: 'delhi',
+    name: 'Delhi (NCT)',
+    hindiName: 'दिल्ली',
+    isAvailable: true,
+    code: 'DL',
+    capital: 'New Delhi',
+  },
+  {
+    id: 'haryana',
+    name: 'Haryana',
+    hindiName: 'हरियाणा',
+    isAvailable: false,
+    code: 'HR',
+    capital: 'Chandigarh',
+  },
+  {
+    id: 'punjab',
+    name: 'Punjab',
+    hindiName: 'पंजाब',
+    isAvailable: false,
+    code: 'PB',
+    capital: 'Chandigarh',
+  },
+  {
+    id: 'up',
+    name: 'Uttar Pradesh',
+    hindiName: 'उत्तर प्रदेश',
+    isAvailable: false,
+    code: 'UP',
+    capital: 'Lucknow',
+  },
+  {
+    id: 'rajasthan',
+    name: 'Rajasthan',
+    hindiName: 'राजस्थान',
+    isAvailable: false,
+    code: 'RJ',
+    capital: 'Jaipur',
+  },
+  {
+    id: 'maharashtra',
+    name: 'Maharashtra',
+    hindiName: 'महाराष्ट्र',
+    isAvailable: false,
+    code: 'MH',
+    capital: 'Mumbai',
+  },
+  {
+    id: 'national',
+    name: 'Central Services (India)',
+    hindiName: 'केंद्र सरकार सेवाएं',
+    isAvailable: true,
+    code: 'IN',
+    capital: 'New Delhi',
+  },
+];

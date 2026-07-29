@@ -1,0 +1,6 @@
+{
+  "name": "SarkarSaathi.org",
+  "description": "India's Government Assistance Platform - Official .gov.in links, Delhi services, step-by-step guides, calculators, finders, banking hub, and life events.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
