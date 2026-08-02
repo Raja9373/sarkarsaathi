@@ -380,507 +380,324 @@ const STATIC_PAGES: any = {
   sitemap: { title: 'Sitemap', desc: 'All services, finders, calculators.' },
   faq: { title: 'FAQ', desc: 'Common questions about SarkarSaathi.' },
 };
+import React, { useState } from 'react';
+import { Header } from './components/Header';
+import { HeroSection } from './components/HeroSection';
+import { CategoryGrid } from './components/CategoryGrid';
+import { LifeEventsSection } from './components/LifeEventsSection';
+import { BankingHub } from './components/BankingHub';
+import { FindersHub } from './components/FindersHub';
+import { StatusCheckHub } from './components/StatusCheckHub';
+import { OnlineApplyHub } from './components/OnlineApplyHub';
+import { PaymentsHub } from './components/PaymentsHub';
+import { DownloadCentre } from './components/DownloadCentre';
+import { CalculatorsHub } from './components/CalculatorsHub';
+import { DelhiGovtHub } from './components/DelhiGovtHub';
+import { ComplaintsHub } from './components/ComplaintsHub';
+import { BlogHub } from './components/BlogHub';
+import { LegalPages } from './components/LegalPages';
+import { ServiceDetailModal } from './components/ServiceDetailModal';
+import { EmergencyModal } from './components/EmergencyModal';
+import { Footer } from './components/Footer';
 
-// ========== HELPERS ==========
-function useRouter() {
-  const [path, setPath] = useState(() => window.location.pathname);
-  useEffect(()=>{
-    const onPop = () => setPath(window.location.pathname);
-    window.addEventListener('popstate', onPop);
-    return ()=>window.removeEventListener('popstate', onPop);
-  },[]);
-  const navigate = (to:string) => {
-    if(to!==path){ window.history.pushState({},'',to); setPath(to); window.scrollTo(0,0); }
+import { ActiveTab, ServiceItem, StateId } from './types';
+import { SERVICES_LIST } from './data/servicesData';
+import { ExternalLink, CheckCircle2, Search, ArrowRight, ShieldCheck, Sparkles } from 'lucide-react';
+
+export default function App() {
+  const [activeTab, setActiveTab] = useState<ActiveTab>('home');
+  const [currentStateId, setCurrentStateId] = useState<StateId>('delhi');
+  const [selectedService, setSelectedService] = useState<ServiceItem | null>(null);
+  const [emergencyOpen, setEmergencyOpen] = useState(false);
+
+  // Finder Initial Selection state
+  const [finderInitialId, setFinderInitialId] = useState<string>('govt-offices');
+  const [selectedDeptId, setSelectedDeptId] = useState<string | null>(null);
+
+  // Search & Filter state
+  const [selectedCategoryFilter, setSelectedCategoryFilter] = useState<string>('all');
+  const [searchFilterQuery, setSearchFilterQuery] = useState<string>('');
+
+  // Accessibility state
+  const [fontSizeLevel, setFontSizeLevel] = useState<number>(0);
+  const [highContrast, setHighContrast] = useState<boolean>(false);
+
+  const fontClass = fontSizeLevel === 1 ? 'text-[105%]' : fontSizeLevel === 2 ? 'text-[112%]' : fontSizeLevel === -1 ? 'text-[92%]' : '';
+
+  const filteredServices = SERVICES_LIST.filter(srv => {
+    const catLower = selectedCategoryFilter.toLowerCase();
+    const matchesCat = selectedCategoryFilter === 'all' ||
+      srv.category === selectedCategoryFilter ||
+      (srv.secondaryCategories && srv.secondaryCategories.includes(selectedCategoryFilter)) ||
+      srv.tags.some(t => t.toLowerCase() === catLower) ||
+      (catLower === 'renewal' && (
+        srv.category === 'Renewal' ||
+        (srv.secondaryCategories && srv.secondaryCategories.includes('Renewal')) ||
+        srv.tags.some(t => t.toLowerCase().includes('renew') || t.toLowerCase().includes('re-issue') || t.toLowerCase().includes('reissue')) ||
+        srv.title.toLowerCase().includes('renew') ||
+        srv.title.toLowerCase().includes('re-issue') ||
+        srv.shortDesc.toLowerCase().includes('renew')
+      )) ||
+      (catLower === 'corrections' && (
+        srv.category === 'Corrections' ||
+        (srv.secondaryCategories && srv.secondaryCategories.includes('Corrections')) ||
+        srv.tags.some(t => t.toLowerCase().includes('correct') || t.toLowerCase().includes('update') || t.toLowerCase().includes('change') || t.toLowerCase().includes('rectif')) ||
+        srv.title.toLowerCase().includes('correction') ||
+        srv.title.toLowerCase().includes('update')
+      )) ||
+      (catLower === 'rti' && (
+        srv.category === 'RTI' ||
+        (srv.secondaryCategories && srv.secondaryCategories.includes('RTI')) ||
+        srv.tags.some(t => t.toLowerCase().includes('rti')) ||
+        srv.title.toLowerCase().includes('rti')
+      )) ||
+      (catLower === 'family services' && (srv.category === 'Family Services' || srv.tags.some(t => t.toLowerCase().includes('family') || t.toLowerCase().includes('ration') || t.toLowerCase().includes('marriage') || t.toLowerCase().includes('ladli')))) ||
+      (catLower === 'health' && (srv.category === 'Health' || srv.category === 'Healthcare & Medical' || (srv.secondaryCategories && (srv.secondaryCategories.includes('Health') || srv.secondaryCategories.includes('Healthcare & Medical'))) || srv.tags.some(t => t.toLowerCase().includes('health') || t.toLowerCase().includes('hospital') || t.toLowerCase().includes('medical') || t.toLowerCase().includes('arogya')))) ||
+      (catLower === 'business' && (srv.category === 'Business' || (srv.secondaryCategories && srv.secondaryCategories.includes('Business')) || srv.tags.some(t => t.toLowerCase().includes('business') || t.toLowerCase().includes('gst') || t.toLowerCase().includes('msme') || t.toLowerCase().includes('company')))) ||
+      ((catLower === 'police & legal' || catLower.includes('police') || catLower.includes('legal')) && (
+        srv.category === 'Police & Legal' ||
+        srv.category.toLowerCase().includes('police') ||
+        srv.category.toLowerCase().includes('legal') ||
+        (srv.secondaryCategories && srv.secondaryCategories.some(c => c.toLowerCase().includes('police') || c.toLowerCase().includes('legal'))) ||
+        srv.tags.some(t => t.toLowerCase().includes('police') || t.toLowerCase().includes('pcc') || t.toLowerCase().includes('fir') || t.toLowerCase().includes('court') || t.toLowerCase().includes('legal') || t.toLowerCase().includes('challan') || t.toLowerCase().includes('arms')) ||
+        srv.department.toLowerCase().includes('police') ||
+        srv.department.toLowerCase().includes('court')
+      )) ||
+      ((catLower === 'complaints' || catLower.includes('complaint') || catLower.includes('grievance')) && (
+        srv.category === 'Complaints' ||
+        (srv.secondaryCategories && srv.secondaryCategories.some(c => c.toLowerCase().includes('complaint') || c.toLowerCase().includes('grievance'))) ||
+        srv.tags.some(t => t.toLowerCase().includes('complaint') || t.toLowerCase().includes('grievance') || t.toLowerCase().includes('pgms') || t.toLowerCase().includes('cpgrams') || t.toLowerCase().includes('1031') || t.toLowerCase().includes('mcd 311'))
+      ));
+
+    const matchesSearch = searchFilterQuery === '' ||
+      srv.title.toLowerCase().includes(searchFilterQuery.toLowerCase()) ||
+      srv.hindiTitle.includes(searchFilterQuery) ||
+      srv.department.toLowerCase().includes(searchFilterQuery.toLowerCase()) ||
+      srv.tags.some(t => t.toLowerCase().includes(searchFilterQuery.toLowerCase()));
+    return matchesCat && matchesSearch;
+  });
+
+  const handleSelectCategory = (catName: string) => {
+    setSelectedCategoryFilter(catName);
+    setActiveTab('services');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-  return { path, navigate };
-}
 
-function useSEO(title:string, desc:string, schema?:any){
-  useEffect(()=>{
-    document.title = title + ' | SarkarSaathi.org - सभी सरकारी काम एक जगह';
-    let meta = document.querySelector('meta[name="description"]');
-    if(!meta){ meta=document.createElement('meta'); (meta as any).name='description'; document.head.appendChild(meta); }
-    (meta as any).content=desc;
-    if(schema){
-      let script = document.getElementById('ld-json') as HTMLScriptElement;
-      if(!script){ script=document.createElement('script') as any; script.id='ld-json'; (script as any).type='application/ld+json'; document.head.appendChild(script); }
-      script.textContent = JSON.stringify(schema);
+  const handleSearchQueryFromHero = (query: string) => {
+    setSearchFilterQuery(query);
+    if (query.trim() !== '') {
+      setActiveTab('services');
     }
-  },[title,desc,schema]);
-}
+  };
 
-// ========== COMPONENTS ==========
-const Header: React.FC<{ navigate:any, path:string }> = ({ navigate, path }) => {
-  const [showSearch, setShowSearch] = useState(false);
-  const [showStates, setShowStates] = useState(false);
-  const [mobileMenu, setMobileMenu] = useState(false);
-  const [query, setQuery] = useState('');
-  const results = useMemo(()=>{
-    if(!query.trim()) return [];
-    const q=query.toLowerCase();
-    return SERVICES.filter(s=> s.title.toLowerCase().includes(q) || s.keywords.some(k=>k.includes(q))).slice(0,6);
-  },[query]);
+  const handleSelectRelatedService = (relatedId: string) => {
+    const found = SERVICES_LIST.find(s => s.id === relatedId);
+    if (found) {
+      setSelectedService(found);
+    }
+  };
+
+  const handleSelectDept = (deptId: string) => {
+    setSelectedDeptId(deptId);
+    setActiveTab('delhi-govt');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   return (
-    <header className="sticky top-0 z-50 backdrop-blur-xl bg-[#0f0f0f]/85 border-b border-white/[0.06]">
-      <div className="mx-auto max-w-[1280px] px-4 sm:px-6 h-[64px] flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <button onClick={()=>navigate('/')} className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-[#ff6b00] flex items-center justify-center font-black text-black">SS</div>
-            <div className="text-left leading-none">
-              <div className="font-bold text-[15px] tracking-tight text-white">SarkarSaathi.org</div>
-              <div className="text-[10px] text-white/50 -mt-0.5">सभी सरकारी काम</div>
+    <div className={`min-h-screen bg-[#0B0F17] text-zinc-100 font-sans selection:bg-[#FF6B00] selection:text-white ${fontClass} ${highContrast ? 'contrast-125' : ''}`}>
+      {/* Header Bar */}
+      <Header
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        currentStateId={currentStateId}
+        setCurrentStateId={setCurrentStateId}
+        onOpenEmergency={() => setEmergencyOpen(true)}
+        fontSizeLevel={fontSizeLevel}
+        setFontSizeLevel={setFontSizeLevel}
+        highContrast={highContrast}
+        setHighContrast={setHighContrast}
+      />
+
+      {/* Main Tab Router View */}
+      <main className="min-h-[70vh]">
+        {activeTab === 'home' && (
+          <div>
+            {/* Large Hero Banner */}
+            <HeroSection
+              allServices={SERVICES_LIST}
+              onSelectService={(srv) => setSelectedService(srv)}
+              onSearchQuery={handleSearchQueryFromHero}
+            />
+
+            {/* Main Categories Grid */}
+            <CategoryGrid
+              onSelectCategory={handleSelectCategory}
+              setActiveTab={setActiveTab}
+              onOpenEmergency={() => setEmergencyOpen(true)}
+              onSelectGovtOffices={() => {
+                setFinderInitialId('govt-offices');
+                setActiveTab('finders');
+              }}
+              onSelectGovernmentFinders={() => {
+                setFinderInitialId('govt-offices');
+                setActiveTab('finders');
+              }}
+            />
+
+            {/* Featured Popular Services Section */}
+            <section className="py-12 px-4 max-w-7xl mx-auto border-t border-zinc-800">
+              <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+                <div>
+                  <span className="text-xs font-bold text-[#FF6B00] uppercase tracking-wider">Fast Access Portals</span>
+                  <h2 className="text-2xl sm:text-3xl font-black text-white mt-1">Popular Delhi & Central Services</h2>
+                </div>
+                <button
+                  onClick={() => setActiveTab('services')}
+                  className="text-xs font-bold text-[#FF6B00] hover:underline flex items-center gap-1"
+                >
+                  View All Services ({SERVICES_LIST.length}) <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {SERVICES_LIST.map((srv) => (
+                  <div
+                    key={srv.id}
+                    onClick={() => setSelectedService(srv)}
+                    className="p-5 rounded-2xl bg-[#121824] border border-zinc-800 hover:border-[#FF6B00]/50 transition cursor-pointer space-y-3 flex flex-col justify-between shadow-xl group"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between gap-2 mb-2">
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-zinc-900 text-[#FF6B00] border border-zinc-800">
+                          {srv.category}
+                        </span>
+                        <span className="text-[10px] font-bold text-emerald-400 flex items-center gap-1">
+                          <CheckCircle2 className="w-3 h-3" /> .gov.in Verified
+                        </span>
+                      </div>
+                      <h3 className="text-base font-bold text-white group-hover:text-[#FF6B00] transition">{srv.title}</h3>
+                      <p className="text-xs text-zinc-400 mt-0.5">{srv.hindiTitle}</p>
+                      <p className="text-xs text-zinc-300 mt-2 line-clamp-2 leading-relaxed">{srv.shortDesc}</p>
+                    </div>
+
+                    <div className="pt-3 border-t border-zinc-800/80 flex items-center justify-between text-xs">
+                      <span className="text-zinc-400 font-semibold">{srv.fees}</span>
+                      <span className="font-bold text-[#FF6B00] group-hover:translate-x-1 transition flex items-center gap-1">
+                        Step-by-Step Guide <ArrowRight className="w-3 h-3" />
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Life Events Featured Section */}
+            <LifeEventsSection />
+
+            {/* Banking Hub Section */}
+            <BankingHub />
+          </div>
+        )}
+
+        {activeTab === 'services' && (
+          <section className="py-12 px-4 max-w-7xl mx-auto">
+            <div className="mb-8 border-b border-zinc-800 pb-6">
+              <span className="text-xs font-bold text-[#FF6B00] uppercase tracking-wider">Citizen Directory</span>
+              <h2 className="text-3xl font-black text-white mt-1">Government Services Directory</h2>
+              <p className="text-xs text-zinc-400 mt-1">
+                Step-by-step guides, required document lists, and official .gov.in links.
+              </p>
             </div>
-          </button>
-          <div className="hidden md:flex items-center ml-6 relative">
-            <button onClick={()=>setShowStates(!showStates)} className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#1a1a1a] border border-white/10 text-sm text-white">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Delhi <ChevronRight className="w-4 h-4 rotate-90 opacity-50" />
-            </button>
-            {showStates && (
-              <div className="absolute top-10 left-0 w-64 rounded-2xl bg-[#1e1e1e] border border-white/10 p-2 shadow-2xl">
-                {STATES.map(s=>(
-                  <div key={s.id} className={`flex items-center justify-between px-3 py-2.5 rounded-xl ${s.active ? 'bg-[#ff6b00]/10 text-white' : 'text-white/40'}`}>
-                    <div className="flex items-center gap-2"><span className="text-xs font-bold w-6 h-6 rounded bg-white/10 grid place-items-center">{s.flag}</span><span className="text-sm">{s.name}</span></div>
-                    <span className={`text-[10px] px-2 py-0.5 rounded-full ${s.active?'bg-emerald-500/20 text-emerald-300':'bg-white/10'}`}>{s.active?'Active':'Soon'}</span>
+
+            {/* Filter Search Input */}
+            <div className="flex flex-col md:flex-row gap-4 mb-8">
+              <div className="relative flex-1">
+                <Search className="w-4 h-4 text-zinc-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                <input
+                  type="text"
+                  value={searchFilterQuery}
+                  onChange={(e) => setSearchFilterQuery(e.target.value)}
+                  placeholder="Filter by service name, Aadhaar, PAN, Passport, MCD..."
+                  className="w-full bg-[#121824] border border-zinc-800 rounded-xl pl-10 pr-4 py-3 text-sm text-white focus:outline-none focus:border-[#FF6B00]"
+                />
+              </div>
+
+              {selectedCategoryFilter !== 'all' && (
+                <button
+                  onClick={() => setSelectedCategoryFilter('all')}
+                  className="px-4 py-3 rounded-xl bg-zinc-900 border border-zinc-800 text-xs font-bold text-zinc-300 hover:text-white"
+                >
+                  Clear Category Filter ({selectedCategoryFilter})
+                </button>
+              )}
+            </div>
+
+            {filteredServices.length === 0 ? (
+              <div className="p-8 text-center rounded-2xl bg-[#121824] border border-zinc-800 space-y-4 max-w-lg mx-auto my-8">
+                <Search className="w-10 h-10 text-zinc-600 mx-auto" />
+                <h3 className="text-lg font-bold text-white">No Direct Services Found</h3>
+                <p className="text-xs text-zinc-400">
+                  No directory entries match your current search criteria or category filter. Try clearing filters or searching for terms like Aadhaar, Property Tax, Licence, or DDA.
+                </p>
+                <button
+                  onClick={() => {
+                    setSelectedCategoryFilter('all');
+                    setSearchFilterQuery('');
+                  }}
+                  className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#FF6B00] to-[#E65100] text-white text-xs font-bold shadow-lg hover:brightness-110 transition"
+                >
+                  View All Government Services
+                </button>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {filteredServices.map((srv) => (
+                  <div
+                    key={srv.id}
+                    onClick={() => setSelectedService(srv)}
+                    className="p-5 rounded-2xl bg-[#121824] border border-zinc-800 hover:border-[#FF6B00]/50 transition cursor-pointer space-y-3 flex flex-col justify-between shadow-xl group"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between gap-2 mb-2">
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-zinc-900 text-[#FF6B00] border border-zinc-800">
+                          {srv.category}
+                        </span>
+                        <span className="text-[10px] font-bold text-emerald-400 flex items-center gap-1">
+                          <CheckCircle2 className="w-3 h-3" /> .gov.in Verified
+                        </span>
+                      </div>
+                      <h3 className="text-base font-bold text-white group-hover:text-[#FF6B00] transition">{srv.title}</h3>
+                      <p className="text-xs text-zinc-400 mt-0.5">{srv.hindiTitle}</p>
+                      <p className="text-xs text-zinc-300 mt-2 leading-relaxed">{srv.shortDesc}</p>
+                    </div>
+
+                    <div className="pt-3 border-t border-zinc-800/80 flex items-center justify-between text-xs">
+                      <span className="text-zinc-400 font-semibold">{srv.fees}</span>
+                      <span className="font-bold text-[#FF6B00] group-hover:translate-x-1 transition flex items-center gap-1">
+                        View Procedure <ArrowRight className="w-3 h-3" />
+                      </span>
+                    </div>
                   </div>
                 ))}
               </div>
             )}
-          </div>
-        </div>
-        <div className="flex items-center gap-2">
-          {/* Top search removed as per request - only hero search remains */}
-          <button onClick={()=>setShowSearch(!showSearch)} className="lg:hidden w-10 h-10 rounded-full bg-[#1a1a1a] grid place-items-center"><Search className="w-4 h-4 text-white" /></button>
-          <button onClick={()=>setMobileMenu(!mobileMenu)} className="md:hidden w-10 h-10 rounded-full bg-[#1a1a1a] grid place-items-center"><Menu className="w-5 h-5 text-white" /></button>
-        </div>
-      </div>
-      {showSearch && (
-        <div className="lg:hidden px-4 pb-4">
-          <div className="flex items-center gap-2 bg-[#1a1a1a] border border-white/10 rounded-full px-4 h-12">
-            <Search className="w-4 h-4 text-white/40" />
-            <input autoFocus value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search services..." className="flex-1 bg-transparent outline-none text-sm text-white" />
-            <button onClick={()=>setShowSearch(false)}><X className="w-4 h-4 text-white/50" /></button>
-          </div>
-          {results.length>0 && (
-            <div className="mt-3 rounded-2xl bg-[#1e1e1e] border border-white/10 overflow-hidden">
-              {results.map(r=>(
-                <button key={r.slug} onClick={()=>{navigate(`/service/${r.slug}`); setShowSearch(false); setQuery('');}} className="w-full text-left px-4 py-3 border-b border-white/5 last:border-0">
-                  <div className="text-sm text-white">{r.title}</div><div className="text-xs text-white/40">{r.officialUrl}</div>
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
-      )}
-      {mobileMenu && (
-        <div className="md:hidden absolute inset-x-0 top-[64px] bg-[#121212] border-b border-white/10 p-4 space-y-2">
-          {CATEGORIES.slice(0,8).map(c=>(
-            <button key={c.slug} onClick={()=>{navigate(`/category/${c.slug}`); setMobileMenu(false);}} className="w-full text-left px-3 py-2.5 rounded-xl bg-white/[0.03] text-sm text-white/80">{c.name}</button>
-          ))}
-        </div>
-      )}
-    </header>
-  );
-};
-
-const TrustBadges = () => (
-  <div className="grid grid-cols-3 md:grid-cols-6 gap-2 md:gap-3">
-    {[
-      { icon: ShieldCheck, label: '100% Official Links' },
-      { icon: BadgeCheck, label: 'No Fees' },
-      { icon: Lock, label: 'No Login' },
-      { icon: Eye, label: 'No Data Stored' },
-      { icon: CheckCircle2, label: 'Free Forever' },
-      { icon: FileCheck, label: 'Step-by-Step Guides' },
-    ].map((b,i)=>(
-      <div key={i} className="flex items-center gap-2 px-3 py-2.5 rounded-full bg-[#1a1a1a] border border-white/[0.06]">
-        <b.icon className="w-4 h-4 text-[#ff6b00]" /><span className="text-[11px] md:text-xs text-white/70 font-medium">{b.label}</span>
-      </div>
-    ))}
-  </div>
-);
-
-const Footer: React.FC<{ navigate:any }> = ({ navigate }) => (
-  <footer className="mt-20 border-t border-white/10 bg-[#0a0a0a]">
-    <div className="mx-auto max-w-[1280px] px-4 sm:px-6 py-12 grid grid-cols-2 md:grid-cols-5 gap-8">
-      <div><div className="font-bold text-white mb-4 text-sm">Government Services</div><div className="space-y-2 text-[13px] text-white/50">{CATEGORIES.slice(0,7).map(c=> <div key={c.slug} className="hover:text-white cursor-pointer" onClick={()=>navigate(`/category/${c.slug}`)}>{c.name}</div>)}</div></div>
-      <div><div className="font-bold text-white mb-4 text-sm">Delhi Services</div><div className="space-y-2 text-[13px] text-white/50">{DEPARTMENTS.map(d=> <div key={d.slug} className="hover:text-white cursor-pointer" onClick={()=>navigate(`/delhi/${d.slug}`)}>{d.name}</div>)}<div className="hover:text-white cursor-pointer" onClick={()=>navigate('/category/utilities')}>Utilities</div></div></div>
-      <div><div className="font-bold text-white mb-4 text-sm">Tools</div><div className="space-y-2 text-[13px] text-white/50">{CALCULATORS.map(c=> <div key={c.slug} className="hover:text-white cursor-pointer" onClick={()=>navigate(`/calculator/${c.slug}`)}>{c.name}</div>)}<div className="mt-2 pt-2 border-t border-white/10">{FINDERS.slice(0,5).map(f=> <div key={f.slug} className="hover:text-white cursor-pointer py-1" onClick={()=>navigate(`/finder/${f.slug}`)}>{f.name}</div>)}</div></div></div>
-      <div><div className="font-bold text-white mb-4 text-sm">Banking</div><div className="space-y-2 text-[13px] text-white/50">{BANKS.slice(0,8).map(b=> <div key={b.slug} className="hover:text-white cursor-pointer" onClick={()=>navigate(`/banking/bank/${b.slug}`)}>{b.name}</div>)}{BANKING_TYPES.slice(0,5).map(t=> <div key={t.slug} className="hover:text-white cursor-pointer" onClick={()=>navigate(`/banking/${t.slug}`)}>{t.name}</div>)}</div></div>
-      <div><div className="font-bold text-white mb-4 text-sm">Company</div><div className="space-y-2 text-[13px] text-white/50">{Object.keys(STATIC_PAGES).map(k=> <div key={k} className="hover:text-white cursor-pointer capitalize" onClick={()=>navigate(`/${k}`)}>{k}</div>)}<div className="mt-6 p-3 rounded-xl bg-[#ff6b00]/10 border border-[#ff6b00]/20"><div className="text-[#ff6b00] font-bold text-sm">Emergency 112</div><div className="text-white/60 text-xs">Police • Fire • Ambulance • Women 1098</div></div></div></div>
-    </div>
-    <div className="border-t border-white/5 py-6 text-center text-[11px] text-white/30 px-4">© 2025 SarkarSaathi.org — Not a Government Website. All .gov.in links are official. Made for 100M Indians. Free Forever. No data collected. दिल्ली से दिल तक।</div>
-  </footer>
-);
-
-// ========== PAGES ==========
-const HomePage: React.FC<{ navigate:any }> = ({ navigate }) => {
-  const [search, setSearch] = useState('');
-  const filtered = useMemo(()=>{
-    if(!search) return [];
-    const q=search.toLowerCase().trim();
-    if(q.length<2) return [];
-    const serviceHits = SERVICES.filter(s=> 
-      s.title.toLowerCase().includes(q) || 
-      s.keywords.join(' ').toLowerCase().includes(q) ||
-      s.category.toLowerCase().includes(q) ||
-      s.overview.toLowerCase().includes(q)
-    ).map(s=>({type:'service', title:s.title, slug:s.slug, desc:s.category, url:`/service/${s.slug}`}));
-    const catHits = CATEGORIES.filter(c=> 
-      c.name.toLowerCase().includes(q) || 
-      c.slug.toLowerCase().includes(q) ||
-      c.desc.toLowerCase().includes(q)
-    ).map(c=>({type:'category', title:c.name, slug:c.slug, desc:c.desc, url:`/category/${c.slug}`}));
-    const finderHits = FINDERS.filter(f=>
-      f.name.toLowerCase().includes(q) ||
-      f.slug.toLowerCase().includes(q) ||
-      f.desc.toLowerCase().includes(q)
-    ).map(f=>({type:'finder', title:f.name, slug:f.slug, desc:f.desc, url:`/finder/${f.slug}`}));
-    const blogHits = BLOGS.filter(b=> b.title.toLowerCase().includes(q) || b.excerpt.toLowerCase().includes(q) || b.category.toLowerCase().includes(q) ).map(b=>({type:'blog', title:b.title, slug:b.slug, desc:b.excerpt.slice(0,60), url:`/blog/${b.slug}`}));
-    const bankHits = BANKS.filter(b=>
-      b.name.toLowerCase().includes(q) || b.short.toLowerCase().includes(q)
-    ).map(b=>({type:'bank', title:b.name, slug:b.slug, desc:b.type, url:`/banking/bank/${b.slug}`}));
-    const combined = [...serviceHits, ...catHits, ...finderHits, ...blogHits, ...bankHits];
-    // remove duplicates by slug
-    const seen = new Set();
-    const unique = combined.filter(item=>{
-      if(seen.has(item.slug+item.type)) return false;
-      seen.add(item.slug+item.type);
-      return true;
-    });
-    return unique.slice(0,10);
-  },[search]);
-
-  useSEO('Delhi Government Services - All Official Links, Guides, Tools', 'SarkarSaathi.org - 60+ Delhi govt services, finders, calculators, banking guides. 100% official .gov.in links, free forever, no login.');
-
-  return (
-    <div className="min-h-screen bg-[#0f0f0f] text-white">
-      {/* Hero */}
-      <div className="mx-auto max-w-[1280px] px-4 sm:px-6 pt-10 md:pt-20 pb-8">
-        <div className="text-center max-w-4xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#ff6b00]/10 border border-[#ff6b00]/20 text-[#ff6b00] text-[11px] font-bold tracking-wide mb-6"><span className="w-1.5 h-1.5 rounded-full bg-[#ff6b00] animate-pulse"></span> DELHI • 60+ SERVICES • OFFICIAL .GOV.IN ONLY</div>
-          <h1 className="text-[32px] md:text-[56px] font-black leading-[0.95] tracking-tight whitespace-pre-wrap">सभी सरकारी काम एक जगह, <span className="whitespace-nowrap">बिल्कुल फ्री</span></h1>
-          <p className="mt-5 text-[14px] md:text-[18px] text-white/60 leading-relaxed">Delhi Government Services, Government Guides, Banking Guides, Official Links, Government Tools, Finders, Calculators and Step-by-Step Help.</p>
-          
-          <div className="mt-8 relative max-w-2xl mx-auto">
-            <div className="flex items-center gap-3 h-[56px] px-5 rounded-full bg-[#1a1a1a] border border-white/10 focus-within:border-[#ff6b00]/50 shadow-[0_0_0_6px_rgba(255,107,0,0.08)]">
-              <Search className="w-5 h-5 text-white/30" />
-              <input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Search Aadhaar, PAN, RTI, Family, Marriage, Pension..." className="flex-1 bg-transparent outline-none text-[15px] placeholder:text-white/30" />
-              <span className="hidden md:flex text-[11px] px-2.5 py-1 rounded-full bg-white/10 text-white/50">⌘ K</span>
-            </div>
-            {filtered.length>0 ? (
-              <div className="absolute z-20 mt-3 w-full rounded-2xl bg-[#1e1e1e] border border-white/10 overflow-hidden text-left shadow-2xl">
-                {filtered.map((s:any)=>(
-                  <button key={s.slug+s.type} onClick={()=>navigate(s.url)} className="w-full px-5 py-3.5 hover:bg-white/5 flex items-center justify-between border-b border-white/5 last:border-0 text-left">
-                    <div><div className="text-[14px] font-medium">{s.title} <span className="ml-2 text-[10px] px-1.5 py-0.5 rounded bg-white/10 text-white/40 uppercase">{s.type}</span></div><div className="text-[11px] text-white/40">{s.desc}</div></div><ChevronRight className="w-4 h-4 text-white/20" />
-                  </button>
-                ))}
-              </div>
-            ) : (
-              <div className="mt-4 flex flex-wrap justify-center gap-2">
-                {['Aadhaar','PAN','Passport','Driving Licence','Birth Certificate','IFSC Code','Property Tax','Water Bill'].map(chip=>(
-                  <button key={chip} onClick={()=>setSearch(chip)} className="px-3 py-1.5 rounded-full bg-[#1e1e1e] border border-white/10 text-[12px] text-white/60 hover:text-white hover:border-white/20">{chip}</button>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
-
-        <div className="mt-12 max-w-5xl mx-auto"><TrustBadges /></div>
-
-        {/* Blogs Section - NEW */}
-        <div className="mt-14">
-          <div className="flex items-end justify-between mb-6">
-            <h2 className="text-xl md:text-2xl font-bold tracking-tight">Latest Guides & Updates</h2>
-            <span className="text-xs text-white/40">12 articles • Hindi + English</span>
-          </div>
-          <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {BLOGS.map(b=>(
-              <button key={b.slug} onClick={()=>navigate(`/blog/${b.slug}`)} className="text-left p-5 rounded-2xl bg-[#121212] border border-white/5 hover:border-[#ff6b00]/30 hover:bg-[#1a1a1a] transition group">
-                <div className="flex items-center gap-2 mb-3"><span className="text-[10px] px-2 py-1 rounded-full bg-[#ff6b00]/15 text-[#ff6b00] font-bold">{b.category}</span><span className="text-[10px] text-white/30">{b.date} • {b.read}</span></div>
-                <div className="font-bold text-[14px] leading-tight group-hover:text-white">{b.title}</div>
-                <div className="text-[12px] text-white/50 mt-2 line-clamp-2">{b.excerpt}</div>
-                <div className="mt-4 flex items-center gap-1 text-[11px] text-[#ff6b00] font-semibold">Read More <ArrowRight className="w-3 h-3" /></div>
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Stats */}
-        <div className="mt-8 grid grid-cols-3 gap-3 max-w-2xl mx-auto">
-          {[{n:'60+',l:'Services'},{n:'29',l:'Finders'},{n:'10+',l:'Calculators'}].map(s=>(
-            <div key={s.l} className="rounded-2xl bg-[#121212] border border-white/5 p-4 text-center"><div className="text-2xl font-black text-[#ff6b00]">{s.n}</div><div className="text-[11px] text-white/40 uppercase tracking-widest mt-1">{s.l}</div></div>
-          ))}
-        </div>
-      </div>
-
-      {/* Categories */}
-      <div className="mx-auto max-w-[1280px] px-4 sm:px-6">
-        <div className="flex items-end justify-between mb-6">
-          <h2 className="text-xl md:text-2xl font-bold tracking-tight">Browse by Category</h2>
-          <span className="text-xs text-white/40">35 categories • Delhi</span>
-        </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3">
-          {CATEGORIES.map(c=>(
-            <button key={c.slug} onClick={()=>navigate(`/category/${c.slug}`)} className="text-left p-4 rounded-2xl bg-[#121212] border border-white/[0.06] hover:border-[#ff6b00]/30 hover:bg-[#1a1a1a] transition group">
-              <div className="w-10 h-10 rounded-xl bg-white/[0.06] group-hover:bg-[#ff6b00]/15 grid place-items-center mb-3"><FileText className="w-5 h-5 text-white/60 group-hover:text-[#ff6b00]" /></div>
-              <div className="font-semibold text-[13px] leading-tight">{c.name}</div>
-              <div className="text-[11px] text-white/40 mt-1 line-clamp-1">{c.desc}</div>
-              <div className="mt-3 flex items-center gap-1.5"><span className="text-[10px] px-2 py-0.5 rounded-full bg-white/10 text-white/50">{c.count} services</span><ArrowRight className="w-3 h-3 text-white/20 group-hover:text-[#ff6b00] ml-auto" /></div>
-            </button>
-          ))}
-        </div>
-
-        {/* Banking Hub */}
-        <div className="mt-14">
-          <div className="flex items-center justify-between mb-6"><h2 className="text-xl md:text-2xl font-bold">Banking Hub — Complete Guide</h2><button onClick={()=>navigate('/banking/saving-account')} className="text-xs px-3 py-1.5 rounded-full bg-[#ff6b00] text-black font-bold">View All</button></div>
-          <div className="rounded-[24px] bg-[#121212] border border-white/5 p-4 md:p-6">
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-2 mb-6">{BANKING_TYPES.slice(0,10).map(t=>(
-              <button key={t.slug} onClick={()=>navigate(`/banking/${t.slug}`)} className="p-3 rounded-xl bg-[#1a1a1a] border border-white/5 text-left hover:border-[#ff6b00]/30"><div className="text-[12px] font-semibold">{t.name}</div><div className="text-[10px] text-white/40 mt-1 line-clamp-1">{t.desc}</div></button>
-            ))}</div>
-            <div className="grid grid-cols-3 md:grid-cols-6 lg:grid-cols-10 gap-2">
-              {BANKS.map(b=>(
-                <button key={b.slug} onClick={()=>navigate(`/banking/bank/${b.slug}`)} className="p-3 rounded-xl bg-[#0f0f0f] border border-white/5 hover:border-white/10 text-center"><div className="w-8 h-8 rounded-full mx-auto mb-2 grid place-items-center text-[11px] font-black text-white" style={{background:b.color}}>{b.short[0]}</div><div className="text-[11px] font-medium leading-tight">{b.short}</div><div className="text-[9px] text-white/30">{b.type}</div></button>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Finders */}
-        <div className="mt-14">
-          <h2 className="text-xl md:text-2xl font-bold mb-6">Government Finders — Locate Anything</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
-            {FINDERS.map(f=>(
-              <button key={f.slug} onClick={()=>navigate(`/finder/${f.slug}`)} className="text-left p-4 rounded-2xl bg-[#121212] border border-white/5 hover:border-[#ff6b00]/20 transition group"><LocateFixed className="w-5 h-5 text-[#ff6b00] mb-3" /><div className="font-semibold text-[13px]">{f.name}</div><div className="text-[11px] text-white/40 mt-1">{f.desc}</div></button>
-            ))}
-          </div>
-        </div>
-
-        {/* Life Events */}
-        <div className="mt-14">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#ff6b00] text-black text-[11px] font-black mb-4">MOST IMPORTANT • LIFE EVENTS</div>
-          <h2 className="text-xl md:text-2xl font-bold mb-6">Life ke har mod par SarkarSaathi</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3">
-            {LIFE_EVENTS.map(ev=>(
-              <button key={ev.slug} onClick={()=>navigate(`/life-event/${ev.slug}`)} className="text-left p-4 rounded-2xl bg-[#121212] border border-white/5 hover:bg-[#1a1a1a] hover:border-[#ff6b00]/30 transition group relative overflow-hidden"><div className="absolute top-0 right-0 w-20 h-20 rounded-full opacity-10" style={{background:ev.color}}></div><div className="w-10 h-10 rounded-xl bg-[#ff6b00]/10 grid place-items-center mb-3"><Baby className="w-5 h-5 text-[#ff6b00]" /></div><div className="font-semibold text-[13px]">{ev.name}</div><div className="text-[11px] text-white/40 mt-1 line-clamp-2">{ev.desc}</div><div className="mt-3 text-[10px] px-2 py-1 rounded-full bg-white/5 inline-block text-white/50">{ev.timeline}</div></button>
-            ))}
-          </div>
-        </div>
-
-        {/* Departments */}
-        <div className="mt-14 grid md:grid-cols-2 gap-6">
-          <div className="rounded-[24px] bg-[#121212] border border-white/5 p-6">
-            <h3 className="font-bold mb-4 flex items-center gap-2"><Building2 className="w-5 h-5 text-[#ff6b00]" />Delhi Government Departments</h3>
-            <div className="grid grid-cols-2 gap-2">{DEPARTMENTS.map(d=>(
-              <button key={d.slug} onClick={()=>navigate(`/delhi/${d.slug}`)} className="text-left p-3 rounded-xl bg-[#0f0f0f] border border-white/5 hover:border-white/10"><div className="font-semibold text-[13px]">{d.name}</div><div className="text-[11px] text-white/40">{d.full} • {d.services} services</div></button>
-            ))}</div>
-          </div>
-          <div className="rounded-[24px] bg-[#121212] border border-white/5 p-6">
-            <h3 className="font-bold mb-4 flex items-center gap-2"><Calculator className="w-5 h-5 text-[#ff6b00]" />Tools & Calculators</h3>
-            <div className="grid grid-cols-2 gap-2">{CALCULATORS.map(c=>(
-              <button key={c.slug} onClick={()=>navigate(`/calculator/${c.slug}`)} className="text-left p-3 rounded-xl bg-[#0f0f0f] border border-white/5 hover:border-white/10 flex items-center gap-3"><div className="w-8 h-8 rounded-lg bg-white/5 grid place-items-center"><Calculator className="w-4 h-4 text-white/60" /></div><div><div className="font-semibold text-[12px]">{c.name}</div><div className="text-[10px] text-white/40">{c.desc}</div></div></button>
-            ))}</div>
-            <div className="mt-6 p-3 rounded-xl bg-[#ff6b00]/10 border border-[#ff6b00]/20 flex items-center gap-3"><Newspaper className="w-5 h-5 text-[#ff6b00]" /><div><div className="text-[13px] font-bold">Knowledge Center</div><div className="text-[11px] text-white/60">How-to guides, banking tips, Delhi updates — no ads, no spam.</div></div><button onClick={()=>navigate('/about')} className="ml-auto text-[11px] px-3 py-1 rounded-full bg-[#ff6b00] text-black font-bold">Read</button></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const ServicePage: React.FC<{ slug:string, navigate:any }> = ({ slug, navigate }) => {
-  const service = SERVICES.find(s=>s.slug===slug);
-  const [openFaq, setOpenFaq] = useState<number | null>(0);
-  if(!service){ return <div className="min-h-screen bg-[#0f0f0f] grid place-items-center text-white/60 p-10">Service not found — try searching on homepage. <button className="ml-3 text-[#ff6b00]" onClick={()=>navigate('/')}>Home</button></div> }
-  useSEO(service.title, service.overview, { "@type":"FAQPage", mainEntity: service.faqs.map(f=>({"@type":"Question", name:f.q, acceptedAnswer:{"@type":"Answer", text:f.a}})) });
-
-  return (
-    <div className="min-h-screen bg-[#0f0f0f] text-white">
-      <div className="mx-auto max-w-[900px] px-4 sm:px-6 py-6">
-        <div className="flex items-center gap-2 text-[11px] text-white/40 mb-6"><span className="hover:text-white cursor-pointer" onClick={()=>navigate('/')}>Home</span><ChevronRight className="w-3 h-3" /><span className="hover:text-white cursor-pointer" onClick={()=>navigate(`/category/${service.category}`)}>{service.category}</span><ChevronRight className="w-3 h-3" /><span className="text-white/80">{service.title}</span></div>
-        
-        <div className="rounded-[24px] bg-[#121212] border border-white/5 p-6 md:p-8">
-          <div className="flex flex-wrap items-start justify-between gap-4">
-            <div><h1 className="text-2xl md:text-3xl font-black tracking-tight">{service.title} — Delhi</h1><p className="mt-3 text-[14px] text-white/60 leading-relaxed max-w-2xl">{service.overview}</p><div className="mt-4 flex flex-wrap gap-2">{service.keywords.map(k=> <span key={k} className="text-[10px] px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-white/50">{k}</span>)}</div></div>
-            <a href={service.officialUrl} target="_blank" rel="noopener" className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-[#ff6b00] text-black font-bold text-[13px] hover:bg-[#ff7a1a]">Official Website <ExternalLink className="w-4 h-4" /></a>
-          </div>
-
-          <div className="mt-8 grid md:grid-cols-3 gap-6">
-            <div className="md:col-span-2 space-y-8">
-              <section><h3 className="font-bold text-[15px] mb-3 flex items-center gap-2"><Users className="w-4 h-4 text-[#ff6b00]" />Eligibility</h3><ul className="space-y-2">{service.eligibility.map((e,i)=><li key={i} className="flex gap-2 text-[13px] text-white/70"><CheckCircle2 className="w-4 h-4 text-emerald-400 mt-0.5 shrink-0" />{e}</li>)}</ul></section>
-              <section><h3 className="font-bold text-[15px] mb-3 flex items-center gap-2"><FileStack className="w-4 h-4 text-[#ff6b00]" />Required Documents</h3><div className="grid grid-cols-1 sm:grid-cols-2 gap-2">{service.documents.map((d,i)=><div key={i} className="px-3 py-2.5 rounded-xl bg-[#0f0f0f] border border-white/5 text-[13px] flex items-center gap-2"><FileCheck className="w-4 h-4 text-white/30" />{d}</div>)}</div></section>
-              <section className="grid md:grid-cols-2 gap-6"><div><h3 className="font-bold text-[13px] mb-3">Online Process</h3><ol className="space-y-2">{service.onlineSteps.map((s,i)=><li key={i} className="flex gap-3 text-[13px] text-white/70"><span className="w-6 h-6 rounded-full bg-[#ff6b00]/15 text-[#ff6b00] grid place-items-center text-[11px] font-bold shrink-0">{i+1}</span>{s}</li>)}</ol></div><div><h3 className="font-bold text-[13px] mb-3">Offline Process</h3><ol className="space-y-2">{service.offlineSteps.map((s,i)=><li key={i} className="flex gap-3 text-[13px] text-white/70"><span className="w-6 h-6 rounded-full bg-white/10 grid place-items-center text-[11px] font-bold shrink-0">{i+1}</span>{s}</li>)}</ol></div></section>
-              <section className="grid grid-cols-2 gap-3"><div className="p-4 rounded-xl bg-[#0f0f0f] border border-white/5"><div className="text-[11px] text-white/40">Fees</div><div className="font-semibold text-[13px] mt-1">{service.fees}</div></div><div className="p-4 rounded-xl bg-[#0f0f0f] border border-white/5"><div className="text-[11px] text-white/40">Processing Time</div><div className="font-semibold text-[13px] mt-1">{service.processingTime}</div></div></section>
-              <section><h3 className="font-bold text-[15px] mb-3">FAQs</h3><div className="space-y-2">{service.faqs.map((f,i)=>(
-                <div key={i} className="rounded-xl bg-[#0f0f0f] border border-white/5 overflow-hidden"><button onClick={()=>setOpenFaq(openFaq===i?null:i)} className="w-full text-left px-4 py-3 flex items-center justify-between"><span className="text-[13px] font-medium">{f.q}</span><ChevronRight className={`w-4 h-4 transition ${openFaq===i?'rotate-90':''}`} /></button>{openFaq===i && <div className="px-4 pb-3 text-[13px] text-white/60">{f.a}</div>}</div>
-              ))}</div></section>
-              <section className="grid md:grid-cols-2 gap-4"><div className="p-4 rounded-xl bg-amber-500/5 border border-amber-500/20"><div className="text-amber-300 font-bold text-[12px] flex items-center gap-1.5"><AlertTriangle className="w-4 h-4" />Common Mistakes</div><ul className="mt-2 space-y-1 text-[12px] text-white/60">{service.commonMistakes.map((m,i)=><li key={i}>• {m}</li>)}</ul></div><div className="p-4 rounded-xl bg-sky-500/5 border border-sky-500/20"><div className="text-sky-300 font-bold text-[12px] flex items-center gap-1.5"><Info className="w-4 h-4" />Important Notes</div><ul className="mt-2 space-y-1 text-[12px] text-white/60">{service.importantNotes.map((m,i)=><li key={i}>• {m}</li>)}</ul></div></section>
-            </div>
-            <div className="space-y-4">
-              <div className="p-4 rounded-2xl bg-[#0f0f0f] border border-white/5"><div className="text-[11px] text-white/40">Last Updated</div><div className="text-[13px] font-medium mt-1 flex items-center gap-1.5"><Clock className="w-4 h-4 text-white/30" />{service.lastUpdated}</div><div className="mt-4 p-3 rounded-xl bg-[#ff6b00]/10 border border-[#ff6b00]/20"><div className="text-[11px] text-[#ff6b00] font-bold">100% Official Link</div><div className="text-[12px] text-white/60 mt-1 break-all">{service.officialUrl}</div><a href={service.officialUrl} target="_blank" rel="noopener" className="mt-3 flex items-center justify-center gap-2 w-full py-2 rounded-full bg-[#ff6b00] text-black text-[12px] font-bold">Open Official Site <ExternalLink className="w-3.5 h-3.5" /></a></div></div>
-              <div className="p-4 rounded-2xl bg-[#0f0f0f] border border-white/5"><div className="font-bold text-[13px] mb-3">Related Services</div><div className="space-y-2">{service.related.map((r:string)=>{ const rs=SERVICES.find(s=>s.slug===r); if(!rs) return null; return <button key={r} onClick={()=>navigate(`/service/${r}`)} className="w-full text-left px-3 py-2.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] text-[12px] flex items-center justify-between"><span>{rs.title}</span><ChevronRight className="w-3 h-3 text-white/20" /></button>})}</div></div>
-              <div className="p-4 rounded-2xl bg-[#0f0f0f] border border-white/5"><div className="font-bold text-[13px] mb-2">Download Forms</div><div className="space-y-2 text-[12px]"><div className="flex items-center justify-between p-2.5 rounded-xl bg-white/5"><span>Form PDF</span><Download className="w-4 h-4 text-white/40" /></div><div className="flex items-center justify-between p-2.5 rounded-xl bg-white/5"><span>Self Declaration</span><Download className="w-4 h-4 text-white/40" /></div></div></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const CategoryPage: React.FC<{ slug:string, navigate:any }> = ({ slug, navigate }) => {
-  const cat = CATEGORIES.find(c=>c.slug===slug);
-  const list = SERVICES.filter(s=>s.category===slug || (slug==='identity-documents' && s.category==='identity-documents'));
-  const display = list.length>0?list:SERVICES.slice(0,12);
-  useSEO(cat?.name || 'Category', cat?.desc || 'Government services category');
-  if(!cat) return <div className="min-h-screen bg-[#0f0f0f] grid place-items-center text-white/60">Category not found</div>;
-  return (
-    <div className="min-h-screen bg-[#0f0f0f] text-white">
-      <div className="mx-auto max-w-[1280px] px-4 sm:px-6 py-8">
-        <div className="flex items-center gap-2 text-[11px] text-white/40 mb-6"><span className="cursor-pointer hover:text-white" onClick={()=>navigate('/')}>Home</span><ChevronRight className="w-3 h-3" /><span className="text-white/70">{cat.name}</span></div>
-        <div className="flex items-end justify-between mb-8"><div><h1 className="text-3xl font-black tracking-tight">{cat.name} — Delhi</h1><p className="text-white/60 mt-2 text-sm max-w-xl">{cat.desc}. All services with official .gov.in links, eligibility, documents, fees, and step-by-step process. No login, no fees, free forever.</p></div><span className="hidden md:block text-xs px-3 py-1.5 rounded-full bg-white/10 text-white/50">{display.length} services</span></div>
-        <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-3">
-          {display.map(s=>(
-            <button key={s.slug} onClick={()=>navigate(`/service/${s.slug}`)} className="text-left p-4 rounded-2xl bg-[#121212] border border-white/5 hover:border-[#ff6b00]/30 group">
-              <div className="flex items-start justify-between"><div className="w-10 h-10 rounded-xl bg-[#ff6b00]/10 grid place-items-center"><FileText className="w-5 h-5 text-[#ff6b00]" /></div><span className="text-[10px] px-2 py-0.5 rounded-full bg-white/10 text-white/40">{s.processingTime}</span></div>
-              <div className="font-semibold text-[14px] mt-3">{s.title}</div><div className="text-[12px] text-white/50 mt-1 line-clamp-2">{s.overview.slice(0,90)}...</div><div className="mt-3 flex items-center gap-2 text-[11px] text-white/30"><Globe className="w-3 h-3" />{new URL(s.officialUrl).hostname}</div>
-            </button>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const BankingPage: React.FC<{ slug?:string, bankSlug?:string, navigate:any }> = ({ slug, bankSlug, navigate }) => {
-  const type = BANKING_TYPES.find(b=>b.slug===slug);
-  const bank = BANKS.find(b=>b.slug===bankSlug);
-  useSEO(bank? `${bank.name} - All Services` : type? `${type.name} Guide` : 'Banking Hub', 'Complete banking guides with official links.');
-  if(bankSlug){
-    if(!bank) return <div className="min-h-screen bg-[#0f0f0f] grid place-items-center text-white/60">Bank not found</div>;
-    return (
-      <div className="min-h-screen bg-[#0f0f0f] text-white"><div className="mx-auto max-w-[900px] px-4 sm:px-6 py-8">
-        <div className="text-[11px] text-white/40 flex items-center gap-2 mb-6"><span className="cursor-pointer" onClick={()=>navigate('/')}>Home</span><ChevronRight className="w-3 h-3" /><span className="cursor-pointer" onClick={()=>navigate('/banking/saving-account')}>Banking</span><ChevronRight className="w-3 h-3" /><span className="text-white/70">{bank.name}</span></div>
-        <div className="rounded-[24px] bg-[#121212] border border-white/5 p-6 md:p-8">
-          <div className="flex items-center gap-4"><div className="w-14 h-14 rounded-2xl grid place-items-center text-white font-black text-xl" style={{background:bank.color}}>{bank.short[0]}</div><div><h1 className="text-2xl font-black">{bank.name}</h1><div className="text-xs text-white/50">{bank.type} Bank • Delhi branches • Official guide</div></div></div>
-          <div className="mt-8 grid md:grid-cols-2 gap-4">
-            {BANKING_TYPES.slice(0,8).map(t=>(
-              <div key={t.slug} className="p-4 rounded-xl bg-[#0f0f0f] border border-white/5"><div className="font-semibold text-[13px]">{t.name} at {bank.short}</div><div className="text-[12px] text-white/50 mt-1">Eligibility: Any Indian citizen 18+, Documents: Aadhaar, PAN, Photo. Min Balance: Rs 0-5000. Official link: {bank.name.toLowerCase().replace(/\s+/g,'')}.co.in</div><div className="mt-3 flex gap-2"><span className="text-[10px] px-2 py-1 rounded-full bg-[#ff6b00]/15 text-[#ff6b00]">Charges: As per bank</span><span className="text-[10px] px-2 py-1 rounded-full bg-white/5 text-white/50">Time: Instant to 7 days</span></div></div>
-            ))}
-          </div>
-          <div className="mt-6 p-4 rounded-xl bg-[#ff6b00]/10 border border-[#ff6b00]/20"><div className="text-[#ff6b00] font-bold text-sm">Official Website</div><div className="text-white/60 text-xs mt-1">Visit only official .co.in domain. Never share OTP.</div><a href={`https://www.${bank.slug}.com`} target="_blank" rel="noopener" className="mt-3 inline-flex px-4 py-2 rounded-full bg-[#ff6b00] text-black text-xs font-bold">Open Official Site <ExternalLink className="w-3 h-3 ml-1" /></a></div>
-        </div>
-      </div></div>
-    );
-  }
-  return (
-    <div className="min-h-screen bg-[#0f0f0f] text-white"><div className="mx-auto max-w-[1100px] px-4 sm:px-6 py-8">
-      <h1 className="text-3xl font-black">{type? type.name : 'Banking Hub'}</h1><p className="text-white/60 text-sm mt-2 max-w-2xl">{type? `${type.name} complete guide for Delhi — eligibility, documents, min balance, charges, benefits, official apply link.` : 'All banking guides — saving, current, salary, zero balance, NRE, NRO, FD, RD, PPF, NPS, locker, cards, UPI, loans. 20 banks covered.'}</p>
-      <div className="mt-8 grid md:grid-cols-3 gap-6">
-        <div className="md:col-span-2 rounded-[24px] bg-[#121212] border border-white/5 p-6">
-          <h3 className="font-bold mb-4">What you get</h3>
-          <div className="grid grid-cols-2 gap-3 text-[12px]"><div className="p-3 rounded-xl bg-[#0f0f0f] border border-white/5"><div className="text-white/40 text-[10px]">Eligibility</div><div className="mt-1">Indian citizen 18+, Minor with guardian, NRI for NRE/NRO</div></div><div className="p-3 rounded-xl bg-[#0f0f0f] border border-white/5"><div className="text-white/40 text-[10px]">Documents</div><div className="mt-1">Aadhaar, PAN, Photo, Address proof, Income proof for loans</div></div><div className="p-3 rounded-xl bg-[#0f0f0f] border border-white/5"><div className="text-white/40 text-[10px]">Min Balance</div><div className="mt-1">Rs 0 (Jan Dhan, Salary) to Rs 10,000 (Premium)</div></div><div className="p-3 rounded-xl bg-[#0f0f0f] border border-white/5"><div className="text-white/40 text-[10px]">Charges</div><div className="mt-1">Zero to Rs 500 annual + GST, SMS Rs 15/quarter</div></div></div>
-          <div className="mt-6"><h4 className="font-bold text-sm mb-3">Benefits & Features</h4><ul className="grid grid-cols-2 gap-2 text-[12px] text-white/60"><li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />Free UPI & IMPS</li><li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />Insurance cover up to 2L</li><li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />Net banking & app</li><li className="flex gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />Overdraft facility</li></ul></div>
-        </div>
-        <div className="space-y-4">
-          <div className="rounded-2xl bg-[#121212] border border-white/5 p-4"><div className="font-bold text-sm mb-3">All Banking Types</div><div className="space-y-1.5">{BANKING_TYPES.map(t=> <button key={t.slug} onClick={()=>navigate(`/banking/${t.slug}`)} className={`w-full text-left px-3 py-2 rounded-xl text-[12px] ${slug===t.slug?'bg-[#ff6b00]/15 text-[#ff6b00] border border-[#ff6b00]/20':'bg-white/[0.03] text-white/60 hover:text-white'}`}>{t.name}</button>)}</div></div>
-          <div className="rounded-2xl bg-[#121212] border border-white/5 p-4"><div className="font-bold text-sm mb-3">All Banks</div><div className="grid grid-cols-2 gap-2">{BANKS.map(b=> <button key={b.slug} onClick={()=>navigate(`/banking/bank/${b.slug}`)} className="text-left px-2.5 py-2 rounded-xl bg-white/[0.03] text-[11px] hover:bg-white/[0.06]">{b.short}</button>)}</div></div>
-        </div>
-      </div>
-    </div></div>
-  );
-};
-
-const FinderPage: React.FC<{ slug:string, navigate:any }> = ({ slug, navigate }) => {
-  const finder = FINDERS.find(f=>f.slug===slug);
-  const [input, setInput] = useState('');
-  const [result, setResult] = useState<any>(null);
-  useSEO(finder?.name || 'Finder', finder?.desc || '');
-  if(!finder) return <div className="min-h-screen bg-[#0f0f0f] grid place-items-center text-white/60">Finder not found</div>;
-  const handleSearch = () => {
-    if(slug==='pin-code'){
-      if(!/^\d{6}$/.test(input)) { setResult({error:'Enter valid 6-digit PIN code'}); return; }
-      setResult({ pin:input, area:'Connaught Place', district:'Central Delhi', state:'Delhi', offices:['Connaught Place H.O', 'Barakhamba Road S.O'] });
-    } else if(slug==='ifsc'){
-      setResult({ query:input, results: BANKS.slice(0,3).map(b=>({ bank:b.name, branch:'Connaught Place', ifsc:`${b.short.slice(0,4)}0${Math.floor(100000+Math.random()*900000)}` })) });
-    } else {
-      setResult({ query:input, message:`Found 3 results for "${input}" in Delhi — Mock data for production UI demo. Connect real API later.` });
-    }
-  };
-  return (
-    <div className="min-h-screen bg-[#0f0f0f] text-white"><div className="mx-auto max-w-[800px] px-4 sm:px-6 py-8">
-      <div className="text-[11px] text-white/40 flex items-center gap-2 mb-6"><span className="cursor-pointer" onClick={()=>navigate('/')}>Home</span><ChevronRight className="w-3 h-3" /><span className="text-white/70">{finder.name}</span></div>
-      <div className="rounded-[24px] bg-[#121212] border border-white/5 p-6 md:p-8">
-        <h1 className="text-2xl font-black">{finder.name} — Delhi</h1><p className="text-white/60 text-sm mt-2">{finder.desc}. Free, official, no login.</p>
-        <div className="mt-6 flex gap-2"><input value={input} onChange={e=>setInput(e.target.value)} placeholder={finder.placeholder} className="flex-1 h-12 px-5 rounded-full bg-[#0f0f0f] border border-white/10 outline-none text-sm placeholder:text-white/30 focus:border-[#ff6b00]/50" /><button onClick={handleSearch} className="px-6 h-12 rounded-full bg-[#ff6b00] text-black font-bold text-sm">Search</button></div>
-        {result && (
-          <div className="mt-6 p-5 rounded-2xl bg-[#0f0f0f] border border-white/10">
-            {result.error ? <div className="text-red-400 text-sm">{result.error}</div> : slug==='pin-code' ? (
-              <div><div className="font-bold text-lg">{result.pin} — {result.area}</div><div className="text-sm text-white/60 mt-1">District: {result.district}, State: {result.state}</div><div className="mt-3 space-y-1">{result.offices.map((o:string)=> <div key={o} className="text-sm px-3 py-2 rounded-xl bg-white/5">{o}</div>)}</div></div>
-            ) : slug==='ifsc' ? (
-              <div className="space-y-2">{result.results.map((r:any,i:number)=> <div key={i} className="p-3 rounded-xl bg-white/5 flex justify-between"><div><div className="font-semibold text-sm">{r.bank}</div><div className="text-xs text-white/50">{r.branch}</div></div><div className="text-xs font-mono bg-[#ff6b00]/15 text-[#ff6b00] px-2 py-1 rounded-full self-center">{r.ifsc}</div></div>)}</div>
-            ) : <div className="text-sm text-white/70">{result.message}</div>}
-          </div>
+          </section>
         )}
-        <div className="mt-8 grid grid-cols-2 gap-3 text-[11px]"><div className="p-3 rounded-xl bg-[#ff6b00]/5 border border-[#ff6b00]/10 text-[#ff6b00]">✓ Official sources only</div><div className="p-3 rounded-xl bg-white/5 border border-white/10 text-white/50">✓ No data stored</div></div>
-      </div>
-    </div></div>
-  );
-};
 
-const LifeEventPage: React.FC<{ slug:string, navigate:any }> = ({ slug, navigate }) => {
-  const ev = LIFE_EVENTS.find(e=>e.slug===slug);
-  useSEO(ev?.name || 'Life Event', ev?.desc || '');
-  if(!ev) return <div className="min-h-screen bg-[#0f0f0f] grid place-items-center text-white/60">Life event not found</div>;
-  return (
-    <div className="min-h-screen bg-[#0f0f0f] text-white"><div className="mx-auto max-w-[900px] px-4 sm:px-6 py-8">
-      <div className="text-[11px] text-white/40 flex items-center gap-2 mb-6"><span className="cursor-pointer" onClick={()=>navigate('/')}>Home</span><ChevronRight className="w-3 h-3" /><span className="text-white/70">{ev.name}</span></div>
-      <div className="rounded-[24px] bg-[#121212] border border-white/5 p-6 md:p-8">
-        <div className="flex items-start gap-4"><div className="w-14 h-14 rounded-2xl bg-[#ff6b00]/15 grid place-items-center"><Baby className="w-7 h-7 text-[#ff6b00]" /></div><div><h1 className="text-2xl md:text-3xl font-black">{ev.name} — Complete Government Checklist</h1><p className="text-white/60 text-sm mt-2 max-w-xl">{ev.desc}. This life event guide automatically shows required services, documents, fees, official links, and timeline. For Delhi citizens, free forever.</p></div></div>
-
-        <div className="mt-8 grid md:grid-cols-3 gap-6">
-          <div className="md:col-span-2 space-y-6">
-            <section><h3 className="font-bold mb-3">Required Government Services</h3><div className="grid grid-cols-1 sm:grid-cols-2 gap-2">{ev.services.map(s=>{ const srv=SERVICES.find(x=>x.slug===s); return <button key={s} onClick={()=>navigate(`/service/${s}`)} className="text-left p-3 rounded-xl bg-[#0f0f0f] border border-white/5 hover:border-[#ff6b00]/20"><div className="font-semibold text-[13px]">{srv?.title || s}</div><div className="text-[11px] text-white/40 mt-1">Official link • {srv?.processingTime || '7-15 days'}</div></button>})}</div></section>
-            <section><h3 className="font-bold mb-3">Required Documents Checklist</h3><div className="space-y-2">{['Aadhaar of parents/self', 'Address proof (Electricity bill)', 'Identity proof', 'Photographs', 'Application form'].map((d,i)=><div key={i} className="flex items-center gap-3 p-3 rounded-xl bg-[#0f0f0f] border border-white/5 text-[13px]"><div className="w-5 h-5 rounded-full border border-white/20 grid place-items-center"><div className="w-2 h-2 rounded-full bg-white/20"></div></div>{d}</div>)}</div></section>
-            <section><h3 className="font-bold mb-3">Fees Table</h3><div className="rounded-xl overflow-hidden border border-white/10"><div className="grid grid-cols-3 bg-white/5 p-3 text-[11px] font-bold text-white/50"><span>Service</span><span>Fee</span><span>Time</span></div>{ev.services.map(s=> <div key={s} className="grid grid-cols-3 p-3 border-t border-white/5 text-[12px]"><span>{s}</span><span>Rs 0-500</span><span>7-21 days</span></div>)}</div></section>
-          </div>
-          <div className="space-y-4">
-            <div className="p-4 rounded-2xl bg-[#0f0f0f] border border-white/5"><h4 className="font-bold text-sm mb-3">Timeline</h4><div className="relative pl-6 border-l border-white/10 space-y-4">{['Start', 'Apply', 'Verification', 'Complete'].map((step,i)=> <div key={step} className="relative"><div className="absolute -left-[25px] w-3 h-3 rounded-full bg-[#ff6b00]"></div><div className="text-[12px] font-semibold">{step}</div><div className="text-[11px] text-white/40">Day {i*2+1} - {i*2+3}</div></div>)}</div><div className="mt-4 text-[11px] px-3 py-2 rounded-full bg-[#ff6b00]/10 text-[#ff6b00] text-center">Total: {ev.timeline}</div></div>
-            <div className="p-4 rounded-2xl bg-[#0f0f0f] border border-white/5"><h4 className="font-bold text-sm mb-2">Official Links</h4><div className="space-y-2 text-[12px]"><a href="https://edistrict.delhigovt.nic.in" target="_blank" className="flex items-center justify-between p-2.5 rounded-xl bg-white/5 hover:bg-white/10">e-District Delhi <ExternalLink className="w-3 h-3" /></a><a href="https://mcdonline.nic.in" target="_blank" className="flex items-center justify-between p-2.5 rounded-xl bg-white/5 hover:bg-white/10">MCD Online <ExternalLink className="w-3 h-3" /></a></div></div>
-          </div>
-        </div>
-      </div>
-    </div></div>
-  );
-};
-
-const CalculatorPage: React.FC<{ slug:string, navigate:any }> = ({ slug, navigate }) => {
-  const calc = CALCULATORS.find(c=>c.slug===slug);
-  const [emi, setEmi] = useState({ p:500000, r:8.5, t:5 });
-  const [ageDob, setAgeDob] = useState('2000-01-01');
-  const emiValue = useMemo(()=>{
-    const monthly = emi.r/12/100; const n=emi.t*12; const e = emi.p * monthly * Math.pow(1+monthly,n) / (Math.pow(1+monthly,n)-1); return isNaN(e)?0:Math.round(e);
-  },[emi]);
-  const age = useMemo(()=>{
-    const diff = Date.now() - new Date(ageDob).getTime(); return Math.floor(diff / (1000*60*60*24*365.25));
-  },[ageDob]);
-  useSEO(calc?.name || 'Calculator', calc?.desc || '');
-  if(!calc) return <div className="min-h-screen bg-[#0f0f0f] grid place-items-center text-white/60">Calculator not found</div>;
-  return (
-    <div className="min-h-screen bg-[#0f0f0f] text-white"><div className="mx-auto max-w-[800px] px-4 sm:px-6 py-8">
-      <div className="text-[11px] text-white/40 flex items-center gap-2 mb-6"><span className="cursor-pointer" onClick={()=>navigate('/')}>Home</span><ChevronRight className="w-3 h-3" /><span className="text-white/70">{calc.name}</span></div>
-      <div className="rounded-[24px] bg-[#121212] border border-white/5 p-6 md:p-8">
-        <h1 className="text-2xl font-black">{calc.name}</h1><p className="text-white/60 text-sm mt-2">{calc.desc} • Official formula • Free forever.</p>
-        {slug==='emi' ? (
-          <div className="mt-6 space-y-4">
-            <div><label className="text-xs text-white/50">Loan Amount ₹{emi.p.toLocaleString()}</label><input type="range" min={50000} max={5000000} step={50000} value={emi.p} onChange={e=>setEmi({...emi, p:+e.target.value})} className="w-full accent-[#ff6b00]" /></div>
-            <div className="grid grid-cols-2 gap-4"><div><label className="text-xs text-white/50">Interest {emi.r}%</label><input type="range" min={5} max={20} step={0.1} value={emi.r} onChange={e=>setEmi({...emi, r:+e.target.value})} className="w-full accent-[#ff6b00]" /></div><div><label className="text-xs text-white/50">Years {emi.t}</label><input type="range" min={1} max={30} value={emi.t} onChange={e=>setEmi({...emi, t:+e.target.value})} className="w-full accent-[#ff6b00]" /></div></div>
-            <div className="p-5 rounded-2xl bg-[#ff6b00]/10 border border-[#ff6b00]/20 text-center"><div className="text-xs text-[#ff6b00] font-bold">Monthly EMI</div><div className="text-3xl font-black mt-1">₹{emiValue.toLocaleString()}</div><div className="text-[11px] text-white/50 mt-1">Total Payable ₹{(emiValue*emi.t*12).toLocaleString()}</div></div>
-          </div>
-        ) : slug==='age' ? (
-          <div className="mt-6"><input type="date" value={ageDob} onChange={e=>setAgeDob(e.target.value)} className="w-full h-12 px-5 rounded-full bg-[#0f0f0f] border border-white/10 text-white" /><div className="mt-6 p-6 rounded-2xl bg-[#0f0f0f] border border-white/10 text-center"><div className="text-4xl font-black text-[#ff6b00]">{age} years</div><div className="text-xs text-white/50 mt-2">As on today</div></div></div>
-        ) : (
-          <div className="mt-6 p-6 rounded-2xl bg-[#0f0f0f] border border-white/10 text-center text-white/60 text-sm">Production-ready calculator UI — formula implemented for {calc.name}. Extend with official gov formula. No data stored.</div>
+        {activeTab === 'categories' && (
+          <CategoryGrid
+            onSelectCategory={handleSelectCategory}
+            setActiveTab={setActiveTab}
+            onOpenEmergency={() => setEmergencyOpen(true)}
+            onSelectGovtOffices={() => {
+              setFinderInitialId('govt-offices');
+              setActiveTab('finders');
+            }}
+            onSelectGovernmentFinders={() => {
+              setFinderInitialId('govt-offices');
+              setActiveTab('finders');
+            }}
+          />
         )}
       </div>
     </div></div>
@@ -988,6 +805,45 @@ export default function App(){
       {page}
       <Footer navigate={navigate} />
       <Analytics />
+        {activeTab === 'life-events' && <LifeEventsSection />}
+        {activeTab === 'banking' && <BankingHub />}
+        {activeTab === 'finders' && <FindersHub initialFinderId={finderInitialId} />}
+        {activeTab === 'status-check' && <StatusCheckHub />}
+        {activeTab === 'online-apply' && <OnlineApplyHub />}
+        {activeTab === 'payments' && <PaymentsHub />}
+        {activeTab === 'downloads' && <DownloadCentre />}
+        {activeTab === 'calculators' && <CalculatorsHub />}
+        {activeTab === 'delhi-govt' && (
+          <DelhiGovtHub
+            initialDeptId={selectedDeptId}
+            onResetDept={() => setSelectedDeptId(null)}
+          />
+        )}
+        {activeTab === 'complaints' && <ComplaintsHub />}
+        {activeTab === 'blog' && <BlogHub />}
+        {activeTab === 'legal' && <LegalPages />}
+      </main>
+
+      {/* In-Depth Service Detail Modal */}
+      <ServiceDetailModal
+        service={selectedService}
+        onClose={() => setSelectedService(null)}
+        onSelectRelated={handleSelectRelatedService}
+      />
+
+      {/* Emergency Helplines Modal */}
+      <EmergencyModal
+        isOpen={emergencyOpen}
+        onClose={() => setEmergencyOpen(false)}
+      />
+
+      {/* Footer */}
+      <Footer
+        setActiveTab={setActiveTab}
+        onOpenEmergency={() => setEmergencyOpen(true)}
+        onSelectServiceById={handleSelectRelatedService}
+        onSelectDeptById={handleSelectDept}
+      />
     </div>
   );
 }
