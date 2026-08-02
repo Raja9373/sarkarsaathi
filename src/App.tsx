@@ -805,45 +805,6 @@ export default function App(){
       {page}
       <Footer navigate={navigate} />
       <Analytics />
-        {activeTab === 'life-events' && <LifeEventsSection />}
-        {activeTab === 'banking' && <BankingHub />}
-        {activeTab === 'finders' && <FindersHub initialFinderId={finderInitialId} />}
-        {activeTab === 'status-check' && <StatusCheckHub />}
-        {activeTab === 'online-apply' && <OnlineApplyHub />}
-        {activeTab === 'payments' && <PaymentsHub />}
-        {activeTab === 'downloads' && <DownloadCentre />}
-        {activeTab === 'calculators' && <CalculatorsHub />}
-        {activeTab === 'delhi-govt' && (
-          <DelhiGovtHub
-            initialDeptId={selectedDeptId}
-            onResetDept={() => setSelectedDeptId(null)}
-          />
-        )}
-        {activeTab === 'complaints' && <ComplaintsHub />}
-        {activeTab === 'blog' && <BlogHub />}
-        {activeTab === 'legal' && <LegalPages />}
-      </main>
-
-      {/* In-Depth Service Detail Modal */}
-      <ServiceDetailModal
-        service={selectedService}
-        onClose={() => setSelectedService(null)}
-        onSelectRelated={handleSelectRelatedService}
-      />
-
-      {/* Emergency Helplines Modal */}
-      <EmergencyModal
-        isOpen={emergencyOpen}
-        onClose={() => setEmergencyOpen(false)}
-      />
-
-      {/* Footer */}
-      <Footer
-        setActiveTab={setActiveTab}
-        onOpenEmergency={() => setEmergencyOpen(true)}
-        onSelectServiceById={handleSelectRelatedService}
-        onSelectDeptById={handleSelectDept}
-      />
     </div>
   );
 }
