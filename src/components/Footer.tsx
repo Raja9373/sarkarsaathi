@@ -7,9 +7,10 @@ interface FooterProps {
   onOpenEmergency: () => void;
   onSelectServiceById?: (serviceId: string) => void;
   onSelectDeptById?: (deptId: string) => void;
+  onOpenSitemap?: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ setActiveTab, onOpenEmergency, onSelectServiceById, onSelectDeptById }) => {
+export const Footer: React.FC<FooterProps> = ({ setActiveTab, onOpenEmergency, onSelectServiceById, onSelectDeptById, onOpenSitemap }) => {
   const handleNav = (tab: ActiveTab) => {
     setActiveTab(tab);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -148,7 +149,7 @@ export const Footer: React.FC<FooterProps> = ({ setActiveTab, onOpenEmergency, o
               <li><button onClick={() => handleNav('legal')} className="hover:text-[#FF6B00]">About SarkarSaathi</button></li>
               <li><button onClick={() => handleNav('legal')} className="hover:text-[#FF6B00]">Privacy Policy</button></li>
               <li><button onClick={() => handleNav('legal')} className="hover:text-[#FF6B00]">Disclaimer Notice</button></li>
-              <li><button onClick={() => handleNav('legal')} className="hover:text-[#FF6B00]">Report Broken Link</button></li>
+              <li>{onOpenSitemap && <button onClick={onOpenSitemap} className="hover:text-[#FF6B00] font-bold text-amber-400">XML Sitemap & SEO</button>}</li>
               <li><button onClick={() => handleNav('legal')} className="hover:text-[#FF6B00]">Contact & Feedback</button></li>
             </ul>
           </div>

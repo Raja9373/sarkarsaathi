@@ -209,6 +209,19 @@ export const Header: React.FC<HeaderProps> = ({
             Home
           </button>
           <button
+            onClick={() => handleNavClick('schemes')}
+            className={`px-3 py-2 rounded-lg transition flex items-center gap-1 ${activeTab === 'schemes' ? 'bg-[#FF6B00] text-white font-bold' : 'hover:bg-zinc-800 hover:text-white'}`}
+          >
+            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+            <span>Schemes & Subsidies</span>
+          </button>
+          <button
+            onClick={() => handleNavClick('delhi-govt')}
+            className={`px-3 py-2 rounded-lg transition ${activeTab === 'delhi-govt' ? 'bg-[#FF6B00] text-white font-bold' : 'hover:bg-zinc-800 hover:text-white'}`}
+          >
+            Delhi Govt
+          </button>
+          <button
             onClick={() => handleNavClick('life-events')}
             className={`px-3 py-2 rounded-lg transition flex items-center gap-1 ${activeTab === 'life-events' ? 'bg-[#FF6B00] text-white font-bold' : 'hover:bg-zinc-800 hover:text-white'}`}
           >
@@ -220,7 +233,7 @@ export const Header: React.FC<HeaderProps> = ({
             className={`px-3 py-2 rounded-lg transition flex items-center gap-1 ${activeTab === 'banking' ? 'bg-[#FF6B00] text-white font-bold' : 'hover:bg-zinc-800 hover:text-white'}`}
           >
             <Landmark className="w-3.5 h-3.5 text-blue-400" />
-            <span>Banking Hub</span>
+            <span>Banking</span>
           </button>
           <button
             onClick={() => handleNavClick('finders')}
@@ -230,12 +243,6 @@ export const Header: React.FC<HeaderProps> = ({
             <span>Finders</span>
           </button>
           <button
-            onClick={() => handleNavClick('status-check')}
-            className={`px-3 py-2 rounded-lg transition ${activeTab === 'status-check' ? 'bg-[#FF6B00] text-white font-bold' : 'hover:bg-zinc-800 hover:text-white'}`}
-          >
-            Status Check
-          </button>
-          <button
             onClick={() => handleNavClick('calculators')}
             className={`px-3 py-2 rounded-lg transition flex items-center gap-1 ${activeTab === 'calculators' ? 'bg-[#FF6B00] text-white font-bold' : 'hover:bg-zinc-800 hover:text-white'}`}
           >
@@ -243,23 +250,19 @@ export const Header: React.FC<HeaderProps> = ({
             <span>Calculators</span>
           </button>
           <button
-            onClick={() => handleNavClick('delhi-govt')}
-            className={`px-3 py-2 rounded-lg transition ${activeTab === 'delhi-govt' ? 'bg-[#FF6B00] text-white font-bold' : 'hover:bg-zinc-800 hover:text-white'}`}
+            onClick={() => handleNavClick('blog')}
+            className={`px-3 py-2 rounded-lg transition flex items-center gap-1 ${activeTab === 'blog' ? 'bg-[#FF6B00] text-white font-bold' : 'hover:bg-zinc-800 hover:text-white'}`}
           >
-            Delhi Govt
+            <BookOpen className="w-3.5 h-3.5 text-cyan-400" />
+            <span>Blog</span>
           </button>
           <button
-            onClick={() => handleNavClick('complaints')}
-            className={`px-3 py-2 rounded-lg transition flex items-center gap-1 ${activeTab === 'complaints' ? 'bg-[#FF6B00] text-white font-bold' : 'hover:bg-zinc-800 hover:text-white'}`}
+            onClick={() => handleNavClick('auto-update')}
+            className={`px-3 py-2 rounded-lg transition flex items-center gap-1 text-amber-300 ${activeTab === 'auto-update' ? 'bg-[#FF6B00] text-white font-bold' : 'hover:bg-zinc-800 hover:text-white'}`}
+            title="Auto Update Engine"
           >
-            <MessageSquare className="w-3.5 h-3.5 text-orange-400" />
-            <span>Complaints</span>
-          </button>
-          <button
-            onClick={() => handleNavClick('downloads')}
-            className={`px-3 py-2 rounded-lg transition ${activeTab === 'downloads' ? 'bg-[#FF6B00] text-white font-bold' : 'hover:bg-zinc-800 hover:text-white'}`}
-          >
-            Downloads
+            <Sparkles className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
+            <span>Auto Updates</span>
           </button>
         </nav>
 

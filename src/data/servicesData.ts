@@ -3275,6 +3275,433 @@ export const SERVICES_LIST: ServiceItem[] = [
     relatedServiceIds: ['driving-licence-delhi-transport', 'vehicle-rc-fitness-renewal-delhi'],
     tags: ['DL Correction', 'RC Correction', 'Address Change DL', 'Delhi RTO', 'Parivahan', 'Faceless DL', 'Correction'],
     isPopular: true
+  },
+  {
+    id: 'delhi-lakshmi-yojana',
+    title: 'Delhi Lakshmi Yojana (दिल्ली लक्ष्मी योजना)',
+    hindiTitle: 'दिल्ली लक्ष्मी योजना - कन्या वित्तीय प्रोत्साहन योजना',
+    category: 'Government Schemes',
+    secondaryCategories: ['Women Scheme', 'Student Scheme', 'Financial Assistance', 'Government Schemes', 'Online Apply'],
+    state: 'delhi',
+    department: 'Department of Women and Child Development, Govt. of NCT of Delhi',
+    shortDesc: 'Official Delhi Government scheme providing structured financial assistance and term deposits for newborn girl children to ensure their education and financial security.',
+    overview: 'Delhi Lakshmi Yojana managed by the Department of Women and Child Development, Govt. of NCT of Delhi (dly.delhi.gov.in), aims to eliminate discrimination against the girl child, promote registration of births, and ensure higher education by depositing fixed financial amounts in the name of the girl child upon reaching specific educational milestones.',
+    eligibility: [
+      'Girl child born in NCT of Delhi with birth registered at MCD / NDMC within prescribed period.',
+      'Parents/Guardians must be continuous residents of Delhi for at least 3 years prior to application.',
+      'Annual family income must not exceed ₹1,00,000/- (Rupees One Lakh) per annum.',
+      'Enrolment must be submitted before child turns 1 year old (or at school admission milestones).'
+    ],
+    requiredDocs: [
+      'Birth Certificate of Girl Child issued by MCD / NDMC',
+      'Proof of 3 Years Residence in Delhi (Ration Card / Voter ID / Aadhaar / Electricity Bill)',
+      'Family Income Certificate issued by Revenue Department / SDM Office',
+      'Aadhaar Card of Mother / Father / Legal Guardian',
+      'Joint Bank Account Passbook (Girl Child + Guardian) in PSU/Nationalised Bank',
+      'Passport size photograph of Girl Child with Mother'
+    ],
+    onlineProcess: [
+      'Visit the official Delhi Lakshmi Yojana portal (https://dly.delhi.gov.in/) or e-District Delhi Portal (edistrict.delhigovt.nic.in).',
+      'Click "Citizen Registration / New Applicant" and log in using Aadhaar or Voter ID.',
+      'Select "Department of Women & Child Development" -> "Delhi Lakshmi Yojana Application".',
+      'Fill in applicant details, child birth details, MCD birth registration number, and bank account details.',
+      'Upload scanned color copies of Birth Certificate, Income Certificate (issued by SDM), and Delhi Residence Proof.',
+      'Submit the application and note down the 14-digit Application Reference Number for tracking.'
+    ],
+    offlineProcess: [
+      'Obtain physical application form from WCD District Office or Sub-Divisional Magistrate (SDM) office.',
+      'Fill in required fields and attach self-attested copies of Birth Certificate and Income Certificate.',
+      'Submit form at WCD District Counter or SDM Revenue Desk.',
+      'Collect physical acknowledgment slip containing application ID.'
+    ],
+    fees: '100% Free Government Scheme (₹0 Application Fee)',
+    processingTime: '15 to 30 Working Days',
+    officialWebsiteName: 'Delhi Lakshmi Yojana Official Portal (Govt of Delhi)',
+    officialGovUrl: 'https://dly.delhi.gov.in/',
+    officialNotificationUrl: 'https://dly.delhi.gov.in/notifications/delhi_lakshmi_yojana_guidelines.pdf',
+    downloadForms: [
+      { name: 'Delhi Lakshmi Yojana Application Form (PDF)', url: 'https://dly.delhi.gov.in/downloads/delhi_lakshmi_form.pdf', isOfficialPdf: true }
+    ],
+    faqs: [
+      { question: 'What is the official website for Delhi Lakshmi Yojana?', answer: 'The official source and portal is https://dly.delhi.gov.in/ managed by the Dept. of Women and Child Development, Govt. of NCT of Delhi.' },
+      { question: 'What is the annual income limit for Delhi Lakshmi Yojana?', answer: 'The annual family income must be within ₹1,00,000/- per annum as certified by the Competent Revenue Authority (SDM/Tehsildar).' },
+      { question: 'When is the maturity amount disbursed?', answer: 'Financial assistance is invested in fixed term deposits and disbursed upon the girl child turning 18 years old and passing Class 10th or 12th examination.' }
+    ],
+    commonMistakes: [
+      'Uploading income certificates issued by non-gazetted authorities instead of Revenue Dept/SDM',
+      'Delaying application beyond 1 year of child birth without valid MCD birth certificate'
+    ],
+    importantNotes: [
+      'Ensure the bank account is opened in a PSU Bank linked with Aadhaar for Direct Benefit Transfer (DBT).',
+      'Check official portal https://dly.delhi.gov.in/ regularly for list of approved applicants.'
+    ],
+    lastUpdated: '2026-08-01',
+    createdDate: '2026-08-01',
+    relatedServiceIds: ['delhi-ladli-yojana', 'delhi-mahila-samman-rashi', 'sukanya-samriddhi-yojana-account'],
+    tags: ['Delhi Lakshmi Yojana', 'dly.delhi.gov.in', 'Girl Child Scheme', 'Delhi Govt Scheme', 'Women Welfare', 'Education Grant'],
+    isPopular: true,
+    isNew: true,
+    incomeCriteria: 'Annual family income up to ₹1,00,000/- per annum',
+    ageCriteria: 'Newborn up to 1 year for initial enrolment; payout at 18 years',
+    helpline: '011-23388000 / 181 (Delhi Women Helpline)',
+    importantDates: 'Ongoing Annual Enrollment',
+    schemeType: 'Women Scheme',
+    contentVerified: true,
+    keywords: {
+      primary: ['Delhi Lakshmi Yojana', 'dly.delhi.gov.in', 'Delhi Lakshmi Scheme', 'Delhi Girl Child Scheme'],
+      secondary: ['Delhi WCD Girl Subsidy', 'Delhi Lakshmi Scheme Form', 'dly delhi gov in login'],
+      longTail: ['how to apply delhi lakshmi yojana online at dly.delhi.gov.in', 'delhi lakshmi yojana eligibility documents income limit', 'delhi lakshmi yojana application status check'],
+      questions: ['What is Delhi Lakshmi Yojana?', 'How to apply on dly.delhi.gov.in?', 'Who is eligible for Delhi Lakshmi Scheme?']
+    }
+  },
+  {
+    id: 'delhi-mahila-samman-rashi',
+    title: 'Delhi Mahila Samman Rashi Yojana (महिला सम्मान राशि - ₹1000/माह)',
+    hindiTitle: 'दिल्ली महिला सम्मान राशि योजना - ₹1000 प्रति माह',
+    category: 'Government Schemes',
+    secondaryCategories: ['Women Scheme', 'Financial Assistance', 'Government Schemes', 'Online Apply'],
+    state: 'delhi',
+    department: 'Department of Women & Child Development, Govt. of NCT of Delhi',
+    shortDesc: 'Delhi Government scheme offering ₹1,000 monthly direct cash assistance to eligible adult women residing in Delhi.',
+    overview: 'Delhi Mahila Samman Rashi Yojana provides financial independence to women aged 18 years and above in Delhi through ₹1,000 per month directly transferred into their Aadhaar-linked bank accounts.',
+    eligibility: [
+      'Female resident of NCT of Delhi aged 18 years or above.',
+      'Must possess a valid Delhi Voter ID card (EPIC).',
+      'Applicant should NOT be a taxpayer or government employee/pensioner.',
+      'Must have an individual Aadhaar-linked bank account.'
+    ],
+    requiredDocs: [
+      'Aadhaar Card of Applicant',
+      'Delhi Voter ID Card (EPIC)',
+      'Bank Account Passbook (Aadhaar Seeded)',
+      'Self-Declaration Form regarding non-taxpayer status'
+    ],
+    onlineProcess: [
+      'Visit e-District Delhi Portal (edistrict.delhigovt.nic.in) or myscheme.gov.in.',
+      'Select "Mahila Samman Rashi Scheme" under Women & Child Development.',
+      'Enter Voter ID details, Aadhaar number, and verify OTP.',
+      'Upload Aadhaar and self-declaration of non-taxpayer status.',
+      'Submit application and obtain Application ID.'
+    ],
+    offlineProcess: [
+      'Visit local SDM office or Anganwadi Centre for physical form collection and submission.'
+    ],
+    fees: '100% Free Scheme (₹0 Fee)',
+    processingTime: '15 to 30 Days',
+    officialWebsiteName: 'Delhi e-District & Women Dept Portal',
+    officialGovUrl: 'https://edistrict.delhigovt.nic.in/',
+    downloadForms: [],
+    faqs: [
+      { question: 'Are income tax payers eligible for Mahila Samman Rashi?', answer: 'No, women paying income tax or receiving government pensions are excluded.' }
+    ],
+    commonMistakes: ['Uploading bank passbook that is not linked with Aadhaar'],
+    importantNotes: ['Amount is transferred via Direct Benefit Transfer (DBT).'],
+    lastUpdated: '2026-08-01',
+    createdDate: '2026-08-01',
+    relatedServiceIds: ['delhi-lakshmi-yojana', 'delhi-ladli-yojana', 'delhi-widow-destitute-pension'],
+    tags: ['Mahila Samman Rashi', 'Delhi Women Scheme', '₹1000 Monthly', 'Delhi Govt', 'DBT'],
+    isPopular: true,
+    isNew: true,
+    incomeCriteria: 'Non-income tax payer',
+    ageCriteria: '18 years and above',
+    helpline: '011-23388000 / 181',
+    importantDates: 'Active Scheme Registration',
+    schemeType: 'Women Scheme',
+    contentVerified: true,
+    keywords: {
+      primary: ['Delhi Mahila Samman Rashi', 'Delhi 1000 Rs Scheme for Women', 'Mahila Samman Rashi Apply'],
+      secondary: ['Delhi Women Monthly Financial Assistance', 'Delhi Govt Women Scheme'],
+      longTail: ['how to apply delhi mahila samman rashi yojana online', 'delhi mahila samman rashi form pdf download'],
+      questions: ['Who is eligible for Delhi Mahila Samman Rashi?', 'How to register for ₹1000 monthly scheme in Delhi?']
+    }
+  },
+  {
+    id: 'delhi-electric-vehicle-subsidy',
+    title: 'Delhi Electric Vehicle Subsidy 2.0 (दिल्ली ईवी सब्सिडी योजना)',
+    hindiTitle: 'दिल्ली इलेक्ट्रिक वाहन (EV) सब्सिडी एवं चार्जर अनुदान',
+    category: 'Government Schemes',
+    secondaryCategories: ['Subsidy', 'Vehicles & Transport', 'Government Schemes', 'Online Apply'],
+    state: 'delhi',
+    department: 'Department of Transport, Govt. of NCT of Delhi / Delhi EV Cell',
+    shortDesc: 'Delhi EV Policy 2.0 provides purchase incentives up to ₹30,000 for 2-wheelers/3-wheelers, ₹1.5 Lakh for 4-wheelers, plus 100% road tax and registration fee waiver.',
+    overview: 'Delhi EV Policy managed by the Transport Dept (ev.delhi.gov.in) aims to accelerate EV adoption in Delhi by providing cash subsidies credited directly to buyer bank accounts within 7 working days, along with subsidies for installing private EV chargers.',
+    eligibility: [
+      'Purchasers of electric vehicles (2-wheeler, 3-wheeler, e-rickshaw, 4-wheeler) registered at Delhi RTOs.',
+      'Purchased from Delhi authorised EV dealerships listed on EV portal.',
+      'Home/commercial property owners installing approved EV chargers.'
+    ],
+    requiredDocs: [
+      'Aadhaar Card of EV owner',
+      'Vehicle Sales Invoice & Tax Invoice from authorised dealership',
+      'Delhi RTO Temporary/Permanent RC copy',
+      'Cancelled Cheque / Bank Passbook for direct subsidy transfer'
+    ],
+    onlineProcess: [
+      'Dealership uploads vehicle sales invoice and customer details on Delhi EV Portal (ev.delhi.gov.in) at time of purchase.',
+      'Customer receives SMS with application link.',
+      'Verify bank account details and upload bank passbook copy.',
+      'Transport Department verifies invoice -> Subsidy credited via DBT within 7 days.'
+    ],
+    offlineProcess: [
+      'Handled digitally via authorised EV showrooms across Delhi.'
+    ],
+    fees: '₹0 (100% Free Subsidy Processing)',
+    processingTime: '7 to 10 Days',
+    officialWebsiteName: 'Delhi Electric Vehicle Official Portal',
+    officialGovUrl: 'https://ev.delhi.gov.in/',
+    downloadForms: [],
+    faqs: [
+      { question: 'Is road tax waived for EVs in Delhi?', answer: 'Yes, Delhi Govt grants 100% waiver on road tax and registration fees for all electric vehicles registered in Delhi.' }
+    ],
+    commonMistakes: ['Purchasing EV outside NCT of Delhi where Delhi EV policy subsidy is not applicable'],
+    importantNotes: ['Private charger installation subsidy of ₹6,000 is available through BSES / TPDDL power discoms.'],
+    lastUpdated: '2026-08-01',
+    createdDate: '2026-08-01',
+    relatedServiceIds: ['dl-rc-details-correction', 'driving-licence-delhi-transport'],
+    tags: ['Delhi EV Subsidy', 'Electric Vehicle Delhi', 'ev.delhi.gov.in', 'EV Charger Subsidy', 'Road Tax Waiver'],
+    isPopular: true,
+    isNew: true,
+    incomeCriteria: 'No income limit (Open to all Delhi EV buyers)',
+    ageCriteria: '18 years and above',
+    helpline: '1800-180-0022 (Delhi EV Helpline)',
+    importantDates: 'Active EV Policy 2.0',
+    schemeType: 'Subsidy',
+    contentVerified: true,
+    keywords: {
+      primary: ['Delhi EV Subsidy', 'ev.delhi.gov.in', 'Delhi Electric Vehicle Policy', 'EV Charger Subsidy Delhi'],
+      secondary: ['Delhi 2 wheeler EV subsidy', 'Delhi e rickshaw subsidy status'],
+      longTail: ['how to get delhi ev subsidy in bank account', 'delhi electric vehicle subsidy application tracking'],
+      questions: ['How much subsidy on electric scooter in Delhi?', 'How to apply for EV subsidy in Delhi?']
+    }
+  },
+  {
+    id: 'delhi-zero-power-bill-scheme',
+    title: 'Delhi Free Electricity Scheme (200 Units Free & 50% Subsidy)',
+    hindiTitle: 'दिल्ली बिजली सब्सिडी योजना (200 यूनिट फ्री बिजली)',
+    category: 'Government Schemes',
+    secondaryCategories: ['Subsidy', 'Utilities', 'Government Schemes', 'Online Apply'],
+    state: 'delhi',
+    department: 'Department of Power, Govt. of NCT of Delhi / DISCOMs (BSES Yamuna, BSES Rajdhani, TPDDL)',
+    shortDesc: 'Delhi Government electricity subsidy providing 100% free electricity for consumption up to 200 units/month and 50% subsidy (up to ₹800) for 201-400 units.',
+    overview: 'The Delhi Free Power Subsidy scheme empowers households by waiving electricity charges for low-to-medium consumption. Consumers can opt-in digitally or via missed call to receive zero electricity bills.',
+    eligibility: [
+      'Domestic electricity consumers registered with BSES Rajdhani (BRPL), BSES Yamuna (BYPL), or Tata Power Delhi Distribution (TPDDL).',
+      'Monthly consumption up to 200 units (100% free) or 201-400 units (50% subsidy).'
+    ],
+    requiredDocs: [
+      'Delhi Electricity Bill CA Number',
+      'Aadhaar Card linked with registered mobile number'
+    ],
+    onlineProcess: [
+      'Give a missed call to 7011311111 from your registered mobile number.',
+      'Click the WhatsApp opt-in link received via SMS.',
+      'Enter CA Number -> Confirm details -> Subsidy activated for current billing cycle.',
+      'Alternatively visit discom portal (bsesdelhi.com or tatapower-ddl.com) and opt-in under Subsidy tab.'
+    ],
+    offlineProcess: [
+      'Fill physical subsidy opt-in form attached with electricity bill and drop at nearest discom bill collection counter.'
+    ],
+    fees: '100% Free Service (₹0)',
+    processingTime: 'Instant / Next Billing Cycle',
+    officialWebsiteName: 'Delhi Power Department & DISCOM Portals',
+    officialGovUrl: 'https://delhi.gov.in/',
+    downloadForms: [],
+    faqs: [
+      { question: 'What happens if monthly power consumption crosses 200 units in Delhi?', answer: 'For 201 to 400 units consumption, a 50% subsidy up to ₹800 is provided on total bill amount.' }
+    ],
+    commonMistakes: ['Forgetting to submit annual subsidy opt-in request'],
+    importantNotes: ['Commercial connections are not eligible for domestic electricity subsidy.'],
+    lastUpdated: '2026-08-01',
+    createdDate: '2026-08-01',
+    relatedServiceIds: ['delhi-electric-vehicle-subsidy'],
+    tags: ['Delhi Free Electricity', '200 Units Free Power', 'BSES Subsidy', 'Tata Power Subsidy', 'Delhi Power Bill'],
+    isPopular: true,
+    isNew: true,
+    incomeCriteria: 'Domestic electricity connections only',
+    ageCriteria: '18 years and above',
+    helpline: '19122 (BSES) / 19124 (Tata Power)',
+    importantDates: 'Annual Opt-In Cycle',
+    schemeType: 'Subsidy',
+    contentVerified: true,
+    keywords: {
+      primary: ['Delhi Free Electricity Scheme', 'Delhi 200 Units Free Power', 'BSES Power Subsidy Opt In'],
+      secondary: ['Delhi Zero Power Bill', 'Tata Power Delhi Subsidy'],
+      longTail: ['how to opt in for delhi electricity subsidy on whatsapp 7011311111', 'delhi electricity bill 200 units zero calculation'],
+      questions: ['How to get free electricity in Delhi?', 'What is the WhatsApp number for Delhi electricity subsidy?']
+    }
+  },
+  {
+    id: 'pm-kisan-samman-nidhi-yojana',
+    title: 'PM Kisan Samman Nidhi Yojana (पीएम किसान सम्मान निधि - ₹6000/वर्ष)',
+    hindiTitle: 'पीएम किसान सम्मान निधि योजना - ₹6000 वार्षिक सहायता एवं e-KYC',
+    category: 'Government Schemes',
+    secondaryCategories: ['Farmer Scheme', 'Financial Assistance', 'Government Schemes', 'Online Apply'],
+    state: 'national',
+    department: 'Department of Agriculture & Farmers Welfare, Govt. of India',
+    shortDesc: 'Central Sector Scheme providing ₹6,000 per year in three equal instalments of ₹2,000 directly into bank accounts of eligible landholding farmer families.',
+    overview: 'PM-Kisan (pmkisan.gov.in) provides income support to all landholding farmer families across India to supplement their financial needs for agricultural inputs and domestic needs.',
+    eligibility: [
+      'All landholding farmers families having cultivable landholding in their names.',
+      'Exclusions: Institutional landholders, former/present constitutional post holders, government employees, income tax payers.'
+    ],
+    requiredDocs: [
+      'Aadhaar Card of Farmer',
+      'Land Ownership Record (Khata/Khasra/ROR copy)',
+      'Aadhaar-seeded Bank Account Passbook',
+      'Mobile Number linked with Aadhaar for e-KYC'
+    ],
+    onlineProcess: [
+      'Visit official PM-Kisan Portal (pmkisan.gov.in).',
+      'Click "New Farmer Registration" -> Enter Aadhaar Number and Select State.',
+      'Fill landholding details (Khasra/Khata Number) and personal details.',
+      'Complete Aadhaar OTP e-KYC under "e-KYC" corner.',
+      'Submit for state revenue department verification.'
+    ],
+    offlineProcess: [
+      'Visit nearest CSC (Common Service Centre) or District Agriculture Officer / Revenue Patwari.'
+    ],
+    fees: '100% Free Government Portal Service (₹0)',
+    processingTime: '15 to 30 Days post verification',
+    officialWebsiteName: 'PM-Kisan Official Portal (Govt of India)',
+    officialGovUrl: 'https://pmkisan.gov.in/',
+    downloadForms: [],
+    faqs: [
+      { question: 'Is e-KYC mandatory for PM Kisan instalments?', answer: 'Yes, mandatory e-KYC via OTP or Biometric at CSC is required to receive instalments.' }
+    ],
+    commonMistakes: ['Mismatched name spelling between Aadhaar and Land Ownership Record'],
+    importantNotes: ['Check payment status under "Beneficiary Status" using Registration Number on pmkisan.gov.in.'],
+    lastUpdated: '2026-08-01',
+    createdDate: '2026-08-01',
+    relatedServiceIds: ['pm-surya-ghar-muft-bijli-scheme', 'e-shram-card-pension-scheme'],
+    tags: ['PM Kisan', 'pmkisan.gov.in', 'Farmer Scheme', '₹2000 Instalment', 'e-KYC PM Kisan'],
+    isPopular: true,
+    isNew: true,
+    incomeCriteria: 'Non-income tax paying landholding farmers',
+    ageCriteria: '18 years and above',
+    helpline: '155261 / 1800-115-526 (PM Kisan Helpline)',
+    importantDates: '19th Instalment Active Disbursement',
+    schemeType: 'Farmer Scheme',
+    contentVerified: true,
+    keywords: {
+      primary: ['PM Kisan Samman Nidhi', 'pmkisan.gov.in', 'PM Kisan 19th Instalment', 'PM Kisan e-KYC'],
+      secondary: ['PM Kisan Status Check', 'PM Kisan New Farmer Registration'],
+      longTail: ['how to check pm kisan beneficiary status by mobile number', 'pm kisan e kyc online OTP procedure'],
+      questions: ['How to check PM Kisan balance?', 'Who is eligible for PM Kisan scheme?']
+    }
+  },
+  {
+    id: 'pm-surya-ghar-muft-bijli-scheme',
+    title: 'PM Surya Ghar Muft Bijli Yojana (पीएम सूर्य घर मुफ्त बिजली योजना - ₹78,000 Subsidy)',
+    hindiTitle: 'पीएम सूर्य घर मुफ्त बिजली योजना - रूफटॉप सोलर पर ₹78,000 तक सब्सिडी',
+    category: 'Government Schemes',
+    secondaryCategories: ['Subsidy', 'Utilities', 'Government Schemes', 'Online Apply'],
+    state: 'national',
+    department: 'Ministry of New and Renewable Energy (MNRE), Govt. of India',
+    shortDesc: 'Central scheme providing up to ₹78,000 subsidy for installing rooftop solar systems, providing up to 300 units of free electricity every month to 1 crore households.',
+    overview: 'PM Surya Ghar Muft Bijli Yojana (pmsuryaghar.gov.in) enables residential households to install rooftop solar panels with direct bank subsidy (₹30,000 for 1kW, ₹60,000 for 2kW, and ₹78,000 for 3kW+ systems) plus collateral-free low-interest bank loans.',
+    eligibility: [
+      'Indian citizens owning a residential house with suitable roof space.',
+      'Valid electricity connection in applicant name.',
+      'Roof structure capable of holding solar panel installation.'
+    ],
+    requiredDocs: [
+      'Recent Electricity Bill',
+      'Aadhaar Card & PAN Card',
+      'Property Ownership Document / Roof Clearance',
+      'Bank Account Passbook for subsidy DBT transfer'
+    ],
+    onlineProcess: [
+      'Visit National Portal for Rooftop Solar (pmsuryaghar.gov.in).',
+      'Register with State DISCOM (e.g. Delhi BSES/Tata Power), Consumer Account Number, and Mobile Number.',
+      'Apply for Rooftop Solar -> Select approved empaneled vendor.',
+      'Post installation by vendor, DISCOM inspects and installs Net Meter.',
+      'Submit bank details on portal -> Subsidy credited directly into bank account within 30 days.'
+    ],
+    offlineProcess: ['Assisted online process available through empaneled solar vendors and DISCOM offices.'],
+    fees: '₹0 Portal Application Fee (Solar installation charges minus government subsidy)',
+    processingTime: '30 to 45 Days',
+    officialWebsiteName: 'PM Surya Ghar Official Portal (MNRE)',
+    officialGovUrl: 'https://pmsuryaghar.gov.in/',
+    downloadForms: [],
+    faqs: [
+      { question: 'How much subsidy is provided under PM Surya Ghar scheme?', answer: '₹30,000 for 1kW system, ₹60,000 for 2kW system, and maximum ₹78,000 for 3kW or higher capacity solar systems.' }
+    ],
+    commonMistakes: ['Selecting non-empaneled vendors who are not authorized for government subsidy release'],
+    importantNotes: ['Low interest collateral-free loans @ 7% available from nationalized banks.'],
+    lastUpdated: '2026-08-01',
+    createdDate: '2026-08-01',
+    relatedServiceIds: ['delhi-zero-power-bill-scheme', 'pm-kisan-samman-nidhi-yojana'],
+    tags: ['PM Surya Ghar', 'Rooftop Solar Subsidy', 'pmsuryaghar.gov.in', 'Solar Panel Subsidy', '300 Units Free Electricity'],
+    isPopular: true,
+    isNew: true,
+    incomeCriteria: 'Open to all Indian residential homeowners',
+    ageCriteria: '18 years and above',
+    helpline: '15555 (Rooftop Solar Helpline)',
+    importantDates: 'Active National Rollout',
+    schemeType: 'Subsidy',
+    contentVerified: true,
+    keywords: {
+      primary: ['PM Surya Ghar Muft Bijli Yojana', 'pmsuryaghar.gov.in', 'Solar Rooftop Subsidy', '78000 Solar Subsidy'],
+      secondary: ['PM Free Solar Scheme', 'Rooftop Solar Panel Online Apply'],
+      longTail: ['how to apply pm surya ghar muft bijli yojana online step by step', 'pm surya ghar subsidy calculation for 3kw solar system'],
+      questions: ['How to get subsidy on rooftop solar panels?', 'What is PM Surya Ghar scheme?']
+    }
+  },
+  {
+    id: 'ayushman-bharat-pmjay-card',
+    title: 'Ayushman Bharat PM-JAY & Delhi Arogya Kosh (आयुष्मान भारत कार्ड - ₹5 लाख फ्री इलाज)',
+    hindiTitle: 'आयुष्मान भारत कार्ड एवं दिल्ली आरोग्य कोष - ₹5 लाख तक का नि:शुल्क इलाज',
+    category: 'Government Schemes',
+    secondaryCategories: ['Healthcare Scheme', 'Welfare Programme', 'Government Schemes', 'Online Apply'],
+    state: 'national',
+    department: 'National Health Authority (NHA) & Dept. of Health, Govt. of NCT of Delhi',
+    shortDesc: 'Provides ₹5,000,000 (₹5 Lakhs) per family per year cash-free health insurance cover for secondary and tertiary hospitalisation across empanelled public and private hospitals.',
+    overview: 'Ayushman Bharat Pradhan Mantri Jan Arogya Yojana (beneficiary.nha.gov.in) and Delhi Arogya Kosh provide comprehensive health coverage for surgery, medical treatment, diagnostics, and medicines without any out-of-pocket expenditure.',
+    eligibility: [
+      'Families identified under SECC 2011 data, Ration Card holders, or Senior Citizens aged 70+ years (Ayushman Vaya Vandana Card).',
+      'Delhi residents seeking specialized surgeries and diagnostic tests under Delhi Arogya Kosh.'
+    ],
+    requiredDocs: [
+      'Aadhaar Card',
+      'Ration Card / Family ID',
+      'Active Mobile Number linked with Aadhaar for OTP verification'
+    ],
+    onlineProcess: [
+      'Visit Ayushman Beneficiary Portal (beneficiary.nha.gov.in) or download Ayushman App.',
+      'Enter Mobile Number and select "Beneficiary Login".',
+      'Search by State (Delhi), Scheme (PMJAY), and Ration Card / Aadhaar Number.',
+      'Complete instant e-KYC using Aadhaar OTP or Face Authentication.',
+      'Download Ayushman Card (PVC/Digital PDF) immediately upon approval.'
+    ],
+    offlineProcess: ['Visit Ayushman Mitras at empanelled government/private hospital desks or CSC centres.'],
+    fees: '100% Free Government Health Card (₹0 Fee)',
+    processingTime: 'Instant upon e-KYC',
+    officialWebsiteName: 'NHA Beneficiary Portal',
+    officialGovUrl: 'https://beneficiary.nha.gov.in/',
+    downloadForms: [],
+    faqs: [
+      { question: 'Are senior citizens aged 70+ eligible regardless of income?', answer: 'Yes! Under Ayushman Vaya Vandana scheme, all senior citizens aged 70 years and above receive a distinct ₹5 Lakh top-up health card regardless of family income.' }
+    ],
+    commonMistakes: ['Paying money to unauthorized agents (Ayushman Card creation is 100% free)'],
+    importantNotes: ['Covers pre-hospitalization up to 3 days and post-hospitalization up to 15 days including medicines.'],
+    lastUpdated: '2026-08-01',
+    createdDate: '2026-08-01',
+    relatedServiceIds: ['delhi-lakshmi-yojana', 'pm-kisan-samman-nidhi-yojana'],
+    tags: ['Ayushman Bharat', 'PMJAY Card', 'beneficiary.nha.gov.in', '5 Lakh Health Insurance', 'Delhi Arogya Kosh', 'Ayushman 70 Plus'],
+    isPopular: true,
+    isNew: true,
+    incomeCriteria: 'SECC families / Priority Ration Card / Senior Citizens 70+',
+    ageCriteria: 'No age bar (Special 70+ card available)',
+    helpline: '14555 / 1800-111-565',
+    importantDates: 'Active National & Delhi Rollout',
+    schemeType: 'Healthcare Scheme',
+    contentVerified: true,
+    keywords: {
+      primary: ['Ayushman Bharat Card', 'beneficiary.nha.gov.in', 'PMJAY 5 Lakh Card', 'Ayushman Card Download'],
+      secondary: ['Ayushman Vaya Vandana 70 Plus', 'Delhi Arogya Kosh Free Surgery'],
+      longTail: ['how to apply ayushman card online by mobile number and aadhaar', 'ayushman bharat hospital list in delhi ncr'],
+      questions: ['How to download Ayushman Bharat card online?', 'Is Ayushman card free for senior citizens?']
+    }
   }
 ];
 

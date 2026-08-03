@@ -12,9 +12,12 @@ import {
   FileText, 
   Sparkles,
   Layers,
-  Code
+  Code,
+  Phone,
+  Info
 } from 'lucide-react';
 import { ServiceItem } from '../types';
+import { SocialShareBar } from './SocialShareBar';
 
 interface ServiceDetailModalProps {
   service: ServiceItem | null;
@@ -45,71 +48,67 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
     }))
   };
 
-  const howToSchema = {
-    "@context": "https://schema.org",
-    "@type": "HowTo",
-    "name": `How to apply for ${service.title}`,
-    "description": service.overview,
-    "step": service.onlineProcess.map((stepText, idx) => ({
-      "@type": "HowToStep",
-      "position": idx + 1,
-      "text": stepText
-    }))
-  };
-
   return (
-    <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 overflow-y-auto custom-scrollbar">
-      <div className="bg-[#0F1522] border border-zinc-700 w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden my-auto text-zinc-100 flex flex-col max-h-[90vh]">
-        {/* Modal Top Header Bar */}
-        <div className="bg-[#141C2D] border-b border-zinc-800 p-4 sm:p-6 flex items-start justify-between gap-4 sticky top-0 z-20">
-          <div>
-            <div className="flex items-center gap-2 mb-1">
-              <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-zinc-800 text-[#FF6B00] border border-zinc-700">
-                {service.category} • {service.department}
-              </span>
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800">
-                Official .gov.in Portal
-              </span>
+    <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-2 sm:p-6 overflow-hidden animate-fadeIn">
+      <div className="bg-[#0F1522] border border-zinc-700 w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden text-zinc-100 flex flex-col h-full max-h-[92vh] my-auto">
+        {/* Unified Sticky Modal Top Header Unit */}
+        <div className="bg-[#141C2D] border-b border-zinc-800 shrink-0 z-20">
+          {/* Top Title & Close Bar */}
+          <div className="p-4 sm:p-6 flex items-start justify-between gap-4 border-b border-zinc-800/60">
+            <div>
+              <div className="flex flex-wrap items-center gap-2 mb-1.5">
+                <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded bg-zinc-800 text-[#FF6B00] border border-zinc-700">
+                  {service.category} • {service.department}
+                </span>
+                <span className="text-[10px] font-bold px-2.5 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800">
+                  Official .gov.in Portal
+                </span>
+                {service.isNew && (
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[#FF6B00] text-white">
+                    NEW SCHEME
+                  </span>
+                )}
+              </div>
+              <h2 className="text-xl sm:text-2xl font-black text-white">{service.title}</h2>
+              <p className="text-xs text-[#FF6B00] font-semibold mt-0.5">{service.hindiTitle}</p>
             </div>
-            <h2 className="text-xl sm:text-2xl font-black text-white">{service.title}</h2>
-            <p className="text-xs text-[#FF6B00] font-semibold">{service.hindiTitle}</p>
+
+            <button
+              onClick={onClose}
+              className="p-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white transition shrink-0"
+              aria-label="Close details"
+            >
+              <X className="w-5 h-5" />
+            </button>
           </div>
 
-          <button
-            onClick={onClose}
-            className="p-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white transition flex-shrink-0"
-            aria-label="Close details"
-          >
-            <X className="w-5 h-5" />
-          </button>
-        </div>
-
-        {/* Modal Navigation Tabs */}
-        <div className="flex border-b border-zinc-800 px-4 sm:px-6 bg-[#111726] text-xs font-bold gap-1 overflow-x-auto custom-scrollbar">
-          {[
-            { id: 'overview', label: 'Overview & Eligibility' },
-            { id: 'online', label: 'Online Step-by-Step' },
-            { id: 'offline', label: 'Offline Process' },
-            { id: 'docs', label: 'Required Documents' },
-            { id: 'faqs', label: 'FAQs & Notes' },
-            { id: 'schema', label: 'SEO Schema Markup' }
-          ].map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id as any)}
-              className={`py-3 px-3.5 border-b-2 transition whitespace-nowrap ${
-                activeTab === tab.id 
-                  ? 'border-[#FF6B00] text-[#FF6B00] font-black' 
-                  : 'border-transparent text-zinc-400 hover:text-white'
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
+          {/* Modal Navigation Tabs */}
+          <div className="flex items-center px-4 sm:px-6 bg-[#111726] text-xs font-bold gap-1 sm:gap-2 overflow-x-auto custom-scrollbar shrink-0 pt-2 pb-0">
+            {[
+              { id: 'overview', label: 'Overview & Eligibility' },
+              { id: 'online', label: 'Online Step-by-Step' },
+              { id: 'offline', label: 'Offline Process' },
+              { id: 'docs', label: 'Required Documents' },
+              { id: 'faqs', label: 'FAQs & Notes' },
+              { id: 'schema', label: 'SEO Schema Markup' }
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id as any)}
+                className={`py-2.5 px-3.5 border-b-2 transition whitespace-nowrap shrink-0 text-xs sm:text-sm ${
+                  activeTab === tab.id 
+                    ? 'border-[#FF6B00] text-[#FF6B00] font-black bg-[#182136] rounded-t-lg' 
+                    : 'border-transparent text-zinc-400 hover:text-white hover:bg-zinc-800/40 rounded-t-lg'
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Modal Scrollable Body */}
-        <div className="p-4 sm:p-6 overflow-y-auto space-y-6 custom-scrollbar text-xs sm:text-sm">
+        <div className="p-4 sm:p-6 overflow-y-auto space-y-6 custom-scrollbar text-xs sm:text-sm flex-1 min-h-0">
           {/* Quick Metrics Header Bar */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <div className="p-3 rounded-xl bg-zinc-900 border border-zinc-800">
@@ -129,6 +128,33 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
               <span className="text-xs sm:text-sm font-bold text-cyan-400">{service.officialWebsiteName}</span>
             </div>
           </div>
+
+          {/* Income & Age Criteria Highlights */}
+          {(service.incomeCriteria || service.ageCriteria || service.helpline) && (
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              {service.incomeCriteria && (
+                <div className="p-3 rounded-xl bg-amber-950/30 border border-amber-800/40 text-amber-200">
+                  <span className="text-[10px] font-bold text-amber-400 uppercase block">Income Criteria</span>
+                  <span className="font-semibold text-xs">{service.incomeCriteria}</span>
+                </div>
+              )}
+              {service.ageCriteria && (
+                <div className="p-3 rounded-xl bg-sky-950/30 border border-sky-800/40 text-sky-200">
+                  <span className="text-[10px] font-bold text-sky-400 uppercase block">Age Bracket</span>
+                  <span className="font-semibold text-xs">{service.ageCriteria}</span>
+                </div>
+              )}
+              {service.helpline && (
+                <div className="p-3 rounded-xl bg-emerald-950/30 border border-emerald-800/40 text-emerald-200 flex items-center gap-2">
+                  <Phone className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+                  <div>
+                    <span className="text-[10px] font-bold text-emerald-400 uppercase block">Helpline</span>
+                    <span className="font-mono text-xs">{service.helpline}</span>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
 
           {activeTab === 'overview' && (
             <div className="space-y-6">
@@ -151,12 +177,23 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
                 </div>
               </div>
 
-              {/* Downloadable Forms if available */}
-              {service.downloadForms && service.downloadForms.length > 0 && (
+              {/* Official Notification & Forms */}
+              {((service.downloadForms && service.downloadForms.length > 0) || service.officialNotificationUrl) && (
                 <div>
-                  <h3 className="text-xs font-bold text-zinc-400 uppercase tracking-wider mb-2">Official Downloadable PDF Forms</h3>
+                  <h3 className="text-xs font-bold text-zinc-400 uppercase tracking-wider mb-2">Official Guidelines & PDF Downloads</h3>
                   <div className="flex flex-wrap gap-2">
-                    {service.downloadForms.map((form, idx) => (
+                    {service.officialNotificationUrl && (
+                      <a
+                        href={service.officialNotificationUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-3 py-2 rounded-xl bg-emerald-950 border border-emerald-800 hover:border-emerald-500 text-emerald-300 text-xs font-bold transition flex items-center gap-2"
+                      >
+                        <Download className="w-3.5 h-3.5 text-emerald-400" />
+                        <span>Official Scheme Notification PDF</span>
+                      </a>
+                    )}
+                    {service.downloadForms?.map((form, idx) => (
                       <a
                         key={idx}
                         href={form.url}
@@ -171,6 +208,9 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
                   </div>
                 </div>
               )}
+
+              {/* Social Share Bar */}
+              <SocialShareBar title={service.title} summary={service.shortDesc} />
             </div>
           )}
 
@@ -258,7 +298,7 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
         {/* Modal Bottom Footer Action Bar */}
         <div className="bg-[#141C2D] border-t border-zinc-800 p-4 sm:p-6 flex flex-col sm:flex-row items-center justify-between gap-4 sticky bottom-0 z-20">
           <div className="text-xs text-zinc-400">
-            Source: <strong className="text-zinc-200">{service.department}</strong>
+            Official Source: <strong className="text-zinc-200">{service.department}</strong>
           </div>
 
           <a
@@ -267,7 +307,7 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
             rel="noopener noreferrer"
             className="w-full sm:w-auto px-6 py-3 rounded-xl bg-gradient-to-r from-[#FF6B00] to-[#E65100] text-white text-xs font-bold shadow-lg hover:brightness-110 transition flex items-center justify-center gap-2"
           >
-            <span>Proceed to Official .gov.in Website</span>
+            <span>Apply / Access Official .gov.in Website</span>
             <ExternalLink className="w-4 h-4" />
           </a>
         </div>
@@ -275,3 +315,4 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
     </div>
   );
 };
+

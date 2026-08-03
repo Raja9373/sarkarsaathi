@@ -26,15 +26,31 @@ export interface ServiceItem {
   processingTime: string;
   officialWebsiteName: string;
   officialGovUrl: string;
+  officialNotificationUrl?: string;
   downloadForms?: { name: string; url: string; isOfficialPdf: boolean }[];
   faqs: { question: string; answer: string }[];
   commonMistakes: string[];
   importantNotes: string[];
   lastUpdated: string;
+  createdDate?: string;
   relatedServiceIds: string[];
   tags: string[];
   secondaryCategories?: string[];
   isPopular?: boolean;
+  isNew?: boolean;
+  incomeCriteria?: string;
+  ageCriteria?: string;
+  helpline?: string;
+  importantDates?: string;
+  schemeType?: string;
+  keywords?: {
+    primary: string[];
+    secondary: string[];
+    longTail: string[];
+    questions: string[];
+  };
+  isDraft?: boolean;
+  contentVerified?: boolean;
 }
 
 export interface LifeEvent {
@@ -179,6 +195,7 @@ export type ActiveTab =
   | 'home' 
   | 'categories' 
   | 'services' 
+  | 'schemes'
   | 'life-events' 
   | 'banking' 
   | 'finders' 
@@ -188,6 +205,7 @@ export type ActiveTab =
   | 'downloads' 
   | 'calculators' 
   | 'delhi-govt' 
+  | 'auto-update'
   | 'complaints'
   | 'blog' 
   | 'legal' 
