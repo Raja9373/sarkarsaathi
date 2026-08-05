@@ -208,5 +208,6 @@ export type ActiveTab =
   | 'auto-update'
   | 'complaints'
   | 'blog' 
+  | 'faqs'
   | 'legal' 
   | 'service-detail';

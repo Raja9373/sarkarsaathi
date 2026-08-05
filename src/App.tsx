@@ -13,6 +13,7 @@ import { CalculatorsHub } from './components/CalculatorsHub';
 import { DelhiGovtHub } from './components/DelhiGovtHub';
 import { ComplaintsHub } from './components/ComplaintsHub';
 import { BlogHub } from './components/BlogHub';
+import { ServicesFaqPage } from './components/ServicesFaqPage';
 import { LegalPages } from './components/LegalPages';
 import { ServiceDetailModal } from './components/ServiceDetailModal';
 import { EmergencyModal } from './components/EmergencyModal';
@@ -225,6 +226,7 @@ export default function App() {
         )}
         {activeTab === 'complaints' && <ComplaintsHub />}
         {activeTab === 'blog' && <BlogHub />}
+        {activeTab === 'faqs' && <ServicesFaqPage />}
         {activeTab === 'legal' && <LegalPages />}
       </main>
 

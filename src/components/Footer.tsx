@@ -139,6 +139,7 @@ export const Footer: React.FC<FooterProps> = ({ setActiveTab, onOpenEmergency, o
               <li><button onClick={() => handleNav('online-apply')} className="hover:text-[#FF6B00]">Apply Online Direct Links</button></li>
               <li><button onClick={() => handleNav('payments')} className="hover:text-[#FF6B00]">Pay Property Tax & Utility Bills</button></li>
               <li><button onClick={() => handleNav('blog')} className="hover:text-[#FF6B00]">Knowledge Center Articles</button></li>
+              <li><button onClick={() => handleNav('faqs')} className="hover:text-[#FF6B00] font-bold text-[#FF6B00]">❓ 1000+ Sarkari Seva FAQs</button></li>
             </ul>
           </div>
 

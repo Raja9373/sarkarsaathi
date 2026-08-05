@@ -21,6 +21,7 @@ import {
   Landmark,
   Layers,
   HeartHandshake,
+  HelpCircle,
   MessageSquare
 } from 'lucide-react';
 import { ActiveTab, StateId } from '../types';
@@ -257,6 +258,13 @@ export const Header: React.FC<HeaderProps> = ({
             <span>Blog</span>
           </button>
           <button
+            onClick={() => handleNavClick('faqs')}
+            className={`px-3 py-2 rounded-lg transition flex items-center gap-1 ${activeTab === 'faqs' ? 'bg-[#FF6B00] text-white font-bold' : 'hover:bg-zinc-800 hover:text-white'}`}
+          >
+            <HelpCircle className="w-3.5 h-3.5 text-amber-400" />
+            <span>1000+ FAQs</span>
+          </button>
+          <button
             onClick={() => handleNavClick('auto-update')}
             className={`px-3 py-2 rounded-lg transition flex items-center gap-1 text-amber-300 ${activeTab === 'auto-update' ? 'bg-[#FF6B00] text-white font-bold' : 'hover:bg-zinc-800 hover:text-white'}`}
             title="Auto Update Engine"
@@ -351,6 +359,12 @@ export const Header: React.FC<HeaderProps> = ({
               className={`p-2.5 rounded-lg text-left font-medium ${activeTab === 'blog' ? 'bg-[#FF6B00] text-white font-bold' : 'bg-zinc-900 text-zinc-200'}`}
             >
               📚 Knowledge Base
+            </button>
+            <button
+              onClick={() => handleNavClick('faqs')}
+              className={`p-2.5 rounded-lg text-left font-medium col-span-2 ${activeTab === 'faqs' ? 'bg-[#FF6B00] text-white font-bold' : 'bg-zinc-900 text-amber-300 border border-amber-500/30'}`}
+            >
+              ❓ 1000+ Sarkari Seva FAQs Hub
             </button>
           </div>
         </div>
