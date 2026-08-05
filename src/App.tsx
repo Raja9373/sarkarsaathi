@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { HeroSection } from './components/HeroSection';
 import { CategoryGrid } from './components/CategoryGrid';
@@ -25,12 +25,13 @@ import { VoiceSearchModal } from './components/VoiceSearchModal';
 import { SitemapModal } from './components/SitemapModal';
 import { SchemesHub } from './components/SchemesHub';
 import { AutoUpdateSystem } from './components/AutoUpdateSystem';
+import { FaqDetailPage } from './components/FaqDetailPage';
 
 import { ActiveTab, ServiceItem, StateId } from './types';
 import { SERVICES_LIST } from './data/servicesData';
 import { BLOG_POSTS } from './data/blogData';
 import { ExternalLink, CheckCircle2, Search, ArrowRight, ShieldCheck, Sparkles, Mic } from 'lucide-react';
-
+import { ALL_FAQS } from './data/faqs/index';
 
 export default function App() {
   const [servicesData, setServicesData] = useState<ServiceItem[]>(SERVICES_LIST);
@@ -48,7 +49,22 @@ export default function App() {
   const [fontSizeLevel, setFontSizeLevel] = useState<number>(0);
   const [highContrast, setHighContrast] = useState<boolean>(false);
 
-  const fontClass = fontSizeLevel === 1 ? 'text-[105%]' : fontSizeLevel === 2 ? 'text-[112%]' : fontSizeLevel === -1 ? 'text-[92%]' : '';
+  // NEW: FAQ Slug handling for /faq/:slug URLs
+  const [selectedFaqSlug, setSelectedFaqSlug] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Check URL on load for /faq/xxx
+    const path = window.location.pathname;
+    if (path.startsWith('/faq/')) {
+      const slug = path.replace('/faq/', '').replace('/', '');
+      if (slug && slug!== 'faq') {
+        setSelectedFaqSlug(slug);
+        setActiveTab('faq-detail' as any);
+      }
+    }
+  }, []);
+
+  const fontClass = fontSizeLevel === 1? 'text-[105%]' : fontSizeLevel === 2? 'text-[112%]' : fontSizeLevel === -1? 'text-[92%]' : '';
 
   const filteredServices = servicesData.filter(srv => {
     const catLower = selectedCategoryFilter.toLowerCase();
@@ -76,7 +92,7 @@ export default function App() {
 
   const handleSearchQueryFromHero = (query: string) => {
     setSearchFilterQuery(query);
-    if (query.trim() !== '') {
+    if (query.trim()!== '') {
       setActiveTab('services');
     }
   };
@@ -95,13 +111,25 @@ export default function App() {
   };
 
   const handlePublishNewScheme = (newScheme: ServiceItem) => {
-    setServicesData(prev => [newScheme, ...prev]);
+    setServicesData(prev => [newScheme,...prev]);
     setSelectedService(newScheme);
   };
 
+  const handleOpenFaq = (slug: string) => {
+    setSelectedFaqSlug(slug);
+    setActiveTab('faq-detail' as any);
+    window.history.pushState({}, '', `/faq/${slug}`);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleBackToFaqs = () => {
+    setSelectedFaqSlug(null);
+    setActiveTab('faqs');
+    window.history.pushState({}, '', `/`);
+  };
+
   return (
-    <div className={`min-h-screen bg-[#0B0F17] text-zinc-100 font-sans selection:bg-[#FF6B00] selection:text-white ${fontClass} ${highContrast ? 'contrast-125' : ''}`}>
-      {/* Enterprise SEO Metadata & JSON-LD Injection */}
+    <div className={`min-h-screen bg-[#0B0F17] text-zinc-100 font-sans selection:bg-[#FF6B00] selection:text-white ${fontClass} ${highContrast? 'contrast-125' : ''}`}>
       <SEOHead activeService={selectedService} />
 
       <Header
@@ -116,7 +144,12 @@ export default function App() {
         setHighContrast={setHighContrast}
       />
 
-      <main className="min-h-[70vh]">
+      <main className="min-h-">
+        {/* NEW FAQ DETAIL ROUTE */}
+        {(activeTab as any) === 'faq-detail' && selectedFaqSlug && (
+          <FaqDetailPage slug={selectedFaqSlug} onBack={handleBackToFaqs} />
+        )}
+
         {activeTab === 'home' && (
           <div>
             <HeroSection
@@ -195,11 +228,11 @@ export default function App() {
                   className="p-5 rounded-2xl bg-[#121824] border border-zinc-800 hover:border-[#FF6B00]/50 transition cursor-pointer space-y-2 group"
                 >
                   <div className="flex items-center justify-between gap-2">
-                    <span className="text-[10px] font-bold text-[#FF6B00] uppercase px-2 py-0.5 rounded bg-zinc-900">
+                    <span className="text- font-bold text-[#FF6B00] uppercase px-2 py-0.5 rounded bg-zinc-900">
                       {srv.category}
                     </span>
-                    <span className="text-[10px] font-medium text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-800/40">
-                      Official .gov.in
+                    <span className="text- font-medium text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-800/40">
+                      Official.gov.in
                     </span>
                   </div>
                   <h3 className="text-base font-bold text-white group-hover:text-[#FF6B00] transition">{srv.title}</h3>
@@ -226,11 +259,10 @@ export default function App() {
         )}
         {activeTab === 'complaints' && <ComplaintsHub />}
         {activeTab === 'blog' && <BlogHub />}
-        {activeTab === 'faqs' && <ServicesFaqPage />}
+        {activeTab === 'faqs' && <ServicesFaqPage onOpenFaq={handleOpenFaq} />}
         {activeTab === 'legal' && <LegalPages />}
       </main>
 
-      {/* Voice Search Modal */}
       <VoiceSearchModal
         isOpen={voiceSearchOpen}
         onClose={() => setVoiceSearchOpen(false)}
@@ -240,7 +272,6 @@ export default function App() {
         }}
       />
 
-      {/* Sitemap & Robots.txt Generator Modal */}
       <SitemapModal
         isOpen={sitemapOpen}
         onClose={() => setSitemapOpen(false)}
@@ -248,20 +279,17 @@ export default function App() {
         allBlogPosts={BLOG_POSTS}
       />
 
-      {/* Service Detail Modal */}
       <ServiceDetailModal
         service={selectedService}
         onClose={() => setSelectedService(null)}
         onSelectRelated={handleSelectRelatedService}
       />
 
-      {/* Emergency Modal */}
       <EmergencyModal
         isOpen={emergencyOpen}
         onClose={() => setEmergencyOpen(false)}
       />
 
-      {/* Footer */}
       <Footer
         setActiveTab={setActiveTab}
         onOpenEmergency={() => setEmergencyOpen(true)}
@@ -272,4 +300,3 @@ export default function App() {
     </div>
   );
 }
-
