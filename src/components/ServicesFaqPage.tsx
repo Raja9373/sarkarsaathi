@@ -15,19 +15,28 @@ import {
   ChevronRight,
   Filter,
   CheckCircle2,
-  FileText
+  FileText,
+  ArrowRight
 } from 'lucide-react';
-import allFaqsData from '../data/allServicesFaqs.json';
+import allFaqsData from '../data/faqs';
+import { FaqDetailPage } from './FaqDetailPage';
 
 export interface FaqItem {
   id: number;
-  q: string;
-  q_en: string;
-  a: string;
-  a_en: string;
-  cat: string;
   slug: string;
-  updated: string;
+  category: string;
+  categorySlug?: string;
+  question: string;
+  q?: string;
+  q_en?: string;
+  answer: string;
+  a?: string;
+  a_en?: string;
+  answer_en?: string;
+  keywords?: string[];
+  updatedDate?: string;
+  updated?: string;
+  officialSource?: string;
 }
 
 const CATEGORIES = [
@@ -45,10 +54,12 @@ const CATEGORIES = [
 ];
 
 interface ServicesFaqPageProps {
+  initialSlug?: string;
   onSelectServiceSlug?: (slug: string) => void;
 }
 
-export const ServicesFaqPage: React.FC<ServicesFaqPageProps> = () => {
+export const ServicesFaqPage: React.FC<ServicesFaqPageProps> = ({ initialSlug }) => {
+  const [selectedFaqSlug, setSelectedFaqSlug] = useState<string | null>(initialSlug || null);
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [lang, setLang] = useState<'hi' | 'en'>('hi');
@@ -59,29 +70,40 @@ export const ServicesFaqPage: React.FC<ServicesFaqPageProps> = () => {
 
   const ITEMS_PER_PAGE = 20;
 
+  // Check URL Hash on load
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash && hash.startsWith('#faq/')) {
+      const slugFromHash = hash.replace('#faq/', '');
+      if (slugFromHash) setSelectedFaqSlug(slugFromHash);
+    }
+  }, []);
+
   // Category Counts
   const categoryCounts = useMemo(() => {
     const counts: Record<string, number> = { All: allFaqsData.length };
-    allFaqsData.forEach((faq) => {
-      counts[faq.cat] = (counts[faq.cat] || 0) + 1;
+    (allFaqsData as unknown as FaqItem[]).forEach((faq) => {
+      const catName = faq.category || (faq as any).cat || 'General';
+      counts[catName] = (counts[catName] || 0) + 1;
     });
     return counts;
   }, []);
 
   // Filtered FAQs
   const filteredFaqs = useMemo(() => {
-    return allFaqsData.filter((faq: FaqItem) => {
-      const matchesCat = selectedCategory === 'All' || faq.cat === selectedCategory;
+    return (allFaqsData as unknown as FaqItem[]).filter((faq) => {
+      const catName = faq.category || (faq as any).cat || 'General';
+      const matchesCat = selectedCategory === 'All' || catName === selectedCategory;
       const queryLower = searchQuery.toLowerCase().trim();
       if (!queryLower) return matchesCat;
 
-      const qText = lang === 'hi' ? faq.q : faq.q_en;
-      const aText = lang === 'hi' ? faq.a : faq.a_en;
+      const qText = lang === 'hi' ? (faq.question || faq.q || '') : (faq.q_en || faq.question || '');
+      const aText = lang === 'hi' ? (faq.answer || faq.a || '') : (faq.a_en || faq.answer || '');
 
       const matchesSearch = 
         qText.toLowerCase().includes(queryLower) ||
         aText.toLowerCase().includes(queryLower) ||
-        faq.cat.toLowerCase().includes(queryLower) ||
+        catName.toLowerCase().includes(queryLower) ||
         faq.slug.toLowerCase().includes(queryLower);
 
       return matchesCat && matchesSearch;
@@ -116,20 +138,19 @@ export const ServicesFaqPage: React.FC<ServicesFaqPageProps> = () => {
 
   // Copy FAQ to Clipboard
   const handleCopy = (faq: FaqItem) => {
-    const qText = lang === 'hi' ? faq.q : faq.q_en;
-    const aText = lang === 'hi' ? faq.a : faq.a_en;
-    const textToCopy = `Q: ${qText}\n\nA: ${aText}\n\nSource: https://www.sarkarsaathi.org/faqs#${faq.slug}`;
+    const qText = lang === 'hi' ? (faq.question || faq.q || '') : (faq.q_en || faq.question || '');
+    const textToCopy = `Q: ${qText}\n\nDirect URL: https://sarkarsaathi.org/faq/${faq.slug}`;
 
     navigator.clipboard.writeText(textToCopy);
     setCopiedId(faq.id);
-    showToast('Question & Answer copied to clipboard!');
+    showToast('Question Link copied to clipboard!');
     setTimeout(() => setCopiedId(null), 2000);
   };
 
   // Share FAQ
   const handleShare = (faq: FaqItem) => {
-    const qText = lang === 'hi' ? faq.q : faq.q_en;
-    const shareUrl = `${window.location.origin}/faqs#${faq.slug}`;
+    const qText = lang === 'hi' ? (faq.question || faq.q || '') : (faq.q_en || faq.question || '');
+    const shareUrl = `https://sarkarsaathi.org/faq/${faq.slug}`;
 
     if (navigator.share) {
       navigator.share({
@@ -143,6 +164,15 @@ export const ServicesFaqPage: React.FC<ServicesFaqPageProps> = () => {
     }
   };
 
+  const getValidUrl = (urlStr?: string) => {
+    if (!urlStr) return 'https://india.gov.in';
+    let clean = urlStr.trim();
+    if (!clean.startsWith('http://') && !clean.startsWith('https://')) {
+      clean = `https://${clean}`;
+    }
+    return clean;
+  };
+
   const showToast = (msg: string) => {
     setToastMessage(msg);
     setTimeout(() => setToastMessage(null), 3000);
@@ -150,33 +180,52 @@ export const ServicesFaqPage: React.FC<ServicesFaqPageProps> = () => {
 
   // Dynamically Inject FAQ Schema JSON-LD for Search Engines (Google, Bing)
   useEffect(() => {
+    if (selectedFaqSlug) return; // Handled by FaqDetailPage when open
+
     const schemaData = {
       "@context": "https://schema.org",
       "@type": "FAQPage",
       "mainEntity": paginatedFaqs.map(faq => ({
         "@type": "Question",
-        "name": lang === 'hi' ? faq.q : faq.q_en,
+        "name": lang === 'hi' ? (faq.question || faq.q || '') : (faq.q_en || faq.question || ''),
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": lang === 'hi' ? faq.a : faq.a_en
+          "text": (lang === 'hi' ? (faq.answer || faq.a || '') : (faq.a_en || faq.answer || '')).replace(/<[^>]*>/g, ' ')
         }
       }))
     };
 
-    let scriptTag = document.getElementById('faq-jsonld-schema');
+    let scriptTag = document.getElementById('faq-hub-jsonld-schema');
     if (!scriptTag) {
       scriptTag = document.createElement('script');
-      scriptTag.id = 'faq-jsonld-schema';
+      scriptTag.id = 'faq-hub-jsonld-schema';
       scriptTag.setAttribute('type', 'application/ld+json');
       document.head.appendChild(scriptTag);
     }
     scriptTag.textContent = JSON.stringify(schemaData);
 
     return () => {
-      const tag = document.getElementById('faq-jsonld-schema');
+      const tag = document.getElementById('faq-hub-jsonld-schema');
       if (tag) tag.remove();
     };
-  }, [paginatedFaqs, lang]);
+  }, [paginatedFaqs, lang, selectedFaqSlug]);
+
+  // If a single FAQ detail view is active, render FaqDetailPage
+  if (selectedFaqSlug) {
+    return (
+      <FaqDetailPage 
+        slug={selectedFaqSlug} 
+        onBackToHub={() => {
+          setSelectedFaqSlug(null);
+          window.history.replaceState(null, '', window.location.pathname);
+        }}
+        onSelectFaqSlug={(newSlug) => {
+          setSelectedFaqSlug(newSlug);
+          window.location.hash = `#faq/${newSlug}`;
+        }}
+      />
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#0B0F17] text-zinc-100 py-8 px-3 sm:px-6 max-w-7xl mx-auto space-y-8 animate-fadeIn">
@@ -328,10 +377,11 @@ export const ServicesFaqPage: React.FC<ServicesFaqPageProps> = () => {
         </div>
       ) : (
         <div className="space-y-3">
-          {paginatedFaqs.map((faq, idx) => {
+          {paginatedFaqs.map((faq) => {
             const isExpanded = !!expandedIds[faq.id];
-            const qText = lang === 'hi' ? faq.q : faq.q_en;
-            const aText = lang === 'hi' ? faq.a : faq.a_en;
+            const qText = lang === 'hi' ? (faq.question || faq.q || '') : (faq.q_en || faq.question || '');
+            const aText = lang === 'hi' ? (faq.answer || faq.a || '') : (faq.a_en || faq.answer || '');
+            const catName = faq.category || (faq as any).cat || 'General';
 
             return (
               <div
@@ -355,10 +405,10 @@ export const ServicesFaqPage: React.FC<ServicesFaqPageProps> = () => {
                     <div className="space-y-1">
                       <div className="flex flex-wrap items-center gap-2">
                         <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-zinc-800 text-zinc-300">
-                          {faq.cat}
+                          {catName}
                         </span>
                         <span className="text-[10px] text-emerald-400 font-bold bg-emerald-950/60 border border-emerald-800/40 px-2 py-0.5 rounded">
-                          Updated {faq.updated}
+                          Updated {faq.updatedDate || faq.updated || 'May 2026'}
                         </span>
                       </div>
                       <h3 className="text-sm sm:text-base font-bold text-white group-hover:text-[#FF6B00] transition leading-snug">
@@ -375,22 +425,54 @@ export const ServicesFaqPage: React.FC<ServicesFaqPageProps> = () => {
                 {/* Accordion Answer Content */}
                 {isExpanded && (
                   <div className="px-4 sm:px-5 pb-5 pt-1 border-t border-zinc-800/60 space-y-4 animate-fadeIn">
-                    <div className="p-4 rounded-xl bg-[#0B0F17] border border-zinc-800/80 text-xs sm:text-sm text-zinc-300 leading-relaxed space-y-3">
-                      <p className="whitespace-pre-line">{aText}</p>
+                    <div className="p-4 sm:p-5 rounded-2xl bg-[#0B0F17] border border-zinc-800/80 text-xs sm:text-sm text-zinc-300 leading-relaxed space-y-3">
+                      {aText.includes('<p>') || aText.includes('<h2>') ? (
+                        <div 
+                          className="faq-answer-content space-y-3 font-sans text-zinc-200"
+                          dangerouslySetInnerHTML={{ __html: aText }} 
+                        />
+                      ) : (
+                        <p className="whitespace-pre-line">{aText}</p>
+                      )}
                     </div>
+
+                    {/* Official Source Banner Box */}
+                    {faq.officialSource && (
+                      <div className="p-3.5 rounded-xl bg-zinc-900/90 border border-zinc-800 flex items-center justify-between gap-3 text-xs">
+                        <div className="flex items-center gap-2 text-zinc-300 font-bold truncate">
+                          <BookOpen className="w-4 h-4 text-[#FF6B00] shrink-0" />
+                          <span className="truncate">Official Source: {getValidUrl(faq.officialSource)}</span>
+                        </div>
+                        <a
+                          href={getValidUrl(faq.officialSource)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#FF6B00] hover:bg-[#FF6B00]/90 text-white font-bold shrink-0 transition"
+                        >
+                          <span>Open Portal</span>
+                          <ExternalLink className="w-3.5 h-3.5" />
+                        </a>
+                      </div>
+                    )}
 
                     {/* Bottom Action Footer */}
                     <div className="flex flex-wrap items-center justify-between gap-3 text-xs font-bold pt-1">
-                      <div className="flex items-center gap-2 text-zinc-500 text-[11px]">
-                        <BookOpen className="w-3.5 h-3.5 text-zinc-400" />
-                        <span>Official Portal Verified Guide</span>
-                      </div>
+                      <button
+                        onClick={() => {
+                          setSelectedFaqSlug(faq.slug);
+                          window.location.hash = `#faq/${faq.slug}`;
+                        }}
+                        className="inline-flex items-center gap-1.5 text-[#FF6B00] hover:underline"
+                      >
+                        <span>Open Full Dedicated Page Guide</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </button>
 
                       <div className="flex items-center gap-2">
                         <button
                           onClick={() => handleCopy(faq)}
                           className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-[#FF6B00] text-zinc-300 hover:text-white transition"
-                          title="Copy Question & Answer"
+                          title="Copy Question & Link"
                         >
                           {copiedId === faq.id ? (
                             <>
@@ -400,7 +482,7 @@ export const ServicesFaqPage: React.FC<ServicesFaqPageProps> = () => {
                           ) : (
                             <>
                               <Copy className="w-3.5 h-3.5 text-zinc-400" />
-                              <span>Copy Answer</span>
+                              <span>Copy Link</span>
                             </>
                           )}
                         </button>
