@@ -1,10 +1,10 @@
 User-agent: *
 Allow: /
+Allow: /state/
 Allow: /yojana/
 Allow: /scheme/
 Allow: /service/
 Allow: /blog/
-Allow: /state/
 Disallow: /api/
 Disallow: /faq/
 Disallow: /faqs
