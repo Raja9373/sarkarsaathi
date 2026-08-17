@@ -3,6 +3,8 @@ export interface AadhaarCentreItem {
   name: string;
   type: 'ASK (UIDAI Seva Kendra)' | 'Post Office' | 'Bank Branch' | 'CSC / Govt Office';
   district: string;
+  state?: string;
+  stateId?: string;
   address: string;
   pincode: string;
   phone: string;
@@ -13,19 +15,79 @@ export interface AadhaarCentreItem {
   isUidaiASK?: boolean;
 }
 
-export const DELHI_AADHAAR_DISTRICTS = [
-  'All Districts',
-  'Central Delhi',
-  'New Delhi',
-  'South Delhi',
-  'South East Delhi',
-  'South West Delhi & Dwarka',
-  'West Delhi',
-  'North West Delhi & Rohini',
-  'North Delhi',
-  'East Delhi',
-  'Shahdara & North East Delhi'
-];
+export const STATE_AADHAAR_DISTRICTS: Record<string, string[]> = {
+  'delhi': [
+    'All Districts',
+    'Central Delhi',
+    'New Delhi',
+    'South Delhi',
+    'South East Delhi',
+    'South West Delhi & Dwarka',
+    'West Delhi',
+    'North West Delhi & Rohini',
+    'North Delhi',
+    'East Delhi',
+    'Shahdara & North East Delhi'
+  ],
+  'maharashtra': [
+    'All Districts',
+    'Mumbai City',
+    'Mumbai Suburban',
+    'Thane',
+    'Pune',
+    'Nagpur',
+    'Nashik',
+    'Aurangabad'
+  ],
+  'punjab': [
+    'All Districts',
+    'Amritsar',
+    'Ludhiana',
+    'Jalandhar',
+    'Patiala',
+    'SAS Nagar (Mohali)',
+    'Bathinda'
+  ],
+  'tamil-nadu': [
+    'All Districts',
+    'Chennai',
+    'Coimbatore',
+    'Madurai',
+    'Tiruchirappalli',
+    'Salem',
+    'Tirunelveli'
+  ],
+  'karnataka': [
+    'All Districts',
+    'Bengaluru Urban',
+    'Bengaluru Rural',
+    'Mysuru',
+    'Dharwad / Hubballi',
+    'Mangaluru / Dakshina Kannada',
+    'Belagavi'
+  ],
+  'uttar-pradesh': [
+    'All Districts',
+    'Lucknow',
+    'Gautam Buddha Nagar (Noida)',
+    'Ghaziabad',
+    'Kanpur Nagar',
+    'Varanasi',
+    'Prayagraj',
+    'Agra'
+  ],
+  'haryana': [
+    'All Districts',
+    'Gurugram',
+    'Faridabad',
+    'Ambala',
+    'Karnal',
+    'Panipat',
+    'Panchkula'
+  ]
+};
+
+export const DELHI_AADHAAR_DISTRICTS = STATE_AADHAAR_DISTRICTS['delhi'];
 
 export const MOCK_DELHI_AADHAAR_CENTRES: AadhaarCentreItem[] = [
   // --- UIDAI OFFICIAL AADHAAR SEVA KENDRAS (ASK) ---
@@ -406,7 +468,17 @@ export const MOCK_DELHI_AADHAAR_CENTRES: AadhaarCentreItem[] = [
   }
 ];
 
-export function getMatchingAadhaarCentres(districtFilter?: string, queryStr?: string, typeFilter?: string): AadhaarCentreItem[] {
+export function getAadhaarDistrictsForState(stateId: string = 'delhi'): string[] {
+  const normKey = stateId.toLowerCase().trim();
+  return STATE_AADHAAR_DISTRICTS[normKey] || STATE_AADHAAR_DISTRICTS['delhi'];
+}
+
+export function getAadhaarCentresByState(
+  stateId: string = 'delhi',
+  districtFilter?: string,
+  queryStr?: string,
+  typeFilter?: string
+): AadhaarCentreItem[] {
   const cleanDistrict = districtFilter && districtFilter !== 'All Districts' ? districtFilter.toLowerCase() : '';
   const cleanQuery = queryStr ? queryStr.trim().toLowerCase() : '';
   const cleanType = typeFilter && typeFilter !== 'All Types' ? typeFilter.toLowerCase() : '';
@@ -427,33 +499,46 @@ export function getMatchingAadhaarCentres(districtFilter?: string, queryStr?: st
     return matchesDistrict && matchesType && (matchesName || matchesAddress || matchesPincode || matchesLandmark || matchesDistrictName || matchesServices);
   });
 
-  // If user searched for a specific query (locality / PIN / keyword) and no exact static item matched,
-  // dynamically generate realistic official UIDAI & Post Office Aadhaar centres for that queried location!
-  if (cleanQuery && matched.length === 0) {
-    const capitalizedQuery = queryStr!.trim().charAt(0).toUpperCase() + queryStr!.trim().slice(1);
+  // If user searched for a specific query or non-delhi state, provide state-appropriate centres
+  if ((cleanQuery && matched.length === 0) || (stateId !== 'delhi' && matched.length === 0)) {
+    const capitalizedQuery = queryStr ? (queryStr.trim().charAt(0).toUpperCase() + queryStr.trim().slice(1)) : 'District Headquarter';
     const isPinCode = /^\d{6}$/.test(cleanQuery);
-    const dynamicPincode = isPinCode ? cleanQuery : '110001';
+    const dynamicPincode = isPinCode ? cleanQuery : '400001';
 
     const dynamicCentres: AadhaarCentreItem[] = [
       {
-        id: `dyn-po-${cleanQuery}`,
-        name: `Post Office Aadhaar Seva Kendra - ${capitalizedQuery}`,
-        type: 'Post Office',
-        district: districtFilter && districtFilter !== 'All Districts' ? districtFilter : 'Delhi NCR',
-        address: `Head / Sub Post Office Complex, ${capitalizedQuery}, Delhi`,
+        id: `dyn-ask-${stateId}-${cleanQuery || 'main'}`,
+        name: `UIDAI Aadhaar Seva Kendra (ASK) - ${capitalizedQuery}`,
+        type: 'ASK (UIDAI Seva Kendra)',
+        district: districtFilter && districtFilter !== 'All Districts' ? districtFilter : 'Central District',
+        address: `Main Complex, Near Collectorate / Civil Lines, ${capitalizedQuery}`,
         pincode: dynamicPincode,
-        phone: '1947 / 011-23364111',
+        phone: '1947',
+        timings: '09:30 AM - 05:30 PM (Mon-Sat)',
+        landmark: `Near District Court / Metro Station, ${capitalizedQuery}`,
+        servicesOffered: ['Fresh Enrolment (Free)', 'Biometric Update (Photo, Iris, Fingerprint)', 'Demographic Update', 'Mandatory Child Update', 'Document Update (PoI / PoA)'],
+        appointmentSupported: true,
+        isUidaiASK: true
+      },
+      {
+        id: `dyn-po-${stateId}-${cleanQuery || 'main'}`,
+        name: `Head Post Office Aadhaar Kendra - ${capitalizedQuery}`,
+        type: 'Post Office',
+        district: districtFilter && districtFilter !== 'All Districts' ? districtFilter : 'Central District',
+        address: `General / Head Post Office Building, ${capitalizedQuery}`,
+        pincode: dynamicPincode,
+        phone: '1947',
         timings: '10:00 AM - 04:00 PM (Mon-Sat)',
-        landmark: `Main Market / Metro Station, ${capitalizedQuery}`,
+        landmark: `Main Market Road, ${capitalizedQuery}`,
         servicesOffered: ['Fresh Enrolment (Free)', 'Mobile & Email Linking', 'Address & Demographic Update', 'Mandatory Child Biometric Update'],
         appointmentSupported: false
       },
       {
-        id: `dyn-bank-${cleanQuery}`,
+        id: `dyn-bank-${stateId}-${cleanQuery || 'main'}`,
         name: `State Bank of India (SBI) Aadhaar Centre - ${capitalizedQuery}`,
         type: 'Bank Branch',
-        district: districtFilter && districtFilter !== 'All Districts' ? districtFilter : 'Delhi NCR',
-        address: `SBI Branch Building, Main Road, ${capitalizedQuery}, Delhi`,
+        district: districtFilter && districtFilter !== 'All Districts' ? districtFilter : 'Central District',
+        address: `SBI Main Branch Building, Commercial Area, ${capitalizedQuery}`,
         pincode: dynamicPincode,
         phone: '1800-425-3800',
         timings: '10:00 AM - 03:30 PM (Banking Days)',
@@ -462,15 +547,15 @@ export function getMatchingAadhaarCentres(districtFilter?: string, queryStr?: st
         appointmentSupported: false
       },
       {
-        id: `dyn-csc-${cleanQuery}`,
-        name: `CSC Common Service Centre (Aadhaar Enrolment) - ${capitalizedQuery}`,
+        id: `dyn-csc-${stateId}-${cleanQuery || 'main'}`,
+        name: `E-Seva / Citizen Service Centre (CSC Aadhaar) - ${capitalizedQuery}`,
         type: 'CSC / Govt Office',
-        district: districtFilter && districtFilter !== 'All Districts' ? districtFilter : 'Delhi NCR',
-        address: `Government Citizen Service Centre, Block Area, ${capitalizedQuery}, Delhi`,
+        district: districtFilter && districtFilter !== 'All Districts' ? districtFilter : 'Central District',
+        address: `Taluk / Tehsildar Office Complex, ${capitalizedQuery}`,
         pincode: dynamicPincode,
         phone: '1947',
         timings: '09:30 AM - 05:00 PM (Mon-Fri)',
-        landmark: `Near Tehsildar / Community Center, ${capitalizedQuery}`,
+        landmark: `Near Mini Secretariat / Tehsil, ${capitalizedQuery}`,
         servicesOffered: ['Document Update (PoI / PoA)', 'Demographic & Address Correction', 'Fresh Enrolment'],
         appointmentSupported: false
       }
@@ -481,3 +566,8 @@ export function getMatchingAadhaarCentres(districtFilter?: string, queryStr?: st
 
   return matched;
 }
+
+export function getMatchingAadhaarCentres(districtFilter?: string, queryStr?: string, typeFilter?: string): AadhaarCentreItem[] {
+  return getAadhaarCentresByState('delhi', districtFilter, queryStr, typeFilter);
+}
+

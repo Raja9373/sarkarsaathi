@@ -11,38 +11,57 @@ import {
   AlertTriangle,
   FileText,
   Info,
-  Navigation
+  Navigation,
+  Globe
 } from 'lucide-react';
-import { 
-  DELHI_POLICE_DISTRICTS, 
-  getMatchingPoliceStations, 
-  PoliceStationItem 
-} from '../data/policeStationData';
+import { getStateDataSet } from '../data/stateDataManager';
+import { STATES_LIST, getStateInfo } from '../data/statesData';
+import { PoliceStationItem } from '../data/policeStationData';
 
-export const PoliceStationFinder: React.FC = () => {
+interface PoliceStationFinderProps {
+  currentStateId?: string;
+}
+
+export const PoliceStationFinder: React.FC<PoliceStationFinderProps> = ({ currentStateId = 'delhi' }) => {
+  const [selectedState, setSelectedState] = useState<string>(currentStateId);
   const [query, setQuery] = useState<string>('');
-  const [selectedDistrict, setSelectedDistrict] = useState<string>('All Districts');
+  const [selectedDistrict, setSelectedDistrict] = useState<string>('All');
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
-  const stations = getMatchingPoliceStations(selectedDistrict, query);
+  React.useEffect(() => {
+    if (currentStateId) {
+      setSelectedState(currentStateId);
+      setSelectedDistrict('All');
+    }
+  }, [currentStateId]);
+
+  const stateData = getStateDataSet(selectedState);
+  const stateInfo = getStateInfo(selectedState);
+  const stateStations = stateData.police || [];
+
+  const availableDistricts = ['All', ...Array.from(new Set(stateStations.map(s => s.district))).filter(Boolean)];
+
+  const filteredStations = stateStations.filter(station => {
+    const matchesDistrict = selectedDistrict === 'All' || station.district.toLowerCase() === selectedDistrict.toLowerCase();
+    const cleanQuery = query.trim().toLowerCase();
+
+    if (!cleanQuery) return matchesDistrict;
+
+    const matchesName = station.name.toLowerCase().includes(cleanQuery);
+    const matchesHindiName = (station.hindiName || '').toLowerCase().includes(cleanQuery);
+    const matchesAddr = station.address.toLowerCase().includes(cleanQuery);
+    const matchesPin = station.pincode.includes(cleanQuery);
+    const matchesJurisdiction = station.jurisdictionAreas.some(area => area.toLowerCase().includes(cleanQuery));
+
+    return matchesDistrict && (matchesName || matchesHindiName || matchesAddr || matchesPin || matchesJurisdiction);
+  });
 
   const handleCopyStationDetails = (station: PoliceStationItem) => {
-    const textToCopy = `${station.name} (${station.hindiName})\nDistrict: ${station.district}\nAddress: ${station.address} - ${station.pincode}\nLandmark: ${station.landmark}\nPhone: ${station.phone}\nSHO / Control: ${station.shoPhone}\nJurisdiction: ${station.jurisdictionAreas.join(', ')}`;
+    const textToCopy = `${station.name} (${station.hindiName || ''})\nDistrict: ${station.district}\nAddress: ${station.address} - ${station.pincode}\nLandmark: ${station.landmark || ''}\nPhone: ${station.phone}\nSHO / Control: ${station.shoPhone}\nJurisdiction: ${station.jurisdictionAreas.join(', ')}`;
     navigator.clipboard.writeText(textToCopy);
     setCopiedId(station.id);
     setTimeout(() => setCopiedId(null), 2000);
   };
-
-  const QUICK_SEARCHES = [
-    { label: 'Connaught Place', q: 'Connaught Place' },
-    { label: 'Chanakyapuri', q: 'Chanakyapuri' },
-    { label: 'Karol Bagh', q: 'Karol Bagh' },
-    { label: 'Hauz Khas', q: 'Hauz Khas' },
-    { label: 'Dwarka', q: 'Dwarka' },
-    { label: 'Rajouri Garden', q: 'Rajouri Garden' },
-    { label: 'Cyber Crime Cell', q: 'Cyber' },
-    { label: 'Women Helpline', q: 'Women' }
-  ];
 
   return (
     <div className="space-y-6 text-zinc-100">
@@ -51,9 +70,9 @@ export const PoliceStationFinder: React.FC = () => {
         <div className="flex items-start gap-3">
           <ShieldAlert className="w-6 h-6 text-amber-400 flex-shrink-0 mt-1" />
           <div>
-            <h3 className="text-sm font-bold text-amber-200">Delhi Police Station & Jurisdiction Finder</h3>
+            <h3 className="text-sm font-bold text-amber-200">{stateInfo.name} Police Station & Jurisdiction Directory</h3>
             <p className="text-xs text-zinc-300 mt-0.5">
-              Locate official Delhi Police Stations, SHO contacts, duty officer landlines, and covered colonies/markets.
+              Locate official Police Stations, SHO landlines/mobiles, and jurisdiction areas in {stateInfo.name}.
             </p>
           </div>
         </div>
@@ -64,15 +83,30 @@ export const PoliceStationFinder: React.FC = () => {
           >
             <PhoneCall className="w-3.5 h-3.5" /> Emergency Call 112
           </a>
-          <a
-            href="https://delhipolice.gov.in/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-amber-400 border border-amber-800/60 text-xs font-bold inline-flex items-center gap-1"
+        </div>
+      </div>
+
+      {/* State Selector Bar */}
+      <div className="p-3.5 rounded-xl bg-zinc-900 border border-zinc-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+        <div className="flex items-center gap-2">
+          <Globe className="w-4 h-4 text-amber-400" />
+          <span className="font-bold text-zinc-200">Select State / UT for Police Jurisdiction:</span>
+        </div>
+        <div className="w-full sm:w-72">
+          <select
+            value={selectedState}
+            onChange={(e) => {
+              setSelectedState(e.target.value);
+              setSelectedDistrict('All');
+            }}
+            className="w-full bg-zinc-950 border border-zinc-700 text-white rounded-lg px-3 py-1.5 text-xs font-medium focus:outline-none focus:border-amber-500"
           >
-            <span>Delhi Police Portal</span>
-            <ExternalLink className="w-3 h-3" />
-          </a>
+            {STATES_LIST.filter(s => s.id !== 'national').map((st) => (
+              <option key={st.id} value={st.id}>
+                {st.name} ({st.hindiName})
+              </option>
+            ))}
+          </select>
         </div>
       </div>
 
@@ -86,8 +120,8 @@ export const PoliceStationFinder: React.FC = () => {
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search locality (e.g. Connaught Place, Karol Bagh), PIN (110001), or PS name..."
-              className="w-full bg-zinc-950 border border-zinc-800 rounded-xl pl-9 pr-3 py-2.5 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-[#FF6B00]"
+              placeholder={`Search locality, area, PIN, or Police Station name in ${stateInfo.name}...`}
+              className="w-full bg-zinc-950 border border-zinc-800 rounded-xl pl-9 pr-3 py-2.5 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-amber-500"
             />
             {query && (
               <button
@@ -104,139 +138,115 @@ export const PoliceStationFinder: React.FC = () => {
             <select
               value={selectedDistrict}
               onChange={(e) => setSelectedDistrict(e.target.value)}
-              className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-[#FF6B00]"
+              className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-amber-500"
             >
-              {DELHI_POLICE_DISTRICTS.map((dist) => (
-                <option key={dist} value={dist}>{dist}</option>
+              {availableDistricts.map((dist) => (
+                <option key={dist} value={dist}>
+                  {dist === 'All' ? 'All Districts / Zones' : dist}
+                </option>
               ))}
             </select>
           </div>
         </div>
-
-        {/* Quick Search Chips */}
-        <div className="flex flex-wrap items-center gap-2 text-xs">
-          <span className="text-zinc-400 font-semibold text-[11px]">Popular Localities:</span>
-          {QUICK_SEARCHES.map((item, idx) => (
-            <button
-              key={idx}
-              onClick={() => {
-                setQuery(item.q);
-                setSelectedDistrict('All Districts');
-              }}
-              className="px-2.5 py-1 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-[#FF6B00] text-zinc-300 hover:text-white transition text-[11px]"
-            >
-              {item.label}
-            </button>
-          ))}
-        </div>
       </div>
 
-      {/* Search Result Summary Header */}
-      <div className="flex items-center justify-between text-xs bg-zinc-900/60 p-3 rounded-xl border border-zinc-800/80">
-        <div className="flex items-center gap-2">
-          <Info className="w-4 h-4 text-[#FF6B00]" />
-          <span className="text-zinc-300 font-medium">
-            Showing <strong className="text-white">{stations.length}</strong> Police Station{stations.length !== 1 ? 's' : ''} for {selectedDistrict !== 'All Districts' ? selectedDistrict : 'All Delhi Districts'}
-          </span>
-        </div>
-        {(query || selectedDistrict !== 'All Districts') && (
-          <button
-            onClick={() => {
-              setQuery('');
-              setSelectedDistrict('All Districts');
-            }}
-            className="text-[11px] text-amber-400 hover:underline font-bold"
-          >
-            Reset Filters
-          </button>
-        )}
+      {/* Results Header */}
+      <div className="flex items-center justify-between text-xs text-zinc-400 border-b border-zinc-800 pb-2">
+        <span>
+          Showing <strong className="text-white">{filteredStations.length}</strong> Police Station{filteredStations.length === 1 ? '' : 's'} in <strong className="text-amber-400">{stateInfo.name}</strong>
+        </span>
+        <span className="text-[11px] text-zinc-500">
+          Emergency Dial: 112 (National Emergency Helpline)
+        </span>
       </div>
 
-      {/* Police Stations Grid */}
-      {stations.length > 0 ? (
+      {/* Police Station Cards Grid */}
+      {filteredStations.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {stations.map((ps) => (
-            <div 
-              key={ps.id} 
-              className={`p-5 rounded-2xl bg-zinc-900 border transition space-y-4 flex flex-col justify-between ${
-                ps.isSpecialUnit 
-                  ? 'border-amber-700/60 shadow-lg shadow-amber-950/30' 
-                  : 'border-zinc-800 hover:border-[#FF6B00]/60'
-              }`}
+          {filteredStations.map((station) => (
+            <div
+              key={station.id}
+              className="p-5 rounded-2xl bg-zinc-900 border border-zinc-800 hover:border-amber-500/60 transition-all flex flex-col justify-between gap-4 group"
             >
               <div className="space-y-3">
-                {/* Station Title & Badges */}
+                {/* Header info */}
                 <div className="flex items-start justify-between gap-2">
                   <div>
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <h4 className="text-base font-black text-white">{ps.name}</h4>
-                      {ps.isSpecialUnit && (
-                        <span className="text-[10px] px-2 py-0.5 rounded bg-amber-950 text-amber-400 border border-amber-800 font-bold uppercase">
-                          Special Unit
+                    <div className="flex items-center gap-2 flex-wrap mb-1">
+                      <span className="text-[10px] px-2 py-0.5 rounded font-bold bg-amber-500/10 text-amber-300 border border-amber-500/20">
+                        {station.district}
+                      </span>
+                      {station.isSpecialUnit && (
+                        <span className="text-[10px] px-2 py-0.5 rounded font-bold bg-red-500/10 text-red-400 border border-red-500/20">
+                          Special Unit / HQ
                         </span>
                       )}
                     </div>
-                    <p className="text-xs text-amber-400 font-semibold mt-0.5">{ps.hindiName}</p>
-                    <span className="inline-block mt-1 text-[10px] font-bold uppercase tracking-wider text-zinc-400 px-2 py-0.5 rounded bg-zinc-800 border border-zinc-700">
-                      {ps.district}
-                    </span>
+                    <h4 className="text-base font-bold text-white group-hover:text-amber-300 transition">
+                      {station.name}
+                    </h4>
+                    {station.hindiName && (
+                      <p className="text-xs text-zinc-400 font-medium">{station.hindiName}</p>
+                    )}
                   </div>
 
                   <button
-                    onClick={() => handleCopyStationDetails(ps)}
-                    className="p-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white transition flex-shrink-0"
-                    title="Copy full details"
+                    onClick={() => handleCopyStationDetails(station)}
+                    title="Copy details"
+                    className="p-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-300 flex-shrink-0 transition"
                   >
-                    {copiedId === ps.id ? (
+                    {copiedId === station.id ? (
                       <Check className="w-4 h-4 text-emerald-400" />
                     ) : (
-                      <Copy className="w-4 h-4 text-zinc-400" />
+                      <Copy className="w-4 h-4" />
                     )}
                   </button>
                 </div>
 
                 {/* Address & Landmark */}
-                <div className="space-y-1.5 text-xs text-zinc-300 bg-zinc-950/80 p-3 rounded-xl border border-zinc-800/80">
+                <div className="space-y-1 text-xs text-zinc-300">
                   <div className="flex items-start gap-2">
-                    <MapPin className="w-4 h-4 text-[#FF6B00] flex-shrink-0 mt-0.5" />
+                    <MapPin className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" />
+                    <span>{station.address} - <strong className="text-white font-mono">{station.pincode}</strong></span>
+                  </div>
+                  {station.landmark && (
+                    <div className="flex items-start gap-2 text-zinc-400 pl-6 text-[11px]">
+                      <span>Landmark: {station.landmark}</span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Contacts Box */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2 border-t border-zinc-800/80 text-xs">
+                  <div className="p-2 rounded-xl bg-zinc-950 border border-zinc-800 flex items-center gap-2">
+                    <PhoneCall className="w-4 h-4 text-amber-400 flex-shrink-0" />
                     <div>
-                      <p className="font-medium text-white">{ps.address} - <span className="font-mono text-amber-400">{ps.pincode}</span></p>
-                      <p className="text-[11px] text-zinc-400 mt-0.5">Landmark: {ps.landmark}</p>
+                      <span className="text-[10px] text-zinc-400 block">Duty Officer Landline</span>
+                      <a href={`tel:${station.phone.split('/')[0].replace(/[^0-9]/g, '')}`} className="font-mono text-xs font-bold text-zinc-200 hover:underline">
+                        {station.phone}
+                      </a>
+                    </div>
+                  </div>
+
+                  <div className="p-2 rounded-xl bg-zinc-950 border border-zinc-800 flex items-center gap-2">
+                    <Building className="w-4 h-4 text-red-400 flex-shrink-0" />
+                    <div>
+                      <span className="text-[10px] text-zinc-400 block">SHO / Control Phone</span>
+                      <span className="font-mono text-xs font-bold text-red-300">
+                        {station.shoPhone}
+                      </span>
                     </div>
                   </div>
                 </div>
 
-                {/* Contact Phone Numbers */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-                  <div className="p-2.5 rounded-xl bg-zinc-950 border border-zinc-800/80 flex items-center justify-between">
-                    <div>
-                      <span className="text-[10px] text-zinc-500 font-bold uppercase block">Station Landline</span>
-                      <a href={`tel:${ps.phone.split('/')[0].trim()}`} className="font-mono font-bold text-white hover:text-[#FF6B00]">
-                        {ps.phone}
-                      </a>
-                    </div>
-                    <PhoneCall className="w-3.5 h-3.5 text-[#FF6B00]" />
-                  </div>
-
-                  <div className="p-2.5 rounded-xl bg-zinc-950 border border-zinc-800/80 flex items-center justify-between">
-                    <div>
-                      <span className="text-[10px] text-zinc-500 font-bold uppercase block">SHO / Control Phone</span>
-                      <a href={`tel:${ps.shoPhone.split('/')[0].trim()}`} className="font-mono font-bold text-amber-400 hover:underline">
-                        {ps.shoPhone}
-                      </a>
-                    </div>
-                    <PhoneCall className="w-3.5 h-3.5 text-amber-400" />
-                  </div>
-                </div>
-
-                {/* Covered Localities / Jurisdiction Areas */}
-                <div className="pt-2 border-t border-zinc-800/80 space-y-1.5">
+                {/* Jurisdiction tags */}
+                <div className="pt-2 border-t border-zinc-800/80 space-y-1">
                   <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider block">
-                    Covered Localities & Jurisdiction:
+                    Jurisdiction / Areas Covered:
                   </span>
                   <div className="flex flex-wrap gap-1.5">
-                    {ps.jurisdictionAreas.map((area, idx) => (
-                      <span key={idx} className="text-[11px] px-2 py-0.5 rounded bg-zinc-800 text-zinc-200 border border-zinc-700/60 font-medium">
+                    {station.jurisdictionAreas.map((area, idx) => (
+                      <span key={idx} className="text-[11px] px-2 py-0.5 rounded bg-zinc-800 text-zinc-300 font-medium">
                         {area}
                       </span>
                     ))}
@@ -245,23 +255,21 @@ export const PoliceStationFinder: React.FC = () => {
               </div>
 
               {/* Action Buttons */}
-              <div className="pt-3 border-t border-zinc-800 flex items-center gap-2 flex-wrap">
+              <div className="pt-3 border-t border-zinc-800 flex items-center justify-between gap-2 flex-wrap">
                 <a
-                  href={`tel:${ps.phone.split('/')[0].trim()}`}
-                  className="px-3 py-1.5 rounded-lg bg-[#FF6B00] hover:bg-[#FF6B00]/90 text-white text-xs font-bold inline-flex items-center gap-1.5"
+                  href={`tel:${station.phone.split('/')[0].replace(/[^0-9]/g, '')}`}
+                  className="px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-bold inline-flex items-center gap-1.5 border border-zinc-700"
                 >
-                  <PhoneCall className="w-3 h-3" />
+                  <PhoneCall className="w-3.5 h-3.5 text-amber-400" />
                   <span>Call Station</span>
                 </a>
+
                 <a
-                  href="https://delhipolice.gov.in/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-semibold inline-flex items-center gap-1"
+                  href="tel:112"
+                  className="px-3.5 py-1.5 rounded-lg bg-red-600 hover:bg-red-500 text-white text-xs font-bold inline-flex items-center gap-1.5 shadow"
                 >
-                  <FileText className="w-3 h-3 text-amber-400" />
-                  <span>Report E-FIR / Lost Article</span>
-                  <ExternalLink className="w-3 h-3 text-zinc-500" />
+                  <ShieldAlert className="w-3.5 h-3.5" />
+                  <span>Emergency 112</span>
                 </a>
               </div>
             </div>
@@ -269,41 +277,22 @@ export const PoliceStationFinder: React.FC = () => {
         </div>
       ) : (
         <div className="p-8 text-center bg-zinc-900/50 rounded-2xl border border-zinc-800 space-y-3">
-          <AlertTriangle className="w-10 h-10 text-amber-400 mx-auto" />
-          <h4 className="text-base font-bold text-white">No police station found matching "{query}"</h4>
+          <Info className="w-10 h-10 text-amber-400 mx-auto" />
+          <h4 className="text-base font-bold text-white">No police station found matching "{query}" in {stateInfo.name}</h4>
           <p className="text-xs text-zinc-400 max-w-md mx-auto">
-            Try searching by area (e.g., Connaught Place, Hauz Khas, Rohini), district, or PIN code (110001, 110021).
+            Try searching by key colony name, district, or landmark, or dial emergency 112 directly.
           </p>
           <button
             onClick={() => {
               setQuery('');
-              setSelectedDistrict('All Districts');
+              setSelectedDistrict('All');
             }}
             className="px-4 py-2 rounded-xl bg-[#FF6B00] text-white font-bold text-xs hover:brightness-110 transition"
           >
-            Show All Delhi Police Stations
+            Show All {stateInfo.name} Police Stations
           </button>
         </div>
       )}
-
-      {/* Official Directory Citation Footer */}
-      <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-zinc-400">
-        <div className="flex items-start gap-2">
-          <ShieldAlert className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
-          <span>
-            Delhi Police station jurisdiction directory verified against <strong className="text-zinc-200">Delhi Police Official Directory & District Records</strong>.
-          </span>
-        </div>
-        <a
-          href="https://delhipolice.gov.in/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-1 text-[#FF6B00] hover:underline font-bold text-[11px] flex-shrink-0"
-        >
-          <span>Delhi Police Official Portal</span>
-          <ExternalLink className="w-3 h-3" />
-        </a>
-      </div>
     </div>
   );
 };

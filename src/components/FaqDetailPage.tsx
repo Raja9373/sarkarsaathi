@@ -54,10 +54,11 @@ export const FaqDetailPage: React.FC<FaqDetailPageProps> = ({ slug, onBackToHub,
     const found = (allFaqsData as unknown as FaqItem[]).find(
       f => f.slug === slug || String(f.id) === slug
     );
-    return found || (allFaqsData[0] as unknown as FaqItem);
+    return found || ((allFaqsData.length > 0 ? allFaqsData[0] : null) as unknown as FaqItem | null);
   }, [slug]);
 
   const currentIndex = useMemo(() => {
+    if (!faq) return -1;
     return (allFaqsData as unknown as FaqItem[]).findIndex(f => f.id === faq.id);
   }, [faq]);
 
@@ -67,12 +68,13 @@ export const FaqDetailPage: React.FC<FaqDetailPageProps> = ({ slug, onBackToHub,
   }, [currentIndex]);
 
   const nextFaq = useMemo(() => {
-    if (currentIndex < allFaqsData.length - 1) return (allFaqsData as unknown as FaqItem[])[currentIndex + 1];
+    if (currentIndex >= 0 && currentIndex < allFaqsData.length - 1) return (allFaqsData as unknown as FaqItem[])[currentIndex + 1];
     return null;
   }, [currentIndex]);
 
   // Related FAQs in the same category
   const relatedFaqs = useMemo(() => {
+    if (!faq) return [];
     return (allFaqsData as unknown as FaqItem[])
       .filter(f => f.category === faq.category && f.id !== faq.id)
       .slice(0, 5);
@@ -87,11 +89,12 @@ export const FaqDetailPage: React.FC<FaqDetailPageProps> = ({ slug, onBackToHub,
     return clean;
   };
 
-  const displayQuestion = lang === 'hi' ? (faq.question || faq.q || '') : (faq.q_en || faq.question || '');
-  const displayAnswer = lang === 'hi' ? (faq.answer || faq.a || '') : (faq.answer_en || faq.a_en || faq.answer || '');
+  const displayQuestion = faq ? (lang === 'hi' ? (faq.question || faq.q || '') : (faq.q_en || faq.question || '')) : 'Sarkari Yojana FAQ';
+  const displayAnswer = faq ? (lang === 'hi' ? (faq.answer || faq.a || '') : (faq.answer_en || faq.a_en || faq.answer || '')) : '';
 
   // Update DOM Title and Meta Tags for SEO
   useEffect(() => {
+    if (!faq) return;
     document.title = `${displayQuestion} | SarkarSaathi.org`;
     
     // Set canonical link
@@ -124,6 +127,27 @@ export const FaqDetailPage: React.FC<FaqDetailPageProps> = ({ slug, onBackToHub,
       if (tag) tag.remove();
     };
   }, [faq, displayQuestion, displayAnswer]);
+
+  if (!faq) {
+    return (
+      <div className="min-h-[60vh] flex flex-col items-center justify-center p-6 text-center space-y-4">
+        <div className="w-14 h-14 rounded-2xl bg-amber-500/10 text-[#FF6B00] flex items-center justify-center">
+          <HelpCircle className="w-8 h-8" />
+        </div>
+        <h2 className="text-xl font-bold text-white">FAQ Page Not Found or Removed</h2>
+        <p className="text-xs text-zinc-400 max-w-md">
+          This question has been removed or updated. You can browse all verified government schemes, state portals, and official services directly.
+        </p>
+        <button
+          onClick={onBackToHub}
+          className="px-5 py-2.5 rounded-xl bg-[#FF6B00] text-white text-xs font-bold shadow hover:bg-[#E65100] transition flex items-center gap-1.5"
+        >
+          <Home className="w-4 h-4" />
+          <span>Explore All Schemes & Services</span>
+        </button>
+      </div>
+    );
+  }
 
   const handleCopy = () => {
     const textToCopy = `Q: ${displayQuestion}\n\nURL: https://sarkarsaathi.org/faq/${faq.slug}\n\nSource: ${faq.officialSource}`;

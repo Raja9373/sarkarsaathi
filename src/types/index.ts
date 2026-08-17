@@ -1,4 +1,44 @@
-export type StateId = 'delhi' | 'haryana' | 'punjab' | 'up' | 'rajasthan' | 'maharashtra' | 'national';
+export type StateId =
+  | 'delhi'
+  | 'national'
+  | 'andhra-pradesh'
+  | 'arunachal-pradesh'
+  | 'assam'
+  | 'bihar'
+  | 'chhattisgarh'
+  | 'goa'
+  | 'gujarat'
+  | 'haryana'
+  | 'himachal-pradesh'
+  | 'jharkhand'
+  | 'karnataka'
+  | 'kerala'
+  | 'madhya-pradesh'
+  | 'mp'
+  | 'maharashtra'
+  | 'manipur'
+  | 'meghalaya'
+  | 'mizoram'
+  | 'nagaland'
+  | 'odisha'
+  | 'punjab'
+  | 'rajasthan'
+  | 'sikkim'
+  | 'tamil-nadu'
+  | 'telangana'
+  | 'tripura'
+  | 'uttar-pradesh'
+  | 'up'
+  | 'uttarakhand'
+  | 'west-bengal'
+  | 'andaman-nicobar'
+  | 'chandigarh'
+  | 'dadra-nagar-haveli-daman-diu'
+  | 'jammu-kashmir'
+  | 'ladakh'
+  | 'lakshadweep'
+  | 'puducherry'
+  | string;
 
 export interface StateInfo {
   id: StateId;
@@ -7,6 +47,9 @@ export interface StateInfo {
   isAvailable: boolean;
   code: string;
   capital: string;
+  popularCities?: string[];
+  type?: 'state' | 'ut' | 'central';
+  hasLocalSchemes?: boolean;
 }
 
 export interface ServiceItem {

@@ -1,0 +1,36 @@
+[
+  {
+    "id": "rj-hosp-01",
+    "name": "Sawai Man Singh Hospital (SMS Hospital Jaipur)",
+    "type": "Rajasthan Govt Apex Teaching Hospital",
+    "district": "Jaipur",
+    "state": "Rajasthan",
+    "address": "JLN Marg, Ashok Nagar, Jaipur, Rajasthan",
+    "pincode": "302004",
+    "emergencyNumber": "0141-2518222 / 108",
+    "phone": "0141-2518200",
+    "opdTimings": "08:00 AM - 02:00 PM (Mon-Sat) | 24x7 Emergency",
+    "landmark": "Near Rambagh Circle & JLN Marg",
+    "bedCapacity": 3200,
+    "specialties": ["24x7 Level 1 Trauma", "Cardiology", "Neurology", "Chiranjeevi / RGHS Desks", "Organ Transplant"],
+    "hasTraumaCenter": true,
+    "has24x7Emergency": true
+  },
+  {
+    "id": "rj-hosp-02",
+    "name": "All India Institute of Medical Sciences (AIIMS Jodhpur)",
+    "type": "Central Govt Apex Medical Institute",
+    "district": "Jodhpur",
+    "state": "Rajasthan",
+    "address": "Basni Industrial Area Phase 2, Jodhpur, Rajasthan",
+    "pincode": "342005",
+    "emergencyNumber": "0291-2740741 / 108",
+    "phone": "0291-2740742",
+    "opdTimings": "08:30 AM - 01:00 PM (Mon-Sat) | 24x7 Emergency",
+    "landmark": "Near Basni Industrial Area",
+    "bedCapacity": 960,
+    "specialties": ["Apex Trauma Center", "Oncology", "Cardiothoracic Surgery", "Nephrology", "Pediatrics"],
+    "hasTraumaCenter": true,
+    "has24x7Emergency": true
+  }
+]

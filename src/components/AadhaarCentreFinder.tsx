@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   UserCheck, 
   Search, 
@@ -17,18 +17,33 @@ import {
   Sparkles
 } from 'lucide-react';
 import { 
-  DELHI_AADHAAR_DISTRICTS, 
-  getMatchingAadhaarCentres, 
+  getAadhaarCentresByState,
+  getAadhaarDistrictsForState,
   AadhaarCentreItem 
 } from '../data/aadhaarData';
+import { getStateInfo } from '../data/statesData';
 
-export const AadhaarCentreFinder: React.FC = () => {
+interface AadhaarCentreFinderProps {
+  currentStateId?: string;
+}
+
+export const AadhaarCentreFinder: React.FC<AadhaarCentreFinderProps> = ({ currentStateId = 'delhi' }) => {
+  const [selectedState, setSelectedState] = useState<string>(currentStateId);
   const [query, setQuery] = useState<string>('');
   const [selectedDistrict, setSelectedDistrict] = useState<string>('All Districts');
   const [selectedType, setSelectedType] = useState<string>('All Types');
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
-  const centres = getMatchingAadhaarCentres(selectedDistrict, query, selectedType);
+  useEffect(() => {
+    if (currentStateId) {
+      setSelectedState(currentStateId);
+      setSelectedDistrict('All Districts');
+    }
+  }, [currentStateId]);
+
+  const stateInfo = getStateInfo(selectedState);
+  const districts = getAadhaarDistrictsForState(selectedState);
+  const centres = getAadhaarCentresByState(selectedState, selectedDistrict, query, selectedType);
 
   const handleCopyCentreDetails = (centre: AadhaarCentreItem) => {
     const textToCopy = `${centre.name}\nType: ${centre.type}\nDistrict: ${centre.district}\nAddress: ${centre.address} - ${centre.pincode}\nLandmark: ${centre.landmark}\nTimings: ${centre.timings}\nPhone: ${centre.phone}\nServices: ${centre.servicesOffered.join(', ')}`;
@@ -36,17 +51,6 @@ export const AadhaarCentreFinder: React.FC = () => {
     setCopiedId(centre.id);
     setTimeout(() => setCopiedId(null), 2000);
   };
-
-  const QUICK_AREAS = [
-    { label: 'Karol Bagh (ASK)', q: 'Karol Bagh' },
-    { label: 'Dwarka Sec 12 (ASK)', q: 'Dwarka' },
-    { label: 'Inderlok (ASK)', q: 'Inderlok' },
-    { label: 'Akshardham (ASK)', q: 'Akshardham' },
-    { label: 'Parliament Street PO', q: 'Parliament' },
-    { label: 'Kalkaji Post Office', q: 'Kalkaji' },
-    { label: 'Janakpuri HO', q: 'Janakpuri' },
-    { label: 'Rohini Sec 7 HO', q: 'Rohini' }
-  ];
 
   return (
     <div className="space-y-6 text-zinc-100">
@@ -58,13 +62,13 @@ export const AadhaarCentreFinder: React.FC = () => {
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h3 className="text-base font-black text-white">Delhi Aadhaar Seva Kendra & Enrolment Centre Finder</h3>
+              <h3 className="text-base font-black text-white">{stateInfo.name} Aadhaar Seva Kendra & Enrolment Centre Finder</h3>
               <span className="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30 font-bold uppercase">
                 UIDAI Verified
               </span>
             </div>
             <p className="text-xs text-zinc-300 mt-0.5">
-              Find nearest official UIDAI Aadhaar Seva Kendras, Post Offices, Bank branches, and CSC centers for new enrolment, biometric update, or document updation.
+              Find nearest official UIDAI Aadhaar Seva Kendras, Post Offices, Bank branches, and CSC centers across {stateInfo.name} for new enrolment, biometric update, or document updation.
             </p>
           </div>
         </div>
@@ -133,7 +137,7 @@ export const AadhaarCentreFinder: React.FC = () => {
               onChange={(e) => setSelectedDistrict(e.target.value)}
               className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-[#FF6B00]"
             >
-              {DELHI_AADHAAR_DISTRICTS.map((dist) => (
+              {districts.map((dist) => (
                 <option key={dist} value={dist}>{dist}</option>
               ))}
             </select>
@@ -153,24 +157,6 @@ export const AadhaarCentreFinder: React.FC = () => {
               <option value="CSC / Govt Office">CSC / Govt Office Centres</option>
             </select>
           </div>
-        </div>
-
-        {/* Quick Search Chips */}
-        <div className="flex flex-wrap items-center gap-2 text-xs">
-          <span className="text-zinc-400 font-semibold text-[11px]">Popular Seva Kendras:</span>
-          {QUICK_AREAS.map((item, idx) => (
-            <button
-              key={idx}
-              onClick={() => {
-                setQuery(item.q);
-                setSelectedDistrict('All Districts');
-                setSelectedType('All Types');
-              }}
-              className="px-2.5 py-1 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-[#FF6B00] text-zinc-300 hover:text-white transition text-[11px]"
-            >
-              {item.label}
-            </button>
-          ))}
         </div>
       </div>
 

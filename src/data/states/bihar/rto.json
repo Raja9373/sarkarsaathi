@@ -1,0 +1,53 @@
+[
+  {
+    "id": "br-rto-01",
+    "rtoCode": "BR-01",
+    "zoneName": "District Transport Office (DTO) Patna",
+    "district": "Patna",
+    "state": "Bihar",
+    "address": "Gandhi Maidan Road, Near Biscomaun Bhawan, Patna, Bihar",
+    "pincode": "800001",
+    "phone": "0612-2219100",
+    "email": "dto.patna-bih@gov.in",
+    "timings": "10:00 AM - 05:00 PM (Mon-Sat)",
+    "landmark": "Near Biscomaun Bhawan & Gandhi Maidan",
+    "jurisdictionAreas": ["Patna City", "Fraser Road", "Kankarbagh", "Danapur", "Boring Road", "Rajendra Nagar"],
+    "servicesOffered": ["Learner & Permanent Driving License", "Automated Driving Test Track", "Vehicle RC Registration", "Transfer of Ownership", "Commercial Fitness Certificate", "VIP Registration Number"],
+    "automatedTrackAvailable": true,
+    "mloIncharge": "District Transport Officer (DTO Patna)"
+  },
+  {
+    "id": "br-rto-02",
+    "rtoCode": "BR-02",
+    "zoneName": "District Transport Office Gaya",
+    "district": "Gaya",
+    "state": "Bihar",
+    "address": "Collectorate Compound, Gaya, Bihar",
+    "pincode": "823001",
+    "phone": "0631-2220100",
+    "email": "dto.gaya-bih@gov.in",
+    "timings": "10:00 AM - 05:00 PM (Mon-Sat)",
+    "landmark": "Near Gaya Collectorate & Civil Lines",
+    "jurisdictionAreas": ["Gaya City", "Bodh Gaya", "Tekari", "Sherghati", "Manpur"],
+    "servicesOffered": ["Driving License", "Vehicle RC", "Road Tax Payment", "Automated Track Testing"],
+    "automatedTrackAvailable": true,
+    "mloIncharge": "District Transport Officer Gaya"
+  },
+  {
+    "id": "br-rto-06",
+    "rtoCode": "BR-06",
+    "zoneName": "District Transport Office Muzaffarpur",
+    "district": "Muzaffarpur",
+    "state": "Bihar",
+    "address": "Collectorate Campus, Company Bagh, Muzaffarpur, Bihar",
+    "pincode": "842001",
+    "phone": "0621-2242100",
+    "email": "dto.muz-bih@gov.in",
+    "timings": "10:00 AM - 05:00 PM (Mon-Sat)",
+    "landmark": "Near Company Bagh & Red Cross",
+    "jurisdictionAreas": ["Muzaffarpur City", "Kanti", "Motipur", "Sakra", "Saraiya"],
+    "servicesOffered": ["DL Issue & Renewal", "RC Transfer", "Commercial Permit", "Fitness Certificate"],
+    "automatedTrackAvailable": true,
+    "mloIncharge": "District Transport Officer Muzaffarpur"
+  }
+]

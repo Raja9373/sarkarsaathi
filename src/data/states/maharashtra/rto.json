@@ -1,0 +1,53 @@
+[
+  {
+    "id": "mh-rto-01",
+    "rtoCode": "MH-01",
+    "zoneName": "Regional Transport Office Mumbai South (Tardeo)",
+    "district": "Mumbai City",
+    "state": "Maharashtra",
+    "address": "Old Bodyguard Lane, Tulsiwadi, Tardeo, Mumbai, Maharashtra",
+    "pincode": "400034",
+    "phone": "022-23532333",
+    "email": "rto.mumbai-south@gov.in",
+    "timings": "10:00 AM - 05:30 PM (Mon-Fri)",
+    "landmark": "Near AC Market Tardeo",
+    "jurisdictionAreas": ["South Mumbai", "Colaba", "Fort", "Nariman Point", "Malabar Hill", "Byculla", "Dadar South"],
+    "servicesOffered": ["Smart Card Driving License", "Automated Driving Test", "Vehicle Registration", "Vintage Car Registration", "Commercial Permits"],
+    "automatedTrackAvailable": true,
+    "mloIncharge": "Regional Transport Officer Mumbai South"
+  },
+  {
+    "id": "mh-rto-12",
+    "rtoCode": "MH-12",
+    "zoneName": "Regional Transport Office Pune (Sangam Bridge)",
+    "district": "Pune",
+    "state": "Maharashtra",
+    "address": "Near Sangam Bridge, Raja Bahadur Mill Road, Pune, Maharashtra",
+    "pincode": "411001",
+    "phone": "020-26058080",
+    "email": "rto.pune-mh@gov.in",
+    "timings": "10:00 AM - 05:30 PM (Mon-Fri)",
+    "landmark": "Near Sangam Bridge & COEP Ground",
+    "jurisdictionAreas": ["Pune City", "Shivajinagar", "Kothrud", "Camp", "Swargate", "Hadapsar", "Aundh"],
+    "servicesOffered": ["Learner & Permanent License", "Online LL Exam", "IDP International Permit", "Fitness Certificate"],
+    "automatedTrackAvailable": true,
+    "mloIncharge": "Regional Transport Officer Pune"
+  },
+  {
+    "id": "mh-rto-02",
+    "rtoCode": "MH-02",
+    "zoneName": "Regional Transport Office Mumbai West (Andheri)",
+    "district": "Mumbai Suburban",
+    "state": "Maharashtra",
+    "address": "D-111, Ambivali Village, Versova Road, Andheri West, Mumbai, Maharashtra",
+    "pincode": "400053",
+    "phone": "022-26366952",
+    "email": "rto.mumbai-west@gov.in",
+    "timings": "10:00 AM - 05:30 PM (Mon-Fri)",
+    "landmark": "Near Versova Metro Station",
+    "jurisdictionAreas": ["Andheri", "Bandra", "Juhu", "Goregaon", "Malad", "Jogeshwari"],
+    "servicesOffered": ["Driving License", "Vehicle RC Registration", "Tax Assessment"],
+    "automatedTrackAvailable": true,
+    "mloIncharge": "Regional Transport Officer Andheri"
+  }
+]

@@ -1,0 +1,66 @@
+[
+  {
+    "pin": "110001",
+    "area": "Connaught Place, Janpath, Parliament Street, Barakhamba Road, Pragati Maidan, Mandi House, Bengali Market",
+    "district": "New Delhi",
+    "postOffice": "Connaught Place Head Post Office (HO)",
+    "stdCode": "011",
+    "state": "Delhi"
+  },
+  {
+    "pin": "110002",
+    "area": "Daryaganj, Delhi Gate, Rajghat, ITO, Maulana Azad Medical College, Asaf Ali Road",
+    "district": "Central Delhi",
+    "postOffice": "Daryaganj Sub Post Office",
+    "stdCode": "011",
+    "state": "Delhi"
+  },
+  {
+    "pin": "110003",
+    "area": "Pandara Road, CGO Complex, Golf Links, Khan Market, Lodhi Road, Kaka Nagar",
+    "district": "New Delhi",
+    "postOffice": "Pandara Road SO",
+    "stdCode": "011",
+    "state": "Delhi"
+  },
+  {
+    "pin": "110005",
+    "area": "Karol Bagh, Anand Parbat, Dev Nagar, Bank Street, Joshi Road",
+    "district": "Central Delhi",
+    "postOffice": "Karol Bagh SO",
+    "stdCode": "011",
+    "state": "Delhi"
+  },
+  {
+    "pin": "110006",
+    "area": "Chandni Chowk, Jama Masjid, Red Fort, Kashmere Gate, Town Hall, Fatehpuri",
+    "district": "North Delhi",
+    "postOffice": "Chandni Chowk SO",
+    "stdCode": "011",
+    "state": "Delhi"
+  },
+  {
+    "pin": "110016",
+    "area": "Hauz Khas, Green Park, AIIMS, Safdarjung Hospital, IIT Delhi, Yusuf Sarai",
+    "district": "South Delhi",
+    "postOffice": "Hauz Khas SO",
+    "stdCode": "011",
+    "state": "Delhi"
+  },
+  {
+    "pin": "110075",
+    "area": "Dwarka Sector 1 to 12, Dwarka Court, IP University, Welcome Hotel",
+    "district": "South West Delhi",
+    "postOffice": "Dwarka Sector 6 SO",
+    "stdCode": "011",
+    "state": "Delhi"
+  },
+  {
+    "pin": "110085",
+    "area": "Rohini Sector 1 to 9, Rithala, Japanese Park, Ambedkar Hospital Area",
+    "district": "North West Delhi",
+    "postOffice": "Rohini Sector 7 SO",
+    "stdCode": "011",
+    "state": "Delhi"
+  }
+]

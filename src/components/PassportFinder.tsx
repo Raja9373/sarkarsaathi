@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Compass, 
   Search, 
@@ -19,18 +19,33 @@ import {
   Sparkles
 } from 'lucide-react';
 import { 
-  DELHI_PASSPORT_REGIONS, 
-  getMatchingPassportOffices, 
+  getPassportOfficesByState, 
+  getPassportRegionsForState,
   PassportOfficeItem 
 } from '../data/passportData';
+import { getStateInfo } from '../data/statesData';
 
-export const PassportFinder: React.FC = () => {
+interface PassportFinderProps {
+  currentStateId?: string;
+}
+
+export const PassportFinder: React.FC<PassportFinderProps> = ({ currentStateId = 'delhi' }) => {
+  const [selectedState, setSelectedState] = useState<string>(currentStateId);
   const [query, setQuery] = useState<string>('');
   const [selectedRegion, setSelectedRegion] = useState<string>('All Regions');
   const [selectedType, setSelectedType] = useState<string>('All Types');
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
-  const offices = getMatchingPassportOffices(selectedRegion, query, selectedType);
+  useEffect(() => {
+    if (currentStateId) {
+      setSelectedState(currentStateId);
+      setSelectedRegion('All Regions');
+    }
+  }, [currentStateId]);
+
+  const stateInfo = getStateInfo(selectedState);
+  const regions = getPassportRegionsForState(selectedState);
+  const offices = getPassportOfficesByState(selectedState, selectedRegion, query, selectedType);
 
   const handleCopyOfficeDetails = (office: PassportOfficeItem) => {
     const textToCopy = `${office.name}\nType: ${office.type}\nRegion: ${office.region}\nAddress: ${office.address} - ${office.pincode}\nLandmark: ${office.landmark}\nTimings: ${office.timings}\nPhone/Helpline: ${office.phone}\nServices: ${office.servicesOffered.join(', ')}`;
@@ -38,17 +53,6 @@ export const PassportFinder: React.FC = () => {
     setCopiedId(office.id);
     setTimeout(() => setCopiedId(null), 2000);
   };
-
-  const QUICK_AREAS = [
-    { label: 'PSK ITO Herald House', q: 'Herald House' },
-    { label: 'PSK Shalimar Bagh', q: 'Shalimar Bagh' },
-    { label: 'RPO Bhikaji Cama', q: 'Bhikaji' },
-    { label: 'PSK Gurgaon', q: 'Gurgaon' },
-    { label: 'PSK Noida Sec 62', q: 'Noida' },
-    { label: 'POPSK Yamuna Vihar', q: 'Yamuna Vihar' },
-    { label: 'POPSK Rohini Sec 7', q: 'Rohini' },
-    { label: 'POPSK Kalkaji', q: 'Kalkaji' }
-  ];
 
   return (
     <div className="space-y-6 text-zinc-100">
@@ -60,13 +64,13 @@ export const PassportFinder: React.FC = () => {
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h3 className="text-base font-black text-white">Delhi Passport Seva Kendra (PSK) & RPO Finder</h3>
+              <h3 className="text-base font-black text-white">{stateInfo.name} Passport Seva Kendra (PSK) & RPO Finder</h3>
               <span className="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30 font-bold uppercase">
                 MEA Govt of India Verified
               </span>
             </div>
             <p className="text-xs text-zinc-300 mt-0.5">
-              Locate official Regional Passport Offices (RPO), Passport Seva Kendras (PSK), and Post Office PSKs (POPSK) across Delhi NCT & NCR for fresh passports, Tatkaal, or Police Clearance Certificates (PCC).
+              Locate official Regional Passport Offices (RPO), Passport Seva Kendras (PSK), and Post Office PSKs (POPSK) across {stateInfo.name} for fresh passports, Tatkaal, or Police Clearance Certificates (PCC).
             </p>
           </div>
         </div>
@@ -97,10 +101,10 @@ export const PassportFinder: React.FC = () => {
         <Sparkles className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
         <div className="space-y-1">
           <p className="font-bold text-blue-200">
-            Important Passport Application Guidelines:
+            Official Passport Guidelines ({stateInfo.name}):
           </p>
           <p className="text-zinc-300">
-            Prior appointment booking on the official <a href="https://www.passportindia.gov.in" target="_blank" rel="noopener noreferrer" className="text-amber-400 underline font-semibold">Passport Seva Portal</a> is mandatory before visiting any PSK or POPSK. Carry original Proof of Birth, Proof of Identity, Address Proof (Aadhaar, Voter ID, Utility bill), and ARN printout.
+            Prior appointment booking on the official <a href="https://www.passportindia.gov.in" target="_blank" rel="noopener noreferrer" className="text-amber-400 underline font-semibold">Passport Seva Portal</a> is mandatory before visiting any PSK or POPSK in {stateInfo.name}. Carry original Proof of Birth, Proof of Identity, Address Proof (Aadhaar, Voter ID, Utility bill), and ARN printout.
           </p>
         </div>
       </div>
@@ -115,63 +119,45 @@ export const PassportFinder: React.FC = () => {
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search by locality (e.g. ITO, Shalimar Bagh, Rohini, Gurgaon), PIN code, or office name..."
+              placeholder={`Search PSK, city, district in ${stateInfo.name} (e.g. PIN code, office name)...`}
               className="w-full bg-zinc-950 border border-zinc-800 rounded-xl pl-9 pr-8 py-2.5 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-[#FF6B00]"
             />
             {query && (
-              <button
+              <button 
                 onClick={() => setQuery('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-zinc-400 hover:text-white"
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-white text-xs font-bold"
               >
-                Clear
+                ✕
               </button>
             )}
           </div>
 
-          {/* Region Dropdown */}
+          {/* Region / District Filter */}
           <div className="md:col-span-3">
             <select
               value={selectedRegion}
               onChange={(e) => setSelectedRegion(e.target.value)}
-              className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-[#FF6B00]"
+              className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-2.5 text-xs text-zinc-200 focus:outline-none focus:border-[#FF6B00]"
             >
-              {DELHI_PASSPORT_REGIONS.map((reg) => (
-                <option key={reg} value={reg}>{reg}</option>
+              {regions.map((r) => (
+                <option key={r} value={r}>{r}</option>
               ))}
             </select>
           </div>
 
-          {/* Type Dropdown */}
+          {/* Office Type Filter */}
           <div className="md:col-span-3">
             <select
               value={selectedType}
               onChange={(e) => setSelectedType(e.target.value)}
-              className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-[#FF6B00]"
+              className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-2.5 text-xs text-zinc-200 focus:outline-none focus:border-[#FF6B00]"
             >
-              <option value="All Types">All Office Types</option>
-              <option value="PSK (Passport Seva Kendra)">Passport Seva Kendra (PSK)</option>
-              <option value="POPSK (Post Office PSK)">Post Office PSK (POPSK)</option>
-              <option value="RPO (Regional Passport Office)">Regional Passport Office (RPO)</option>
+              <option value="All Types">All Center Types</option>
+              <option value="PSK (Passport Seva Kendra)">PSK (Passport Seva Kendra)</option>
+              <option value="POPSK (Post Office PSK)">POPSK (Post Office PSK)</option>
+              <option value="RPO (Regional Passport Office)">RPO (Regional Passport Office)</option>
             </select>
           </div>
-        </div>
-
-        {/* Quick Search Chips */}
-        <div className="flex flex-wrap items-center gap-2 text-xs">
-          <span className="text-zinc-400 font-semibold text-[11px]">Popular Passport Kendras:</span>
-          {QUICK_AREAS.map((item, idx) => (
-            <button
-              key={idx}
-              onClick={() => {
-                setQuery(item.q);
-                setSelectedRegion('All Regions');
-                setSelectedType('All Types');
-              }}
-              className="px-2.5 py-1 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-[#FF6B00] text-zinc-300 hover:text-white transition text-[11px]"
-            >
-              {item.label}
-            </button>
-          ))}
         </div>
       </div>
 

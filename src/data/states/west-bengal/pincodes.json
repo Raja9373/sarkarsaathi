@@ -1,0 +1,10 @@
+[
+  { "pin": "700001", "area": "BBD Bagh, Dalhousie Square, High Court, Writers' Building, Netaji Subhas Road", "district": "Kolkata", "postOffice": "Kolkata GPO", "stdCode": "033" },
+  { "pin": "700016", "area": "Park Street, Camac Street, Russell Street, Free School Street", "district": "Kolkata", "postOffice": "Park Street SO", "stdCode": "033" },
+  { "pin": "700029", "area": "Gariahat, Ballygunge, Golpark, Dover Lane", "district": "Kolkata", "postOffice": "Gariahat SO", "stdCode": "033" },
+  { "pin": "700091", "area": "Salt Lake Sector V, Electronics Complex, Technopolis", "district": "North 24 Parganas (Kolkata)", "postOffice": "Salt Lake Sector V SO", "stdCode": "033" },
+  { "pin": "700156", "area": "New Town Rajarhat, Action Area 1, 2, 3, Eco Park", "district": "North 24 Parganas", "postOffice": "New Town SO", "stdCode": "033" },
+  { "pin": "711101", "area": "Howrah Station, Howrah Maidan, GT Road, Shibpur", "district": "Howrah", "postOffice": "Howrah HO", "stdCode": "033" },
+  { "pin": "734001", "area": "Siliguri Town, Hill Cart Road, Sevoke Road, Venus More", "district": "Darjeeling / Jalpaiguri", "postOffice": "Siliguri HO", "stdCode": "0353" },
+  { "pin": "713201", "area": "Durgapur Steel Township, City Centre, Benachity", "district": "Paschim Bardhaman", "postOffice": "Durgapur HO", "stdCode": "0343" }
+]

@@ -1,0 +1,53 @@
+[
+  {
+    "id": "mh-hosp-01",
+    "name": "King Edward Memorial Hospital (KEM Hospital) & Seth GS Medical College",
+    "type": "Municipal Corporation Apex Teaching Hospital",
+    "district": "Mumbai City",
+    "state": "Maharashtra",
+    "address": "Acharya Donde Marg, Parel, Mumbai, Maharashtra",
+    "pincode": "400012",
+    "emergencyNumber": "022-24107000 / 022-24136051",
+    "phone": "022-24107000",
+    "opdTimings": "08:00 AM - 12:30 PM (Mon-Sat) | 24x7 Emergency & Trauma",
+    "landmark": "Near Parel Railway Station & Tata Memorial",
+    "bedCapacity": 1800,
+    "specialties": ["24x7 Trauma Centre", "Cardiology", "Neurology", "Gastroenterology", "Nephrology", "Mahatma Jyotirao Phule Jan Arogya Yojana (MJPJAY)"],
+    "hasTraumaCenter": true,
+    "has24x7Emergency": true
+  },
+  {
+    "id": "mh-hosp-02",
+    "name": "Sassoon General Hospital & B.J. Medical College Pune",
+    "type": "Maharashtra Govt Apex Teaching Hospital",
+    "district": "Pune",
+    "state": "Maharashtra",
+    "address": "Near Pune Railway Station, Sassoon Road, Pune, Maharashtra",
+    "pincode": "411001",
+    "emergencyNumber": "020-26128000 / 108",
+    "phone": "020-26128000",
+    "opdTimings": "08:00 AM - 01:30 PM (Mon-Sat) | 24x7 Emergency",
+    "landmark": "Opposite Pune Junction Railway Station",
+    "bedCapacity": 1300,
+    "specialties": ["24x7 Trauma & Accident Care", "Pediatrics", "Burn Center", "Neurosurgery", "General Surgery"],
+    "hasTraumaCenter": true,
+    "has24x7Emergency": true
+  },
+  {
+    "id": "mh-hosp-03",
+    "name": "All India Institute of Medical Sciences (AIIMS Nagpur)",
+    "type": "Central Govt Apex Medical Institute",
+    "district": "Nagpur",
+    "state": "Maharashtra",
+    "address": "MIHAN, Sector 20, Nagpur, Maharashtra",
+    "pincode": "441108",
+    "emergencyNumber": "0712-2821000 / 108",
+    "phone": "0712-2821000",
+    "opdTimings": "08:30 AM - 01:00 PM (Mon-Sat) | 24x7 Emergency",
+    "landmark": "Inside MIHAN Special Economic Zone",
+    "bedCapacity": 960,
+    "specialties": ["Level-1 Trauma", "Surgical Oncology", "Cardiothoracic Surgery", "Radiotherapy", "Dialysis"],
+    "hasTraumaCenter": true,
+    "has24x7Emergency": true
+  }
+]

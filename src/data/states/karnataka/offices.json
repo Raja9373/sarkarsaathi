@@ -1,0 +1,47 @@
+[
+  {
+    "id": "ka-off-01",
+    "name": "Deputy Commissioner (DC) Office Bengaluru Urban",
+    "hindiName": "उपायुक्त कार्यालय बेंगलुरु शहरी (DC Office)",
+    "category": "Deputy Commissioner / DM Office",
+    "district": "Bengaluru Urban",
+    "state": "Karnataka",
+    "address": "DC Office Building, Near KG Road, Revenue Complex, Bengaluru, Karnataka - 560009",
+    "pincode": "560009",
+    "helpline": "080-22211292 / 080-22211293",
+    "email": "dcbangaloreurban@karnataka.gov.in",
+    "website": "https://bengaluruurban.nic.in",
+    "publicHours": "10:00 AM - 05:30 PM (Mon-Sat, 2nd & 4th Sat off)",
+    "services": ["Seva Sindhu Portal Verification", "Caste & Income Certificate (Nadakacheri)", "Bhoomi Land Mutation & RTC Extract", "Grievance Redressal (Janaspandana)", "Senior Citizen Cards"]
+  },
+  {
+    "id": "ka-off-02",
+    "name": "Bengaluru One / Nadakacheri Civic Service Centre (Koramangala)",
+    "hindiName": "बेंगलुरु वन / नादकचेरी नागरिक सेवा केंद्र",
+    "category": "Civic Centre / Nadakacheri",
+    "district": "Bengaluru Urban",
+    "state": "Karnataka",
+    "address": "BDA Complex, 80 Feet Road, 3rd Block, Koramangala, Bengaluru, Karnataka",
+    "pincode": "560034",
+    "helpline": "080-22221188",
+    "email": "onebangalore@karnataka.gov.in",
+    "website": "https://www.karnatakaone.gov.in",
+    "publicHours": "08:00 AM - 07:00 PM (All 7 Days)",
+    "services": ["Gruha Lakshmi & Gruha Jyothi Guarantee Registration", "Ration Card (Ahara Karnataka)", "Birth & Death Certificates", "BESCOM & BWSSB Utility Payments", "Property Tax (e-Aasthi BBMP)"]
+  },
+  {
+    "id": "ka-off-03",
+    "name": "Assistant Commissioner / SDM Office Bengaluru North",
+    "hindiName": "सहायक आयुक्त / एसडीएम कार्यालय बेंगलुरु उत्तर",
+    "category": "Sub-Divisional Magistrate (SDM)",
+    "district": "Bengaluru Urban",
+    "state": "Karnataka",
+    "address": "Kandaya Bhavan, KG Road, Bengaluru, Karnataka",
+    "pincode": "560009",
+    "helpline": "080-22211155",
+    "email": "acnorth-bng@karnataka.gov.in",
+    "website": "https://bengaluruurban.nic.in",
+    "publicHours": "10:30 AM - 04:30 PM (Mon-Fri)",
+    "services": ["Revenue Appeals", "Legal Heir Inquiries", "Maintenance of Parents & Senior Citizens Tribunal", "Land Conversion Appeals"]
+  }
+]

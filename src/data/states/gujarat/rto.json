@@ -1,0 +1,53 @@
+[
+  {
+    "id": "gj-rto-01",
+    "rtoCode": "GJ-01",
+    "zoneName": "RTO Ahmedabad (Subhash Bridge)",
+    "district": "Ahmedabad",
+    "state": "Gujarat",
+    "address": "Near Subhash Bridge, Sabarmati Riverfront Road, Ahmedabad, Gujarat",
+    "pincode": "380027",
+    "phone": "079-27559900",
+    "email": "rto-ahd-gj@gujarat.gov.in",
+    "timings": "10:30 AM - 05:30 PM (Mon-Sat)",
+    "landmark": "Near Subhash Bridge & Sabarmati Ashram Road",
+    "jurisdictionAreas": ["Ahmedabad West", "Sabarmati", "Navrangpura", "Satellite", "Thaltej", "Bopal"],
+    "servicesOffered": ["Computerized Driving License Test", "Vehicle Registration & Transfer", "High Security Number Plate (HSRP)", "International Driving Permit", "Trade Certificate"],
+    "automatedTrackAvailable": true,
+    "mloIncharge": "Regional Transport Officer (Ahmedabad West)"
+  },
+  {
+    "id": "gj-rto-05",
+    "rtoCode": "GJ-05",
+    "zoneName": "RTO Surat (Majura Gate / Ring Road)",
+    "district": "Surat",
+    "state": "Gujarat",
+    "address": "Opp. Police Headquarters, Majura Gate, Ring Road, Surat, Gujarat",
+    "pincode": "395001",
+    "phone": "0261-2470100",
+    "email": "rto-surat-gj@gujarat.gov.in",
+    "timings": "10:30 AM - 05:30 PM (Mon-Sat)",
+    "landmark": "Near Majura Gate",
+    "jurisdictionAreas": ["Surat City", "Athwa", "Rander", "Varachha", "Katargam", "Udhna"],
+    "servicesOffered": ["DL Issue and Renewal", "RC Ownership Transfer", "Commercial Permit", "Automated Driving Test"],
+    "automatedTrackAvailable": true,
+    "mloIncharge": "Regional Transport Officer (Surat)"
+  },
+  {
+    "id": "gj-rto-06",
+    "rtoCode": "GJ-06",
+    "zoneName": "RTO Vadodara (Karanlibaug)",
+    "district": "Vadodara",
+    "state": "Gujarat",
+    "address": "Near Golden Chowkdi, Karelibaug, Vadodara, Gujarat",
+    "pincode": "390018",
+    "phone": "0265-2460100",
+    "email": "rto-vadodara-gj@gujarat.gov.in",
+    "timings": "10:30 AM - 05:30 PM (Mon-Sat)",
+    "landmark": "Near Karelibaug Police Station",
+    "jurisdictionAreas": ["Vadodara City", "Alkapuri", "Gorwa", "Manjalpur", "Makarpura"],
+    "servicesOffered": ["Driving License", "Vehicle RC", "Fitness Certificate", "Automated Track Testing"],
+    "automatedTrackAvailable": true,
+    "mloIncharge": "Regional Transport Officer (Vadodara)"
+  }
+]

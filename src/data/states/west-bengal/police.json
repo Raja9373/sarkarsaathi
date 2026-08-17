@@ -1,0 +1,41 @@
+[
+  {
+    "id": "wb-ps-01",
+    "name": "Hare Street Police Station",
+    "hindiName": "थाना हेयर स्ट्रीट (कोलकाता)",
+    "district": "Kolkata Central Division",
+    "address": "42, BB Ganguly Street / Hare Street, BBD Bagh, Kolkata, West Bengal",
+    "pincode": "700001",
+    "phone": "033-22481001",
+    "shoPhone": "033-22481002 / 9830010001",
+    "pcrNumber": "100 / 112",
+    "jurisdictionAreas": ["BBD Bagh", "High Court", "Dalhousie Square", "Old Post Office Street", "Writers' Building"],
+    "landmark": "Near Kolkata High Court"
+  },
+  {
+    "id": "wb-ps-02",
+    "name": "Park Street Police Station",
+    "hindiName": "थाना पार्क स्ट्रीट",
+    "district": "Kolkata South Division",
+    "address": "1, Park Street, Near Chowringhee, Kolkata, West Bengal",
+    "pincode": "700016",
+    "phone": "033-22268001",
+    "shoPhone": "033-22268002 / 9830010002",
+    "pcrNumber": "100 / 112",
+    "jurisdictionAreas": ["Park Street", "Camac Street", "Russell Street", "Middleton Row", "Free School Street"],
+    "landmark": "Near Park Street Metro Station"
+  },
+  {
+    "id": "wb-ps-03",
+    "name": "Electronic Complex Police Station (Salt Lake)",
+    "hindiName": "थाना इलेक्ट्रॉनिक कॉम्प्लेक्स (सॉल्ट लेक)",
+    "district": "Bidhannagar Police Commissionerate",
+    "address": "Sector V, Salt Lake, Kolkata, West Bengal",
+    "pincode": "700091",
+    "phone": "033-23572001",
+    "shoPhone": "033-23572002 / 9830020001",
+    "pcrNumber": "100 / 112",
+    "jurisdictionAreas": ["Sector V IT Hub", "Technopolis", "College More", "Godrej Waterside", "RDB Boulevard"],
+    "landmark": "Near College More Sector V"
+  }
+]

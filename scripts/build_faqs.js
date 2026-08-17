@@ -1,27 +1,103 @@
 import fs from 'fs';
 import path from 'path';
 
-// Generator script for 1000 Unique Government Service FAQs
+// Generator script for 1000 Enriched Unique Government Service FAQs & Sitemap/Robots
 
 const faqs = [];
 let currentId = 1;
 
-function addFaq(q, q_en, a, a_en, cat, slug) {
+function getOfficialSource(cat, portalHint) {
+  if (portalHint && portalHint.startsWith('http')) return portalHint;
+  if (portalHint && portalHint.includes('.gov.in')) {
+    const clean = portalHint.split(' ')[0].split('/')[0];
+    return `https://${clean}`;
+  }
+  if (cat.includes('Parivahan')) return 'https://parivahan.gov.in';
+  if (cat.includes('Aadhaar')) return 'https://myaadhaar.uidai.gov.in';
+  if (cat.includes('PAN')) return 'https://eportal.incometax.gov.in';
+  if (cat.includes('Voter')) return 'https://voters.eci.gov.in';
+  if (cat.includes('Ration') || cat.includes('Labour') || cat.includes('Shram')) return 'https://nfsa.gov.in';
+  if (cat.includes('Certificate')) return 'https://edistrict.delhi.gov.in';
+  if (cat.includes('PF') || cat.includes('Pension')) return 'https://unifiedportal-mem.epfindia.gov.in';
+  if (cat.includes('Police') || cat.includes('RTI') || cat.includes('Court')) return 'https://rtionline.gov.in';
+  if (cat.includes('Bijli') || cat.includes('Property')) return 'https://mcdonline.nic.in';
+  if (cat.includes('Rozgar') || cat.includes('Scholarship')) return 'https://scholarships.gov.in';
+  if (cat.includes('Business')) return 'https://gst.gov.in';
+  return 'https://india.gov.in';
+}
+
+function addFaq(q, q_en, rawA, rawAEn, cat, slug, portalHint) {
+  const officialSource = getOfficialSource(cat, portalHint);
+  const categorySlug = cat.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  
+  const formattedHtmlAnswer = `
+    <h2>Sarkari Seva Overview & Guidance 2026</h2>
+    <p>${rawA}</p>
+    <h2>Aavedan Prakriya - Step by Step Process</h2>
+    <ul>
+      <li>Official portal <strong><a href="${officialSource}" target="_blank" rel="noopener noreferrer">${officialSource}</a></strong> par visit kare.</li>
+      <li>Apna Mobile Number aur OTP dalkar authentication complete kare.</li>
+      <li>Form me zaroori jankari jaise Name, Address, Aadhaar Details, Bank Passbook bhare.</li>
+      <li>Scanned copies of required documents upload kare aur eKYC verify kare.</li>
+      <li>NetBanking / UPI / SBI ePay se prescribe fees pay kare aur acknowledgement slip save kare.</li>
+    </ul>
+    <h2>Zaroori Documents List (Required Proofs)</h2>
+    <ul>
+      <li>Aadhaar Card (Mobile Number Linked)</li>
+      <li>Voter ID Card / Domicile Certificate / Address Proof</li>
+      <li>Income Certificate & Bank Passbook Copy</li>
+      <li>Recent Passport Size Photograph</li>
+    </ul>
+    <h2>Helpline & Official Source</h2>
+    <p>Kuch bhi samasya hone par official portal <strong>${officialSource}</strong> par Grievance section check kare ya Toll-Free Number 1800-11-0001 par call kare. Source: ${officialSource}</p>
+  `.trim();
+
+  const formattedEnHtmlAnswer = `
+    <h2>Government Service Overview & Guidance 2026</h2>
+    <p>${rawAEn}</p>
+    <h2>Step by Step Application Process</h2>
+    <ul>
+      <li>Visit the official portal <strong><a href="${officialSource}" target="_blank" rel="noopener noreferrer">${officialSource}</a></strong>.</li>
+      <li>Authenticate using your registered Mobile Number and OTP.</li>
+      <li>Fill in required personal, identity, and bank account details accurately.</li>
+      <li>Upload scanned supporting documents and complete eKYC verification.</li>
+      <li>Pay the prescribed fees via online payment gateway and download the acknowledgment receipt.</li>
+    </ul>
+    <h2>List of Required Documents</h2>
+    <ul>
+      <li>Aadhaar Card (with linked mobile number)</li>
+      <li>Voter ID / Residence Proof / Ration Card</li>
+      <li>Income Certificate & Active Bank Account Details</li>
+      <li>Passport size photograph</li>
+    </ul>
+    <h2>Helpline & Support</h2>
+    <p>For official support, access the help desk on <strong>${officialSource}</strong> or call the toll-free citizen helpline. Source: ${officialSource}</p>
+  `.trim();
+
+  const topicKeywords = q.split(' ').filter(w => w.length > 3).slice(0, 5);
+
   faqs.push({
     id: currentId,
+    slug: slug.trim(),
+    category: cat.trim(),
+    categorySlug,
+    question: q.trim(),
     q: q.trim(),
     q_en: q_en.trim(),
-    a: a.trim(),
-    a_en: a_en.trim(),
-    cat: cat.trim(),
-    slug: slug.trim(),
-    updated: 'May 2026'
+    answer: formattedHtmlAnswer,
+    a: rawA.trim(),
+    a_en: rawAEn.trim(),
+    answer_en: formattedEnHtmlAnswer,
+    keywords: [...topicKeywords, 'sarkari seva 2026', 'online apply', cat.toLowerCase()],
+    updatedDate: '2026-05-13',
+    updated: 'May 2026',
+    officialSource
   });
   currentId++;
 }
 
 // -------------------------------------------------------------
-// CATEGORY 1: Parivahan & RTO Seva (IDs 1-101)
+// CATEGORY 1: Parivahan & RTO Seva (101 FAQs)
 // -------------------------------------------------------------
 const rtoTopics = [
   { topic: 'Learning License Apply', portal: 'sarathi.parivahan.gov.in' },
@@ -83,14 +159,14 @@ for (let i = 0; i < 101; i++) {
   const q = `${item.topic} (${qNum}) - ${angle}`;
   const q_en = `How to complete ${item.topic} (Case ${qNum}) via official Parivahan portal in 2026?`;
   const slug = `${item.topic.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${qNum}-2026`;
-  const a = `Official portal ${item.portal} par ${item.topic} ke liye aavedan karne ki prakriya behad saral aur digital hai. Sabse pehle Portal par jaye, apna State aur RTO branch select kare. Zaroori documents jaise Aadhaar card, Purani RC/DL, aur address proof upload kare. Aadhaar eKYC se contactless verification complete kare. Online fee payment gateaway ke dwara charges pay kare aur acknowledgement receipt download kare. Status track karne ke liye Application Number ka upayog kare. Source: ${item.portal}`;
+  const a = `Official portal ${item.portal} par ${item.topic} ke liye aavedan karne ki prakriya behad saral aur digital hai. Sabse pehle Portal par jaye, apna State aur RTO branch select kare. Zaroori documents jaise Aadhaar card, Purani RC/DL, aur address proof upload kare. Aadhaar eKYC se contactless verification complete kare. Online fee payment gateway ke dwara charges pay kare aur acknowledgement receipt download kare. Status track karne ke liye Application Number ka upayog kare. Source: ${item.portal}`;
   const a_en = `Applying for ${item.topic} on the official portal ${item.portal} is streamlined and fully digital in 2026. Visit the portal, select your State and RTO center, fill in the application form, and complete Aadhaar eKYC verification. Upload required scanned documents such as Aadhaar, previous DL/RC copy, and photograph. Pay the prescribed fees online through SBI ePay or NetBanking and download the receipt. Track your application status using the Application Reference Number. Source: ${item.portal}`;
 
-  addFaq(q, q_en, a, a_en, 'Parivahan & RTO', slug);
+  addFaq(q, q_en, a, a_en, 'Parivahan & RTO', slug, item.portal);
 }
 
 // -------------------------------------------------------------
-// CATEGORY 2: Aadhaar, PAN & Voter ID (IDs 102-200)
+// CATEGORY 2: Aadhaar, PAN & Voter ID (99 FAQs)
 // -------------------------------------------------------------
 const identityTopics = [
   'Aadhaar Card Download Online PDF',
@@ -125,15 +201,15 @@ for (let i = 0; i < 99; i++) {
   const q_en = `How to complete ${topic} step by step in 2026?`;
   const slug = `${topic.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${qNum}-2026`;
   const portal = topic.includes('Aadhaar') ? 'myaadhaar.uidai.gov.in' : topic.includes('PAN') ? 'eportal.incometax.gov.in' : 'voters.eci.gov.in';
-  
+
   const a = `${topic} ke liye official website ${portal} sabse pramanik madhyam hai. Sabse pehle portal par login kare, apna UID/PAN/Voter Number dalkar OTP verification kare. Aavashyak sewa option chune aur nirdesh anusar documents upload kare. Aavedan Jama hone par SRN ya Reference Number prapt hoga jisse aap anytime status track kar sakte hain. Source: ${portal}`;
   const a_en = `For ${topic}, visit the authentic official portal ${portal}. Log in using your registered mobile number and OTP authentication. Navigate to the specific service section, enter your required demographic details, and upload valid supporting proofs. Upon successful submission, note down the Service Request Number (SRN) or Application ID for real-time tracking. Source: ${portal}`;
 
-  addFaq(q, q_en, a, a_en, 'Aadhaar, PAN & Voter ID', slug);
+  addFaq(q, q_en, a, a_en, 'Aadhaar, PAN & Voter ID', slug, portal);
 }
 
 // -------------------------------------------------------------
-// CATEGORY 3: Ration Card & PDS, E-Shram, Labour Card (IDs 201-298)
+// CATEGORY 3: Ration Card & PDS, E-Shram, Labour Card (98 FAQs)
 // -------------------------------------------------------------
 const rationTopics = [
   'New Ration Card Online Apply State Wise',
@@ -159,16 +235,16 @@ for (let i = 0; i < 98; i++) {
   const q = `${topic} - Complete Process ${qNum} in 2026?`;
   const q_en = `How to process ${topic} via official PDS / Labour portal in 2026?`;
   const slug = `${topic.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${qNum}-2026`;
-  const portal = topic.includes('E-Shram') ? 'eshram.gov.in' : topic.includes('Labour') || topic.includes('Majdur') ? 'eshram.gov.in / State Labour Dept' : 'nfsa.gov.in';
+  const portal = topic.includes('E-Shram') ? 'eshram.gov.in' : topic.includes('Labour') || topic.includes('Majdur') ? 'eshram.gov.in' : 'nfsa.gov.in';
 
   const a = `${topic} ke liye aavedan aur jankari official portal ${portal} par uplabdha hai. Aavedak ko apna Aadhaar card, mobile number, bank account details aur aay praman patra taiyar rakhna chahiye. Portal par naya aavedan form bhare, eKYC complete kare aur prapt Application ID se FPS ration dukan ya labour department status verify kare. Source: ${portal}`;
   const a_en = `${topic} can be seamlessly accessed via the official portal ${portal}. Applicants need to keep their Aadhaar, active mobile number, bank passbook, and income document ready. Fill in the digital application form, verify Aadhaar eKYC, and submit. Track approval status using the generated registration/application reference number. Source: ${portal}`;
 
-  addFaq(q, q_en, a, a_en, 'Ration Card, E-Shram & Labour', slug);
+  addFaq(q, q_en, a, a_en, 'Ration Card, E-Shram & Labour', slug, portal);
 }
 
 // -------------------------------------------------------------
-// CATEGORY 4: Certificate Services - Jati, Niwas, Aay, Mool (IDs 299-399)
+// CATEGORY 4: Certificate Services - Jati, Niwas, Aay, Mool (101 FAQs)
 // -------------------------------------------------------------
 const certTopics = [
   'Jati Praman Patra (Caste Certificate) Online Apply',
@@ -194,16 +270,16 @@ for (let i = 0; i < 101; i++) {
   const q = `${topic} - Guide ${qNum} in 2026?`;
   const q_en = `How to apply for ${topic} via state eDistrict portal in 2026?`;
   const slug = `${topic.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${qNum}-2026`;
-  const portal = 'edistrict.delhi.gov.in / State eDistrict Portal';
+  const portal = 'edistrict.delhi.gov.in';
 
   const a = `${topic} hetu official eDistrict portal par Citizen Login kare. Form me apni vyaktigat jankari bhare, ration card, voter ID, photo aur self-declaration form upload kare. Tehsildar/SDM level par verification ke baad 7 se 15 dino me certificate digitally signed Hokar portal par download ke liye uplabdha ho jata hai. Source: ${portal}`;
   const a_en = `To apply for ${topic}, create an account or log in to your state eDistrict service portal. Fill in personal details, upload required supporting documents (Aadhaar, income proof, affidavit, passport photo). After revenue authority (Tehsildar/SDM) verification, the digitally signed certificate becomes available for direct download within 7-15 days. Source: ${portal}`;
 
-  addFaq(q, q_en, a, a_en, 'Certificates - Jati, Niwas & Aay', slug);
+  addFaq(q, q_en, a, a_en, 'Certificates - Jati, Niwas & Aay', slug, portal);
 }
 
 // -------------------------------------------------------------
-// CATEGORY 5: PF, ESI, Pension, Samagra (IDs 400-494)
+// CATEGORY 5: PF, ESI, Pension, Samagra (95 FAQs)
 // -------------------------------------------------------------
 const pfTopics = [
   'UAN Activation Online via EPFO Portal',
@@ -229,16 +305,16 @@ for (let i = 0; i < 95; i++) {
   const q = `${topic} - Detailed Guide ${qNum} in 2026?`;
   const q_en = `How to manage ${topic} via EPFO / Pension portal in 2026?`;
   const slug = `${topic.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${qNum}-2026`;
-  const portal = topic.includes('EPFO') || topic.includes('UAN') || topic.includes('PF') ? 'unifiedportal-mem.epfindia.gov.in' : 'sspy-up.gov.in / nsap.nic.in';
+  const portal = topic.includes('EPFO') || topic.includes('UAN') || topic.includes('PF') ? 'unifiedportal-mem.epfindia.gov.in' : 'nsap.nic.in';
 
   const a = `${topic} ke liye official portal ${portal} par login kare. UAN Number/PPO Number aur Password se authenticate kare. Service section me jaakar aavashyak online claim ya KYC update submit kare. Direct Bank Transfer (DBT) ke madhyam se rashi seedhe khate me bheji jaati hai. Application status 'Track Claim' option se dekhe. Source: ${portal}`;
   const a_en = `Access ${topic} by visiting the official portal ${portal}. Log in using your UAN/PPO credential and OTP. Navigate to the online services section to initiate claims, passbook downloads, or KYC modifications. All financial benefits are credited directly to your bank account via DBT upon verification. Track status online anytime. Source: ${portal}`;
 
-  addFaq(q, q_en, a, a_en, 'PF, ESI, Pension & Samagra', slug);
+  addFaq(q, q_en, a, a_en, 'PF, ESI, Pension & Samagra', slug, portal);
 }
 
 // -------------------------------------------------------------
-// CATEGORY 6: Police, FIR, RTI, Complaint, Court (IDs 495-594)
+// CATEGORY 6: Police, FIR, RTI, Complaint, Court (100 FAQs)
 // -------------------------------------------------------------
 const policeTopics = [
   'Online Police Lost Article Report Filing',
@@ -264,16 +340,16 @@ for (let i = 0; i < 100; i++) {
   const q = `${topic} - Official Procedure ${qNum} in 2026?`;
   const q_en = `How to complete ${topic} online safely in 2026?`;
   const slug = `${topic.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${qNum}-2026`;
-  const portal = topic.includes('RTI') ? 'rtionline.gov.in' : topic.includes('Court') ? 'ecourts.gov.in' : 'delhipolice.gov.in / State Police';
+  const portal = topic.includes('RTI') ? 'rtionline.gov.in' : topic.includes('Court') ? 'ecourts.gov.in' : 'delhipolice.gov.in';
 
   const a = `${topic} ke liye official portal ${portal} sabse uttam madhyam hai. Online portal par account banaye ya guest filing chune. Ghatna ya complaint ki puri jankari sahi-sahi bhare, supporting proof attach kare. Submitting ke baad unique Registration Number/Grievance ID milti hai jisse aap karyavahi ka status online check kar sakte hain. Source: ${portal}`;
   const a_en = `To initiate ${topic}, access the official portal ${portal}. Register or opt for guest submission. Fill in accurate factual details, attach supporting documents or ID proof, and submit. An official Registration Number / Acknowledgement ID will be generated for tracking the investigation or response status online. Source: ${portal}`;
 
-  addFaq(q, q_en, a, a_en, 'Police, FIR, RTI & Legal', slug);
+  addFaq(q, q_en, a, a_en, 'Police, FIR, RTI & Legal', slug, portal);
 }
 
 // -------------------------------------------------------------
-// CATEGORY 7: Bijli, Pani & Property (IDs 595-694)
+// CATEGORY 7: Bijli, Pani & Property (100 FAQs)
 // -------------------------------------------------------------
 const utilityTopics = [
   'Electricity Bill Check & Online Payment (BSES/Tata Power)',
@@ -299,16 +375,16 @@ for (let i = 0; i < 100; i++) {
   const q = `${topic} - Step-by-Step Guide ${qNum} in 2026?`;
   const q_en = `How to perform ${topic} on government portals in 2026?`;
   const slug = `${topic.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${qNum}-2026`;
-  const portal = topic.includes('Water') ? 'djb.gov.in' : topic.includes('Property') ? 'mcdonline.nic.in' : topic.includes('Land') ? 'dlrc.delhi.gov.in / State Bhulekh' : 'bsesdelhi.com';
+  const portal = topic.includes('Water') ? 'djb.gov.in' : topic.includes('Property') ? 'mcdonline.nic.in' : 'bsesdelhi.com';
 
   const a = `${topic} ke liye official web portal ${portal} par visit kare. Consumer Number (CA No) / Khasra No / Property ID enter kare. Bill view kare ya naye aavedan form ko bhare. Digital payment gateway ke dwara bhugtan kare aur instant e-Receipt/Acknowledgement certificate save kare. Source: ${portal}`;
   const a_en = `For ${topic}, log on to the official department portal ${portal}. Provide your CA Number, Property Unique ID, or Land Survey Number. View pending dues or complete the digital application form. Complete secure payment via UPI/Credit Card/NetBanking and download the official computer-generated receipt. Source: ${portal}`;
 
-  addFaq(q, q_en, a, a_en, 'Bijli, Pani & Property', slug);
+  addFaq(q, q_en, a, a_en, 'Bijli, Pani & Property', slug, portal);
 }
 
 // -------------------------------------------------------------
-// CATEGORY 8: Rozgar, Scholarship & Skill (IDs 695-794)
+// CATEGORY 8: Rozgar, Scholarship & Skill (100 FAQs)
 // -------------------------------------------------------------
 const employmentTopics = [
   'Employment Exchange Registration Online (Rojgar Panjiyan)',
@@ -334,16 +410,16 @@ for (let i = 0; i < 100; i++) {
   const q = `${topic} - Registration & Process ${qNum} in 2026?`;
   const q_en = `How to apply for ${topic} via official portal in 2026?`;
   const slug = `${topic.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${qNum}-2026`;
-  const portal = topic.includes('Scholarship') ? 'scholarships.gov.in' : topic.includes('Rozgar') || topic.includes('Employment') ? 'jobs.delhi.gov.in / ncs.gov.in' : 'ssc.gov.in / upsc.gov.in';
+  const portal = topic.includes('Scholarship') ? 'scholarships.gov.in' : 'jobs.delhi.gov.in';
 
   const a = `${topic} ke liye official portal ${portal} par One Time Registration (OTR) kare. Educational certificates, caste proof, photo va signature upload kare. Application form submit karke registration card ya fee receipt download kare. Scholarship aur Job notifications ki jankari registered email/mobile par bheji jaati hai. Source: ${portal}`;
   const a_en = `To register for ${topic}, complete One Time Registration (OTR) on ${portal}. Upload educational marksheets, category certificates, scanned photos, and signatures. Review all entries before final submission. Download the acknowledgement slip and keep track of exam/scholarship updates via portal login. Source: ${portal}`;
 
-  addFaq(q, q_en, a, a_en, 'Rozgar, Scholarship & Skill', slug);
+  addFaq(q, q_en, a, a_en, 'Rozgar, Scholarship & Skill', slug, portal);
 }
 
 // -------------------------------------------------------------
-// CATEGORY 9: Business & License Services (IDs 795-894)
+// CATEGORY 9: Business & License Services (100 FAQs)
 // -------------------------------------------------------------
 const businessTopics = [
   'MSME Udyam Registration Free Online Certificate',
@@ -369,16 +445,16 @@ for (let i = 0; i < 100; i++) {
   const q = `${topic} - Official Business Guide ${qNum} in 2026?`;
   const q_en = `How to apply for ${topic} on government portals in 2026?`;
   const slug = `${topic.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${qNum}-2026`;
-  const portal = topic.includes('Udyam') ? 'udyamregistration.gov.in' : topic.includes('GST') ? 'gst.gov.in' : topic.includes('FSSAI') ? 'foscos.fssai.gov.in' : 'invest.delhi.gov.in';
+  const portal = topic.includes('Udyam') ? 'udyamregistration.gov.in' : topic.includes('GST') ? 'gst.gov.in' : 'foscos.fssai.gov.in';
 
   const a = `${topic} ke liye official single-window portal ${portal} par visit kare. Business details, PAN, Aadhaar, Bank details aur PAN card upload kare. Mandatory inspection ya desk verification ke baad e-Certificate generate hota hai jise aap portal se digitally sign karke download kar sakte hain. Source: ${portal}`;
   const a_en = `For ${topic}, register your business enterprise on ${portal}. Provide basic entity information, PAN, Aadhaar eKYC, bank credentials, and premises proof. Upon automated risk assessment or officer approval, download your authentic digitally signed business license/certificate directly from the portal. Source: ${portal}`;
 
-  addFaq(q, q_en, a, a_en, 'Business & License Services', slug);
+  addFaq(q, q_en, a, a_en, 'Business & License Services', slug, portal);
 }
 
 // -------------------------------------------------------------
-// CATEGORY 10: Helpline, Status & CSC (IDs 895-1000)
+// CATEGORY 10: Helpline, Status & CSC (106 FAQs)
 // -------------------------------------------------------------
 const helplineTopics = [
   'Aadhaar National Helpline Number 1947 Toll Free',
@@ -404,17 +480,90 @@ for (let i = 0; i < 106; i++) {
   const q = `${topic} - Official Info ${qNum} in 2026?`;
   const q_en = `What are the details and official helpline info for ${topic} in 2026?`;
   const slug = `${topic.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${qNum}-2026`;
-  const portal = 'india.gov.in / Official Helpline Portal';
+  const portal = 'india.gov.in';
 
   const a = `${topic} par sahayata prapt karne ke liye official 24x7 toll-free helpline par call kare ya portal ${portal} par complaint register kare. Doorstep delivery services (jaise Delhi 1076) me executive aapke ghar aakar documents verify karta hai. CSC kendro par mamuli shulka dekar saari sarkari sewayen li ja sakti hain. Source: ${portal}`;
   const a_en = `To access assistance regarding ${topic}, dial the official 24x7 toll-free emergency/support helpline or visit ${portal}. Citizens can also schedule doorstep service visits or locate their nearest Common Service Center (CSC) to apply for government services with complete guidance and nominal prescribed fees. Source: ${portal}`;
 
-  addFaq(q, q_en, a, a_en, 'Helpline, Status & CSC', slug);
+  addFaq(q, q_en, a, a_en, 'Helpline, Status & CSC', slug, portal);
 }
 
 console.log(`Total generated FAQs: ${faqs.length}`);
 
-// Write JSON to src/data/allServicesFaqs.json
-const outputPath = path.join(process.cwd(), 'src', 'data', 'allServicesFaqs.json');
-fs.writeFileSync(outputPath, JSON.stringify(faqs, null, 2), 'utf-8');
-console.log(`Saved ${faqs.length} FAQs to ${outputPath}`);
+// Ensure directories exist
+const rootFaqsDir = path.join(process.cwd(), 'data', 'faqs');
+const srcFaqsDir = path.join(process.cwd(), 'src', 'data', 'faqs');
+
+[rootFaqsDir, srcFaqsDir].forEach(dir => {
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+});
+
+// Remove old single large faqs.json files if they exist
+['/data/faqs.json', '/src/data/faqs.json', '/src/data/allServicesFaqs.json', '/public/data/faqs.json'].forEach(p => {
+  const fullPath = path.join(process.cwd(), p);
+  if (fs.existsSync(fullPath)) {
+    fs.unlinkSync(fullPath);
+    console.log(`Cleaned up obsolete large JSON: ${p}`);
+  }
+});
+
+// Split 1000 FAQs into 10 files of 100 FAQs each
+const CHUNK_SIZE = 100;
+const totalParts = Math.ceil(faqs.length / CHUNK_SIZE);
+const importStatements = [];
+const partVariables = [];
+
+for (let part = 1; part <= totalParts; part++) {
+  const startIdx = (part - 1) * CHUNK_SIZE;
+  const chunk = faqs.slice(startIdx, startIdx + CHUNK_SIZE);
+  const jsonContent = JSON.stringify(chunk, null, 2);
+
+  const fileName = `faqs-part-${part}.json`;
+  fs.writeFileSync(path.join(rootFaqsDir, fileName), jsonContent, 'utf-8');
+  fs.writeFileSync(path.join(srcFaqsDir, fileName), jsonContent, 'utf-8');
+
+  importStatements.push(`import part${part} from './${fileName}';`);
+  partVariables.push(`...part${part}`);
+}
+
+// Generate src/data/faqs/index.ts to export all aggregated FAQs cleanly
+const indexTsContent = `// Auto-generated aggregator for 10 FAQ chunk files
+${importStatements.join('\n')}
+
+export interface FaqItem {
+  id: number;
+  slug: string;
+  category: string;
+  categorySlug?: string;
+  question: string;
+  q?: string;
+  q_en?: string;
+  answer: string;
+  a?: string;
+  a_en?: string;
+  answer_en?: string;
+  keywords?: string[];
+  updatedDate?: string;
+  updated?: string;
+  officialSource?: string;
+}
+
+export const allFaqs: FaqItem[] = [
+  ${partVariables.join(',\n  ')}
+];
+
+export default allFaqs;
+`;
+
+fs.writeFileSync(path.join(srcFaqsDir, 'index.ts'), indexTsContent, 'utf-8');
+
+console.log(`Successfully split 1000 FAQs into ${totalParts} files in /data/faqs/ and /src/data/faqs/ with /src/data/faqs/index.ts`);
+
+// Generate XML Sitemap & robots.txt via generate_sitemap.js
+import { execSync } from 'child_process';
+try {
+  execSync('node scripts/generate_sitemap.js', { stdio: 'inherit' });
+} catch (e) {
+  console.error('Failed to run generate_sitemap.js:', e);
+}
+

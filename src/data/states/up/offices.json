@@ -1,0 +1,47 @@
+[
+  {
+    "id": "up-off-01",
+    "name": "District Magistrate & Collectorate Office Gautam Buddha Nagar (Noida)",
+    "hindiName": "जिलाधिकारी एवं कलेक्ट्रेट कार्यालय गौतम बुद्ध नगर (नोएडा)",
+    "category": "District Magistrate / DC Office",
+    "district": "Gautam Buddha Nagar (Noida)",
+    "state": "Uttar Pradesh",
+    "address": "Collectorate Compound, Surajpur, Greater Noida, Uttar Pradesh - 201306",
+    "pincode": "201306",
+    "helpline": "0120-2569001 / 0120-2569002",
+    "email": "dmgbn@nic.in",
+    "website": "https://gbnagar.nic.in",
+    "publicHours": "10:00 AM - 05:00 PM (Mon-Sat)",
+    "services": ["e-District UP Portal Services", "Revenue & Khasra Khatauni Verification", "Jati / Niwas / Aay Praman Patra", "IGRS Public Grievances Portal", "Land Acquisition & Registries"]
+  },
+  {
+    "id": "up-off-02",
+    "name": "Jan Seva Kendra Central (e-District UP CSC Center Noida)",
+    "hindiName": "जन सेवा केंद्र (ई-डिस्ट्रिक्ट उत्तर प्रदेश)",
+    "category": "CSC / Jan Seva Kendra",
+    "district": "Gautam Buddha Nagar (Noida)",
+    "state": "Uttar Pradesh",
+    "address": "Sector 27, Near Atta Market, Noida, Uttar Pradesh",
+    "pincode": "201301",
+    "helpline": "0522-2304706",
+    "email": "edistrict-up@gov.in",
+    "website": "https://edistrict.up.gov.in",
+    "publicHours": "09:00 AM - 06:00 PM (Mon-Sat)",
+    "services": ["Aadhaar Linkage", "Ration Card (FCS UP)", "Kanya Sumangala Yojana", "Vridhavastha Pension", "Divyang Pension Registration", "Khatauni Copy"]
+  },
+  {
+    "id": "up-off-03",
+    "name": "SDM Office Dadri / Noida",
+    "hindiName": "एसडीएम कार्यालय दादरी / नोएडा",
+    "category": "Sub-Divisional Magistrate (SDM)",
+    "district": "Gautam Buddha Nagar (Noida)",
+    "state": "Uttar Pradesh",
+    "address": "Tehsil Compound, Dadri, Gautam Buddha Nagar, Uttar Pradesh",
+    "pincode": "203207",
+    "helpline": "0120-2569015",
+    "email": "sdmdadri@nic.in",
+    "website": "https://gbnagar.nic.in",
+    "publicHours": "10:00 AM - 04:30 PM (Mon-Fri)",
+    "services": ["Domicile Certificate", "Caste Certificate", "Encumbrance Certificate", "Court Cases & Mutation"]
+  }
+]

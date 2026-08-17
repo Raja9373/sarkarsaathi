@@ -1,0 +1,32 @@
+[
+  {
+    "id": "tn-off-01",
+    "name": "District Collectorate & DM Office Chennai",
+    "hindiName": "जिलाधिकारी एवं समाहर्ता कार्यालय चेन्नई",
+    "category": "District Magistrate / DC Office",
+    "district": "Chennai",
+    "state": "Tamil Nadu",
+    "address": "Singaravelar Maaligai, 62, Rajaji Salai, George Town, Chennai, Tamil Nadu - 600001",
+    "pincode": "600001",
+    "helpline": "044-25268344 / 044-25268345",
+    "email": "collrchn@nic.in",
+    "website": "https://chennai.nic.in",
+    "publicHours": "10:00 AM - 05:45 PM (Mon-Sat, 2nd & 4th Sat off)",
+    "services": ["TNeGA e-Sevai Services", "Community / Caste Certificate", "Income & Nativity Certificate", "Patta / Chitta Land Records (e-Services)", "Chief Minister's Comprehensive Health Insurance (CMCHIS)"]
+  },
+  {
+    "id": "tn-off-02",
+    "name": "e-Sevai Common Service Centre (TNeGA Chennai Central)",
+    "hindiName": "ई-सेवई नागरिक सेवा केंद्र (चेन्नई)",
+    "category": "e-Sevai / CSC Centre",
+    "district": "Chennai",
+    "state": "Tamil Nadu",
+    "address": "Ripon Building Campus, Sydenhams Road, Periyamet, Chennai, Tamil Nadu",
+    "pincode": "600003",
+    "helpline": "1800-425-1333",
+    "email": "tnega.helpdesk@tn.gov.in",
+    "website": "https://www.tnesevai.tn.gov.in",
+    "publicHours": "09:30 AM - 05:30 PM (Mon-Sat)",
+    "services": ["Kalaignar Magalir Urimai Thogai Scheme", "First Graduate Certificate", "Legal Heir Certificate", "Smart Family Card (TNPDS)", "Disability Identity Card (UDID)"]
+  }
+]

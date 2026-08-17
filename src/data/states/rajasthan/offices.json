@@ -1,0 +1,32 @@
+[
+  {
+    "id": "rj-off-01",
+    "name": "Government Secretariat Rajasthan (Jaipur)",
+    "hindiName": "शासन सचिवालय राजस्थान (जयपुर)",
+    "category": "Secretariat / State HQ",
+    "district": "Jaipur",
+    "state": "Rajasthan",
+    "address": "Bhagwan Das Road, C-Scheme, Jaipur, Rajasthan - 302005",
+    "pincode": "302005",
+    "helpline": "181 / 0141-2227122",
+    "email": "cmo@rajasthan.gov.in",
+    "website": "https://rajasthan.gov.in",
+    "publicHours": "09:30 AM - 06:00 PM (Mon-Fri)",
+    "services": ["e-Mitra Citizen Platform", "Jan Aadhaar Yojana", "Chiranjeevi / RGHS Desk", "Sampark 181 Grievance Portal"]
+  },
+  {
+    "id": "rj-off-02",
+    "name": "e-Mitra Central Citizen Facilitation Center (Jaipur Collectorate)",
+    "hindiName": "ई-मित्र नागरिक सुविधा केंद्र (कलेक्ट्रेट परिसर जयपुर)",
+    "category": "CSC / e-Mitra",
+    "district": "Jaipur",
+    "state": "Rajasthan",
+    "address": "Collectorate Compound, Bani Park, Jaipur, Rajasthan - 302016",
+    "pincode": "302016",
+    "helpline": "0141-2221424",
+    "email": "emitra.helpdesk@rajasthan.gov.in",
+    "website": "https://emitra.rajasthan.gov.in",
+    "publicHours": "09:00 AM - 06:00 PM (Mon-Sat)",
+    "services": ["Jan Aadhaar Card Enrolment", "Bonafide Resident (Mool Niwas) Certificate", "Caste Certificate", "Land Jamabandi Copy", "Electricity & Water Bill"]
+  }
+]

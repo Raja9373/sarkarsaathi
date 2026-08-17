@@ -1,0 +1,11 @@
+[
+  { "pin": "560001", "area": "MG Road, Brigade Road, Vidhana Soudha, High Court, Cubbon Park", "district": "Bengaluru Urban", "postOffice": "Bengaluru GPO", "stdCode": "080" },
+  { "pin": "560025", "area": "Richmond Town, Ashok Nagar, Museum Road, Residency Road", "district": "Bengaluru Urban", "postOffice": "Richmond Town SO", "stdCode": "080" },
+  { "pin": "560034", "area": "Koramangala (1st to 8th Block), St. John's Hospital, Forum Mall", "district": "Bengaluru Urban", "postOffice": "Koramangala SO", "stdCode": "080" },
+  { "pin": "560038", "area": "Indiranagar (1st & 2nd Stage), Defence Colony, 100 Feet Road", "district": "Bengaluru Urban", "postOffice": "Indiranagar SO", "stdCode": "080" },
+  { "pin": "560066", "area": "Whitefield, ITPL, Brookefield, Hope Farm Junction", "district": "Bengaluru Urban", "postOffice": "Whitefield SO", "stdCode": "080" },
+  { "pin": "560100", "area": "Electronic City Phase 1 & 2, Infosys & Wipro Campus, Hosur Road", "district": "Bengaluru Urban", "postOffice": "Electronic City SO", "stdCode": "080" },
+  { "pin": "570001", "area": "Mysuru Palace, Devaraja Market, KR Circle, Sayyaji Rao Road", "district": "Mysuru", "postOffice": "Mysuru HO", "stdCode": "0821" },
+  { "pin": "575001", "area": "Hampankatta, State Bank, Mangaluru Central Station, Car Street", "district": "Dakshina Kannada (Mangaluru)", "postOffice": "Mangaluru HO", "stdCode": "0824" },
+  { "pin": "580020", "area": "Hubballi Central, Chennamma Circle, Station Road", "district": "Dharwad (Hubballi)", "postOffice": "Hubballi HO", "stdCode": "0836" }
+]

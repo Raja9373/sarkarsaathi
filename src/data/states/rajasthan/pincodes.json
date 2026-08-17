@@ -1,0 +1,42 @@
+[
+  {
+    "pin": "302001",
+    "area": "Jaipur General Post Office (GPO), M.I. Road, Ashok Nagar, Panch Batti, Ajmeri Gate, C-Scheme",
+    "district": "Jaipur",
+    "postOffice": "Jaipur General Post Office (GPO)",
+    "stdCode": "0141",
+    "state": "Rajasthan"
+  },
+  {
+    "pin": "302017",
+    "area": "Malviya Nagar Jaipur, Jawahar Circle, World Trade Park (WTP), Gaurav Tower, MNIT Campus",
+    "district": "Jaipur",
+    "postOffice": "Malviya Nagar SO",
+    "stdCode": "0141",
+    "state": "Rajasthan"
+  },
+  {
+    "pin": "342001",
+    "area": "Jodhpur Head Post Office, Station Road, Sojati Gate, High Court Colony, Paota",
+    "district": "Jodhpur",
+    "postOffice": "Jodhpur Head Post Office (HO)",
+    "stdCode": "0291",
+    "state": "Rajasthan"
+  },
+  {
+    "pin": "313001",
+    "area": "Udaipur Head Post Office, Chetak Circle, Delhi Gate, City Palace Area, Surajpole",
+    "district": "Udaipur",
+    "postOffice": "Udaipur Head Post Office",
+    "stdCode": "0294",
+    "state": "Rajasthan"
+  },
+  {
+    "pin": "324001",
+    "area": "Kota Head Post Office, Rampura, Nayapura, Station Road, Aerodrome Circle",
+    "district": "Kota",
+    "postOffice": "Kota Head Post Office",
+    "stdCode": "0744",
+    "state": "Rajasthan"
+  }
+]

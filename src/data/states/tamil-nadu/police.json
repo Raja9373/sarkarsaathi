@@ -1,0 +1,41 @@
+[
+  {
+    "id": "tn-ps-01",
+    "name": "Mylapore Police Station (E-1)",
+    "hindiName": "थाना मायलापुर (चेन्नई)",
+    "district": "Greater Chennai Police (East Zone)",
+    "address": "Kutchery Road, Mylapore, Chennai, Tamil Nadu",
+    "pincode": "600004",
+    "phone": "044-23452581",
+    "shoPhone": "044-23452582 / 9498100001",
+    "pcrNumber": "100 / 112",
+    "jurisdictionAreas": ["Mylapore", "Luz Corner", "Kapaleeshwarar Temple Area", "Santhome High Road", "Mandaveli"],
+    "landmark": "Near Luz Church Road"
+  },
+  {
+    "id": "tn-ps-02",
+    "name": "T. Nagar Police Station (R-1)",
+    "hindiName": "थाना टी. नगर (चेन्नई)",
+    "district": "Greater Chennai Police (South Zone)",
+    "address": "Thyagaraya Road, Near Panagal Park, T. Nagar, Chennai, Tamil Nadu",
+    "pincode": "600017",
+    "phone": "044-23452591",
+    "shoPhone": "044-23452592 / 9498100002",
+    "pcrNumber": "100 / 112",
+    "jurisdictionAreas": ["T. Nagar", "Panagal Park", "Pondy Bazaar", "Usman Road", "G.N. Chetty Road"],
+    "landmark": "Near Panagal Park"
+  },
+  {
+    "id": "tn-ps-03",
+    "name": "Anna Nagar Police Station (K-4)",
+    "hindiName": "थाना अन्ना नगर (चेन्नई)",
+    "district": "Greater Chennai Police (West Zone)",
+    "address": "2nd Avenue, Near Roundtana, Anna Nagar, Chennai, Tamil Nadu",
+    "pincode": "600040",
+    "phone": "044-23452601",
+    "shoPhone": "044-23452602 / 9498100003",
+    "pcrNumber": "100 / 112",
+    "jurisdictionAreas": ["Anna Nagar East/West", "Shanthi Colony", "Tower Park", "Roundtana", "Thirumangalam"],
+    "landmark": "Near Anna Nagar Roundtana"
+  }
+]

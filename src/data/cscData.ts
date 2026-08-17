@@ -300,8 +300,8 @@ export const MOCK_DELHI_CSC_CENTRES: CscCentreItem[] = [
   }
 ];
 
-export function getMatchingCscCentres(zoneFilter?: string, queryStr?: string): CscCentreItem[] {
-  const cleanZone = zoneFilter && zoneFilter !== 'All MCD Zones' ? zoneFilter.toLowerCase() : '';
+export function getCscCentresByState(stateId: string = 'delhi', zoneFilter?: string, queryStr?: string): CscCentreItem[] {
+  const cleanZone = zoneFilter && zoneFilter !== 'All MCD Zones' && zoneFilter !== 'All Zones' ? zoneFilter.toLowerCase() : '';
   const cleanQuery = queryStr ? queryStr.trim().toLowerCase() : '';
 
   const matched = MOCK_DELHI_CSC_CENTRES.filter(c => {
@@ -320,47 +320,47 @@ export function getMatchingCscCentres(zoneFilter?: string, queryStr?: string): C
     return matchesZone && (matchesName || matchesVle || matchesAddress || matchesPincode || matchesLandmark || matchesZoneName || matchesServices);
   });
 
-  // Dynamic fallback for any searched locality or PIN code in Delhi
-  if (cleanQuery && matched.length === 0) {
-    const capitalizedQuery = queryStr!.trim().charAt(0).toUpperCase() + queryStr!.trim().slice(1);
+  // Dynamic fallback for any searched locality or PIN code or state
+  if ((cleanQuery && matched.length === 0) || (stateId !== 'delhi' && matched.length === 0)) {
+    const capitalizedQuery = queryStr ? (queryStr.trim().charAt(0).toUpperCase() + queryStr.trim().slice(1)) : 'District Headquarter';
     const isPinCode = /^\d{6}$/.test(cleanQuery);
-    const dynamicPincode = isPinCode ? cleanQuery : '110001';
+    const dynamicPincode = isPinCode ? cleanQuery : '400001';
 
     const dynamicCentres: CscCentreItem[] = [
       {
-        id: `dyn-csc-mcd-${cleanQuery}`,
-        name: `MCD Citizen Service Facilitation Centre (CSC) - ${capitalizedQuery}`,
-        vleName: `MCD Authorized VLE Helpdesk (${capitalizedQuery})`,
-        mcdZone: zoneFilter && zoneFilter !== 'All MCD Zones' ? zoneFilter : 'Delhi MCD Zonal Circle',
-        address: `MCD Zonal / Sub-Zonal Citizen Service Complex, ${capitalizedQuery}, Delhi`,
+        id: `dyn-csc-${stateId}-${cleanQuery || 'main'}`,
+        name: `Citizen Service Facilitation Centre (CSC e-Seva) - ${capitalizedQuery}`,
+        vleName: `Authorized CSC VLE Helpdesk (${capitalizedQuery})`,
+        mcdZone: zoneFilter && zoneFilter !== 'All MCD Zones' ? zoneFilter : 'Central District Zone',
+        address: `Tehsil / Municipal Citizen Service Complex, ${capitalizedQuery}`,
         pincode: dynamicPincode,
-        phone: '155305 (MCD Toll-Free) / 011-23227413',
+        phone: '14599 (CSC National Helpline)',
         timings: '09:30 AM - 05:00 PM (Mon-Sat)',
-        landmark: `Main MCD Civic Centre Office / Metro Complex, ${capitalizedQuery}`,
+        landmark: `Near Mini Secretariat / Bus Stand, ${capitalizedQuery}`,
         servicesOffered: [
-          'MCD Birth & Death Certificate Registration & Download',
-          'MCD Property Tax UPIC Registration & Payment',
-          'General Trade & Health License Application',
-          'e-District Delhi Certificates (Income, Domicile, Caste)',
-          'Building Plan Approval & Water/Electricity Bills'
+          'Birth & Death Certificate Registration & Download',
+          'Property Tax & Mutation (PTR)',
+          'Trade & Health License Application',
+          'Income, Domicile & Caste Certificates',
+          'Electricity, Water & Utility Bill Payments'
         ],
         mcdVerified: true
       },
       {
-        id: `dyn-csc-digital-${cleanQuery}`,
+        id: `dyn-csc-digital-${stateId}-${cleanQuery || 'main'}`,
         name: `CSC Digital Seva Kendra - ${capitalizedQuery}`,
         vleName: `CSC Certified Entrepreneur - ${capitalizedQuery}`,
-        mcdZone: zoneFilter && zoneFilter !== 'All MCD Zones' ? zoneFilter : 'Delhi NCR Circle',
-        address: `Main Market / Commercial Complex, ${capitalizedQuery}, Delhi`,
+        mcdZone: zoneFilter && zoneFilter !== 'All MCD Zones' ? zoneFilter : 'Central District Zone',
+        address: `Main Market / Commercial Complex, ${capitalizedQuery}`,
         pincode: dynamicPincode,
         phone: '14599 (CSC National Helpline)',
         timings: '09:00 AM - 06:30 PM (Mon-Sat)',
-        landmark: `Near Bus Stand / Metro Station, ${capitalizedQuery}`,
+        landmark: `Near Main Chowk / Post Office, ${capitalizedQuery}`,
         servicesOffered: [
-          'MCD Online Services (Tax, Certificates, Licenses)',
+          'Online State Government Portals (e-District / e-Seva)',
           'PAN Card Application & e-KYC',
           'Aadhaar Address Update & PVC Printing',
-          'Voter ID & e-District Delhi Registration'
+          'Voter ID & Ration Card Applications'
         ],
         mcdVerified: true
       }
@@ -371,3 +371,8 @@ export function getMatchingCscCentres(zoneFilter?: string, queryStr?: string): C
 
   return matched;
 }
+
+export function getMatchingCscCentres(zoneFilter?: string, queryStr?: string): CscCentreItem[] {
+  return getCscCentresByState('delhi', zoneFilter, queryStr);
+}
+

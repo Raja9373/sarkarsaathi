@@ -1,0 +1,47 @@
+[
+  {
+    "ifsc": "SBIN0000300",
+    "bank": "State Bank of India",
+    "branch": "Mumbai Main Branch (Fort)",
+    "district": "Mumbai City",
+    "city": "Mumbai",
+    "state": "Maharashtra",
+    "address": "Mumbai Samachar Marg, Fort, Mumbai, Maharashtra - 400023",
+    "contact": "022-22661500",
+    "micr": "400002010",
+    "upi": true,
+    "rtgs": true,
+    "neft": true,
+    "imps": true
+  },
+  {
+    "ifsc": "HDFC0000060",
+    "bank": "HDFC Bank",
+    "branch": "Mumbai Fort",
+    "district": "Mumbai City",
+    "city": "Mumbai",
+    "state": "Maharashtra",
+    "address": "Manekji Wadia Building, Nanik Motwani Marg, Fort, Mumbai, Maharashtra - 400001",
+    "contact": "022-6160616",
+    "micr": "400240002",
+    "upi": true,
+    "rtgs": true,
+    "neft": true,
+    "imps": true
+  },
+  {
+    "ifsc": "SBIN0000454",
+    "bank": "State Bank of India",
+    "branch": "Pune Main Branch",
+    "district": "Pune",
+    "city": "Pune",
+    "state": "Maharashtra",
+    "address": "Dr. Ambedkar Road, Near Collector Office, Pune, Maharashtra - 411001",
+    "contact": "020-26122500",
+    "micr": "411002002",
+    "upi": true,
+    "rtgs": true,
+    "neft": true,
+    "imps": true
+  }
+]

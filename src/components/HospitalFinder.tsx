@@ -11,47 +11,65 @@ import {
   Clock, 
   AlertCircle, 
   ShieldCheck, 
-  FileText, 
-  Info,
-  Sparkles,
-  HeartPulse,
-  Activity,
-  Bed,
-  ShieldAlert
+  HeartPulse, 
+  Activity, 
+  Bed, 
+  ShieldAlert,
+  Globe
 } from 'lucide-react';
-import { 
-  DELHI_HOSPITAL_DISTRICTS, 
-  HOSPITAL_TYPES,
-  getMatchingHospitals, 
-  HospitalItem 
-} from '../data/hospitalData';
+import { getStateDataSet } from '../data/stateDataManager';
+import { STATES_LIST, getStateInfo } from '../data/statesData';
+import { HospitalItem } from '../data/hospitalData';
 
-export const HospitalFinder: React.FC = () => {
+interface HospitalFinderProps {
+  currentStateId?: string;
+}
+
+export const HospitalFinder: React.FC<HospitalFinderProps> = ({ currentStateId = 'delhi' }) => {
+  const [selectedState, setSelectedState] = useState<string>(currentStateId);
   const [query, setQuery] = useState<string>('');
-  const [selectedDistrict, setSelectedDistrict] = useState<string>('All Districts');
-  const [selectedType, setSelectedType] = useState<string>('All Hospital Types');
+  const [selectedDistrict, setSelectedDistrict] = useState<string>('All');
+  const [selectedType, setSelectedType] = useState<string>('All');
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
-  const hospitals = getMatchingHospitals(selectedDistrict, selectedType, query);
+  // Sync if prop changes
+  React.useEffect(() => {
+    if (currentStateId) {
+      setSelectedState(currentStateId);
+      setSelectedDistrict('All');
+    }
+  }, [currentStateId]);
+
+  const stateData = getStateDataSet(selectedState);
+  const stateInfo = getStateInfo(selectedState);
+  const stateHospitals = stateData.hospitals || [];
+
+  // Extract available districts from state's hospitals
+  const availableDistricts = ['All', ...Array.from(new Set(stateHospitals.map(h => h.district))).filter(Boolean)];
+  const availableTypes = ['All', ...Array.from(new Set(stateHospitals.map(h => h.type))).filter(Boolean)];
+
+  // Filter hospitals
+  const filteredHospitals = stateHospitals.filter(hosp => {
+    const matchesDistrict = selectedDistrict === 'All' || hosp.district.toLowerCase() === selectedDistrict.toLowerCase();
+    const matchesType = selectedType === 'All' || hosp.type === selectedType;
+    const cleanQuery = query.trim().toLowerCase();
+
+    if (!cleanQuery) return matchesDistrict && matchesType;
+
+    const matchesName = hosp.name.toLowerCase().includes(cleanQuery);
+    const matchesAddr = hosp.address.toLowerCase().includes(cleanQuery);
+    const matchesPin = hosp.pincode.includes(cleanQuery);
+    const matchesSpecialty = hosp.specialties.some(s => s.toLowerCase().includes(cleanQuery));
+
+    return matchesDistrict && matchesType && (matchesName || matchesAddr || matchesPin || matchesSpecialty);
+  });
 
   const handleCopyHospitalDetails = (hosp: HospitalItem) => {
-    const textToCopy = `${hosp.name}\nType: ${hosp.type}\nDistrict: ${hosp.district}\nAddress: ${hosp.address} - ${hosp.pincode}\nLandmark: ${hosp.landmark}\nEmergency Helpline: ${hosp.emergencyNumber}\nGeneral Phone: ${hosp.phone}\nOPD Timings: ${hosp.opdTimings}\nBed Capacity: ~${hosp.bedCapacity} Beds\nSpecialties: ${hosp.specialties.join(', ')}`;
+    const textToCopy = `${hosp.name}\nType: ${hosp.type}\nDistrict: ${hosp.district}\nAddress: ${hosp.address} - ${hosp.pincode}\nLandmark: ${hosp.landmark || ''}\nEmergency Helpline: ${hosp.emergencyNumber}\nGeneral Phone: ${hosp.phone}\nOPD Timings: ${hosp.opdTimings}\nBed Capacity: ~${hosp.bedCapacity} Beds\nSpecialties: ${hosp.specialties.join(', ')}`;
     navigator.clipboard.writeText(textToCopy);
     setCopiedId(hosp.id);
     setTimeout(() => setCopiedId(null), 2000);
   };
-
-  const QUICK_HOSPITALS = [
-    { label: 'LNJP Hospital (MAMC)', q: 'LNJP' },
-    { label: 'AIIMS Apex Trauma (24x7)', q: 'AIIMS' },
-    { label: 'RML Hospital (CP)', q: 'RML' },
-    { label: 'Safdarjung Emergency', q: 'Safdarjung' },
-    { label: 'GTB Hospital (Dilshad)', q: 'GTB' },
-    { label: 'DDU Hospital (Hari Nagar)', q: 'Deen Dayal' },
-    { label: 'BSA Hospital (Rohini)', q: 'Ambedkar' },
-    { label: 'Hindu Rao (Civil Lines)', q: 'Hindu Rao' },
-    { label: 'Chacha Nehru Pediatric', q: 'Chacha Nehru' }
-  ];
 
   return (
     <div className="space-y-6 text-zinc-100">
@@ -63,34 +81,50 @@ export const HospitalFinder: React.FC = () => {
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h3 className="text-base font-black text-white">Delhi Government & Central Hospital Directory</h3>
+              <h3 className="text-base font-black text-white">{stateInfo.name} Government & Central Hospital Directory</h3>
               <span className="text-[10px] px-2 py-0.5 rounded bg-red-500/20 text-red-300 border border-red-500/30 font-bold uppercase">
-                Govt of Delhi Verified
+                {stateInfo.code || 'GOVT'} Verified
               </span>
             </div>
             <p className="text-xs text-zinc-300 mt-0.5">
-              Locate official Delhi Government Hospitals (DGHS), Autonomous Super Specialty Institutes, Central Govt Medical Colleges (AIIMS/RML/Safdarjung), and MCD Municipal Hospitals with 24x7 Emergency Casualty contacts.
+              Locate official Government Hospitals, Medical Colleges, AIIMS & Apex institutes with 24x7 Emergency Casualty & Trauma contacts in {stateInfo.name}.
             </p>
           </div>
         </div>
 
         <div className="flex items-center gap-2 flex-wrap flex-shrink-0">
           <a
-            href="https://health.delhi.gov.in/health/delhi-government-hospitals"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="px-3.5 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold text-xs inline-flex items-center gap-1.5 shadow-md transition"
-          >
-            <ExternalLink className="w-4 h-4" />
-            <span>Delhi Govt Health Portal</span>
-          </a>
-          <a
-            href="tel:102"
-            className="px-3 py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-red-400 border border-red-800/60 text-xs font-bold inline-flex items-center gap-1.5"
+            href="tel:108"
+            className="px-3 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-white text-xs font-bold inline-flex items-center gap-1.5 shadow-md transition"
           >
             <PhoneCall className="w-3.5 h-3.5" />
-            <span>CATS Ambulance 102 / 108</span>
+            <span>Emergency Ambulance 108 / 102</span>
           </a>
+        </div>
+      </div>
+
+      {/* State Selection Bar */}
+      <div className="p-3.5 rounded-xl bg-zinc-900 border border-zinc-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+        <div className="flex items-center gap-2">
+          <Globe className="w-4 h-4 text-red-400" />
+          <span className="font-bold text-zinc-200">Select State / UT for Hospital Directory:</span>
+        </div>
+        <div className="w-full sm:w-72">
+          <select
+            value={selectedState}
+            onChange={(e) => {
+              setSelectedState(e.target.value);
+              setSelectedDistrict('All');
+              setSelectedType('All');
+            }}
+            className="w-full bg-zinc-950 border border-zinc-700 text-white rounded-lg px-3 py-1.5 text-xs font-medium focus:outline-none focus:border-red-500"
+          >
+            {STATES_LIST.filter(s => s.id !== 'national').map((st) => (
+              <option key={st.id} value={st.id}>
+                {st.name} ({st.hindiName})
+              </option>
+            ))}
+          </select>
         </div>
       </div>
 
@@ -99,10 +133,10 @@ export const HospitalFinder: React.FC = () => {
         <ShieldAlert className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
         <div className="space-y-1">
           <p className="font-bold text-red-200">
-            24x7 Free Emergency Casualty & Hospital Care in Delhi:
+            24x7 Free Emergency Casualty Care in {stateInfo.name}:
           </p>
           <p className="text-zinc-300">
-            All Delhi Government and Central Government hospitals provide free 24x7 emergency casualty care, free essential medicines, and free diagnostic lab tests. Call <strong className="text-white font-mono">102 or 108</strong> for CATS free emergency ambulance service anywhere in Delhi NCT.
+            All apex state government and central institutions provide 24x7 emergency trauma care. Dial <strong className="text-white font-mono">108 or 102</strong> for free emergency ambulance dispatch.
           </p>
         </div>
       </div>
@@ -117,7 +151,7 @@ export const HospitalFinder: React.FC = () => {
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search by hospital name (LNJP, AIIMS, RML, GTB), area, PIN code, or specialty (Cardiology, Trauma, Pediatrics)..."
+              placeholder={`Search hospitals in ${stateInfo.name} by name, area, PIN code, or specialty...`}
               className="w-full bg-zinc-950 border border-zinc-800 rounded-xl pl-9 pr-8 py-2.5 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-red-500"
             />
             {query && (
@@ -137,166 +171,114 @@ export const HospitalFinder: React.FC = () => {
               onChange={(e) => setSelectedDistrict(e.target.value)}
               className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-red-500"
             >
-              {DELHI_HOSPITAL_DISTRICTS.map((dist) => (
-                <option key={dist} value={dist}>{dist}</option>
+              {availableDistricts.map((dist) => (
+                <option key={dist} value={dist}>
+                  {dist === 'All' ? 'All Districts' : dist}
+                </option>
               ))}
             </select>
           </div>
 
-          {/* Hospital Type Dropdown */}
+          {/* Type Dropdown */}
           <div className="md:col-span-3">
             <select
               value={selectedType}
               onChange={(e) => setSelectedType(e.target.value)}
               className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-red-500"
             >
-              {HOSPITAL_TYPES.map((type) => (
-                <option key={type} value={type}>{type}</option>
+              {availableTypes.map((t) => (
+                <option key={t} value={t}>
+                  {t === 'All' ? 'All Hospital Types' : t}
+                </option>
               ))}
             </select>
           </div>
         </div>
-
-        {/* Quick Search Chips */}
-        <div className="flex flex-wrap items-center gap-2 text-xs">
-          <span className="text-zinc-400 font-semibold text-[11px]">Popular Govt Hospitals:</span>
-          {QUICK_HOSPITALS.map((item, idx) => (
-            <button
-              key={idx}
-              onClick={() => {
-                setQuery(item.q);
-                setSelectedDistrict('All Districts');
-                setSelectedType('All Hospital Types');
-              }}
-              className="px-2.5 py-1 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-red-500 text-zinc-300 hover:text-white transition text-[11px]"
-            >
-              {item.label}
-            </button>
-          ))}
-        </div>
       </div>
 
-      {/* Result Counter Header */}
-      <div className="flex items-center justify-between text-xs bg-zinc-900/60 p-3 rounded-xl border border-zinc-800/80">
-        <div className="flex items-center gap-2">
-          <Info className="w-4 h-4 text-red-400" />
-          <span className="text-zinc-300 font-medium">
-            Showing <strong className="text-white">{hospitals.length}</strong> Government Hospital{hospitals.length !== 1 ? 's' : ''} in {selectedDistrict !== 'All Districts' ? selectedDistrict : 'Delhi NCR'}
-          </span>
-        </div>
-        {(query || selectedDistrict !== 'All Districts' || selectedType !== 'All Hospital Types') && (
-          <button
-            onClick={() => {
-              setQuery('');
-              setSelectedDistrict('All Districts');
-              setSelectedType('All Hospital Types');
-            }}
-            className="text-[11px] text-red-400 hover:underline font-bold"
-          >
-            Reset All Filters
-          </button>
-        )}
+      {/* Results Header */}
+      <div className="flex items-center justify-between text-xs text-zinc-400 border-b border-zinc-800 pb-2">
+        <span>
+          Showing <strong className="text-white">{filteredHospitals.length}</strong> government hospital{filteredHospitals.length === 1 ? '' : 's'} in <strong className="text-red-400">{stateInfo.name}</strong>
+        </span>
+        <span className="text-[11px] text-zinc-500">
+          Source: State Health Department & MoHFW Directory
+        </span>
       </div>
 
       {/* Hospital Cards Grid */}
-      {hospitals.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {hospitals.map((hosp) => (
-            <div 
-              key={hosp.id} 
-              className={`p-5 rounded-2xl bg-zinc-900 border transition space-y-4 flex flex-col justify-between ${
-                hosp.hasTraumaCenter 
-                  ? 'border-red-500/80 shadow-lg shadow-red-950/20 bg-gradient-to-b from-red-950/20 to-zinc-900' 
-                  : 'border-zinc-800 hover:border-red-500/60'
-              }`}
+      {filteredHospitals.length > 0 ? (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          {filteredHospitals.map((hosp) => (
+            <div
+              key={hosp.id}
+              className="p-5 rounded-2xl bg-zinc-900 border border-zinc-800 hover:border-red-500/60 transition-all flex flex-col justify-between gap-4 group"
             >
               <div className="space-y-3">
-                {/* Title & Type Badge */}
+                {/* Header: Name & Type */}
                 <div className="flex items-start justify-between gap-2">
-                  <div>
+                  <div className="space-y-1">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <h4 className="text-base font-black text-white">{hosp.name}</h4>
+                      <span className="text-[10px] px-2 py-0.5 rounded font-bold bg-red-500/10 text-red-400 border border-red-500/20">
+                        {hosp.type}
+                      </span>
+                      <span className="text-[10px] px-2 py-0.5 rounded font-medium bg-zinc-800 text-zinc-300">
+                        {hosp.district}
+                      </span>
                       {hosp.hasTraumaCenter && (
-                        <span className="text-[10px] px-2 py-0.5 rounded bg-red-500/20 text-red-300 border border-red-500/30 font-bold uppercase flex items-center gap-1">
-                          <Activity className="w-3 h-3 text-red-400" />
-                          24x7 Trauma Center
+                        <span className="text-[10px] px-2 py-0.5 rounded font-bold bg-amber-500/10 text-amber-300 border border-amber-500/20">
+                          Apex Trauma Center
                         </span>
                       )}
                     </div>
-                    <div className="flex items-center gap-2 mt-1 flex-wrap">
-                      <span className="text-[10px] px-2 py-0.5 rounded bg-zinc-800 text-red-400 border border-zinc-700 font-bold uppercase">
-                        {hosp.type}
-                      </span>
-                      <span className="text-[10px] text-zinc-400 font-medium">
-                        {hosp.district}
-                      </span>
-                    </div>
+                    <h4 className="text-base font-bold text-white group-hover:text-red-300 transition">
+                      {hosp.name}
+                    </h4>
                   </div>
 
                   <button
                     onClick={() => handleCopyHospitalDetails(hosp)}
-                    className="p-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white transition flex-shrink-0"
-                    title="Copy hospital details"
+                    title="Copy details"
+                    className="p-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-300 flex-shrink-0 transition"
                   >
                     {copiedId === hosp.id ? (
                       <Check className="w-4 h-4 text-emerald-400" />
                     ) : (
-                      <Copy className="w-4 h-4 text-zinc-400" />
+                      <Copy className="w-4 h-4" />
                     )}
                   </button>
                 </div>
 
                 {/* Address & Landmark */}
-                <div className="space-y-1.5 text-xs text-zinc-300 bg-zinc-950/80 p-3 rounded-xl border border-zinc-800/80">
+                <div className="space-y-1.5 text-xs text-zinc-300">
                   <div className="flex items-start gap-2">
                     <MapPin className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
-                    <div>
-                      <p className="font-medium text-white">{hosp.address} - <span className="font-mono text-red-400">{hosp.pincode}</span></p>
-                      <p className="text-[11px] text-zinc-400 mt-0.5">Landmark: {hosp.landmark}</p>
-                    </div>
+                    <span>{hosp.address} - <strong className="text-white font-mono">{hosp.pincode}</strong></span>
                   </div>
+                  {hosp.landmark && (
+                    <div className="flex items-start gap-2 text-zinc-400 pl-6 text-[11px]">
+                      <span>Landmark: {hosp.landmark}</span>
+                    </div>
+                  )}
                 </div>
 
-                {/* Emergency & Phone Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-                  <div className="p-2.5 rounded-xl bg-red-950/40 border border-red-800/80 flex items-center justify-between">
+                {/* Contacts & Capacity */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2 border-t border-zinc-800/80 text-xs">
+                  <div className="p-2.5 rounded-xl bg-zinc-950 border border-zinc-800 flex items-center gap-2">
+                    <PhoneCall className="w-4 h-4 text-red-400 flex-shrink-0" />
                     <div>
-                      <span className="text-[10px] text-red-300 font-bold uppercase block">24x7 Emergency / Casualty</span>
-                      <a href={`tel:${hosp.emergencyNumber.split('/')[0].replace(/[^0-9]/g, '')}`} className="font-mono font-black text-red-400 hover:underline text-[11px]">
+                      <span className="text-[10px] text-zinc-400 block font-semibold">24x7 Emergency Helpline</span>
+                      <a href={`tel:${hosp.emergencyNumber.split('/')[0].replace(/[^0-9]/g, '')}`} className="font-mono text-xs font-bold text-red-300 hover:underline">
                         {hosp.emergencyNumber}
                       </a>
                     </div>
-                    <PhoneCall className="w-3.5 h-3.5 text-red-400" />
                   </div>
 
-                  <div className="p-2.5 rounded-xl bg-zinc-950 border border-zinc-800/80 flex items-center justify-between">
+                  <div className="p-2.5 rounded-xl bg-zinc-950 border border-zinc-800 flex items-center gap-2">
+                    <Bed className="w-4 h-4 text-amber-400 flex-shrink-0" />
                     <div>
-                      <span className="text-[10px] text-zinc-500 font-bold uppercase block">General Board / OPD</span>
-                      <a href={`tel:${hosp.phone.split('/')[0].replace(/[^0-9]/g, '')}`} className="font-mono font-bold text-zinc-200 hover:underline text-[11px]">
-                        {hosp.phone}
-                      </a>
-                    </div>
-                    <PhoneCall className="w-3.5 h-3.5 text-zinc-400" />
-                  </div>
-                </div>
-
-                {/* OPD Timings & Bed Capacity */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-                  <div className="p-2.5 rounded-xl bg-zinc-950 border border-zinc-800/80 flex items-center justify-between">
-                    <div>
-                      <span className="text-[10px] text-zinc-500 font-bold uppercase block">OPD Hours</span>
-                      <span className="font-medium text-zinc-200 text-[11px] flex items-center gap-1">
-                        <Clock className="w-3 h-3 text-red-400 flex-shrink-0" />
-                        {hosp.opdTimings}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="p-2.5 rounded-xl bg-zinc-950 border border-zinc-800/80 flex items-center justify-between">
-                    <div>
-                      <span className="text-[10px] text-zinc-500 font-bold uppercase block">In-Patient Capacity</span>
-                      <span className="font-medium text-zinc-200 text-[11px] flex items-center gap-1">
-                        <Bed className="w-3.5 h-3.5 text-red-400 flex-shrink-0" />
+                      <span className="text-[10px] text-zinc-400 block font-semibold">Bed Capacity</span>
+                      <span className="font-mono text-xs font-bold text-zinc-200">
                         ~{hosp.bedCapacity} Hospital Beds
                       </span>
                     </div>
@@ -321,22 +303,11 @@ export const HospitalFinder: React.FC = () => {
               {/* Action Buttons */}
               <div className="pt-3 border-t border-zinc-800 flex items-center justify-between gap-2 flex-wrap">
                 <a
-                  href="https://health.delhi.gov.in/health/delhi-government-hospitals"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href={`tel:${hosp.emergencyNumber.split('/')[0].replace(/[^0-9]/g, '')}`}
                   className="px-3.5 py-1.5 rounded-lg bg-red-600 hover:bg-red-500 text-white text-xs font-bold inline-flex items-center gap-1.5 shadow"
                 >
-                  <Building2 className="w-3.5 h-3.5" />
-                  <span>Delhi Health Directory</span>
-                  <ExternalLink className="w-3 h-3" />
-                </a>
-
-                <a
-                  href={`tel:${hosp.emergencyNumber.split('/')[0].replace(/[^0-9]/g, '')}`}
-                  className="px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-red-400 text-xs font-bold inline-flex items-center gap-1 border border-red-800/50"
-                >
                   <PhoneCall className="w-3.5 h-3.5" />
-                  <span>Call Emergency</span>
+                  <span>Call Emergency ({hosp.emergencyNumber.split('/')[0]})</span>
                 </a>
               </div>
             </div>
@@ -345,19 +316,19 @@ export const HospitalFinder: React.FC = () => {
       ) : (
         <div className="p-8 text-center bg-zinc-900/50 rounded-2xl border border-zinc-800 space-y-3">
           <AlertCircle className="w-10 h-10 text-red-400 mx-auto" />
-          <h4 className="text-base font-bold text-white">No government hospital found matching "{query}"</h4>
+          <h4 className="text-base font-bold text-white">No government hospital found matching "{query}" in {stateInfo.name}</h4>
           <p className="text-xs text-zinc-400 max-w-md mx-auto">
-            Try searching by key hospital names (LNJP, AIIMS, RML, Safdarjung, GTB, DDU, Ambedkar) or specialties (Cardiology, Trauma, Surgery, Pediatrics).
+            Try searching by area or specialty, or switch state to view apex institutes.
           </p>
           <button
             onClick={() => {
               setQuery('');
-              setSelectedDistrict('All Districts');
-              setSelectedType('All Hospital Types');
+              setSelectedDistrict('All');
+              setSelectedType('All');
             }}
             className="px-4 py-2 rounded-xl bg-red-600 text-white font-bold text-xs hover:brightness-110 transition"
           >
-            Show All Delhi Government Hospitals
+            Show All {stateInfo.name} Hospitals
           </button>
         </div>
       )}
@@ -367,18 +338,9 @@ export const HospitalFinder: React.FC = () => {
         <div className="flex items-start gap-2">
           <ShieldCheck className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
           <span>
-            Hospital directory verified against <strong className="text-zinc-200">Department of Health & Family Welfare, Govt. of NCT of Delhi (health.delhi.gov.in) & Ministry of Health and Family Welfare (MoHFW) Records</strong>.
+            Hospital directory verified against <strong className="text-zinc-200">State Health Department & National Health Portal (NHP / MoHFW)</strong> for {stateInfo.name}.
           </span>
         </div>
-        <a
-          href="https://health.delhi.gov.in/health/delhi-government-hospitals"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-1 text-red-400 hover:underline font-bold text-[11px] flex-shrink-0"
-        >
-          <span>health.delhi.gov.in Portal</span>
-          <ExternalLink className="w-3 h-3" />
-        </a>
       </div>
     </div>
   );

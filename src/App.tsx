@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Header } from './components/Header';
 import { HeroSection } from './components/HeroSection';
 import { CategoryGrid } from './components/CategoryGrid';
@@ -25,13 +25,17 @@ import { VoiceSearchModal } from './components/VoiceSearchModal';
 import { SitemapModal } from './components/SitemapModal';
 import { SchemesHub } from './components/SchemesHub';
 import { AutoUpdateSystem } from './components/AutoUpdateSystem';
-import { FaqDetailPage } from './components/FaqDetailPage';
+import { StateNoticeBanner } from './components/StateNoticeBanner';
+import { NewsTicker } from './components/NewsTicker';
+import { SarkariNewsSection } from './components/SarkariNewsSection';
+import { YojanaFinder } from './components/YojanaFinder';
 
 import { ActiveTab, ServiceItem, StateId } from './types';
 import { SERVICES_LIST } from './data/servicesData';
 import { BLOG_POSTS } from './data/blogData';
-import { ExternalLink, CheckCircle2, Search, ArrowRight, ShieldCheck, Sparkles, Mic } from 'lucide-react';
-import { ALL_FAQS } from './data/faqs/index';
+import { STATES_LIST, getStateInfo } from './data/statesData';
+import { ExternalLink, CheckCircle2, Search, ArrowRight, ShieldCheck, Sparkles, Mic, MapPin, RefreshCw } from 'lucide-react';
+
 
 export default function App() {
   const [servicesData, setServicesData] = useState<ServiceItem[]>(SERVICES_LIST);
@@ -49,24 +53,94 @@ export default function App() {
   const [fontSizeLevel, setFontSizeLevel] = useState<number>(0);
   const [highContrast, setHighContrast] = useState<boolean>(false);
 
-  // NEW: FAQ Slug handling for /faq/:slug URLs
-  const [selectedFaqSlug, setSelectedFaqSlug] = useState<string | null>(null);
+  // Synchronize URL path with activeTab and selected modal/service
+  React.useEffect(() => {
+    const handleRoute = () => {
+      const path = window.location.pathname;
+      const searchParams = new URLSearchParams(window.location.search);
+      const stateParam = searchParams.get('state') as StateId;
+      const typeParam = searchParams.get('type');
 
-  useEffect(() => {
-    // Check URL on load for /faq/xxx
-    const path = window.location.pathname;
-    if (path.startsWith('/faq/')) {
-      const slug = path.replace('/faq/', '').replace('/', '');
-      if (slug && slug!== 'faq') {
-        setSelectedFaqSlug(slug);
-        setActiveTab('faq-detail' as any);
+      if (stateParam) {
+        setCurrentStateId(stateParam);
       }
-    }
-  }, []);
+      if (typeParam) {
+        setFinderInitialId(typeParam);
+      }
 
-  const fontClass = fontSizeLevel === 1? 'text-[105%]' : fontSizeLevel === 2? 'text-[112%]' : fontSizeLevel === -1? 'text-[92%]' : '';
+      if (!path || path === '/') {
+        setActiveTab('home');
+        return;
+      }
+
+      if (path.startsWith('/finder/') || path.startsWith('/finders')) {
+        const parts = path.split('/');
+        if (parts[2]) {
+          setFinderInitialId(parts[2]);
+        }
+        setActiveTab('finders');
+        return;
+      }
+
+      if (path.startsWith('/yojana/') || path.startsWith('/service/') || path.startsWith('/scheme/')) {
+        const id = path.split('/')[2];
+        const found = servicesData.find(s => s.id === id);
+        if (found) {
+          setSelectedService(found);
+          setActiveTab('schemes');
+        } else {
+          setActiveTab('services');
+        }
+      } else if (path.startsWith('/blog/')) {
+        setActiveTab('blog');
+      } else if (path.startsWith('/faq/') || path === '/faqs') {
+        setActiveTab('faqs');
+      } else if (path.startsWith('/state/') || path === '/states') {
+        const stateId = path.split('/')[2] as StateId;
+        if (stateId) setCurrentStateId(stateId);
+        setActiveTab('services');
+      } else if (path === '/schemes' || path === '/find-yojana') {
+        setActiveTab('schemes');
+      } else if (path === '/services' || path === '/eligibility' || path === '/documents' || path === '/news') {
+        setActiveTab('services');
+      } else if (path === '/blog') {
+        setActiveTab('blog');
+      } else if (path === '/banking') {
+        setActiveTab('banking');
+      } else if (path === '/status-check') {
+        setActiveTab('status-check');
+      } else if (path === '/online-apply') {
+        setActiveTab('online-apply');
+      } else if (path === '/finders') {
+        setActiveTab('finders');
+      } else if (path === '/calculators') {
+        setActiveTab('calculators');
+      } else if (path === '/delhi-govt' || path.startsWith('/dept/') || path.startsWith('/department/')) {
+        const deptId = path.split('/')[2];
+        if (deptId) setSelectedDeptId(deptId);
+        setActiveTab('delhi-govt');
+      } else if (path === '/complaints') {
+        setActiveTab('complaints');
+      } else if (path === '/downloads') {
+        setActiveTab('downloads');
+      } else if (['/about', '/contact', '/contact-us', '/privacy', '/privacy-policy', '/terms', '/terms-of-service', '/disclaimer', '/disclaimer-policy'].includes(path)) {
+        setActiveTab('legal');
+      }
+    };
+
+    handleRoute();
+    window.addEventListener('popstate', handleRoute);
+    return () => window.removeEventListener('popstate', handleRoute);
+  }, [servicesData]);
+
+  const fontClass = fontSizeLevel === 1 ? 'text-[105%]' : fontSizeLevel === 2 ? 'text-[112%]' : fontSizeLevel === -1 ? 'text-[92%]' : '';
 
   const filteredServices = servicesData.filter(srv => {
+    // State matching: National services match all states; Delhi matches delhi; specific states match specific ID or national
+    const matchesState = currentStateId === 'national'
+      ? true
+      : (srv.state === 'all' || srv.state === 'national' || srv.state === currentStateId || (currentStateId === 'delhi' && srv.state === 'delhi'));
+
     const catLower = selectedCategoryFilter.toLowerCase();
     const matchesCat = selectedCategoryFilter === 'all' ||
       srv.category === selectedCategoryFilter ||
@@ -77,7 +151,7 @@ export default function App() {
       srv.hindiTitle.includes(searchFilterQuery) ||
       srv.department.toLowerCase().includes(searchFilterQuery.toLowerCase()) ||
       srv.tags.some(t => t.toLowerCase().includes(searchFilterQuery.toLowerCase()));
-    return matchesCat && matchesSearch;
+    return matchesState && matchesCat && matchesSearch;
   });
 
   const handleSelectCategory = (catName: string) => {
@@ -92,7 +166,7 @@ export default function App() {
 
   const handleSearchQueryFromHero = (query: string) => {
     setSearchFilterQuery(query);
-    if (query.trim()!== '') {
+    if (query.trim() !== '') {
       setActiveTab('services');
     }
   };
@@ -111,25 +185,23 @@ export default function App() {
   };
 
   const handlePublishNewScheme = (newScheme: ServiceItem) => {
-    setServicesData(prev => [newScheme,...prev]);
+    setServicesData(prev => [newScheme, ...prev]);
     setSelectedService(newScheme);
   };
 
-  const handleOpenFaq = (slug: string) => {
-    setSelectedFaqSlug(slug);
-    setActiveTab('faq-detail' as any);
-    window.history.pushState({}, '', `/faq/${slug}`);
+  const handleNavigateToFinder = (finderId: string) => {
+    setFinderInitialId(finderId);
+    setActiveTab('finders');
+    const url = new URL(window.location.href);
+    url.searchParams.set('state', currentStateId);
+    url.searchParams.set('type', finderId);
+    window.history.pushState({}, '', `${url.pathname}?${url.searchParams.toString()}`);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleBackToFaqs = () => {
-    setSelectedFaqSlug(null);
-    setActiveTab('faqs');
-    window.history.pushState({}, '', `/`);
-  };
-
   return (
-    <div className={`min-h-screen bg-[#0B0F17] text-zinc-100 font-sans selection:bg-[#FF6B00] selection:text-white ${fontClass} ${highContrast? 'contrast-125' : ''}`}>
+    <div className={`min-h-screen bg-[#0B0F17] text-zinc-100 font-sans selection:bg-[#FF6B00] selection:text-white ${fontClass} ${highContrast ? 'contrast-125' : ''}`}>
+      {/* Enterprise SEO Metadata & JSON-LD Injection */}
       <SEOHead activeService={selectedService} />
 
       <Header
@@ -144,30 +216,57 @@ export default function App() {
         setHighContrast={setHighContrast}
       />
 
-      <main className="min-h-">
-        {/* NEW FAQ DETAIL ROUTE */}
-        {(activeTab as any) === 'faq-detail' && selectedFaqSlug && (
-          <FaqDetailPage slug={selectedFaqSlug} onBack={handleBackToFaqs} />
-        )}
+      {/* Real-time PIB & Sarkari News Ticker */}
+      <NewsTicker currentStateId={currentStateId} />
 
+      {/* State Active Context & Updating Notice Banner for non-Delhi states */}
+      <StateNoticeBanner
+        currentStateId={currentStateId}
+        onChangeStateClick={() => {
+          const btn = document.getElementById('state-selector-btn');
+          if (btn) btn.click();
+        }}
+        onExploreSchemesClick={() => {
+          setActiveTab('schemes');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}
+      />
+
+      <main className="min-h-[70vh]">
         {activeTab === 'home' && (
           <div>
             <HeroSection
               allServices={servicesData}
               onSelectService={(srv) => setSelectedService(srv)}
               onSearchQuery={handleSearchQueryFromHero}
+              currentStateId={currentStateId}
+              onOpenStateSelector={() => {
+                const btn = document.getElementById('state-selector-btn');
+                if (btn) btn.click();
+              }}
+              onNavigateToFinder={handleNavigateToFinder}
             />
             <CategoryGrid
               onSelectCategory={handleSelectCategory}
               setActiveTab={setActiveTab}
               onOpenEmergency={() => setEmergencyOpen(true)}
-              onSelectGovtOffices={() => {
-                setFinderInitialId('govt-offices');
-                setActiveTab('finders');
+              onSelectGovtOffices={() => handleNavigateToFinder('govt-offices')}
+              onSelectGovernmentFinders={() => handleNavigateToFinder('pincode')}
+              currentStateId={currentStateId}
+              onNavigateToFinder={handleNavigateToFinder}
+            />
+            <YojanaFinder
+              currentStateId={currentStateId}
+              onOpenStateSelector={() => {
+                const btn = document.getElementById('state-selector-btn');
+                if (btn) btn.click();
               }}
-              onSelectGovernmentFinders={() => {
-                setFinderInitialId('govt-offices');
-                setActiveTab('finders');
+            />
+            <SarkariNewsSection
+              currentStateId={currentStateId}
+              onViewAllNews={() => {
+                setActiveTab('auto-update');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
             />
             <LifeEventsSection />
@@ -176,19 +275,32 @@ export default function App() {
         )}
 
         {activeTab === 'schemes' && (
-          <SchemesHub
-            allServices={servicesData}
-            onSelectScheme={(sch) => setSelectedService(sch)}
-            onOpenVoiceSearch={() => setVoiceSearchOpen(true)}
-          />
+          <div className="space-y-12">
+            <YojanaFinder
+              currentStateId={currentStateId}
+              onOpenStateSelector={() => {
+                const btn = document.getElementById('state-selector-btn');
+                if (btn) btn.click();
+              }}
+            />
+            <SchemesHub
+              allServices={servicesData}
+              onSelectScheme={(sch) => setSelectedService(sch)}
+              onOpenVoiceSearch={() => setVoiceSearchOpen(true)}
+              currentStateId={currentStateId}
+            />
+          </div>
         )}
 
         {activeTab === 'auto-update' && (
-          <AutoUpdateSystem
-            existingServices={servicesData}
-            onPublishNewScheme={handlePublishNewScheme}
-            onViewService={(srv) => setSelectedService(srv)}
-          />
+          <div className="space-y-12">
+            <SarkariNewsSection currentStateId={currentStateId} />
+            <AutoUpdateSystem
+              existingServices={servicesData}
+              onPublishNewScheme={handlePublishNewScheme}
+              onViewService={(srv) => setSelectedService(srv)}
+            />
+          </div>
         )}
 
         {activeTab === 'services' && (
@@ -228,11 +340,11 @@ export default function App() {
                   className="p-5 rounded-2xl bg-[#121824] border border-zinc-800 hover:border-[#FF6B00]/50 transition cursor-pointer space-y-2 group"
                 >
                   <div className="flex items-center justify-between gap-2">
-                    <span className="text- font-bold text-[#FF6B00] uppercase px-2 py-0.5 rounded bg-zinc-900">
+                    <span className="text-[10px] font-bold text-[#FF6B00] uppercase px-2 py-0.5 rounded bg-zinc-900">
                       {srv.category}
                     </span>
-                    <span className="text- font-medium text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-800/40">
-                      Official.gov.in
+                    <span className="text-[10px] font-medium text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-800/40">
+                      Official .gov.in
                     </span>
                   </div>
                   <h3 className="text-base font-bold text-white group-hover:text-[#FF6B00] transition">{srv.title}</h3>
@@ -245,7 +357,7 @@ export default function App() {
 
         {activeTab === 'life-events' && <LifeEventsSection />}
         {activeTab === 'banking' && <BankingHub />}
-        {activeTab === 'finders' && <FindersHub initialFinderId={finderInitialId} />}
+        {activeTab === 'finders' && <FindersHub initialFinderId={finderInitialId} currentStateId={currentStateId} />}
         {activeTab === 'status-check' && <StatusCheckHub />}
         {activeTab === 'online-apply' && <OnlineApplyHub />}
         {activeTab === 'payments' && <PaymentsHub />}
@@ -259,10 +371,11 @@ export default function App() {
         )}
         {activeTab === 'complaints' && <ComplaintsHub />}
         {activeTab === 'blog' && <BlogHub />}
-        {activeTab === 'faqs' && <ServicesFaqPage onOpenFaq={handleOpenFaq} />}
+        {activeTab === 'faqs' && <ServicesFaqPage />}
         {activeTab === 'legal' && <LegalPages />}
       </main>
 
+      {/* Voice Search Modal */}
       <VoiceSearchModal
         isOpen={voiceSearchOpen}
         onClose={() => setVoiceSearchOpen(false)}
@@ -272,6 +385,7 @@ export default function App() {
         }}
       />
 
+      {/* Sitemap & Robots.txt Generator Modal */}
       <SitemapModal
         isOpen={sitemapOpen}
         onClose={() => setSitemapOpen(false)}
@@ -279,24 +393,29 @@ export default function App() {
         allBlogPosts={BLOG_POSTS}
       />
 
+      {/* Service Detail Modal */}
       <ServiceDetailModal
         service={selectedService}
         onClose={() => setSelectedService(null)}
         onSelectRelated={handleSelectRelatedService}
       />
 
+      {/* Emergency Modal */}
       <EmergencyModal
         isOpen={emergencyOpen}
         onClose={() => setEmergencyOpen(false)}
       />
 
+      {/* Footer */}
       <Footer
         setActiveTab={setActiveTab}
         onOpenEmergency={() => setEmergencyOpen(true)}
         onSelectServiceById={handleSelectRelatedService}
         onSelectDeptById={handleSelectDept}
         onOpenSitemap={() => setSitemapOpen(true)}
+        currentStateId={currentStateId}
       />
     </div>
   );
 }
+

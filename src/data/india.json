@@ -1,0 +1,5144 @@
+{
+  "delhi": {
+    "pincodes": [
+      {
+        "pin": "110001",
+        "area": "Connaught Place, Janpath, Parliament Street, Barakhamba Road, Pragati Maidan, Mandi House, Bengali Market",
+        "district": "New Delhi",
+        "postOffice": "Connaught Place Head Post Office (HO)",
+        "stdCode": "011",
+        "state": "Delhi"
+      },
+      {
+        "pin": "110002",
+        "area": "Daryaganj, Delhi Gate, Rajghat, ITO, Maulana Azad Medical College, Asaf Ali Road",
+        "district": "Central Delhi",
+        "postOffice": "Daryaganj Sub Post Office",
+        "stdCode": "011",
+        "state": "Delhi"
+      },
+      {
+        "pin": "110003",
+        "area": "Pandara Road, CGO Complex, Golf Links, Khan Market, Lodhi Road, Kaka Nagar",
+        "district": "New Delhi",
+        "postOffice": "Pandara Road SO",
+        "stdCode": "011",
+        "state": "Delhi"
+      },
+      {
+        "pin": "110005",
+        "area": "Karol Bagh, Anand Parbat, Dev Nagar, Bank Street, Joshi Road",
+        "district": "Central Delhi",
+        "postOffice": "Karol Bagh SO",
+        "stdCode": "011",
+        "state": "Delhi"
+      },
+      {
+        "pin": "110006",
+        "area": "Chandni Chowk, Jama Masjid, Red Fort, Kashmere Gate, Town Hall, Fatehpuri",
+        "district": "North Delhi",
+        "postOffice": "Chandni Chowk SO",
+        "stdCode": "011",
+        "state": "Delhi"
+      },
+      {
+        "pin": "110016",
+        "area": "Hauz Khas, Green Park, AIIMS, Safdarjung Hospital, IIT Delhi, Yusuf Sarai",
+        "district": "South Delhi",
+        "postOffice": "Hauz Khas SO",
+        "stdCode": "011",
+        "state": "Delhi"
+      },
+      {
+        "pin": "110075",
+        "area": "Dwarka Sector 1 to 12, Dwarka Court, IP University, Welcome Hotel",
+        "district": "South West Delhi",
+        "postOffice": "Dwarka Sector 6 SO",
+        "stdCode": "011",
+        "state": "Delhi"
+      },
+      {
+        "pin": "110085",
+        "area": "Rohini Sector 1 to 9, Rithala, Japanese Park, Ambedkar Hospital Area",
+        "district": "North West Delhi",
+        "postOffice": "Rohini Sector 7 SO",
+        "stdCode": "011",
+        "state": "Delhi"
+      }
+    ],
+    "hospitals": [
+      {
+        "id": "dl-hosp-01",
+        "name": "Lok Nayak Jai Prakash Narayan Hospital (LNJP) & MAMC",
+        "type": "Delhi Govt Hospital (DGHS)",
+        "district": "Central Delhi",
+        "state": "Delhi",
+        "address": "Jawaharlal Nehru Marg, Delhi Gate, Near Maulana Azad Medical College, New Delhi",
+        "pincode": "110002",
+        "emergencyNumber": "011-23233000 / 011-23232400",
+        "phone": "011-23233000 (Board) / 102 (CATS Ambulance)",
+        "opdTimings": "08:30 AM - 12:30 PM (Mon-Sat) | 24x7 Casualty & Emergency",
+        "landmark": "Near Delhi Gate Metro Station & Maulana Azad Medical College",
+        "bedCapacity": 2200,
+        "specialties": [
+          "24x7 Emergency Casualty",
+          "General Surgery",
+          "Pediatrics",
+          "Obstetrics & Gynecology",
+          "Trauma Care",
+          "Orthopedics",
+          "ENT & Ophthalmology"
+        ],
+        "hasTraumaCenter": true,
+        "has24x7Emergency": true
+      },
+      {
+        "id": "dl-hosp-02",
+        "name": "All India Institute of Medical Sciences (AIIMS New Delhi) - JPN Apex Trauma Center",
+        "type": "Central Govt / Autonomous",
+        "district": "South Delhi",
+        "state": "Delhi",
+        "address": "Sri Aurobindo Marg, Ansari Nagar, Ring Road, New Delhi",
+        "pincode": "110029",
+        "emergencyNumber": "011-26588500 / 011-26588700",
+        "phone": "011-26598400 (Trauma Reception)",
+        "opdTimings": "08:00 AM - 11:30 AM (Online ORS Reg) | 24x7 Apex Trauma Center",
+        "landmark": "Near AIIMS Metro Station (Yellow Line) & Safdarjung Hospital",
+        "bedCapacity": 2500,
+        "specialties": [
+          "Level 1 Apex Trauma",
+          "Cardiothoracic (CTVS)",
+          "Neurosciences",
+          "Cancer Oncology (IRCH)",
+          "Organ Transplant",
+          "Emergency Medicine"
+        ],
+        "hasTraumaCenter": true,
+        "has24x7Emergency": true
+      },
+      {
+        "id": "dl-hosp-03",
+        "name": "Safdarjung Hospital & Vardhman Mahavir Medical College (VMMC)",
+        "type": "Central Govt / Autonomous",
+        "district": "South West Delhi",
+        "state": "Delhi",
+        "address": "Ring Road, Opp. AIIMS, Ansari Nagar West, New Delhi",
+        "pincode": "110029",
+        "emergencyNumber": "011-26707444 / 011-26165060",
+        "phone": "011-26165060",
+        "opdTimings": "08:30 AM - 12:00 PM (Mon-Sat) | 24x7 Emergency & Dedicated Burn Centre",
+        "landmark": "Opposite AIIMS Hospital, AIIMS Metro Station Gate 2",
+        "bedCapacity": 2900,
+        "specialties": [
+          "Super Specialty Emergency Block",
+          "Asia's Largest Burn Unit",
+          "Trauma & Orthopedics",
+          "Sports Injury Centre",
+          "Pediatric Surgery"
+        ],
+        "hasTraumaCenter": true,
+        "has24x7Emergency": true
+      },
+      {
+        "id": "dl-hosp-04",
+        "name": "Dr. Ram Manohar Lohia Hospital (RML Hospital) & ABVIMS",
+        "type": "Central Govt / Autonomous",
+        "district": "New Delhi",
+        "state": "Delhi",
+        "address": "Baba Kharak Singh Marg, Near Gurudwara Bangla Sahib, Connaught Place, New Delhi",
+        "pincode": "110001",
+        "emergencyNumber": "011-23365525 / 011-23404286",
+        "phone": "011-23365525",
+        "opdTimings": "08:30 AM - 11:30 AM (Mon-Sat) | 24x7 Emergency & Trauma",
+        "landmark": "Near Shivaji Stadium Metro & Bangla Sahib",
+        "bedCapacity": 1500,
+        "specialties": [
+          "24x7 Emergency Services",
+          "Cardiology",
+          "Burn & Plastic Surgery",
+          "Neurosurgery",
+          "Toxicology & Poison Center"
+        ],
+        "hasTraumaCenter": true,
+        "has24x7Emergency": true
+      },
+      {
+        "id": "dl-hosp-05",
+        "name": "Guru Teg Bahadur Hospital (GTB Hospital) & UCMS",
+        "type": "Delhi Govt Hospital (DGHS)",
+        "district": "Shahdara",
+        "state": "Delhi",
+        "address": "Tahirpur Road, Dilshad Garden, GTB Enclave, Delhi",
+        "pincode": "110095",
+        "emergencyNumber": "011-22586262 / 011-22588383",
+        "phone": "011-22586262",
+        "opdTimings": "08:30 AM - 12:30 PM (Mon-Sat) | 24x7 Emergency",
+        "landmark": "Near Jhilmil & Dilshad Garden Metro Stations",
+        "bedCapacity": 1700,
+        "specialties": [
+          "Level-2 Trauma Services",
+          "General Surgery",
+          "Pediatric ICU",
+          "Nephrology",
+          "Dermatology"
+        ],
+        "hasTraumaCenter": true,
+        "has24x7Emergency": true
+      }
+    ],
+    "police": [
+      {
+        "id": "dl-ps-01",
+        "name": "Police Station Parliament Street",
+        "hindiName": "थाना पार्लियामेंट स्ट्रीट",
+        "district": "New Delhi District",
+        "state": "Delhi",
+        "address": "Parliament Street, Opp. NDMC Building, Patel Chowk, New Delhi",
+        "pincode": "110001",
+        "phone": "011-23361100",
+        "shoPhone": "011-23747100 / 8750870121",
+        "pcrNumber": "112",
+        "jurisdictionAreas": [
+          "Connaught Place",
+          "Janpath",
+          "Patel Chowk",
+          "Jantar Mantar",
+          "Tolstoy Marg",
+          "Windsor Place",
+          "Parliament House"
+        ],
+        "landmark": "Near Patel Chowk Metro Station"
+      },
+      {
+        "id": "dl-ps-02",
+        "name": "Police Station Connaught Place",
+        "hindiName": "थाना कनॉट प्लेस",
+        "district": "New Delhi District",
+        "state": "Delhi",
+        "address": "Atul Grove Road, Near Janpath, Connaught Place, New Delhi",
+        "pincode": "110001",
+        "phone": "011-23341800",
+        "shoPhone": "011-23341801 / 8750870122",
+        "pcrNumber": "112",
+        "jurisdictionAreas": [
+          "Inner Circle CP",
+          "Outer Circle CP",
+          "Middle Circle",
+          "Palika Bazar",
+          "Regal Building",
+          "Scindia House",
+          "Kasturba Gandhi Marg"
+        ],
+        "landmark": "Near Janpath Market & Palika Bazar"
+      },
+      {
+        "id": "dl-ps-03",
+        "name": "Police Station Daryaganj",
+        "hindiName": "थाना दरियागंज",
+        "district": "Central Delhi District",
+        "state": "Delhi",
+        "address": "Ansari Road, Daryaganj, New Delhi",
+        "pincode": "110002",
+        "phone": "011-23274647",
+        "shoPhone": "011-23275000 / 8750870221",
+        "pcrNumber": "112",
+        "jurisdictionAreas": [
+          "Daryaganj",
+          "Delhi Gate",
+          "Asaf Ali Road",
+          "Ansari Road",
+          "Golcha Cinema Area",
+          "LNJP Hospital Zone",
+          "Bahadur Shah Zafar Marg (BSZ Marg)"
+        ],
+        "landmark": "Near Delhi Gate & Golcha Cinema"
+      },
+      {
+        "id": "dl-ps-04",
+        "name": "Police Station Hauz Khas",
+        "hindiName": "थाना हौज खास",
+        "district": "South Delhi District",
+        "state": "Delhi",
+        "address": "Aurobindo Marg, Near Hauz Khas Metro Station, New Delhi",
+        "pincode": "110016",
+        "phone": "011-26862500",
+        "shoPhone": "011-26852500 / 8750870421",
+        "pcrNumber": "112",
+        "jurisdictionAreas": [
+          "Hauz Khas Village",
+          "Hauz Khas Enclave",
+          "Green Park Main/Ext",
+          "IIT Delhi Outer",
+          "SDA Market",
+          "Kalu Sarai"
+        ],
+        "landmark": "Near Hauz Khas Metro Station Gate 3"
+      }
+    ],
+    "rto": [
+      {
+        "id": "dl-rto-01",
+        "rtoCode": "DL-01",
+        "zoneName": "North Zone RTO Office (Mall Road / Civil Lines)",
+        "district": "North Delhi",
+        "state": "Delhi",
+        "address": "Transport Department, Zonal Office North, 5/9 Under Hill Road, Mall Road, Civil Lines, Delhi",
+        "pincode": "110054",
+        "phone": "011-23930260 / 011-23930261",
+        "email": "mlo.north@delhi.gov.in",
+        "timings": "08:30 AM - 02:00 PM (Mon-Sat)",
+        "landmark": "Near Vishwavidyalaya Metro Station & Old Secretariat",
+        "jurisdictionAreas": [
+          "Civil Lines",
+          "Chandni Chowk",
+          "Kashmere Gate",
+          "Delhi University North Campus",
+          "Kamla Nagar",
+          "Roop Nagar",
+          "Timarpur",
+          "Sadar Bazar"
+        ],
+        "servicesOffered": [
+          "Permanent Driving License (DL)",
+          "Learner License (LL) Test",
+          "Vehicle RC Registration",
+          "Transfer of Ownership",
+          "NOC Issue",
+          "HSRP & RC Renewal"
+        ],
+        "automatedTrackAvailable": true,
+        "mloIncharge": "Motor Licensing Officer (North Zone)"
+      },
+      {
+        "id": "dl-rto-02",
+        "rtoCode": "DL-02",
+        "zoneName": "Central Zone RTO Office (IP Estate / ITO)",
+        "district": "Central Delhi",
+        "state": "Delhi",
+        "address": "Transport Department Zonal Office, MLO Building, IP Estate, Near Tilak Bridge, New Delhi",
+        "pincode": "110002",
+        "phone": "011-23318288 / 011-23318289",
+        "email": "mlo.central@delhi.gov.in",
+        "timings": "08:30 AM - 02:00 PM (Mon-Sat)",
+        "landmark": "Near Tilak Bridge Railway Station & ITO Metro",
+        "jurisdictionAreas": [
+          "Daryaganj",
+          "Karol Bagh",
+          "Paharganj",
+          "Rajendra Nagar",
+          "Patel Nagar",
+          "Connaught Place",
+          "ITO",
+          "Delhi Gate"
+        ],
+        "servicesOffered": [
+          "Faceless DL Services",
+          "Permanent Driving License Test",
+          "Duplicate Driving License",
+          "Commercial Permit Endorsement",
+          "International Driving Permit (IDP)"
+        ],
+        "automatedTrackAvailable": false,
+        "mloIncharge": "Motor Licensing Officer (Central Zone)"
+      },
+      {
+        "id": "dl-rto-04",
+        "rtoCode": "DL-04",
+        "zoneName": "West Zone-I RTO Office (Janakpuri)",
+        "district": "West Delhi",
+        "state": "Delhi",
+        "address": "Transport Department Zonal Office, B-Block, Community Centre, Janakpuri, New Delhi",
+        "pincode": "110058",
+        "phone": "011-25553555",
+        "email": "mlo.west1@delhi.gov.in",
+        "timings": "08:30 AM - 02:00 PM (Mon-Sat)",
+        "landmark": "Near Janakpuri West Metro & Bharti College",
+        "jurisdictionAreas": [
+          "Janakpuri",
+          "Vikaspuri",
+          "Uttam Nagar",
+          "Tilak Nagar",
+          "Hari Nagar",
+          "Najafgarh Road",
+          "Subhash Nagar"
+        ],
+        "servicesOffered": [
+          "Permanent DL on Automated Track",
+          "Learner License E-Test",
+          "RC Hypothecation Addition/Deletion",
+          "Vehicle Ownership Transfer",
+          "Road Tax Assessment"
+        ],
+        "automatedTrackAvailable": true,
+        "mloIncharge": "Motor Licensing Officer (West Zone-I)"
+      }
+    ],
+    "ifsc": [
+      {
+        "ifsc": "SBIN0000691",
+        "bank": "State Bank of India",
+        "branch": "New Delhi Main Branch (Parliament Street)",
+        "district": "New Delhi",
+        "city": "New Delhi",
+        "state": "Delhi",
+        "address": "11, Parliament Street, Near Patel Chowk, New Delhi - 110001",
+        "contact": "011-23374100",
+        "micr": "110002001",
+        "upi": true,
+        "rtgs": true,
+        "neft": true,
+        "imps": true
+      },
+      {
+        "ifsc": "PUNB0000100",
+        "bank": "Punjab National Bank",
+        "branch": "Connaught Place Head Office",
+        "district": "New Delhi",
+        "city": "New Delhi",
+        "state": "Delhi",
+        "address": "ECE House, 28 Kasturba Gandhi Marg, Connaught Place, New Delhi - 110001",
+        "contact": "011-23321550",
+        "micr": "110024001",
+        "upi": true,
+        "rtgs": true,
+        "neft": true,
+        "imps": true
+      },
+      {
+        "ifsc": "HDFC0000003",
+        "bank": "HDFC Bank",
+        "branch": "Kasturba Gandhi Marg CP",
+        "district": "New Delhi",
+        "city": "New Delhi",
+        "state": "Delhi",
+        "address": "Surya Kiran Building, 19 KG Marg, Connaught Place, New Delhi - 110001",
+        "contact": "011-6160616",
+        "micr": "110240001",
+        "upi": true,
+        "rtgs": true,
+        "neft": true,
+        "imps": true
+      },
+      {
+        "ifsc": "ICIC0000007",
+        "bank": "ICICI Bank",
+        "branch": "Connaught Place",
+        "district": "New Delhi",
+        "city": "New Delhi",
+        "state": "Delhi",
+        "address": "9A, Phelps Building, Inner Circle, Connaught Place, New Delhi - 110001",
+        "contact": "011-43555000",
+        "micr": "110229001",
+        "upi": true,
+        "rtgs": true,
+        "neft": true,
+        "imps": true
+      }
+    ],
+    "offices": [
+      {
+        "id": "dl-off-01",
+        "name": "Delhi Secretariat & Chief Minister Office (CMO)",
+        "hindiName": "दिल्ली सचिवालय एवं मुख्यमंत्री कार्यालय",
+        "category": "Secretariat / State HQ",
+        "district": "Central Delhi",
+        "state": "Delhi",
+        "address": "Delhi Secretariat, IP Estate, New Delhi",
+        "pincode": "110002",
+        "helpline": "011-23392020 / 1076",
+        "email": "cmdelhi@nic.in",
+        "website": "https://delhi.gov.in",
+        "publicHours": "09:30 AM - 06:00 PM (Mon-Fri)",
+        "services": [
+          "Government Policy & Administration",
+          "Cabinet Decisions",
+          "e-District Delhi Oversight",
+          "Doorstep Delivery of Public Services (1076)"
+        ]
+      },
+      {
+        "id": "dl-off-02",
+        "name": "District Magistrate (DM) Office New Delhi",
+        "hindiName": "जिलाधिकारी कार्यालय नई दिल्ली",
+        "category": "District Magistrate / DC Office",
+        "district": "New Delhi",
+        "state": "Delhi",
+        "address": "12/1, Jam Nagar House, Shahjahan Road, New Delhi",
+        "pincode": "110011",
+        "helpline": "011-23070637",
+        "email": "dcnd@nic.in",
+        "website": "https://dcmagistrate.delhigovt.nic.in",
+        "publicHours": "10:00 AM - 05:00 PM (Mon-Fri)",
+        "services": [
+          "e-District Certificate Approval",
+          "Revenue Records & Land Demarcation",
+          "Civil Defense & Relief",
+          "Court Hearings"
+        ]
+      },
+      {
+        "id": "dl-off-03",
+        "name": "SDM Office Chanakyapuri",
+        "hindiName": "एसडीएम कार्यालय चाणक्यपुरी",
+        "category": "Sub-Divisional Magistrate (SDM)",
+        "district": "New Delhi",
+        "state": "Delhi",
+        "address": "Jam Nagar House, Shahjahan Road, New Delhi",
+        "pincode": "110011",
+        "helpline": "011-23070637",
+        "email": "sdmchp.delhi@nic.in",
+        "website": "https://edistrict.delhigovt.nic.in",
+        "publicHours": "10:00 AM - 04:00 PM (Mon-Fri)",
+        "services": [
+          "Income Certificate",
+          "SC/ST/OBC Certificate",
+          "Marriage Registration",
+          "Domicile Certificate",
+          "Lal Dora Certificate"
+        ]
+      }
+    ]
+  },
+  "punjab": {
+    "pincodes": [
+      {
+        "pin": "141001",
+        "area": "Ludhiana Head Post Office, Civil Lines, Court Complex, Bharat Nagar, Ferozepur Road, Fountain Chowk, Rakh Bagh",
+        "district": "Ludhiana",
+        "postOffice": "Ludhiana Head Post Office (HO)",
+        "stdCode": "0161",
+        "state": "Punjab"
+      },
+      {
+        "pin": "141002",
+        "area": "Miller Ganj, Gill Road, Dashmesh Nagar, Vishwakarma Chowk, Industrial Area B",
+        "district": "Ludhiana",
+        "postOffice": "Miller Ganj Sub Post Office",
+        "stdCode": "0161",
+        "state": "Punjab"
+      },
+      {
+        "pin": "141003",
+        "area": "Model Town, Pritm Nagar, Model Town Extension, Jawaddi, Gulchaman Gali",
+        "district": "Ludhiana",
+        "postOffice": "Model Town Ludhiana SO",
+        "stdCode": "0161",
+        "state": "Punjab"
+      },
+      {
+        "pin": "141008",
+        "area": "Sundar Nagar, Basti Jodhewal, Rahon Road, Subhash Nagar, Kakowal Road",
+        "district": "Ludhiana",
+        "postOffice": "Sundar Nagar SO",
+        "stdCode": "0161",
+        "state": "Punjab"
+      },
+      {
+        "pin": "141012",
+        "area": "PAU Campus, Punjab Agricultural University, Sarabha Nagar, Gurdev Nagar, Malhar Road",
+        "district": "Ludhiana",
+        "postOffice": "PAU Ludhiana SO",
+        "stdCode": "0161",
+        "state": "Punjab"
+      },
+      {
+        "pin": "143001",
+        "area": "Amritsar GPO, Golden Temple Area, Hall Bazar, Katra Ahluwalia, Town Hall, Lawrence Road, Court Road",
+        "district": "Amritsar",
+        "postOffice": "Amritsar General Post Office (GPO)",
+        "stdCode": "0183",
+        "state": "Punjab"
+      },
+      {
+        "pin": "143002",
+        "area": "Majitha Road, Medical College Campus, Guru Nanak Dev Hospital Area, Green Avenue",
+        "district": "Amritsar",
+        "postOffice": "Majitha Road SO",
+        "stdCode": "0183",
+        "state": "Punjab"
+      },
+      {
+        "pin": "143005",
+        "area": "Guru Nanak Dev University (GNDU), Chheharta, Kabir Park, Model Town Amritsar",
+        "district": "Amritsar",
+        "postOffice": "GNDU Campus SO",
+        "stdCode": "0183",
+        "state": "Punjab"
+      },
+      {
+        "pin": "144001",
+        "area": "Jalandhar City HO, Company Bagh, GT Road, Jyoti Chowk, Model Town Jalandhar, Rainak Bazar",
+        "district": "Jalandhar",
+        "postOffice": "Jalandhar City Head Post Office",
+        "stdCode": "0181",
+        "state": "Punjab"
+      },
+      {
+        "pin": "144005",
+        "area": "Jalandhar Cantt HO, Rama Mandi, Deep Nagar, Military Camp, PAP Complex",
+        "district": "Jalandhar",
+        "postOffice": "Jalandhar Cantt Head Post Office",
+        "stdCode": "0181",
+        "state": "Punjab"
+      },
+      {
+        "pin": "147001",
+        "area": "Patiala Head Post Office, The Mall, Baradari Gardens, Leela Bhawan, Rajpura Colony, Qila Mubarak Area",
+        "district": "Patiala",
+        "postOffice": "Patiala Head Post Office (HO)",
+        "stdCode": "0175",
+        "state": "Punjab"
+      },
+      {
+        "pin": "147002",
+        "area": "Punjabi University Campus, Urban Estate Phase 1 & 2, Rajpura Road",
+        "district": "Patiala",
+        "postOffice": "Punjabi University SO",
+        "stdCode": "0175",
+        "state": "Punjab"
+      },
+      {
+        "pin": "151001",
+        "area": "Bathinda Head Post Office, Mall Road, Civil Lines, Court Complex, GT Road Bathinda, Thermal Colony",
+        "district": "Bathinda",
+        "postOffice": "Bathinda Head Post Office (HO)",
+        "stdCode": "0164",
+        "state": "Punjab"
+      },
+      {
+        "pin": "160055",
+        "area": "SAS Nagar Mohali, Phase 1, Phase 2, Phase 3B2, Phase 5, Phase 7, Industrial Area Phase 1-5",
+        "district": "SAS Nagar (Mohali)",
+        "postOffice": "Mohali Sub Post Office",
+        "stdCode": "0172",
+        "state": "Punjab"
+      },
+      {
+        "pin": "160059",
+        "area": "Sector 59 Mohali, Phase 9, Phase 10, Phase 11, PCA Stadium Area, Sector 70 Mohali",
+        "district": "SAS Nagar (Mohali)",
+        "postOffice": "Sector 59 Mohali SO",
+        "stdCode": "0172",
+        "state": "Punjab"
+      },
+      {
+        "pin": "160071",
+        "area": "Sector 71 Mohali, Sohana, Knowledge City, IISER Campus, ISB Mohali",
+        "district": "SAS Nagar (Mohali)",
+        "postOffice": "Sector 71 Mohali SO",
+        "stdCode": "0172",
+        "state": "Punjab"
+      },
+      {
+        "pin": "140401",
+        "area": "Rajpura City, Focal Point Rajpura, ITI Chowk, Kasturba Sewa Mandir",
+        "district": "Patiala",
+        "postOffice": "Rajpura Head Post Office",
+        "stdCode": "01762",
+        "state": "Punjab"
+      },
+      {
+        "pin": "142001",
+        "area": "Moga Head Post Office, GT Road Moga, Main Bazar, New Town, Bagha Purana Road",
+        "district": "Moga",
+        "postOffice": "Moga Head Post Office",
+        "stdCode": "01636",
+        "state": "Punjab"
+      },
+      {
+        "pin": "143521",
+        "area": "Gurdaspur Head Post Office, Tibber Road, Jail Road, Civil Lines Gurdaspur",
+        "district": "Gurdaspur",
+        "postOffice": "Gurdaspur Head Post Office",
+        "stdCode": "01874",
+        "state": "Punjab"
+      },
+      {
+        "pin": "152001",
+        "area": "Firozpur City HO, Delhi Gate, Bagdadi Gate, Cantonment Road",
+        "district": "Firozpur",
+        "postOffice": "Firozpur City Head Post Office",
+        "stdCode": "01632",
+        "state": "Punjab"
+      },
+      {
+        "pin": "146001",
+        "area": "Hoshiarpur Head Post Office, Clock Tower, Mall Road, Civil Lines Hoshiarpur",
+        "district": "Hoshiarpur",
+        "postOffice": "Hoshiarpur Head Post Office",
+        "stdCode": "01882",
+        "state": "Punjab"
+      }
+    ],
+    "hospitals": [
+      {
+        "id": "pb-hosp-01",
+        "name": "Dayanand Medical College and Hospital (DMCH)",
+        "type": "Autonomous Super Specialty Hospital",
+        "district": "Ludhiana",
+        "state": "Punjab",
+        "address": "Civil Lines, Tagore Nagar, Ludhiana, Punjab",
+        "pincode": "141001",
+        "emergencyNumber": "0161-4688888 / 0161-2304242",
+        "phone": "0161-4687700",
+        "opdTimings": "08:30 AM - 02:00 PM (Mon-Sat) | 24x7 Emergency",
+        "landmark": "Near Rose Garden & Tagore Nagar",
+        "bedCapacity": 1500,
+        "specialties": [
+          "24x7 Trauma & Emergency",
+          "Cardiology",
+          "Neurology",
+          "Nephrology",
+          "Oncology",
+          "Organ Transplant"
+        ],
+        "hasTraumaCenter": true,
+        "has24x7Emergency": true
+      },
+      {
+        "id": "pb-hosp-02",
+        "name": "Christian Medical College & Hospital (CMC Ludhiana)",
+        "type": "Teaching Hospital & Tertiary Care Center",
+        "district": "Ludhiana",
+        "state": "Punjab",
+        "address": "Brown Road, CMC Chowk, Ludhiana, Punjab",
+        "pincode": "141008",
+        "emergencyNumber": "0161-2115000",
+        "phone": "0161-2115300",
+        "opdTimings": "08:00 AM - 01:30 PM (Mon-Sat) | 24x7 Casualty",
+        "landmark": "Near CMC Chowk & Clock Tower Road",
+        "bedCapacity": 800,
+        "specialties": [
+          "Trauma & Critical Care",
+          "Neurosurgery",
+          "Pediatrics",
+          "Cardiothoracic Surgery",
+          "Ophthalmology"
+        ],
+        "hasTraumaCenter": true,
+        "has24x7Emergency": true
+      },
+      {
+        "id": "pb-hosp-03",
+        "name": "All India Institute of Medical Sciences (AIIMS Bathinda)",
+        "type": "Central Govt Apex Medical Institute",
+        "district": "Bathinda",
+        "state": "Punjab",
+        "address": "Dabwali Road, Mandi Dabwali Highway, Bathinda, Punjab",
+        "pincode": "151001",
+        "emergencyNumber": "0164-2867000 / 0164-2867250",
+        "phone": "0164-2867500",
+        "opdTimings": "08:30 AM - 01:00 PM (Mon-Sat) | 24x7 Emergency",
+        "landmark": "On Bathinda-Dabwali Highway",
+        "bedCapacity": 750,
+        "specialties": [
+          "24x7 Trauma Center",
+          "Surgical Oncology",
+          "Cardiology",
+          "Urology",
+          "Gastroenterology",
+          "Ayushman Bharat"
+        ],
+        "hasTraumaCenter": true,
+        "has24x7Emergency": true
+      },
+      {
+        "id": "pb-hosp-04",
+        "name": "Government Medical College & Guru Nanak Dev Hospital",
+        "type": "Punjab Govt Medical College Hospital",
+        "district": "Amritsar",
+        "state": "Punjab",
+        "address": "Circular Road, Majitha Road, Amritsar, Punjab",
+        "pincode": "143001",
+        "emergencyNumber": "0183-2576800 / 108",
+        "phone": "0183-2576820",
+        "opdTimings": "08:00 AM - 02:00 PM (Mon-Sat) | 24x7 Emergency",
+        "landmark": "Near Majitha Road & Medical Enclave",
+        "bedCapacity": 1100,
+        "specialties": [
+          "Trauma Care",
+          "Burn Unit",
+          "General Surgery",
+          "Cardiology",
+          "Obstetrics & Gynecology",
+          "Pediatrics"
+        ],
+        "hasTraumaCenter": true,
+        "has24x7Emergency": true
+      },
+      {
+        "id": "pb-hosp-05",
+        "name": "Government Medical College & Rajindra Hospital",
+        "type": "Punjab Govt Apex Hospital",
+        "district": "Patiala",
+        "state": "Punjab",
+        "address": "Sangrur Road, New Lal Bagh Colony, Patiala, Punjab",
+        "pincode": "147001",
+        "emergencyNumber": "0175-2212018 / 108",
+        "phone": "0175-2212019",
+        "opdTimings": "08:00 AM - 02:00 PM (Mon-Sat) | 24x7 Emergency",
+        "landmark": "Opposite Punjabi University extension, Sangrur Road",
+        "bedCapacity": 1200,
+        "specialties": [
+          "Super Specialty Block",
+          "Emergency & Trauma",
+          "Nephrology",
+          "Plastic Surgery",
+          "Orthopedics",
+          "Ayushman OPD"
+        ],
+        "hasTraumaCenter": true,
+        "has24x7Emergency": true
+      },
+      {
+        "id": "pb-hosp-06",
+        "name": "Civil Hospital Jalandhar (Shaheed Babu Labh Singh Hospital)",
+        "type": "Punjab Govt District Hospital",
+        "district": "Jalandhar",
+        "state": "Punjab",
+        "address": "Old Jail Road, Near BMC Chowk, Jalandhar, Punjab",
+        "pincode": "144001",
+        "emergencyNumber": "0181-2224606 / 108",
+        "phone": "0181-2224607",
+        "opdTimings": "08:00 AM - 02:00 PM (Mon-Sat) | 24x7 Casualty",
+        "landmark": "Near BMC Chowk & Football Chowk",
+        "bedCapacity": 500,
+        "specialties": [
+          "24x7 Emergency",
+          "Mother & Child Care (MCH)",
+          "General Medicine",
+          "Dialysis Centre",
+          "Free Pharmacy"
+        ],
+        "hasTraumaCenter": true,
+        "has24x7Emergency": true
+      },
+      {
+        "id": "pb-hosp-07",
+        "name": "Dr. B.R. Ambedkar State Institute of Medical Sciences (AIMS Mohali)",
+        "type": "State Govt Medical Institute",
+        "district": "SAS Nagar (Mohali)",
+        "state": "Punjab",
+        "address": "Phase 6, Sector 56, SAS Nagar, Mohali, Punjab",
+        "pincode": "160055",
+        "emergencyNumber": "0172-2225215 / 108",
+        "phone": "0172-2225214",
+        "opdTimings": "08:00 AM - 02:00 PM (Mon-Sat) | 24x7 Emergency",
+        "landmark": "Civil Hospital Complex, Phase 6 Mohali",
+        "bedCapacity": 400,
+        "specialties": [
+          "Emergency & Trauma",
+          "General Surgery",
+          "Cardiology OPD",
+          "Pediatrics",
+          "Pathology & Blood Bank"
+        ],
+        "hasTraumaCenter": true,
+        "has24x7Emergency": true
+      }
+    ],
+    "police": [
+      {
+        "id": "pb-ps-01",
+        "name": "Police Station Division No. 1 (Kotwali)",
+        "hindiName": "थाना डिवीजन नंबर 1 (कोतवाली लुधियाना)",
+        "district": "Ludhiana",
+        "state": "Punjab",
+        "address": "Near Clock Tower, Chaura Bazar, Ludhiana, Punjab",
+        "pincode": "141001",
+        "phone": "0161-2741100",
+        "shoPhone": "0161-2741101 / 9875954001",
+        "pcrNumber": "112",
+        "jurisdictionAreas": [
+          "Clock Tower",
+          "Chaura Bazar",
+          "Court Complex",
+          "Bharat Nagar Chowk",
+          "Civil Lines Ludhiana"
+        ],
+        "landmark": "Near Clock Tower Chowk"
+      },
+      {
+        "id": "pb-ps-02",
+        "name": "Police Station Model Town",
+        "hindiName": "थाना मॉडल टाउन लुधियाना",
+        "district": "Ludhiana",
+        "state": "Punjab",
+        "address": "Model Town Main Market, Near Gulchaman Gali, Ludhiana, Punjab",
+        "pincode": "141002",
+        "phone": "0161-2402100",
+        "shoPhone": "9875954002",
+        "pcrNumber": "112",
+        "jurisdictionAreas": [
+          "Model Town",
+          "Pritm Nagar",
+          "Model Town Extension",
+          "Jawaddi",
+          "Krishna Nagar"
+        ],
+        "landmark": "Near Model Town Gol Market"
+      },
+      {
+        "id": "pb-ps-03",
+        "name": "Police Station Sarabha Nagar",
+        "hindiName": "थाना सराभा नगर लुधियाना",
+        "district": "Ludhiana",
+        "state": "Punjab",
+        "address": "Ferozepur Road, Near PAU Gate 2, Sarabha Nagar, Ludhiana, Punjab",
+        "pincode": "141012",
+        "phone": "0161-2453100",
+        "shoPhone": "9875954005",
+        "pcrNumber": "112",
+        "jurisdictionAreas": [
+          "Sarabha Nagar",
+          "Gurdev Nagar",
+          "PAU Campus",
+          "Malhar Road",
+          "Kipps Market"
+        ],
+        "landmark": "Near Ferozepur Road & PAU"
+      },
+      {
+        "id": "pb-ps-04",
+        "name": "Police Station Civil Lines Amritsar",
+        "hindiName": "थाना सिविल लाइन्स अमृतसर",
+        "district": "Amritsar",
+        "state": "Punjab",
+        "address": "Court Road, Near Kacheri Chowk, Civil Lines, Amritsar, Punjab",
+        "pincode": "143001",
+        "phone": "0183-2228100",
+        "shoPhone": "9781130201",
+        "pcrNumber": "112",
+        "jurisdictionAreas": [
+          "Lawrence Road",
+          "Mall Road Amritsar",
+          "Court Road",
+          "Green Avenue",
+          "Ranjit Avenue"
+        ],
+        "landmark": "Near District & Sessions Court"
+      },
+      {
+        "id": "pb-ps-05",
+        "name": "Police Station Kotwali Amritsar (Golden Temple Sector)",
+        "hindiName": "थाना कोतवाली अमृतसर (दरबार साहिब सेक्टर)",
+        "district": "Amritsar",
+        "state": "Punjab",
+        "address": "Town Hall Complex, Heritage Street, Amritsar, Punjab",
+        "pincode": "143001",
+        "phone": "0183-2555100",
+        "shoPhone": "9781130202",
+        "pcrNumber": "112",
+        "jurisdictionAreas": [
+          "Golden Temple Complex",
+          "Heritage Street",
+          "Hall Gate",
+          "Katra Jaimal Singh",
+          "Guru Bazar"
+        ],
+        "landmark": "At Town Hall Heritage Plaza"
+      },
+      {
+        "id": "pb-ps-06",
+        "name": "Police Station Model Town Jalandhar",
+        "hindiName": "थाना मॉडल टाउन जालंधर",
+        "district": "Jalandhar",
+        "state": "Punjab",
+        "address": "Model Town Market Road, Near Geeta Mandir, Jalandhar, Punjab",
+        "pincode": "144003",
+        "phone": "0181-2272100",
+        "shoPhone": "9592914001",
+        "pcrNumber": "112",
+        "jurisdictionAreas": [
+          "Model Town Jalandhar",
+          "PPR Mall Area",
+          "Chhoti Baradari",
+          "Civil Hospital Area"
+        ],
+        "landmark": "Near Model Town Geeta Mandir"
+      },
+      {
+        "id": "pb-ps-07",
+        "name": "Police Station Phase-1 Mohali (SAS Nagar)",
+        "hindiName": "थाना फेज 1 मोहाली",
+        "district": "SAS Nagar (Mohali)",
+        "state": "Punjab",
+        "address": "Phase 1 Main Market, SAS Nagar, Mohali, Punjab",
+        "pincode": "160055",
+        "phone": "0172-2270100",
+        "shoPhone": "9115516001",
+        "pcrNumber": "112",
+        "jurisdictionAreas": [
+          "Mohali Phase 1",
+          "Phase 2",
+          "Industrial Area Phase 1 to 5",
+          "YPS Chowk Area"
+        ],
+        "landmark": "Near Phase 1 Barrier & Industrial Area"
+      },
+      {
+        "id": "pb-ps-08",
+        "name": "Police Station Matour (Phase 7 Mohali)",
+        "hindiName": "थाना मटौर मोहाली",
+        "district": "SAS Nagar (Mohali)",
+        "state": "Punjab",
+        "address": "Sector 70 / Matour Chowk, SAS Nagar, Mohali, Punjab",
+        "pincode": "160071",
+        "phone": "0172-2275100",
+        "shoPhone": "9115516007",
+        "pcrNumber": "112",
+        "jurisdictionAreas": [
+          "Mohali Phase 3B2",
+          "Phase 7",
+          "Sector 70",
+          "Sector 71",
+          "Matour Village"
+        ],
+        "landmark": "Near Phase 7 Market & Kumbhra Chowk"
+      },
+      {
+        "id": "pb-ps-09",
+        "name": "Police Station Kotwali Patiala",
+        "hindiName": "थाना कोतवाली पटियाला",
+        "district": "Patiala",
+        "state": "Punjab",
+        "address": "Qila Mubarak Chowk, Old City, Patiala, Punjab",
+        "pincode": "147001",
+        "phone": "0175-2213100",
+        "shoPhone": "9875955001",
+        "pcrNumber": "112",
+        "jurisdictionAreas": [
+          "Qila Mubarak",
+          "Adalat Bazar",
+          "Dharampura Bazar",
+          "The Mall Patiala",
+          "Baradari"
+        ],
+        "landmark": "Near Qila Mubarak Historical Complex"
+      }
+    ],
+    "rto": [
+      {
+        "id": "pb-rto-10",
+        "rtoCode": "PB-10",
+        "zoneName": "Regional Transport Authority (RTA) Ludhiana",
+        "district": "Ludhiana",
+        "state": "Punjab",
+        "address": "Mini Secretariat, D-Block, Ferozepur Road, Ludhiana, Punjab",
+        "pincode": "141001",
+        "phone": "0161-2403970 / 0161-2401990",
+        "email": "rta.ldh@punjab.gov.in",
+        "timings": "09:00 AM - 05:00 PM (Mon-Fri)",
+        "landmark": "Inside DC Office Mini Secretariat Complex",
+        "jurisdictionAreas": [
+          "Ludhiana City",
+          "Civil Lines",
+          "Model Town",
+          "Gill Road",
+          "Focal Point",
+          "PAU Campus"
+        ],
+        "servicesOffered": [
+          "Driving License (Learner & Permanent)",
+          "Vehicle RC Registration",
+          "Automated Driving Test",
+          "Transfer of Ownership",
+          "Commercial Permit Issue",
+          "HSRP Fitment"
+        ],
+        "automatedTrackAvailable": true,
+        "mloIncharge": "Regional Transport Officer (RTA Ludhiana)"
+      },
+      {
+        "id": "pb-rto-02",
+        "rtoCode": "PB-02",
+        "zoneName": "Regional Transport Authority Amritsar",
+        "district": "Amritsar",
+        "state": "Punjab",
+        "address": "District Administrative Complex, Court Road, Amritsar, Punjab",
+        "pincode": "143001",
+        "phone": "0183-2226100",
+        "email": "rta.asr@punjab.gov.in",
+        "timings": "09:00 AM - 05:00 PM (Mon-Fri)",
+        "landmark": "Near Kacheri Chowk & Sessions Court",
+        "jurisdictionAreas": [
+          "Amritsar City",
+          "Civil Lines",
+          "Golden Temple Sector",
+          "Chheharta",
+          "Majitha Road"
+        ],
+        "servicesOffered": [
+          "Smart Card Driving License",
+          "New Vehicle Registration",
+          "Fitness Certificate",
+          "Automated Driving Track Test",
+          "RC Address Change"
+        ],
+        "automatedTrackAvailable": true,
+        "mloIncharge": "Regional Transport Officer (RTA Amritsar)"
+      },
+      {
+        "id": "pb-rto-08",
+        "rtoCode": "PB-08",
+        "zoneName": "Regional Transport Authority Jalandhar",
+        "district": "Jalandhar",
+        "state": "Punjab",
+        "address": "Administrative Complex, Ladowali Road, Jalandhar, Punjab",
+        "pincode": "144001",
+        "phone": "0181-2227495",
+        "email": "rta.jlr@punjab.gov.in",
+        "timings": "09:00 AM - 05:00 PM (Mon-Fri)",
+        "landmark": "Near DC Office & Ladowali Road",
+        "jurisdictionAreas": [
+          "Jalandhar City",
+          "Model Town",
+          "Cantt Area",
+          "Rama Mandi",
+          "PAP Complex"
+        ],
+        "servicesOffered": [
+          "Driving Test on Track",
+          "International Driving Permit",
+          "Vehicle Registration",
+          "Duplicate RC",
+          "Tax Token Collection"
+        ],
+        "automatedTrackAvailable": true,
+        "mloIncharge": "Regional Transport Officer (RTA Jalandhar)"
+      },
+      {
+        "id": "pb-rto-65",
+        "rtoCode": "PB-65",
+        "zoneName": "Regional Transport Authority SAS Nagar (Mohali)",
+        "district": "SAS Nagar (Mohali)",
+        "state": "Punjab",
+        "address": "District Administrative Complex, Sector 76, SAS Nagar, Mohali, Punjab",
+        "pincode": "160071",
+        "phone": "0172-2219500",
+        "email": "rta.mohali@punjab.gov.in",
+        "timings": "09:00 AM - 05:00 PM (Mon-Fri)",
+        "landmark": "Inside Sector 76 DC Office Complex",
+        "jurisdictionAreas": [
+          "Mohali Phase 1 to 11",
+          "Sector 70-80",
+          "Kharar",
+          "Zirakpur",
+          "Dera Bassi"
+        ],
+        "servicesOffered": [
+          "Online DL & LL Slot Booking",
+          "RC Smart Card Issue",
+          "Automated Track Sensor Test",
+          "Commercial Vehicle Fitness",
+          "NOC Issuance"
+        ],
+        "automatedTrackAvailable": true,
+        "mloIncharge": "Regional Transport Officer (RTA Mohali)"
+      },
+      {
+        "id": "pb-rto-11",
+        "rtoCode": "PB-11",
+        "zoneName": "Regional Transport Authority Patiala",
+        "district": "Patiala",
+        "state": "Punjab",
+        "address": "District Administrative Complex, Mini Secretariat, Patiala, Punjab",
+        "pincode": "147001",
+        "phone": "0175-2311300",
+        "email": "rta.pta@punjab.gov.in",
+        "timings": "09:00 AM - 05:00 PM (Mon-Fri)",
+        "landmark": "Near DC Office Mini Secretariat",
+        "jurisdictionAreas": [
+          "Patiala City",
+          "Urban Estate",
+          "Punjabi University Area",
+          "Rajpura",
+          "Samana",
+          "Nabha"
+        ],
+        "servicesOffered": [
+          "Permanent Driving License",
+          "Learner License",
+          "Automated Track Driving Evaluation",
+          "Trade Certificate",
+          "Vehicle Hypothecation Termination"
+        ],
+        "automatedTrackAvailable": true,
+        "mloIncharge": "Regional Transport Officer (RTA Patiala)"
+      },
+      {
+        "id": "pb-rto-03",
+        "rtoCode": "PB-03",
+        "zoneName": "Regional Transport Authority Bathinda",
+        "district": "Bathinda",
+        "state": "Punjab",
+        "address": "District Administrative Complex, Civil Lines, Bathinda, Punjab",
+        "pincode": "151001",
+        "phone": "0164-2211500",
+        "email": "rta.btd@punjab.gov.in",
+        "timings": "09:00 AM - 05:00 PM (Mon-Fri)",
+        "landmark": "Civil Lines Bathinda",
+        "jurisdictionAreas": [
+          "Bathinda City",
+          "Thermal Colony",
+          "Rampura Phul",
+          "Talwandi Sabo",
+          "Goniana"
+        ],
+        "servicesOffered": [
+          "DL Application & Biometrics",
+          "RC Endorsement",
+          "Automated Track Testing",
+          "Permit Renewal"
+        ],
+        "automatedTrackAvailable": true,
+        "mloIncharge": "Regional Transport Officer (RTA Bathinda)"
+      }
+    ],
+    "ifsc": [
+      {
+        "ifsc": "SBIN0000674",
+        "bank": "State Bank of India",
+        "branch": "Ludhiana Main Branch",
+        "district": "Ludhiana",
+        "city": "Ludhiana",
+        "state": "Punjab",
+        "address": "Civil Lines, Near Fountain Chowk, Ludhiana, Punjab - 141001",
+        "contact": "0161-2401832",
+        "micr": "141002002",
+        "upi": true,
+        "rtgs": true,
+        "neft": true,
+        "imps": true
+      },
+      {
+        "ifsc": "PUNB0024700",
+        "bank": "Punjab National Bank",
+        "branch": "Amritsar Hall Bazar",
+        "district": "Amritsar",
+        "city": "Amritsar",
+        "state": "Punjab",
+        "address": "Hall Bazar, Near Golden Temple Road, Amritsar, Punjab - 143001",
+        "contact": "0183-2558700",
+        "micr": "143024002",
+        "upi": true,
+        "rtgs": true,
+        "neft": true,
+        "imps": true
+      },
+      {
+        "ifsc": "HDFC0000248",
+        "bank": "HDFC Bank",
+        "branch": "Ludhiana Mall Road",
+        "district": "Ludhiana",
+        "city": "Ludhiana",
+        "state": "Punjab",
+        "address": "The Mall, Opp. Rakha Bagh, Ludhiana, Punjab - 141001",
+        "contact": "0161-6160616",
+        "micr": "141240002",
+        "upi": true,
+        "rtgs": true,
+        "neft": true,
+        "imps": true
+      },
+      {
+        "ifsc": "SBIN0050012",
+        "bank": "State Bank of India",
+        "branch": "Patiala The Mall",
+        "district": "Patiala",
+        "city": "Patiala",
+        "state": "Punjab",
+        "address": "The Mall Road, Near Baradari Gardens, Patiala, Punjab - 147001",
+        "contact": "0175-2212300",
+        "micr": "147002003",
+        "upi": true,
+        "rtgs": true,
+        "neft": true,
+        "imps": true
+      },
+      {
+        "ifsc": "ICIC0000045",
+        "bank": "ICICI Bank",
+        "branch": "Jalandhar Model Town",
+        "district": "Jalandhar",
+        "city": "Jalandhar",
+        "state": "Punjab",
+        "address": "Model Town Road, Near Geeta Mandir, Jalandhar, Punjab - 144003",
+        "contact": "0181-4690100",
+        "micr": "144229002",
+        "upi": true,
+        "rtgs": true,
+        "neft": true,
+        "imps": true
+      },
+      {
+        "ifsc": "SBIN0011585",
+        "bank": "State Bank of India",
+        "branch": "Mohali Phase 7",
+        "district": "SAS Nagar (Mohali)",
+        "city": "SAS Nagar (Mohali)",
+        "state": "Punjab",
+        "address": "SCF 45-46, Phase 7 Main Market, SAS Nagar, Mohali, Punjab - 160062",
+        "contact": "0172-2270912",
+        "micr": "160002035",
+        "upi": true,
+        "rtgs": true,
+        "neft": true,
+        "imps": true
+      },
+      {
+        "ifsc": "PUNB0004900",
+        "bank": "Punjab National Bank",
+        "branch": "Bathinda Civil Lines",
+        "district": "Bathinda",
+        "city": "Bathinda",
+        "state": "Punjab",
+        "address": "Civil Lines, Near Mall Road, Bathinda, Punjab - 151001",
+        "contact": "0164-2236500",
+        "micr": "151024002",
+        "upi": true,
+        "rtgs": true,
+        "neft": true,
+        "imps": true
+      }
+    ],
+    "offices": [
+      {
+        "id": "pb-off-01",
+        "name": "District Administrative Complex & DC Office Ludhiana",
+        "hindiName": "जिला प्रशासनिक परिसर एवं उपायुक्त कार्यालय लुधियाना",
+        "category": "District Magistrate / DC Office",
+        "district": "Ludhiana",
+        "state": "Punjab",
+        "address": "Mini Secretariat, Ferozepur Road, Ludhiana, Punjab - 141001",
+        "pincode": "141001",
+        "helpline": "0161-2403970 / 0161-2401990",
+        "email": "dc.ldh@punjab.gov.in",
+        "website": "https://ludhiana.nic.in",
+        "publicHours": "09:00 AM - 05:00 PM (Mon-Fri)",
+        "services": [
+          "e-Sewa Services",
+          "Revenue & Land Records",
+          "Caste & Residence Certificates",
+          "Arms License",
+          "Public Grievances (PGRS)"
+        ]
+      },
+      {
+        "id": "pb-off-02",
+        "name": "SDM Office Ludhiana (West)",
+        "hindiName": "एसडीएम कार्यालय लुधियाना (पश्चिम)",
+        "category": "Sub-Divisional Magistrate (SDM)",
+        "district": "Ludhiana",
+        "state": "Punjab",
+        "address": "Mini Secretariat Compound, Ferozepur Road, Ludhiana, Punjab",
+        "pincode": "141001",
+        "helpline": "0161-2401991",
+        "email": "sdm.westldh@punjab.gov.in",
+        "website": "https://ludhiana.nic.in",
+        "publicHours": "09:30 AM - 04:30 PM (Mon-Fri)",
+        "services": [
+          "Domicile Certificate",
+          "SC/BC Certificate",
+          "Legal Heir Certificate",
+          "Registration of Marriages",
+          "Land Demarcation"
+        ]
+      },
+      {
+        "id": "pb-off-03",
+        "name": "Punjab Sewa Kendra Central (e-Sewa Center Ludhiana)",
+        "hindiName": "पंजाब सेवा केंद्र (नागरिक सुविधा केंद्र लुधियाना)",
+        "category": "CSC / Sewa Kendra",
+        "district": "Ludhiana",
+        "state": "Punjab",
+        "address": "Near Rose Garden, Civil Lines, Ludhiana, Punjab",
+        "pincode": "141001",
+        "helpline": "1100 / 0161-2401990",
+        "email": "sewakendra.ldh@punjab.gov.in",
+        "website": "https://connect.punjab.gov.in",
+        "publicHours": "09:00 AM - 05:00 PM (Mon-Sat)",
+        "services": [
+          "Aadhaar Updation",
+          "Birth & Death Registration",
+          "Ration Card (NFSA)",
+          "Old Age Pension",
+          "Driving License Renewal",
+          "Electricity Bill Payment"
+        ]
+      },
+      {
+        "id": "pb-off-04",
+        "name": "Deputy Commissioner Office & DC Complex Amritsar",
+        "hindiName": "उपायुक्त कार्यालय एवं जिला प्रशासनिक परिसर अमृतसर",
+        "category": "District Magistrate / DC Office",
+        "district": "Amritsar",
+        "state": "Punjab",
+        "address": "Kacheri Chowk, Court Road, Amritsar, Punjab - 143001",
+        "pincode": "143001",
+        "helpline": "0183-2226123",
+        "email": "dc.asr@punjab.gov.in",
+        "website": "https://amritsar.nic.in",
+        "publicHours": "09:00 AM - 05:00 PM (Mon-Fri)",
+        "services": [
+          "Citizen Services",
+          "Land Registry Sub-Registrar",
+          "Disaster Management",
+          "Magisterial Inquiries"
+        ]
+      },
+      {
+        "id": "pb-off-05",
+        "name": "District Administrative Complex SAS Nagar (Mohali DC Office)",
+        "hindiName": "जिला प्रशासनिक परिसर मोहाली (डीसी कार्यालय)",
+        "category": "District Magistrate / DC Office",
+        "district": "SAS Nagar (Mohali)",
+        "state": "Punjab",
+        "address": "Sector 76, SAS Nagar, Mohali, Punjab - 160071",
+        "pincode": "160071",
+        "helpline": "0172-2219500",
+        "email": "dc.mohali@punjab.gov.in",
+        "website": "https://sasnagar.punjab.gov.in",
+        "publicHours": "09:00 AM - 05:00 PM (Mon-Fri)",
+        "services": [
+          "e-District Punjab",
+          "Property Registration",
+          "Senior Citizen ID",
+          "Handicap Certificate",
+          "RTI Counter"
+        ]
+      }
+    ]
+  },
+  "haryana": {
+    "pincodes": [
+      {
+        "pin": "122001",
+        "area": "Gurugram Old Railway Road Head Post Office, Sadar Bazar, Civil Lines, Court Complex, Rajiv Chowk",
+        "district": "Gurugram",
+        "postOffice": "Gurgaon Head Post Office (HO)",
+        "stdCode": "0124",
+        "state": "Haryana"
+      },
+      {
+        "pin": "122002",
+        "area": "DLF Phase 1, DLF Phase 2, Sikanderpur, Cyber City, MG Road, Bristol Chowk, Heritage City",
+        "district": "Gurugram",
+        "postOffice": "DLF Phase 2 Sub Post Office",
+        "stdCode": "0124",
+        "state": "Haryana"
+      },
+      {
+        "pin": "122003",
+        "area": "Sector 45, Sector 46, Sector 47, South City 1, Mayfield Garden, Bakhtawar Chowk",
+        "district": "Gurugram",
+        "postOffice": "Sector 45 Gurgaon SO",
+        "stdCode": "0124",
+        "state": "Haryana"
+      },
+      {
+        "pin": "122018",
+        "area": "Sector 14, Sector 15 Part 1 & 2, Old DLF Colony, Civil Hospital Area, Atul Kataria Chowk",
+        "district": "Gurugram",
+        "postOffice": "Sector 14 Gurgaon SO",
+        "stdCode": "0124",
+        "state": "Haryana"
+      },
+      {
+        "pin": "122051",
+        "area": "Manesar IMT, Sector 1 to 8 IMT Manesar, NSG Camp, KMP Expressway Junction",
+        "district": "Gurugram",
+        "postOffice": "Manesar Sub Post Office",
+        "stdCode": "0124",
+        "state": "Haryana"
+      },
+      {
+        "pin": "121001",
+        "area": "Faridabad NIT Head Post Office, BK Chowk, Neelam Flyover, KLJ Complex, AC Nagar",
+        "district": "Faridabad",
+        "postOffice": "Faridabad NIT Head Post Office",
+        "stdCode": "0129",
+        "state": "Haryana"
+      },
+      {
+        "pin": "121002",
+        "area": "Faridabad Sector 15, Sector 14, Sector 16, Mathura Road, Old Faridabad",
+        "district": "Faridabad",
+        "postOffice": "Sector 15 Faridabad SO",
+        "stdCode": "0129",
+        "state": "Haryana"
+      },
+      {
+        "pin": "132103",
+        "area": "Panipat Head Post Office, Model Town, GT Road, Textile Market, Sanjay Chowk",
+        "district": "Panipat",
+        "postOffice": "Panipat Head Post Office",
+        "stdCode": "0180",
+        "state": "Haryana"
+      },
+      {
+        "pin": "133001",
+        "area": "Ambala Cantt Head Post Office, Sadar Bazar, Nicholson Road, Staff Road, Railway Station Area",
+        "district": "Ambala",
+        "postOffice": "Ambala Cantt Head Post Office",
+        "stdCode": "0171",
+        "state": "Haryana"
+      },
+      {
+        "pin": "134112",
+        "area": "Panchkula Sector 8, Sector 4, Sector 7, Sector 9, DC Office Complex, Mansa Devi Complex",
+        "district": "Panchkula",
+        "postOffice": "Sector 8 Panchkula SO",
+        "stdCode": "0172",
+        "state": "Haryana"
+      },
+      {
+        "pin": "124001",
+        "area": "Rohtak Head Post Office, Delhi Road, Mansarover Park, Medical Mor, PGIMS Campus",
+        "district": "Rohtak",
+        "postOffice": "Rohtak Head Post Office",
+        "stdCode": "01262",
+        "state": "Haryana"
+      },
+      {
+        "pin": "131001",
+        "area": "Sonipat Head Post Office, Subhash Chowk, Railway Road, Model Town Sonipat",
+        "district": "Sonipat",
+        "postOffice": "Sonipat Head Post Office",
+        "stdCode": "0130",
+        "state": "Haryana"
+      },
+      {
+        "pin": "132001",
+        "area": "Karnal Head Post Office, Mall Road, Kunjpura Road, NDRI Campus, Sector 13 Karnal",
+        "district": "Karnal",
+        "postOffice": "Karnal Head Post Office",
+        "stdCode": "0184",
+        "state": "Haryana"
+      },
+      {
+        "pin": "125001",
+        "area": "Hisar Head Post Office, Town Park, Auto Market, Rajgarh Road, HAU Campus",
+        "district": "Hisar",
+        "postOffice": "Hisar Head Post Office",
+        "stdCode": "01662",
+        "state": "Haryana"
+      }
+    ],
+    "hospitals": [
+      {
+        "id": "hr-hosp-01",
+        "name": "Pt. Bhagwat Dayal Sharma PGIMS Rohtak",
+        "type": "Autonomous State Apex Medical Institute",
+        "district": "Rohtak",
+        "state": "Haryana",
+        "address": "Medical Mor, Rohtak, Haryana",
+        "pincode": "124001",
+        "emergencyNumber": "01262-281307 / 108",
+        "phone": "01262-281300",
+        "opdTimings": "08:30 AM - 01:30 PM (Mon-Sat) | 24x7 Emergency",
+        "landmark": "Near Medical Mor & Delhi Road",
+        "bedCapacity": 2100,
+        "specialties": [
+          "24x7 Trauma Centre",
+          "Cardiology",
+          "Neurology",
+          "Burn Care",
+          "Pediatrics",
+          "Oncology"
+        ],
+        "hasTraumaCenter": true,
+        "has24x7Emergency": true
+      },
+      {
+        "id": "hr-hosp-02",
+        "name": "Civil Hospital Sector 10 Gurugram",
+        "type": "Haryana Govt District Hospital",
+        "district": "Gurugram",
+        "state": "Haryana",
+        "address": "Sector 10A, Near Hero Honda Chowk, Gurugram, Haryana",
+        "pincode": "122001",
+        "emergencyNumber": "0124-2255450 / 108",
+        "phone": "0124-2255452",
+        "opdTimings": "08:00 AM - 02:00 PM (Mon-Sat) | 24x7 Emergency",
+        "landmark": "Near Sector 10A Police Station & Kadipur",
+        "bedCapacity": 400,
+        "specialties": [
+          "24x7 Emergency & Trauma",
+          "Mother & Child Care",
+          "General Surgery",
+          "Orthopedics",
+          "ICU & Dialysis"
+        ],
+        "hasTraumaCenter": true,
+        "has24x7Emergency": true
+      },
+      {
+        "id": "hr-hosp-03",
+        "name": "B.K. Civil Hospital (Badshah Khan Hospital) Faridabad",
+        "type": "Haryana Govt District Hospital",
+        "district": "Faridabad",
+        "state": "Haryana",
+        "address": "BK Chowk, NIT Faridabad, Haryana",
+        "pincode": "121001",
+        "emergencyNumber": "0129-2415600 / 108",
+        "phone": "0129-2415602",
+        "opdTimings": "08:00 AM - 02:00 PM (Mon-Sat) | 24x7 Emergency",
+        "landmark": "At BK Chowk, Near Neelam Cinema",
+        "bedCapacity": 350,
+        "specialties": [
+          "Casualty & Trauma",
+          "Obstetrics & Gynecology",
+          "Pediatrics",
+          "Blood Bank",
+          "Ayushman Bharat"
+        ],
+        "hasTraumaCenter": true,
+        "has24x7Emergency": true
+      },
+      {
+        "id": "hr-hosp-04",
+        "name": "Kalpana Chawla Govt Medical College & Hospital (KCGMC Karnal)",
+        "type": "State Govt Medical College",
+        "district": "Karnal",
+        "state": "Haryana",
+        "address": "Model Town Road, Karnal, Haryana",
+        "pincode": "132001",
+        "emergencyNumber": "0184-2266250 / 108",
+        "phone": "0184-2266251",
+        "opdTimings": "08:30 AM - 01:30 PM (Mon-Sat) | 24x7 Emergency",
+        "landmark": "Near Mall Road & Old Civil Hospital",
+        "bedCapacity": 600,
+        "specialties": [
+          "24x7 Trauma Center",
+          "Cardiology",
+          "Neurology",
+          "Pediatrics",
+          "General Medicine"
+        ],
+        "hasTraumaCenter": true,
+        "has24x7Emergency": true
+      },
+      {
+        "id": "hr-hosp-05",
+        "name": "Civil Hospital Sector 6 Panchkula",
+        "type": "Haryana Govt District Super-Specialty Hospital",
+        "district": "Panchkula",
+        "state": "Haryana",
+        "address": "Sector 6, Near Old Panchkula, Panchkula, Haryana",
+        "pincode": "134109",
+        "emergencyNumber": "0172-2566000 / 108",
+        "phone": "0172-2566001",
+        "opdTimings": "08:00 AM - 02:00 PM (Mon-Sat) | 24x7 Emergency",
+        "landmark": "Near Gymkhana Club Sector 6",
+        "bedCapacity": 300,
+        "specialties": [
+          "24x7 Emergency",
+          "Dialysis Unit",
+          "Maternal Care",
+          "General Surgery",
+          "Cardiology OPD"
+        ],
+        "hasTraumaCenter": true,
+        "has24x7Emergency": true
+      }
+    ],
+    "police": [
+      {
+        "id": "hr-ps-01",
+        "name": "Police Station DLF Phase 1",
+        "hindiName": "थाना डीएलएफ फेज 1 गुरुग्राम",
+        "district": "Gurugram",
+        "state": "Haryana",
+        "address": "Golf Course Road, Near Bristol Hotel, DLF Phase 1, Gurugram, Haryana",
+        "pincode": "122002",
+        "phone": "0124-2351100",
+        "shoPhone": "0124-2351101 / 9999981801",
+        "pcrNumber": "112",
+        "jurisdictionAreas": [
+          "DLF Phase 1",
+          "Sikanderpur",
+          "Golf Course Road",
+          "Chakkarpur",
+          "Bristol Chowk"
+        ],
+        "landmark": "Near Sikanderpur Metro Station"
+      },
+      {
+        "id": "hr-ps-02",
+        "name": "Police Station Sector 29",
+        "hindiName": "थाना सेक्टर 29 गुरुग्राम",
+        "district": "Gurugram",
+        "state": "Haryana",
+        "address": "Sector 29, Leisure Valley Road, Gurugram, Haryana",
+        "pincode": "122001",
+        "phone": "0124-2388100",
+        "shoPhone": "9999981802",
+        "pcrNumber": "112",
+        "jurisdictionAreas": [
+          "Sector 29 Food Hub",
+          "Leisure Valley Park",
+          "HUDA City Centre Metro",
+          "IFFCO Chowk",
+          "Kingdom of Dreams Area"
+        ],
+        "landmark": "Near Millennium City Centre Metro"
+      },
+      {
+        "id": "hr-ps-03",
+        "name": "Police Station Civil Lines Gurugram",
+        "hindiName": "थाना सिविल लाइन्स गुरुग्राम",
+        "district": "Gurugram",
+        "state": "Haryana",
+        "address": "Opposite Rajiv Chowk, Near Court Complex, Gurugram, Haryana",
+        "pincode": "122001",
+        "phone": "0124-2321100",
+        "shoPhone": "9999981803",
+        "pcrNumber": "112",
+        "jurisdictionAreas": [
+          "Civil Lines",
+          "Sadar Bazar",
+          "Rajiv Chowk",
+          "District Courts",
+          "Mini Secretariat"
+        ],
+        "landmark": "Near Rajiv Chowk Flyover"
+      },
+      {
+        "id": "hr-ps-04",
+        "name": "Police Station Central Faridabad",
+        "hindiName": "थाना सेंट्रल फरीदाबाद",
+        "district": "Faridabad",
+        "state": "Haryana",
+        "address": "Sector 12, Court Complex Road, Faridabad, Haryana",
+        "pincode": "121007",
+        "phone": "0129-2228100",
+        "shoPhone": "9582200101",
+        "pcrNumber": "112",
+        "jurisdictionAreas": [
+          "Sector 12",
+          "Sector 15",
+          "Mathura Road",
+          "Crown Plaza Area",
+          "Mini Secretariat Faridabad"
+        ],
+        "landmark": "Near Sector 12 DC Office"
+      },
+      {
+        "id": "hr-ps-05",
+        "name": "Police Station Sector 5 Panchkula",
+        "hindiName": "थाना सेक्टर 5 पंचकूला",
+        "district": "Panchkula",
+        "state": "Haryana",
+        "address": "Sector 5, Near HUDA Ground, Panchkula, Haryana",
+        "pincode": "134109",
+        "phone": "0172-2567100",
+        "shoPhone": "9729990101",
+        "pcrNumber": "112",
+        "jurisdictionAreas": [
+          "Sector 5",
+          "Sector 6",
+          "Sector 8",
+          "Town Park",
+          "Indradhanush Auditorium Area"
+        ],
+        "landmark": "Opposite Indradhanush Auditorium"
+      }
+    ],
+    "rto": [
+      {
+        "id": "hr-rto-26",
+        "rtoCode": "HR-26",
+        "zoneName": "Regional Transport Authority (RTA) Gurugram North",
+        "district": "Gurugram",
+        "state": "Haryana",
+        "address": "Mini Secretariat, Rajiv Chowk, Gurugram, Haryana",
+        "pincode": "122001",
+        "phone": "0124-2224444 / 0124-2321808",
+        "email": "rta.ggn@hry.gov.in",
+        "timings": "09:00 AM - 05:00 PM (Mon-Fri)",
+        "landmark": "Inside Mini Secretariat Compound",
+        "jurisdictionAreas": [
+          "Gurugram North",
+          "Civil Lines",
+          "DLF Phase 1 to 5",
+          "Cyber City",
+          "Sadar Bazar"
+        ],
+        "servicesOffered": [
+          "Permanent Driving License",
+          "Automated Sensor Track Test",
+          "RC Transfer",
+          "Trade Certificate",
+          "High Security Plates (HSRP)"
+        ],
+        "automatedTrackAvailable": true,
+        "mloIncharge": "Secretary RTA Gurugram"
+      },
+      {
+        "id": "hr-rto-51",
+        "rtoCode": "HR-51",
+        "zoneName": "Regional Transport Authority Faridabad",
+        "district": "Faridabad",
+        "state": "Haryana",
+        "address": "Mini Secretariat, Sector 12, Faridabad, Haryana",
+        "pincode": "121007",
+        "phone": "0129-2227868",
+        "email": "rta.fbd@hry.gov.in",
+        "timings": "09:00 AM - 05:00 PM (Mon-Fri)",
+        "landmark": "Near District Court Complex Sector 12",
+        "jurisdictionAreas": [
+          "Faridabad NIT",
+          "Old Faridabad",
+          "Sector 14-19",
+          "Ballabgarh Area",
+          "Surajkund"
+        ],
+        "servicesOffered": [
+          "DL Application",
+          "Commercial Vehicle Permits",
+          "RC Endorsement",
+          "Fitness Test Track"
+        ],
+        "automatedTrackAvailable": true,
+        "mloIncharge": "Secretary RTA Faridabad"
+      },
+      {
+        "id": "hr-rto-06",
+        "rtoCode": "HR-06",
+        "zoneName": "Regional Transport Authority Panipat",
+        "district": "Panipat",
+        "state": "Haryana",
+        "address": "District Administrative Complex, Mini Secretariat, Panipat, Haryana",
+        "pincode": "132103",
+        "phone": "0180-2651100",
+        "email": "rta.panipat@hry.gov.in",
+        "timings": "09:00 AM - 05:00 PM (Mon-Fri)",
+        "landmark": "Mini Secretariat Panipat",
+        "jurisdictionAreas": [
+          "Panipat City",
+          "Model Town",
+          "Samalkha",
+          "Israna",
+          "Industrial Area"
+        ],
+        "servicesOffered": [
+          "Driving License",
+          "Vehicle Registration",
+          "Automated Driving Test"
+        ],
+        "automatedTrackAvailable": true,
+        "mloIncharge": "Secretary RTA Panipat"
+      },
+      {
+        "id": "hr-rto-01",
+        "rtoCode": "HR-01",
+        "zoneName": "Regional Transport Authority Ambala",
+        "district": "Ambala",
+        "state": "Haryana",
+        "address": "Mini Secretariat, Ambala City, Haryana",
+        "pincode": "134003",
+        "phone": "0171-2530100",
+        "email": "rta.ambala@hry.gov.in",
+        "timings": "09:00 AM - 05:00 PM (Mon-Fri)",
+        "landmark": "Near DC Office Ambala City",
+        "jurisdictionAreas": [
+          "Ambala Cantt",
+          "Ambala City",
+          "Barara",
+          "Naraingarh",
+          "Saha"
+        ],
+        "servicesOffered": [
+          "DL Smart Card",
+          "RC Renewal",
+          "International Driving Permit"
+        ],
+        "automatedTrackAvailable": true,
+        "mloIncharge": "Secretary RTA Ambala"
+      }
+    ],
+    "ifsc": [
+      {
+        "ifsc": "SBIN0000780",
+        "bank": "State Bank of India",
+        "branch": "Gurugram Main Branch",
+        "district": "Gurugram",
+        "city": "Gurugram",
+        "state": "Haryana",
+        "address": "Civil Lines, Near Rajiv Chowk, Gurugram, Haryana - 122001",
+        "contact": "0124-2320450",
+        "micr": "110002048",
+        "upi": true,
+        "rtgs": true,
+        "neft": true,
+        "imps": true
+      },
+      {
+        "ifsc": "HDFC0000043",
+        "bank": "HDFC Bank",
+        "branch": "Gurgaon DLF Phase 1",
+        "district": "Gurugram",
+        "city": "Gurugram",
+        "state": "Haryana",
+        "address": "A-Block, DLF Qutab Enclave Phase 1, Gurugram, Haryana - 122002",
+        "contact": "0124-6160616",
+        "micr": "110240008",
+        "upi": true,
+        "rtgs": true,
+        "neft": true,
+        "imps": true
+      },
+      {
+        "ifsc": "PUNB0016400",
+        "bank": "Punjab National Bank",
+        "branch": "Faridabad NIT 1",
+        "district": "Faridabad",
+        "city": "Faridabad",
+        "state": "Haryana",
+        "address": "B-Block, Market No. 1, NIT Faridabad, Haryana - 121001",
+        "contact": "0129-2412800",
+        "micr": "110024045",
+        "upi": true,
+        "rtgs": true,
+        "neft": true,
+        "imps": true
+      },
+      {
+        "ifsc": "SBIN0000608",
+        "bank": "State Bank of India",
+        "branch": "Ambala Cantt Main",
+        "district": "Ambala",
+        "city": "Ambala",
+        "state": "Haryana",
+        "address": "Staff Road, Ambala Cantt, Haryana - 133001",
+        "contact": "0171-2642100",
+        "micr": "133002002",
+        "upi": true,
+        "rtgs": true,
+        "neft": true,
+        "imps": true
+      }
+    ],
+    "offices": [
+      {
+        "id": "hr-off-01",
+        "name": "District Administration & Deputy Commissioner Office Gurugram",
+        "hindiName": "उपायुक्त कार्यालय एवं जिला प्रशासन गुरुग्राम",
+        "category": "District Magistrate / DC Office",
+        "district": "Gurugram",
+        "state": "Haryana",
+        "address": "Mini Secretariat, Rajiv Chowk, Gurugram, Haryana - 122001",
+        "pincode": "122001",
+        "helpline": "0124-2321144 / 0124-2325500",
+        "email": "dcgrg@hry.nic.in",
+        "website": "https://gurugram.gov.in",
+        "publicHours": "09:00 AM - 05:00 PM (Mon-Fri)",
+        "services": [
+          "Antyodaya SARAL Haryana Services",
+          "Revenue & Registry Verification",
+          "Parivar Pehchan Patra (PPP)",
+          "Caste / Income / Domicile Certificate",
+          "Redressal of Public Grievances (CM Window)"
+        ]
+      },
+      {
+        "id": "hr-off-02",
+        "name": "Antyodaya SARAL Kendra Gurugram (Citizen Facilitation Center)",
+        "hindiName": "अंत्योदय सरल केंद्र गुरुग्राम",
+        "category": "CSC / SARAL Kendra",
+        "district": "Gurugram",
+        "state": "Haryana",
+        "address": "Ground Floor, Mini Secretariat, Rajiv Chowk, Gurugram, Haryana",
+        "pincode": "122001",
+        "helpline": "1800-180-2084",
+        "email": "saral.haryana@gov.in",
+        "website": "https://saralharyana.gov.in",
+        "publicHours": "09:00 AM - 05:00 PM (Mon-Sat)",
+        "services": [
+          "Parivar Pehchan Patra (Family ID)",
+          "Old Age Pension Scheme",
+          "BPL Ration Card Enrollment",
+          "Water & Sewer Connection",
+          "Disability ID Card (UDID)"
+        ]
+      },
+      {
+        "id": "hr-off-03",
+        "name": "SDM Office Gurugram (Badshahpur)",
+        "hindiName": "एसडीएम कार्यालय बादशाहपुर (गुरुग्राम)",
+        "category": "Sub-Divisional Magistrate (SDM)",
+        "district": "Gurugram",
+        "state": "Haryana",
+        "address": "Vikas Sadan Complex, Near Rajiv Chowk, Gurugram, Haryana",
+        "pincode": "122001",
+        "helpline": "0124-2321234",
+        "email": "sdmbadshahpur@hry.gov.in",
+        "website": "https://gurugram.gov.in",
+        "publicHours": "09:30 AM - 04:30 PM (Mon-Fri)",
+        "services": [
+          "Land Mutations",
+          "Marriage Registration",
+          "OBC/EWS Certificate",
+          "Local Inquiries"
+        ]
+      }
+    ]
+  },
+  "up": {
+    "pincodes": [
+      {
+        "pin": "201301",
+        "area": "Noida Sector 16, Sector 1, Sector 2, Sector 15, Atta Market, Sector 18 Commercial Hub, Film City",
+        "district": "Gautam Buddha Nagar (Noida)",
+        "postOffice": "Noida Sector 16 Head Post Office",
+        "stdCode": "0120",
+        "state": "Uttar Pradesh"
+      },
+      {
+        "pin": "201307",
+        "area": "Noida Sector 62, Sector 63, Electronic City, Fortis Hospital Area, JSS Academy Campus",
+        "district": "Gautam Buddha Nagar (Noida)",
+        "postOffice": "Sector 62 Noida Sub Post Office",
+        "stdCode": "0120",
+        "state": "Uttar Pradesh"
+      },
+      {
+        "pin": "201304",
+        "area": "Noida Sector 37, Sector 34, Sector 39, Botanical Garden Metro, District Hospital Sector 39",
+        "district": "Gautam Buddha Nagar (Noida)",
+        "postOffice": "Sector 37 Noida SO",
+        "stdCode": "0120",
+        "state": "Uttar Pradesh"
+      },
+      {
+        "pin": "201310",
+        "area": "Greater Noida Alpha 1, Pari Chowk, Beta 1, Gamma 2, Knowledge Park 1 to 3",
+        "district": "Gautam Buddha Nagar (Noida)",
+        "postOffice": "Greater Noida Head Post Office",
+        "stdCode": "0120",
+        "state": "Uttar Pradesh"
+      },
+      {
+        "pin": "201001",
+        "area": "Ghaziabad Head Post Office, Navyug Market, Old Bus Stand, GT Road, Ghantaghar, Nehru Nagar",
+        "district": "Ghaziabad",
+        "postOffice": "Ghaziabad Head Post Office (HO)",
+        "stdCode": "0120",
+        "state": "Uttar Pradesh"
+      },
+      {
+        "pin": "201014",
+        "area": "Indirapuram, Kaushambi, Vaishali Sector 4, Shipra Sun City, Ahinsa Khand",
+        "district": "Ghaziabad",
+        "postOffice": "Indirapuram SO",
+        "stdCode": "0120",
+        "state": "Uttar Pradesh"
+      },
+      {
+        "pin": "226001",
+        "area": "Lucknow General Post Office (GPO), Hazratganj, Vidhan Sabha Marg, Ashok Marg, Raj Bhavan",
+        "district": "Lucknow",
+        "postOffice": "Lucknow General Post Office (GPO)",
+        "stdCode": "0522",
+        "state": "Uttar Pradesh"
+      },
+      {
+        "pin": "226010",
+        "area": "Gomti Nagar, Vibhuti Khand, Patrakarpuram, Manoj Pandey Chowk, Lohia Hospital Area",
+        "district": "Lucknow",
+        "postOffice": "Gomti Nagar SO",
+        "stdCode": "0522",
+        "state": "Uttar Pradesh"
+      },
+      {
+        "pin": "226003",
+        "area": "Chowk Lucknow, KGMU Campus, Shah Mina Road, King George Medical University, Victoria Street",
+        "district": "Lucknow",
+        "postOffice": "Chowk Lucknow SO",
+        "stdCode": "0522",
+        "state": "Uttar Pradesh"
+      },
+      {
+        "pin": "208001",
+        "area": "Kanpur Head Post Office, Mall Road, Phool Bagh, Civil Lines, Naveen Market, Somdutt Plaza",
+        "district": "Kanpur Nagar",
+        "postOffice": "Kanpur Head Post Office (HO)",
+        "stdCode": "0512",
+        "state": "Uttar Pradesh"
+      },
+      {
+        "pin": "282001",
+        "area": "Agra Fort Head Post Office, Sanjay Place, MG Road Agra, Raja Ki Mandi, Sadar Bazar",
+        "district": "Agra",
+        "postOffice": "Agra Fort Head Post Office",
+        "stdCode": "0562",
+        "state": "Uttar Pradesh"
+      },
+      {
+        "pin": "221001",
+        "area": "Varanasi Cantt Head Post Office, Nadesar, Kashi Vishwanath Route, Godowlia, Dashashwamedh Ghat",
+        "district": "Varanasi",
+        "postOffice": "Varanasi Cantt Head Post Office",
+        "stdCode": "0542",
+        "state": "Uttar Pradesh"
+      },
+      {
+        "pin": "211001",
+        "area": "Prayagraj Head Post Office, Civil Lines, MG Marg, High Court Compound, Subhash Chauraha",
+        "district": "Prayagraj",
+        "postOffice": "Prayagraj Head Post Office (HO)",
+        "stdCode": "0532",
+        "state": "Uttar Pradesh"
+      },
+      {
+        "pin": "250001",
+        "area": "Meerut Cantt Head Post Office, Sadar Bazar, Begum Bridge, Abu Lane, Civil Lines Meerut",
+        "district": "Meerut",
+        "postOffice": "Meerut Cantt Head Post Office",
+        "stdCode": "0121",
+        "state": "Uttar Pradesh"
+      },
+      {
+        "pin": "273001",
+        "area": "Gorakhpur Head Post Office, Golghar, Civil Lines, Gorakhnath Mandir Road, University Chowk",
+        "district": "Gorakhpur",
+        "postOffice": "Gorakhpur Head Post Office",
+        "stdCode": "0551",
+        "state": "Uttar Pradesh"
+      }
+    ],
+    "hospitals": [
+      {
+        "id": "up-hosp-01",
+        "name": "King George's Medical University (KGMU Lucknow)",
+        "type": "Autonomous State Medical University & Apex Hospital",
+        "district": "Lucknow",
+        "state": "Uttar Pradesh",
+        "address": "Shah Mina Road, Chowk, Lucknow, Uttar Pradesh",
+        "pincode": "226003",
+        "emergencyNumber": "0522-2257540 / 108",
+        "phone": "0522-2258880",
+        "opdTimings": "08:00 AM - 02:00 PM (Mon-Sat) | 24x7 Trauma Centre",
+        "landmark": "Near Shah Mina Dargah & Chowk",
+        "bedCapacity": 4500,
+        "specialties": [
+          "Level-1 Trauma Centre",
+          "Cardiology",
+          "Neurology",
+          "Plastic Surgery",
+          "Pediatric Surgery",
+          "Organ Transplant"
+        ],
+        "hasTraumaCenter": true,
+        "has24x7Emergency": true
+      },
+      {
+        "id": "up-hosp-02",
+        "name": "Sanjay Gandhi Postgraduate Institute of Medical Sciences (SGPGI)",
+        "type": "Super Specialty Apex Institute",
+        "district": "Lucknow",
+        "state": "Uttar Pradesh",
+        "address": "Raebareli Road, Lucknow, Uttar Pradesh",
+        "pincode": "226014",
+        "emergencyNumber": "0522-2494000 / 0522-2495000",
+        "phone": "0522-2668004",
+        "opdTimings": "08:30 AM - 01:30 PM (Mon-Sat) | 24x7 Emergency",
+        "landmark": "On Lucknow-Raebareli Highway",
+        "bedCapacity": 1800,
+        "specialties": [
+          "Gastroenterology",
+          "Endocrinology",
+          "Renal Transplant",
+          "Cardiac Sciences",
+          "Hematology"
+        ],
+        "hasTraumaCenter": true,
+        "has24x7Emergency": true
+      },
+      {
+        "id": "up-hosp-03",
+        "name": "District Combined Hospital (Bhimrao Ambedkar Hospital) Sector 30 Noida",
+        "type": "UP Govt District Hospital",
+        "district": "Gautam Buddha Nagar (Noida)",
+        "state": "Uttar Pradesh",
+        "address": "Sector 30, Near Nithari, Noida, Uttar Pradesh",
+        "pincode": "201301",
+        "emergencyNumber": "0120-2455552 / 108",
+        "phone": "0120-2455551",
+        "opdTimings": "08:00 AM - 02:00 PM (Mon-Sat) | 24x7 Emergency",
+        "landmark": "Near DPS Noida & Sector 30 Nithari",
+        "bedCapacity": 450,
+        "specialties": [
+          "24x7 Casualty",
+          "Pediatrics (Child PGI attached)",
+          "Orthopedics",
+          "General Surgery",
+          "Dialysis & Pathology"
+        ],
+        "hasTraumaCenter": true,
+        "has24x7Emergency": true
+      },
+      {
+        "id": "up-hosp-04",
+        "name": "MMG District Hospital Ghaziabad",
+        "type": "UP Govt District Hospital",
+        "district": "Ghaziabad",
+        "state": "Uttar Pradesh",
+        "address": "GT Road, Near Ghantaghar, Kotwali Area, Ghaziabad, Uttar Pradesh",
+        "pincode": "201001",
+        "emergencyNumber": "0120-2824141 / 108",
+        "phone": "0120-2824140",
+        "opdTimings": "08:00 AM - 02:00 PM (Mon-Sat) | 24x7 Casualty",
+        "landmark": "Near Ghantaghar Chowk & Kotwali",
+        "bedCapacity": 300,
+        "specialties": [
+          "24x7 Emergency",
+          "Maternity Wing",
+          "Blood Bank",
+          "General Medicine",
+          "Ayushman Bharat Desk"
+        ],
+        "hasTraumaCenter": true,
+        "has24x7Emergency": true
+      },
+      {
+        "id": "up-hosp-05",
+        "name": "Sir Sunderlal Hospital (IMS - Banaras Hindu University)",
+        "type": "Central Govt Apex University Hospital",
+        "district": "Varanasi",
+        "state": "Uttar Pradesh",
+        "address": "BHU Campus, Lanka, Varanasi, Uttar Pradesh",
+        "pincode": "221005",
+        "emergencyNumber": "0542-2369291 / 108",
+        "phone": "0542-2307500",
+        "opdTimings": "08:00 AM - 01:30 PM (Mon-Sat) | 24x7 Emergency",
+        "landmark": "Inside BHU Main Campus, Lanka Gate",
+        "bedCapacity": 1800,
+        "specialties": [
+          "Apex Trauma Centre",
+          "Cardiology",
+          "Ayurvedic & Allopathic Medicine",
+          "Neurology",
+          "Oncology"
+        ],
+        "hasTraumaCenter": true,
+        "has24x7Emergency": true
+      }
+    ],
+    "police": [
+      {
+        "id": "up-ps-01",
+        "name": "Police Station Sector 20 Noida",
+        "hindiName": "थाना सेक्टर 20 नोएडा",
+        "district": "Gautam Buddha Nagar (Noida)",
+        "state": "Uttar Pradesh",
+        "address": "Sector 20, Near DM Residence, Noida, Uttar Pradesh",
+        "pincode": "201301",
+        "phone": "0120-2522100",
+        "shoPhone": "9870395001",
+        "pcrNumber": "112",
+        "jurisdictionAreas": [
+          "Sector 18 Market",
+          "Atta Market",
+          "Sector 19",
+          "Sector 20",
+          "Sector 26",
+          "Sector 27",
+          "Film City"
+        ],
+        "landmark": "Near Sector 20 B-Block & DM Camp Office"
+      },
+      {
+        "id": "up-ps-02",
+        "name": "Police Station Sector 39 Noida",
+        "hindiName": "थाना सेक्टर 39 नोएडा",
+        "district": "Gautam Buddha Nagar (Noida)",
+        "state": "Uttar Pradesh",
+        "address": "Sector 39, Near District Hospital, Noida, Uttar Pradesh",
+        "pincode": "201301",
+        "phone": "0120-2570100",
+        "shoPhone": "9870395002",
+        "pcrNumber": "112",
+        "jurisdictionAreas": [
+          "Sector 37",
+          "Sector 39",
+          "Sector 41",
+          "Botanical Garden",
+          "Golf Course Area",
+          "Sector 45"
+        ],
+        "landmark": "Opposite District Hospital Sector 39"
+      },
+      {
+        "id": "up-ps-03",
+        "name": "Police Station Indirapuram Ghaziabad",
+        "hindiName": "थाना इंदिरापुरम गाजियाबाद",
+        "district": "Ghaziabad",
+        "state": "Uttar Pradesh",
+        "address": "Kala Patthar Road, Indirapuram, Ghaziabad, Uttar Pradesh",
+        "pincode": "201014",
+        "phone": "0120-2605100",
+        "shoPhone": "9643322901",
+        "pcrNumber": "112",
+        "jurisdictionAreas": [
+          "Indirapuram",
+          "Vaishali",
+          "Vasundhara",
+          "Shipra Mall Area",
+          "Ahinsa Khand"
+        ],
+        "landmark": "Near Kala Patthar Road"
+      },
+      {
+        "id": "up-ps-04",
+        "name": "Police Station Hazratganj Lucknow",
+        "hindiName": "थाना हजरतगंज लखनऊ",
+        "district": "Lucknow",
+        "state": "Uttar Pradesh",
+        "address": "Mahatma Gandhi Marg, Hazratganj, Lucknow, Uttar Pradesh",
+        "pincode": "226001",
+        "phone": "0522-2238100",
+        "shoPhone": "9454403801",
+        "pcrNumber": "112",
+        "jurisdictionAreas": [
+          "Hazratganj Market",
+          "Vidhan Sabha Marg",
+          "GPO Compound",
+          "Ashok Marg",
+          "Mayfair Chowk"
+        ],
+        "landmark": "Near GPO Lucknow & Hazratganj Metro"
+      },
+      {
+        "id": "up-ps-05",
+        "name": "Police Station Gomti Nagar Lucknow",
+        "hindiName": "थाना गोमती नगर लखनऊ",
+        "district": "Lucknow",
+        "state": "Uttar Pradesh",
+        "address": "Vipin Khand, Gomti Nagar, Lucknow, Uttar Pradesh",
+        "pincode": "226010",
+        "phone": "0522-2391100",
+        "shoPhone": "9454403802",
+        "pcrNumber": "112",
+        "jurisdictionAreas": [
+          "Vibhuti Khand",
+          "Vipin Khand",
+          "Patrakarpuram",
+          "Manoj Pandey Chowk",
+          "Gomti Nagar Extension"
+        ],
+        "landmark": "Near Samajwadi Party HQ & Taj Hotel"
+      },
+      {
+        "id": "up-ps-06",
+        "name": "Police Station Sigra Varanasi",
+        "hindiName": "थाना सिगरा वाराणसी",
+        "district": "Varanasi",
+        "state": "Uttar Pradesh",
+        "address": "Sigra Chauraha, Vidyapeeth Road, Varanasi, Uttar Pradesh",
+        "pincode": "221002",
+        "phone": "0542-2221100",
+        "shoPhone": "9454404301",
+        "pcrNumber": "112",
+        "jurisdictionAreas": [
+          "Sigra",
+          "Kashi Vidyapeeth Area",
+          "Rath Yatra Chowk",
+          "Mahmoorganj",
+          "Cantt Station Road"
+        ],
+        "landmark": "Near Sigra Stadium & IP Vijaya Mall"
+      }
+    ],
+    "rto": [
+      {
+        "id": "up-rto-16",
+        "rtoCode": "UP-16",
+        "zoneName": "Regional Transport Office Gautam Buddha Nagar (Noida)",
+        "district": "Gautam Buddha Nagar (Noida)",
+        "state": "Uttar Pradesh",
+        "address": "Sector 32, Near City Centre Metro, Noida, Uttar Pradesh",
+        "pincode": "201301",
+        "phone": "0120-2505500 / 0120-2505501",
+        "email": "arto.gbn@uptransport.upsdc.gov.in",
+        "timings": "10:00 AM - 05:00 PM (Mon-Sat)",
+        "landmark": "Near Wave City Centre Metro Station",
+        "jurisdictionAreas": [
+          "Noida City",
+          "Sector 1 to 168",
+          "Greater Noida West",
+          "Dadri",
+          "Jewar"
+        ],
+        "servicesOffered": [
+          "Learner & Permanent DL",
+          "Automated Sensor Test Track",
+          "Vehicle Registration (RC)",
+          "Transfer of Ownership",
+          "Commercial Fitness Certificate",
+          "VIP Number Booking"
+        ],
+        "automatedTrackAvailable": true,
+        "mloIncharge": "Regional Transport Officer (ARTO Noida)"
+      },
+      {
+        "id": "up-rto-14",
+        "rtoCode": "UP-14",
+        "zoneName": "Regional Transport Office Ghaziabad",
+        "district": "Ghaziabad",
+        "state": "Uttar Pradesh",
+        "address": "Loha Mandi, Bulandshahr Road Industrial Area, Ghaziabad, Uttar Pradesh",
+        "pincode": "201009",
+        "phone": "0120-2700100",
+        "email": "rto.gzb@uptransport.upsdc.gov.in",
+        "timings": "10:00 AM - 05:00 PM (Mon-Sat)",
+        "landmark": "Near Bulandshahr Road Industrial Area",
+        "jurisdictionAreas": [
+          "Ghaziabad City",
+          "Indirapuram",
+          "Vaishali",
+          "Modinagar",
+          "Loni"
+        ],
+        "servicesOffered": [
+          "Driving Test on Track",
+          "Smart Card DL Issue",
+          "New Vehicle RC",
+          "NOC & Hypothecation"
+        ],
+        "automatedTrackAvailable": true,
+        "mloIncharge": "Regional Transport Officer Ghaziabad"
+      },
+      {
+        "id": "up-rto-32",
+        "rtoCode": "UP-32",
+        "zoneName": "Regional Transport Office Lucknow (Transport Nagar)",
+        "district": "Lucknow",
+        "state": "Uttar Pradesh",
+        "address": "Transport Nagar, Kanpur Road, Lucknow, Uttar Pradesh",
+        "pincode": "226012",
+        "phone": "0522-2436100",
+        "email": "rto.lko@uptransport.upsdc.gov.in",
+        "timings": "10:00 AM - 05:00 PM (Mon-Sat)",
+        "landmark": "Near Transport Nagar Metro Station",
+        "jurisdictionAreas": [
+          "Lucknow City",
+          "Hazratganj",
+          "Gomti Nagar",
+          "Alambagh",
+          "Indira Nagar",
+          "Chowk"
+        ],
+        "servicesOffered": [
+          "Automated Driving License Track Test",
+          "RC Renewal",
+          "International Driving Permit",
+          "Trade Certificate"
+        ],
+        "automatedTrackAvailable": true,
+        "mloIncharge": "Regional Transport Officer Lucknow"
+      },
+      {
+        "id": "up-rto-78",
+        "rtoCode": "UP-78",
+        "zoneName": "Regional Transport Office Kanpur",
+        "district": "Kanpur Nagar",
+        "state": "Uttar Pradesh",
+        "address": "Sarvodaya Nagar, Near Rawatpur, Kanpur, Uttar Pradesh",
+        "pincode": "208005",
+        "phone": "0512-2216100",
+        "email": "rto.knp@uptransport.upsdc.gov.in",
+        "timings": "10:00 AM - 05:00 PM (Mon-Sat)",
+        "landmark": "Near Rawatpur Railway Crossing",
+        "jurisdictionAreas": [
+          "Kanpur City",
+          "Civil Lines",
+          "Govind Nagar",
+          "Kalyanpur",
+          "Jajmau"
+        ],
+        "servicesOffered": [
+          "Permanent DL",
+          "RC Fitness",
+          "Tax Clearance",
+          "Driver Testing Track"
+        ],
+        "automatedTrackAvailable": true,
+        "mloIncharge": "Regional Transport Officer Kanpur"
+      },
+      {
+        "id": "up-rto-65",
+        "rtoCode": "UP-65",
+        "zoneName": "Regional Transport Office Varanasi",
+        "district": "Varanasi",
+        "state": "Uttar Pradesh",
+        "address": "Babatpur Road, Shivpur, Varanasi, Uttar Pradesh",
+        "pincode": "221003",
+        "phone": "0542-2281100",
+        "email": "rto.vns@uptransport.upsdc.gov.in",
+        "timings": "10:00 AM - 05:00 PM (Mon-Sat)",
+        "landmark": "Near Shivpur Railway Station",
+        "jurisdictionAreas": [
+          "Varanasi City",
+          "Cantt Area",
+          "Sigra",
+          "BHU Area",
+          "Ramnagar"
+        ],
+        "servicesOffered": [
+          "DL Smart Card",
+          "RC Online Transfer",
+          "Sensor Track Evaluation"
+        ],
+        "automatedTrackAvailable": true,
+        "mloIncharge": "Regional Transport Officer Varanasi"
+      }
+    ],
+    "ifsc": [
+      {
+        "ifsc": "SBIN0004077",
+        "bank": "State Bank of India",
+        "branch": "Noida Sector 1",
+        "district": "Gautam Buddha Nagar (Noida)",
+        "city": "Noida",
+        "state": "Uttar Pradesh",
+        "address": "A-Block, Sector 1, Industrial Area, Noida, Uttar Pradesh - 201301",
+        "contact": "0120-2525100",
+        "micr": "110002061",
+        "upi": true,
+        "rtgs": true,
+        "neft": true,
+        "imps": true
+      },
+      {
+        "ifsc": "HDFC0000088",
+        "bank": "HDFC Bank",
+        "branch": "Noida Sector 18",
+        "district": "Gautam Buddha Nagar (Noida)",
+        "city": "Noida",
+        "state": "Uttar Pradesh",
+        "address": "B-1/30, Sector 18 Commercial Market, Noida, Uttar Pradesh - 201301",
+        "contact": "0120-6160616",
+        "micr": "110240014",
+        "upi": true,
+        "rtgs": true,
+        "neft": true,
+        "imps": true
+      },
+      {
+        "ifsc": "PUNB0024400",
+        "bank": "Punjab National Bank",
+        "branch": "Ghaziabad Navyug Market",
+        "district": "Ghaziabad",
+        "city": "Ghaziabad",
+        "state": "Uttar Pradesh",
+        "address": "Navyug Market, Opp. Old Bus Stand, Ghaziabad, Uttar Pradesh - 201001",
+        "contact": "0120-2794100",
+        "micr": "110024036",
+        "upi": true,
+        "rtgs": true,
+        "neft": true,
+        "imps": true
+      },
+      {
+        "ifsc": "SBIN0000125",
+        "bank": "State Bank of India",
+        "branch": "Lucknow Main Branch (Hazratganj)",
+        "district": "Lucknow",
+        "city": "Lucknow",
+        "state": "Uttar Pradesh",
+        "address": "Tarawali Kothi, Moti Mahal Marg, Hazratganj, Lucknow, Uttar Pradesh - 226001",
+        "contact": "0522-2228410",
+        "micr": "226002002",
+        "upi": true,
+        "rtgs": true,
+        "neft": true,
+        "imps": true
+      },
+      {
+        "ifsc": "ICIC0000002",
+        "bank": "ICICI Bank",
+        "branch": "Varanasi Sigra",
+        "district": "Varanasi",
+        "city": "Varanasi",
+        "state": "Uttar Pradesh",
+        "address": "D-58/12, A-1, Kuber Complex, Rathyatra-Sigra Road, Varanasi, Uttar Pradesh - 221010",
+        "contact": "0542-2227100",
+        "micr": "221229002",
+        "upi": true,
+        "rtgs": true,
+        "neft": true,
+        "imps": true
+      }
+    ],
+    "offices": [
+      {
+        "id": "up-off-01",
+        "name": "District Magistrate & Collectorate Office Gautam Buddha Nagar (Noida)",
+        "hindiName": "जिलाधिकारी एवं कलेक्ट्रेट कार्यालय गौतम बुद्ध नगर (नोएडा)",
+        "category": "District Magistrate / DC Office",
+        "district": "Gautam Buddha Nagar (Noida)",
+        "state": "Uttar Pradesh",
+        "address": "Collectorate Compound, Surajpur, Greater Noida, Uttar Pradesh - 201306",
+        "pincode": "201306",
+        "helpline": "0120-2569001 / 0120-2569002",
+        "email": "dmgbn@nic.in",
+        "website": "https://gbnagar.nic.in",
+        "publicHours": "10:00 AM - 05:00 PM (Mon-Sat)",
+        "services": [
+          "e-District UP Portal Services",
+          "Revenue & Khasra Khatauni Verification",
+          "Jati / Niwas / Aay Praman Patra",
+          "IGRS Public Grievances Portal",
+          "Land Acquisition & Registries"
+        ]
+      },
+      {
+        "id": "up-off-02",
+        "name": "Jan Seva Kendra Central (e-District UP CSC Center Noida)",
+        "hindiName": "जन सेवा केंद्र (ई-डिस्ट्रिक्ट उत्तर प्रदेश)",
+        "category": "CSC / Jan Seva Kendra",
+        "district": "Gautam Buddha Nagar (Noida)",
+        "state": "Uttar Pradesh",
+        "address": "Sector 27, Near Atta Market, Noida, Uttar Pradesh",
+        "pincode": "201301",
+        "helpline": "0522-2304706",
+        "email": "edistrict-up@gov.in",
+        "website": "https://edistrict.up.gov.in",
+        "publicHours": "09:00 AM - 06:00 PM (Mon-Sat)",
+        "services": [
+          "Aadhaar Linkage",
+          "Ration Card (FCS UP)",
+          "Kanya Sumangala Yojana",
+          "Vridhavastha Pension",
+          "Divyang Pension Registration",
+          "Khatauni Copy"
+        ]
+      },
+      {
+        "id": "up-off-03",
+        "name": "SDM Office Dadri / Noida",
+        "hindiName": "एसडीएम कार्यालय दादरी / नोएडा",
+        "category": "Sub-Divisional Magistrate (SDM)",
+        "district": "Gautam Buddha Nagar (Noida)",
+        "state": "Uttar Pradesh",
+        "address": "Tehsil Compound, Dadri, Gautam Buddha Nagar, Uttar Pradesh",
+        "pincode": "203207",
+        "helpline": "0120-2569015",
+        "email": "sdmdadri@nic.in",
+        "website": "https://gbnagar.nic.in",
+        "publicHours": "10:00 AM - 04:30 PM (Mon-Fri)",
+        "services": [
+          "Domicile Certificate",
+          "Caste Certificate",
+          "Encumbrance Certificate",
+          "Court Cases & Mutation"
+        ]
+      }
+    ]
+  },
+  "maharashtra": {
+    "pincodes": [
+      {
+        "pin": "400001",
+        "area": "Mumbai General Post Office (GPO), Fort, Nariman Point, Horniman Circle, Ballard Estate, Churchgate, CST Station",
+        "district": "Mumbai City",
+        "postOffice": "Mumbai General Post Office (GPO)",
+        "stdCode": "022",
+        "state": "Maharashtra"
+      },
+      {
+        "pin": "400050",
+        "area": "Bandra West, Bandstand, Hill Road, Linking Road, Pali Hill, Mount Mary",
+        "district": "Mumbai Suburban",
+        "postOffice": "Bandra West SO",
+        "stdCode": "022",
+        "state": "Maharashtra"
+      },
+      {
+        "pin": "400076",
+        "area": "Powai, IIT Bombay Campus, Hiranandani Gardens, Powai Lake, Saki Vihar",
+        "district": "Mumbai Suburban",
+        "postOffice": "IIT Powai SO",
+        "stdCode": "022",
+        "state": "Maharashtra"
+      },
+      {
+        "pin": "411001",
+        "area": "Pune Head Post Office, Pune Camp, Sadhu Vaswani Chowk, Station Road, MG Road Pune, Sassoon Road",
+        "district": "Pune",
+        "postOffice": "Pune Head Post Office (HO)",
+        "stdCode": "020",
+        "state": "Maharashtra"
+      },
+      {
+        "pin": "411038",
+        "area": "Kothrud, Paud Road, Ideal Colony, MIT College Campus, Karve Road",
+        "district": "Pune",
+        "postOffice": "Kothrud SO",
+        "stdCode": "020",
+        "state": "Maharashtra"
+      },
+      {
+        "pin": "440001",
+        "area": "Nagpur General Post Office (GPO), Civil Lines, Sitabuldi, Zero Mile, High Court Area",
+        "district": "Nagpur",
+        "postOffice": "Nagpur General Post Office (GPO)",
+        "stdCode": "0712",
+        "state": "Maharashtra"
+      },
+      {
+        "pin": "400601",
+        "area": "Thane Head Post Office, Station Road, Talao Pali, Charai, Jambhli Naka",
+        "district": "Thane",
+        "postOffice": "Thane Head Post Office",
+        "stdCode": "022",
+        "state": "Maharashtra"
+      },
+      {
+        "pin": "422001",
+        "area": "Nashik Head Post Office, MG Road, CBS, Shalimar, Canada Corner",
+        "district": "Nashik",
+        "postOffice": "Nashik Head Post Office",
+        "stdCode": "0253",
+        "state": "Maharashtra"
+      }
+    ],
+    "hospitals": [
+      {
+        "id": "mh-hosp-01",
+        "name": "King Edward Memorial Hospital (KEM Hospital) & Seth GS Medical College",
+        "type": "Municipal Corporation Apex Teaching Hospital",
+        "district": "Mumbai City",
+        "state": "Maharashtra",
+        "address": "Acharya Donde Marg, Parel, Mumbai, Maharashtra",
+        "pincode": "400012",
+        "emergencyNumber": "022-24107000 / 022-24136051",
+        "phone": "022-24107000",
+        "opdTimings": "08:00 AM - 12:30 PM (Mon-Sat) | 24x7 Emergency & Trauma",
+        "landmark": "Near Parel Railway Station & Tata Memorial",
+        "bedCapacity": 1800,
+        "specialties": [
+          "24x7 Trauma Centre",
+          "Cardiology",
+          "Neurology",
+          "Gastroenterology",
+          "Nephrology",
+          "Mahatma Jyotirao Phule Jan Arogya Yojana (MJPJAY)"
+        ],
+        "hasTraumaCenter": true,
+        "has24x7Emergency": true
+      },
+      {
+        "id": "mh-hosp-02",
+        "name": "Sassoon General Hospital & B.J. Medical College Pune",
+        "type": "Maharashtra Govt Apex Teaching Hospital",
+        "district": "Pune",
+        "state": "Maharashtra",
+        "address": "Near Pune Railway Station, Sassoon Road, Pune, Maharashtra",
+        "pincode": "411001",
+        "emergencyNumber": "020-26128000 / 108",
+        "phone": "020-26128000",
+        "opdTimings": "08:00 AM - 01:30 PM (Mon-Sat) | 24x7 Emergency",
+        "landmark": "Opposite Pune Junction Railway Station",
+        "bedCapacity": 1300,
+        "specialties": [
+          "24x7 Trauma & Accident Care",
+          "Pediatrics",
+          "Burn Center",
+          "Neurosurgery",
+          "General Surgery"
+        ],
+        "hasTraumaCenter": true,
+        "has24x7Emergency": true
+      },
+      {
+        "id": "mh-hosp-03",
+        "name": "All India Institute of Medical Sciences (AIIMS Nagpur)",
+        "type": "Central Govt Apex Medical Institute",
+        "district": "Nagpur",
+        "state": "Maharashtra",
+        "address": "MIHAN, Sector 20, Nagpur, Maharashtra",
+        "pincode": "441108",
+        "emergencyNumber": "0712-2821000 / 108",
+        "phone": "0712-2821000",
+        "opdTimings": "08:30 AM - 01:00 PM (Mon-Sat) | 24x7 Emergency",
+        "landmark": "Inside MIHAN Special Economic Zone",
+        "bedCapacity": 960,
+        "specialties": [
+          "Level-1 Trauma",
+          "Surgical Oncology",
+          "Cardiothoracic Surgery",
+          "Radiotherapy",
+          "Dialysis"
+        ],
+        "hasTraumaCenter": true,
+        "has24x7Emergency": true
+      }
+    ],
+    "police": [
+      {
+        "id": "mh-ps-01",
+        "name": "Colaba Police Station",
+        "hindiName": "थाना कोलाबा मुंबई",
+        "district": "Mumbai City",
+        "state": "Maharashtra",
+        "address": "SBS Road, Near Regal Cinema, Colaba, Mumbai, Maharashtra",
+        "pincode": "400001",
+        "phone": "022-22856817",
+        "shoPhone": "9821000101",
+        "pcrNumber": "112",
+        "jurisdictionAreas": [
+          "Colaba Causeway",
+          "Gateway of India",
+          "Taj Mahal Palace Hotel",
+          "Cuffe Parade",
+          "Regal Cinema Area"
+        ],
+        "landmark": "Near Regal Cinema & Gateway of India"
+      },
+      {
+        "id": "mh-ps-02",
+        "name": "Bandra Police Station",
+        "hindiName": "थाना बांद्रा मुंबई",
+        "district": "Mumbai Suburban",
+        "state": "Maharashtra",
+        "address": "Hill Road, Near Mehboob Studio, Bandra West, Mumbai, Maharashtra",
+        "pincode": "400050",
+        "phone": "022-26422002",
+        "shoPhone": "9821000102",
+        "pcrNumber": "112",
+        "jurisdictionAreas": [
+          "Bandra West",
+          "Bandstand",
+          "Carter Road",
+          "Linking Road",
+          "Pali Hill",
+          "Hill Road"
+        ],
+        "landmark": "Near Mehboob Studio & Bandra Fort"
+      },
+      {
+        "id": "mh-ps-03",
+        "name": "Shivajinagar Police Station Pune",
+        "hindiName": "थाना शिवाजीनगर पुणे",
+        "district": "Pune",
+        "state": "Maharashtra",
+        "address": "FC Road, Near Ferguson College, Shivajinagar, Pune, Maharashtra",
+        "pincode": "411005",
+        "phone": "020-25536263",
+        "shoPhone": "9823000101",
+        "pcrNumber": "112",
+        "jurisdictionAreas": [
+          "FC Road",
+          "JM Road",
+          "Shivajinagar Railway Station",
+          "District Court Pune",
+          "Ferguson College Area"
+        ],
+        "landmark": "Near Ferguson College Campus"
+      }
+    ],
+    "rto": [
+      {
+        "id": "mh-rto-01",
+        "rtoCode": "MH-01",
+        "zoneName": "Regional Transport Office Mumbai South (Tardeo)",
+        "district": "Mumbai City",
+        "state": "Maharashtra",
+        "address": "Old Bodyguard Lane, Tulsiwadi, Tardeo, Mumbai, Maharashtra",
+        "pincode": "400034",
+        "phone": "022-23532333",
+        "email": "rto.mumbai-south@gov.in",
+        "timings": "10:00 AM - 05:30 PM (Mon-Fri)",
+        "landmark": "Near AC Market Tardeo",
+        "jurisdictionAreas": [
+          "South Mumbai",
+          "Colaba",
+          "Fort",
+          "Nariman Point",
+          "Malabar Hill",
+          "Byculla",
+          "Dadar South"
+        ],
+        "servicesOffered": [
+          "Smart Card Driving License",
+          "Automated Driving Test",
+          "Vehicle Registration",
+          "Vintage Car Registration",
+          "Commercial Permits"
+        ],
+        "automatedTrackAvailable": true,
+        "mloIncharge": "Regional Transport Officer Mumbai South"
+      },
+      {
+        "id": "mh-rto-12",
+        "rtoCode": "MH-12",
+        "zoneName": "Regional Transport Office Pune (Sangam Bridge)",
+        "district": "Pune",
+        "state": "Maharashtra",
+        "address": "Near Sangam Bridge, Raja Bahadur Mill Road, Pune, Maharashtra",
+        "pincode": "411001",
+        "phone": "020-26058080",
+        "email": "rto.pune-mh@gov.in",
+        "timings": "10:00 AM - 05:30 PM (Mon-Fri)",
+        "landmark": "Near Sangam Bridge & COEP Ground",
+        "jurisdictionAreas": [
+          "Pune City",
+          "Shivajinagar",
+          "Kothrud",
+          "Camp",
+          "Swargate",
+          "Hadapsar",
+          "Aundh"
+        ],
+        "servicesOffered": [
+          "Learner & Permanent License",
+          "Online LL Exam",
+          "IDP International Permit",
+          "Fitness Certificate"
+        ],
+        "automatedTrackAvailable": true,
+        "mloIncharge": "Regional Transport Officer Pune"
+      },
+      {
+        "id": "mh-rto-02",
+        "rtoCode": "MH-02",
+        "zoneName": "Regional Transport Office Mumbai West (Andheri)",
+        "district": "Mumbai Suburban",
+        "state": "Maharashtra",
+        "address": "D-111, Ambivali Village, Versova Road, Andheri West, Mumbai, Maharashtra",
+        "pincode": "400053",
+        "phone": "022-26366952",
+        "email": "rto.mumbai-west@gov.in",
+        "timings": "10:00 AM - 05:30 PM (Mon-Fri)",
+        "landmark": "Near Versova Metro Station",
+        "jurisdictionAreas": [
+          "Andheri",
+          "Bandra",
+          "Juhu",
+          "Goregaon",
+          "Malad",
+          "Jogeshwari"
+        ],
+        "servicesOffered": [
+          "Driving License",
+          "Vehicle RC Registration",
+          "Tax Assessment"
+        ],
+        "automatedTrackAvailable": true,
+        "mloIncharge": "Regional Transport Officer Andheri"
+      }
+    ],
+    "ifsc": [
+      {
+        "ifsc": "SBIN0000300",
+        "bank": "State Bank of India",
+        "branch": "Mumbai Main Branch (Fort)",
+        "district": "Mumbai City",
+        "city": "Mumbai",
+        "state": "Maharashtra",
+        "address": "Mumbai Samachar Marg, Fort, Mumbai, Maharashtra - 400023",
+        "contact": "022-22661500",
+        "micr": "400002010",
+        "upi": true,
+        "rtgs": true,
+        "neft": true,
+        "imps": true
+      },
+      {
+        "ifsc": "HDFC0000060",
+        "bank": "HDFC Bank",
+        "branch": "Mumbai Fort",
+        "district": "Mumbai City",
+        "city": "Mumbai",
+        "state": "Maharashtra",
+        "address": "Manekji Wadia Building, Nanik Motwani Marg, Fort, Mumbai, Maharashtra - 400001",
+        "contact": "022-6160616",
+        "micr": "400240002",
+        "upi": true,
+        "rtgs": true,
+        "neft": true,
+        "imps": true
+      },
+      {
+        "ifsc": "SBIN0000454",
+        "bank": "State Bank of India",
+        "branch": "Pune Main Branch",
+        "district": "Pune",
+        "city": "Pune",
+        "state": "Maharashtra",
+        "address": "Dr. Ambedkar Road, Near Collector Office, Pune, Maharashtra - 411001",
+        "contact": "020-26122500",
+        "micr": "411002002",
+        "upi": true,
+        "rtgs": true,
+        "neft": true,
+        "imps": true
+      }
+    ],
+    "offices": [
+      {
+        "id": "mh-off-01",
+        "name": "Mantralaya & Maharashtra State Administrative HQ",
+        "hindiName": "मंत्रालय एवं महाराष्ट्र राज्य प्रशासनिक मुख्यालय",
+        "category": "Secretariat / State HQ",
+        "district": "Mumbai City",
+        "state": "Maharashtra",
+        "address": "Madam Cama Road, Nariman Point, Mumbai, Maharashtra - 400032",
+        "pincode": "400032",
+        "helpline": "022-22025151 / 1800-120-8040",
+        "email": "cmo@maharashtra.gov.in",
+        "website": "https://maharashtra.gov.in",
+        "publicHours": "09:45 AM - 06:15 PM (Mon-Fri)",
+        "services": [
+          "Aaple Sarkar Portal Services",
+          "State Policy & Resolutions",
+          "Disaster Response",
+          "Right to Services (RTS) Commission"
+        ]
+      },
+      {
+        "id": "mh-off-02",
+        "name": "Collector & District Magistrate Office Mumbai City",
+        "hindiName": "जिल्हाधिकारी कार्यालय मुंबई शहर",
+        "category": "District Magistrate / DC Office",
+        "district": "Mumbai City",
+        "state": "Maharashtra",
+        "address": "Old Custom House, Fort, Mumbai, Maharashtra - 400001",
+        "pincode": "400001",
+        "helpline": "022-22661231",
+        "email": "collector.mumbaicity@maharashtra.gov.in",
+        "website": "https://mumbaicity.gov.in",
+        "publicHours": "10:00 AM - 05:00 PM (Mon-Fri)",
+        "services": [
+          "Aaple Sarkar Domicile / Income / Caste Verification",
+          "Land Revenue & 7/12 Extract (Satbara)",
+          "Non-Creamy Layer Certificate",
+          "Election & Rationing"
+        ]
+      },
+      {
+        "id": "mh-off-03",
+        "name": "Aaple Sarkar Seva Kendra (MahaOnline CSC Center Mumbai)",
+        "hindiName": "आपले सरकार सेवा केंद्र (महाऑनलाईन केंद्र)",
+        "category": "CSC / MahaOnline Kendra",
+        "district": "Mumbai City",
+        "state": "Maharashtra",
+        "address": "Opp. GPO, Fort, Mumbai, Maharashtra",
+        "pincode": "400001",
+        "helpline": "1800-120-8040",
+        "email": "support@mahaonline.gov.in",
+        "website": "https://aaplesarkar.mahaonline.gov.in",
+        "publicHours": "09:30 AM - 06:00 PM (Mon-Sat)",
+        "services": [
+          "Age, Nationality and Domicile Certificate",
+          "Caste Certificate",
+          "Income Certificate",
+          "Ration Card Application",
+          "Senior Citizen Card",
+          "Farmer 7/12 Extract"
+        ]
+      }
+    ]
+  },
+  "rajasthan": {
+    "pincodes": [
+      {
+        "pin": "302001",
+        "area": "Jaipur General Post Office (GPO), M.I. Road, Ashok Nagar, Panch Batti, Ajmeri Gate, C-Scheme",
+        "district": "Jaipur",
+        "postOffice": "Jaipur General Post Office (GPO)",
+        "stdCode": "0141",
+        "state": "Rajasthan"
+      },
+      {
+        "pin": "302017",
+        "area": "Malviya Nagar Jaipur, Jawahar Circle, World Trade Park (WTP), Gaurav Tower, MNIT Campus",
+        "district": "Jaipur",
+        "postOffice": "Malviya Nagar SO",
+        "stdCode": "0141",
+        "state": "Rajasthan"
+      },
+      {
+        "pin": "342001",
+        "area": "Jodhpur Head Post Office, Station Road, Sojati Gate, High Court Colony, Paota",
+        "district": "Jodhpur",
+        "postOffice": "Jodhpur Head Post Office (HO)",
+        "stdCode": "0291",
+        "state": "Rajasthan"
+      },
+      {
+        "pin": "313001",
+        "area": "Udaipur Head Post Office, Chetak Circle, Delhi Gate, City Palace Area, Surajpole",
+        "district": "Udaipur",
+        "postOffice": "Udaipur Head Post Office",
+        "stdCode": "0294",
+        "state": "Rajasthan"
+      },
+      {
+        "pin": "324001",
+        "area": "Kota Head Post Office, Rampura, Nayapura, Station Road, Aerodrome Circle",
+        "district": "Kota",
+        "postOffice": "Kota Head Post Office",
+        "stdCode": "0744",
+        "state": "Rajasthan"
+      }
+    ],
+    "hospitals": [
+      {
+        "id": "rj-hosp-01",
+        "name": "Sawai Man Singh Hospital (SMS Hospital Jaipur)",
+        "type": "Rajasthan Govt Apex Teaching Hospital",
+        "district": "Jaipur",
+        "state": "Rajasthan",
+        "address": "JLN Marg, Ashok Nagar, Jaipur, Rajasthan",
+        "pincode": "302004",
+        "emergencyNumber": "0141-2518222 / 108",
+        "phone": "0141-2518200",
+        "opdTimings": "08:00 AM - 02:00 PM (Mon-Sat) | 24x7 Emergency",
+        "landmark": "Near Rambagh Circle & JLN Marg",
+        "bedCapacity": 3200,
+        "specialties": [
+          "24x7 Level 1 Trauma",
+          "Cardiology",
+          "Neurology",
+          "Chiranjeevi / RGHS Desks",
+          "Organ Transplant"
+        ],
+        "hasTraumaCenter": true,
+        "has24x7Emergency": true
+      },
+      {
+        "id": "rj-hosp-02",
+        "name": "All India Institute of Medical Sciences (AIIMS Jodhpur)",
+        "type": "Central Govt Apex Medical Institute",
+        "district": "Jodhpur",
+        "state": "Rajasthan",
+        "address": "Basni Industrial Area Phase 2, Jodhpur, Rajasthan",
+        "pincode": "342005",
+        "emergencyNumber": "0291-2740741 / 108",
+        "phone": "0291-2740742",
+        "opdTimings": "08:30 AM - 01:00 PM (Mon-Sat) | 24x7 Emergency",
+        "landmark": "Near Basni Industrial Area",
+        "bedCapacity": 960,
+        "specialties": [
+          "Apex Trauma Center",
+          "Oncology",
+          "Cardiothoracic Surgery",
+          "Nephrology",
+          "Pediatrics"
+        ],
+        "hasTraumaCenter": true,
+        "has24x7Emergency": true
+      }
+    ],
+    "police": [
+      {
+        "id": "rj-ps-01",
+        "name": "Police Station Ashok Nagar Jaipur",
+        "hindiName": "थाना अशोक नगर जयपुर",
+        "district": "Jaipur",
+        "state": "Rajasthan",
+        "address": "Statue Circle, Ashok Nagar, Jaipur, Rajasthan",
+        "pincode": "302001",
+        "phone": "0141-2385100",
+        "shoPhone": "9414000101",
+        "pcrNumber": "112",
+        "jurisdictionAreas": [
+          "Statue Circle",
+          "C-Scheme",
+          "M.I. Road",
+          "Secretariat Area",
+          "Central Park"
+        ],
+        "landmark": "Near Statue Circle & Secretariat"
+      }
+    ],
+    "rto": [
+      {
+        "id": "rj-rto-14",
+        "rtoCode": "RJ-14",
+        "zoneName": "Regional Transport Office Jaipur South",
+        "district": "Jaipur",
+        "state": "Rajasthan",
+        "address": "Jhalana Doongri, Jaipur, Rajasthan",
+        "pincode": "302004",
+        "phone": "0141-2706100",
+        "email": "rto.jaipur@rajasthan.gov.in",
+        "timings": "09:30 AM - 06:00 PM (Mon-Fri)",
+        "landmark": "Near OTS & Jhalana Doongri",
+        "jurisdictionAreas": [
+          "Jaipur South",
+          "Malviya Nagar",
+          "Mansarovar",
+          "Sanganer",
+          "Tonk Road"
+        ],
+        "servicesOffered": [
+          "Permanent Driving License",
+          "Automated Sensor Track Test",
+          "RC Transfer",
+          "Fitness"
+        ],
+        "automatedTrackAvailable": true,
+        "mloIncharge": "Regional Transport Officer Jaipur"
+      }
+    ],
+    "ifsc": [
+      {
+        "ifsc": "SBIN0000656",
+        "bank": "State Bank of India",
+        "branch": "Jaipur Main Branch",
+        "district": "Jaipur",
+        "city": "Jaipur",
+        "state": "Rajasthan",
+        "address": "Tilak Marg, C-Scheme, Jaipur, Rajasthan - 302005",
+        "contact": "0141-2227100",
+        "micr": "302002002",
+        "upi": true,
+        "rtgs": true,
+        "neft": true,
+        "imps": true
+      }
+    ],
+    "offices": [
+      {
+        "id": "rj-off-01",
+        "name": "Government Secretariat Rajasthan (Jaipur)",
+        "hindiName": "शासन सचिवालय राजस्थान (जयपुर)",
+        "category": "Secretariat / State HQ",
+        "district": "Jaipur",
+        "state": "Rajasthan",
+        "address": "Bhagwan Das Road, C-Scheme, Jaipur, Rajasthan - 302005",
+        "pincode": "302005",
+        "helpline": "181 / 0141-2227122",
+        "email": "cmo@rajasthan.gov.in",
+        "website": "https://rajasthan.gov.in",
+        "publicHours": "09:30 AM - 06:00 PM (Mon-Fri)",
+        "services": [
+          "e-Mitra Citizen Platform",
+          "Jan Aadhaar Yojana",
+          "Chiranjeevi / RGHS Desk",
+          "Sampark 181 Grievance Portal"
+        ]
+      },
+      {
+        "id": "rj-off-02",
+        "name": "e-Mitra Central Citizen Facilitation Center (Jaipur Collectorate)",
+        "hindiName": "ई-मित्र नागरिक सुविधा केंद्र (कलेक्ट्रेट परिसर जयपुर)",
+        "category": "CSC / e-Mitra",
+        "district": "Jaipur",
+        "state": "Rajasthan",
+        "address": "Collectorate Compound, Bani Park, Jaipur, Rajasthan - 302016",
+        "pincode": "302016",
+        "helpline": "0141-2221424",
+        "email": "emitra.helpdesk@rajasthan.gov.in",
+        "website": "https://emitra.rajasthan.gov.in",
+        "publicHours": "09:00 AM - 06:00 PM (Mon-Sat)",
+        "services": [
+          "Jan Aadhaar Card Enrolment",
+          "Bonafide Resident (Mool Niwas) Certificate",
+          "Caste Certificate",
+          "Land Jamabandi Copy",
+          "Electricity & Water Bill"
+        ]
+      }
+    ]
+  },
+  "bihar": {
+    "pincodes": [
+      {
+        "pin": "800001",
+        "area": "Patna General Post Office (GPO), Beer Chand Patel Marg, Fraser Road, Dak Bungalow Chowk, Gandhi Maidan",
+        "district": "Patna",
+        "postOffice": "Patna General Post Office (GPO)",
+        "stdCode": "0612",
+        "state": "Bihar"
+      },
+      {
+        "pin": "800020",
+        "area": "Kankarbagh Patna, Doctor's Colony, Chiraiyatand, Old Bypass Road",
+        "district": "Patna",
+        "postOffice": "Kankarbagh SO",
+        "stdCode": "0612",
+        "state": "Bihar"
+      },
+      {
+        "pin": "823001",
+        "area": "Gaya Head Post Office, Civil Lines, GB Road, Tower Chowk, Bodh Gaya Route",
+        "district": "Gaya",
+        "postOffice": "Gaya Head Post Office (HO)",
+        "stdCode": "0631",
+        "state": "Bihar"
+      },
+      {
+        "pin": "812001",
+        "area": "Bhagalpur Head Post Office, Station Road, Sujaganj, Adampur",
+        "district": "Bhagalpur",
+        "postOffice": "Bhagalpur Head Post Office",
+        "stdCode": "0641",
+        "state": "Bihar"
+      },
+      {
+        "pin": "842001",
+        "area": "Muzaffarpur Head Post Office, Saraiyaganj, Kalyani Chowk, Motijheel",
+        "district": "Muzaffarpur",
+        "postOffice": "Muzaffarpur Head Post Office",
+        "stdCode": "0621",
+        "state": "Bihar"
+      }
+    ],
+    "hospitals": [
+      {
+        "id": "br-hosp-01",
+        "name": "Patna Medical College and Hospital (PMCH)",
+        "type": "Bihar Govt Apex Teaching Hospital",
+        "district": "Patna",
+        "state": "Bihar",
+        "address": "Ashok Rajpath, Muradpur, Patna, Bihar",
+        "pincode": "800004",
+        "emergencyNumber": "0612-2300080 / 108",
+        "phone": "0612-2300080",
+        "opdTimings": "08:30 AM - 01:30 PM (Mon-Sat) | 24x7 Emergency",
+        "landmark": "Near Patna Science College & Ashok Rajpath",
+        "bedCapacity": 1750,
+        "specialties": [
+          "24x7 Emergency & Trauma",
+          "General Surgery",
+          "Cardiology",
+          "Burn Care",
+          "Pediatrics"
+        ],
+        "hasTraumaCenter": true,
+        "has24x7Emergency": true
+      },
+      {
+        "id": "br-hosp-02",
+        "name": "All India Institute of Medical Sciences (AIIMS Patna)",
+        "type": "Central Govt Apex Medical Institute",
+        "district": "Patna",
+        "state": "Bihar",
+        "address": "Phulwarisharif, Patna, Bihar",
+        "pincode": "801507",
+        "emergencyNumber": "0612-2451070 / 108",
+        "phone": "0612-2451070",
+        "opdTimings": "08:30 AM - 01:00 PM (Mon-Sat) | 24x7 Emergency",
+        "landmark": "Near Phulwarisharif & Khagaul Road",
+        "bedCapacity": 960,
+        "specialties": [
+          "Level-1 Apex Trauma",
+          "Cardiothoracic Surgery",
+          "Neurosurgery",
+          "Medical Oncology",
+          "Dialysis"
+        ],
+        "hasTraumaCenter": true,
+        "has24x7Emergency": true
+      }
+    ],
+    "police": [
+      {
+        "id": "br-ps-01",
+        "name": "Police Station Kotwali Patna",
+        "hindiName": "थाना कोतवाली पटना",
+        "district": "Patna",
+        "state": "Bihar",
+        "address": "Buddha Marg, Near Kotwali Chauraha, Patna, Bihar",
+        "pincode": "800001",
+        "phone": "0612-2222100",
+        "shoPhone": "9431800101",
+        "pcrNumber": "112",
+        "jurisdictionAreas": [
+          "Dak Bungalow",
+          "Fraser Road",
+          "Buddha Marg",
+          "Station Road Patna",
+          "Exhibition Road"
+        ],
+        "landmark": "Near Kotwali Chauraha & Patna Junction"
+      }
+    ],
+    "rto": [
+      {
+        "id": "br-rto-01",
+        "rtoCode": "BR-01",
+        "zoneName": "District Transport Office (DTO) Patna",
+        "district": "Patna",
+        "state": "Bihar",
+        "address": "Gandhi Maidan Road, Near Biscomaun Bhawan, Patna, Bihar",
+        "pincode": "800001",
+        "phone": "0612-2219100",
+        "email": "dto.patna-bih@gov.in",
+        "timings": "10:00 AM - 05:00 PM (Mon-Sat)",
+        "landmark": "Near Biscomaun Bhawan & Gandhi Maidan",
+        "jurisdictionAreas": [
+          "Patna City",
+          "Fraser Road",
+          "Kankarbagh",
+          "Danapur",
+          "Boring Road",
+          "Rajendra Nagar"
+        ],
+        "servicesOffered": [
+          "Learner & Permanent Driving License",
+          "Automated Driving Test Track",
+          "Vehicle RC Registration",
+          "Transfer of Ownership",
+          "Commercial Fitness Certificate",
+          "VIP Registration Number"
+        ],
+        "automatedTrackAvailable": true,
+        "mloIncharge": "District Transport Officer (DTO Patna)"
+      },
+      {
+        "id": "br-rto-02",
+        "rtoCode": "BR-02",
+        "zoneName": "District Transport Office Gaya",
+        "district": "Gaya",
+        "state": "Bihar",
+        "address": "Collectorate Compound, Gaya, Bihar",
+        "pincode": "823001",
+        "phone": "0631-2220100",
+        "email": "dto.gaya-bih@gov.in",
+        "timings": "10:00 AM - 05:00 PM (Mon-Sat)",
+        "landmark": "Near Gaya Collectorate & Civil Lines",
+        "jurisdictionAreas": [
+          "Gaya City",
+          "Bodh Gaya",
+          "Tekari",
+          "Sherghati",
+          "Manpur"
+        ],
+        "servicesOffered": [
+          "Driving License",
+          "Vehicle RC",
+          "Road Tax Payment",
+          "Automated Track Testing"
+        ],
+        "automatedTrackAvailable": true,
+        "mloIncharge": "District Transport Officer Gaya"
+      },
+      {
+        "id": "br-rto-06",
+        "rtoCode": "BR-06",
+        "zoneName": "District Transport Office Muzaffarpur",
+        "district": "Muzaffarpur",
+        "state": "Bihar",
+        "address": "Collectorate Campus, Company Bagh, Muzaffarpur, Bihar",
+        "pincode": "842001",
+        "phone": "0621-2242100",
+        "email": "dto.muz-bih@gov.in",
+        "timings": "10:00 AM - 05:00 PM (Mon-Sat)",
+        "landmark": "Near Company Bagh & Red Cross",
+        "jurisdictionAreas": [
+          "Muzaffarpur City",
+          "Kanti",
+          "Motipur",
+          "Sakra",
+          "Saraiya"
+        ],
+        "servicesOffered": [
+          "DL Issue & Renewal",
+          "RC Transfer",
+          "Commercial Permit",
+          "Fitness Certificate"
+        ],
+        "automatedTrackAvailable": true,
+        "mloIncharge": "District Transport Officer Muzaffarpur"
+      }
+    ],
+    "ifsc": [
+      {
+        "ifsc": "SBIN0000152",
+        "bank": "State Bank of India",
+        "branch": "Patna Main Branch (Gandhi Maidan)",
+        "district": "Patna",
+        "city": "Patna",
+        "state": "Bihar",
+        "address": "West Gandhi Maidan, Patna, Bihar - 800001",
+        "contact": "0612-2224500",
+        "micr": "800002002",
+        "upi": true,
+        "rtgs": true,
+        "neft": true,
+        "imps": true
+      },
+      {
+        "ifsc": "PUNB0002400",
+        "bank": "Punjab National Bank",
+        "branch": "Patna Fraser Road",
+        "district": "Patna",
+        "city": "Patna",
+        "state": "Bihar",
+        "address": "Fraser Road, Dak Bungalow Chowk, Patna, Bihar - 800001",
+        "contact": "0612-2223800",
+        "micr": "800024002",
+        "upi": true,
+        "rtgs": true,
+        "neft": true,
+        "imps": true
+      },
+      {
+        "ifsc": "HDFC0000096",
+        "bank": "HDFC Bank",
+        "branch": "Patna Exhibition Road",
+        "district": "Patna",
+        "city": "Patna",
+        "state": "Bihar",
+        "address": "Exhibition Road, Near Big Bazar, Patna, Bihar - 800001",
+        "contact": "0612-6160616",
+        "micr": "800240002",
+        "upi": true,
+        "rtgs": true,
+        "neft": true,
+        "imps": true
+      },
+      {
+        "ifsc": "SBIN0000078",
+        "bank": "State Bank of India",
+        "branch": "Gaya Main Branch",
+        "district": "Gaya",
+        "city": "Gaya",
+        "state": "Bihar",
+        "address": "GB Road, Near Tower Chowk, Gaya, Bihar - 823001",
+        "contact": "0631-2220400",
+        "micr": "823002002",
+        "upi": true,
+        "rtgs": true,
+        "neft": true,
+        "imps": true
+      }
+    ],
+    "offices": [
+      {
+        "id": "br-off-01",
+        "name": "Patna Collectorate & District Magistrate Office",
+        "hindiName": "पटना समाहरणालय एवं जिलाधिकारी कार्यालय",
+        "category": "District Magistrate / DC Office",
+        "district": "Patna",
+        "state": "Bihar",
+        "address": "Collectorate Ghat, Near Gandhi Maidan, Patna, Bihar - 800001",
+        "pincode": "800001",
+        "helpline": "0612-2219545 / 0612-2223838",
+        "email": "dm-patna.bih@nic.in",
+        "website": "https://patna.nic.in",
+        "publicHours": "10:00 AM - 05:00 PM (Mon-Sat)",
+        "services": [
+          "RTPS Bihar Portal Services",
+          "Jati (Caste), Aay (Income), Niwas (Residential) Certificate",
+          "Land Mutation & Dakhil-Kharij",
+          "Bihar Grievance Redressal (Janta Darbar)",
+          "Senior Citizen ID"
+        ]
+      },
+      {
+        "id": "br-off-02",
+        "name": "RTPS Counter (Right to Public Services Center Patna Sadar)",
+        "hindiName": "लोक सेवाओं का अधिकार केंद्र (RTPS पटना सदर)",
+        "category": "CSC / RTPS Counter",
+        "district": "Patna",
+        "state": "Bihar",
+        "address": "Patna Sadar Block Campus, Near Hindi Sahitya Sammelan, Kadamkuan, Patna, Bihar",
+        "pincode": "800003",
+        "helpline": "1800-345-6284",
+        "email": "serviceonline.bihar@gov.in",
+        "website": "https://serviceonline.bihar.gov.in",
+        "publicHours": "09:30 AM - 05:30 PM (Mon-Sat)",
+        "services": [
+          "OBC (Non-Creamy Layer) Certificate",
+          "EWS Certificate",
+          "Character (Acharan) Certificate",
+          "Ration Card (EPDS Bihar)",
+          "Kanya Utthan Yojana Registration"
+        ]
+      },
+      {
+        "id": "br-off-03",
+        "name": "SDM Office Patna Sadar",
+        "hindiName": "एसडीएम कार्यालय पटना सदर",
+        "category": "Sub-Divisional Magistrate (SDM)",
+        "district": "Patna",
+        "state": "Bihar",
+        "address": "Collectorate Campus, Patna, Bihar",
+        "pincode": "800001",
+        "helpline": "0612-2222588",
+        "email": "sdmpatnasadar@gmail.com",
+        "website": "https://patna.nic.in",
+        "publicHours": "10:00 AM - 04:30 PM (Mon-Fri)",
+        "services": [
+          "Court Proceedings",
+          "Magisterial Permissions",
+          "Law and Order Certificates",
+          "Legal Heir Certificate"
+        ]
+      }
+    ]
+  },
+  "gujarat": {
+    "pincodes": [
+      {
+        "pin": "380001",
+        "area": "Bhadra, Lal Darwaja, Relief Road, Ellis Bridge",
+        "district": "Ahmedabad",
+        "postOffice": "Ahmedabad GPO",
+        "stdCode": "079"
+      },
+      {
+        "pin": "380009",
+        "area": "Navrangpura, CG Road, University Area, Ashram Road",
+        "district": "Ahmedabad",
+        "postOffice": "Navrangpura SO",
+        "stdCode": "079"
+      },
+      {
+        "pin": "380015",
+        "area": "Vastrapur, IIM Ahmedabad, Satellite, Bodakdev, SG Highway",
+        "district": "Ahmedabad",
+        "postOffice": "Vastrapur SO",
+        "stdCode": "079"
+      },
+      {
+        "pin": "380054",
+        "area": "Thaltej, SG Highway, Science City Road",
+        "district": "Ahmedabad",
+        "postOffice": "Thaltej SO",
+        "stdCode": "079"
+      },
+      {
+        "pin": "395001",
+        "area": "Chowk Bazar, Nanpura, Ring Road, Station Area",
+        "district": "Surat",
+        "postOffice": "Surat HO",
+        "stdCode": "0261"
+      },
+      {
+        "pin": "395007",
+        "area": "Vesu, Dumas Road, Piplod, SVNIT Campus",
+        "district": "Surat",
+        "postOffice": "SVNIT SO",
+        "stdCode": "0261"
+      },
+      {
+        "pin": "390001",
+        "area": "Mandvi, Raopura, Alkapuri, Vadodara Station",
+        "district": "Vadodara",
+        "postOffice": "Vadodara HO",
+        "stdCode": "0265"
+      },
+      {
+        "pin": "360001",
+        "area": "Dharmendrasinhji Road, Gundawadi, Rajkot Central",
+        "district": "Rajkot",
+        "postOffice": "Rajkot HO",
+        "stdCode": "0281"
+      },
+      {
+        "pin": "382010",
+        "area": "Sector 10, Sachivalaya, Vidhan Sabha, Infocity",
+        "district": "Gandhinagar",
+        "postOffice": "Sachivalaya SO",
+        "stdCode": "079"
+      }
+    ],
+    "hospitals": [
+      {
+        "id": "gj-hosp-01",
+        "name": "Civil Hospital & BJ Medical College (Asia's Largest Civil Hospital)",
+        "type": "State Govt Apex Hospital",
+        "district": "Ahmedabad",
+        "address": "Asarwa, Ahmedabad, Gujarat",
+        "pincode": "380016",
+        "emergencyNumber": "079-22680074 / 108",
+        "phone": "079-22683721",
+        "opdTimings": "09:00 AM - 01:00 PM (Mon-Sat) | 24x7 Emergency",
+        "landmark": "Near Asarwa Railway Station",
+        "bedCapacity": 3000,
+        "specialties": [
+          "24x7 Apex Trauma",
+          "Super Specialty Cardiology (UN Mehta)",
+          "Kidney Diseases (IKDRC)",
+          "Cancer Hospital (GCRI)",
+          "Pediatrics"
+        ],
+        "hasTraumaCenter": true,
+        "has24x7Emergency": true
+      },
+      {
+        "id": "gj-hosp-02",
+        "name": "AIIMS Rajkot",
+        "type": "Central Govt Apex Institute",
+        "district": "Rajkot",
+        "address": "Khandheri, Para Pipaliya, Rajkot, Gujarat",
+        "pincode": "360110",
+        "emergencyNumber": "0281-2992000 / 108",
+        "phone": "0281-2992001",
+        "opdTimings": "08:30 AM - 02:00 PM (Mon-Sat) | 24x7 Emergency",
+        "landmark": "Near Khandheri Railway Station & Jamnagar Highway",
+        "bedCapacity": 750,
+        "specialties": [
+          "Trauma & Emergency Care",
+          "Neurology",
+          "Cardiology",
+          "Oncology",
+          "Advanced Surgical Care"
+        ],
+        "hasTraumaCenter": true,
+        "has24x7Emergency": true
+      },
+      {
+        "id": "gj-hosp-03",
+        "name": "New Civil Hospital & Govt Medical College Surat",
+        "type": "State Govt Medical College",
+        "district": "Surat",
+        "address": "Majura Gate, Ring Road, Surat, Gujarat",
+        "pincode": "395001",
+        "emergencyNumber": "0261-2244456 / 108",
+        "phone": "0261-2244175",
+        "opdTimings": "09:00 AM - 01:00 PM (Mon-Sat) | 24x7 Casualty",
+        "landmark": "Near Majura Gate",
+        "bedCapacity": 1400,
+        "specialties": [
+          "Trauma Care",
+          "Burn Unit",
+          "Pediatrics",
+          "Obstetrics & Gynaecology",
+          "Dialysis Unit"
+        ],
+        "hasTraumaCenter": true,
+        "has24x7Emergency": true
+      },
+      {
+        "id": "gj-hosp-04",
+        "name": "SSG Hospital & Medical College Vadodara",
+        "type": "State Govt Hospital",
+        "district": "Vadodara",
+        "address": "Anandpura, Near Station, Vadodara, Gujarat",
+        "pincode": "390001",
+        "emergencyNumber": "0265-2424848 / 108",
+        "phone": "0265-2424000",
+        "opdTimings": "08:30 AM - 01:30 PM (Mon-Sat) | 24x7 Emergency",
+        "landmark": "Near Sayaji Baug & Station",
+        "bedCapacity": 1500,
+        "specialties": [
+          "General Medicine",
+          "Orthopedics",
+          "Cardiology",
+          "Trauma Casualty",
+          "Pediatric Intensive Care"
+        ],
+        "hasTraumaCenter": true,
+        "has24x7Emergency": true
+      }
+    ],
+    "police": [
+      {
+        "id": "gj-ps-01",
+        "name": "Navrangpura Police Station",
+        "hindiName": "थाना नवरंगपुरा",
+        "district": "Ahmedabad City",
+        "address": "Near Mithakhali Six Roads, Navrangpura, Ahmedabad, Gujarat",
+        "pincode": "380009",
+        "phone": "079-26561100",
+        "shoPhone": "079-26561101 / 9978405001",
+        "pcrNumber": "100 / 112",
+        "jurisdictionAreas": [
+          "Navrangpura",
+          "CG Road",
+          "Mithakhali",
+          "Law Garden",
+          "Gujarat University Area"
+        ],
+        "landmark": "Near Mithakhali Cross Road"
+      },
+      {
+        "id": "gj-ps-02",
+        "name": "Vastrapur Police Station",
+        "hindiName": "थाना वस्त्रपुर",
+        "district": "Ahmedabad City (Zone 1)",
+        "address": "Near Vastrapur Lake, Vastrapur, Ahmedabad, Gujarat",
+        "pincode": "380015",
+        "phone": "079-26760100",
+        "shoPhone": "079-26760101 / 9978405002",
+        "pcrNumber": "100 / 112",
+        "jurisdictionAreas": [
+          "Vastrapur",
+          "IIM Ahmedabad",
+          "Bodakdev",
+          "Alpha One Mall Area",
+          "Judges Bungalow Road"
+        ],
+        "landmark": "Near Vastrapur Lake"
+      },
+      {
+        "id": "gj-ps-03",
+        "name": "Umra Police Station",
+        "hindiName": "थाना उमरा (सूरत)",
+        "district": "Surat City",
+        "address": "Athwalines, Near Court Building, Surat, Gujarat",
+        "pincode": "395001",
+        "phone": "0261-2224100",
+        "shoPhone": "0261-2224101 / 9978406001",
+        "pcrNumber": "100 / 112",
+        "jurisdictionAreas": [
+          "Umra",
+          "Athwalines",
+          "Piplod",
+          "Dumas Road",
+          "Ghod Dod Road"
+        ],
+        "landmark": "Opposite District Court Surat"
+      },
+      {
+        "id": "gj-ps-04",
+        "name": "Sayajiganj Police Station",
+        "hindiName": "थाना सयाजीगंज (वडोदरा)",
+        "district": "Vadodara City",
+        "address": "Near Railway Station, Sayajiganj, Vadodara, Gujarat",
+        "pincode": "390005",
+        "phone": "0265-2361100",
+        "shoPhone": "0265-2361101 / 9978407001",
+        "pcrNumber": "100 / 112",
+        "jurisdictionAreas": [
+          "Sayajiganj",
+          "MS University Campus",
+          "Alkapuri",
+          "Station Area"
+        ],
+        "landmark": "Opposite Vadodara Central Bus Station"
+      }
+    ],
+    "rto": [
+      {
+        "id": "gj-rto-01",
+        "rtoCode": "GJ-01",
+        "zoneName": "RTO Ahmedabad (Subhash Bridge)",
+        "district": "Ahmedabad",
+        "state": "Gujarat",
+        "address": "Near Subhash Bridge, Sabarmati Riverfront Road, Ahmedabad, Gujarat",
+        "pincode": "380027",
+        "phone": "079-27559900",
+        "email": "rto-ahd-gj@gujarat.gov.in",
+        "timings": "10:30 AM - 05:30 PM (Mon-Sat)",
+        "landmark": "Near Subhash Bridge & Sabarmati Ashram Road",
+        "jurisdictionAreas": [
+          "Ahmedabad West",
+          "Sabarmati",
+          "Navrangpura",
+          "Satellite",
+          "Thaltej",
+          "Bopal"
+        ],
+        "servicesOffered": [
+          "Computerized Driving License Test",
+          "Vehicle Registration & Transfer",
+          "High Security Number Plate (HSRP)",
+          "International Driving Permit",
+          "Trade Certificate"
+        ],
+        "automatedTrackAvailable": true,
+        "mloIncharge": "Regional Transport Officer (Ahmedabad West)"
+      },
+      {
+        "id": "gj-rto-05",
+        "rtoCode": "GJ-05",
+        "zoneName": "RTO Surat (Majura Gate / Ring Road)",
+        "district": "Surat",
+        "state": "Gujarat",
+        "address": "Opp. Police Headquarters, Majura Gate, Ring Road, Surat, Gujarat",
+        "pincode": "395001",
+        "phone": "0261-2470100",
+        "email": "rto-surat-gj@gujarat.gov.in",
+        "timings": "10:30 AM - 05:30 PM (Mon-Sat)",
+        "landmark": "Near Majura Gate",
+        "jurisdictionAreas": [
+          "Surat City",
+          "Athwa",
+          "Rander",
+          "Varachha",
+          "Katargam",
+          "Udhna"
+        ],
+        "servicesOffered": [
+          "DL Issue and Renewal",
+          "RC Ownership Transfer",
+          "Commercial Permit",
+          "Automated Driving Test"
+        ],
+        "automatedTrackAvailable": true,
+        "mloIncharge": "Regional Transport Officer (Surat)"
+      },
+      {
+        "id": "gj-rto-06",
+        "rtoCode": "GJ-06",
+        "zoneName": "RTO Vadodara (Karanlibaug)",
+        "district": "Vadodara",
+        "state": "Gujarat",
+        "address": "Near Golden Chowkdi, Karelibaug, Vadodara, Gujarat",
+        "pincode": "390018",
+        "phone": "0265-2460100",
+        "email": "rto-vadodara-gj@gujarat.gov.in",
+        "timings": "10:30 AM - 05:30 PM (Mon-Sat)",
+        "landmark": "Near Karelibaug Police Station",
+        "jurisdictionAreas": [
+          "Vadodara City",
+          "Alkapuri",
+          "Gorwa",
+          "Manjalpur",
+          "Makarpura"
+        ],
+        "servicesOffered": [
+          "Driving License",
+          "Vehicle RC",
+          "Fitness Certificate",
+          "Automated Track Testing"
+        ],
+        "automatedTrackAvailable": true,
+        "mloIncharge": "Regional Transport Officer (Vadodara)"
+      }
+    ],
+    "ifsc": [
+      {
+        "ifsc": "SBIN0000301",
+        "bank": "State Bank of India",
+        "branch": "Ahmedabad Main Branch (Bhadra)",
+        "district": "Ahmedabad",
+        "city": "Ahmedabad",
+        "state": "Gujarat",
+        "address": "Bhadra, Near Lal Darwaja, Ahmedabad, Gujarat - 380001",
+        "contact": "079-25507111",
+        "micr": "380002002",
+        "upi": true,
+        "rtgs": true,
+        "neft": true,
+        "imps": true
+      },
+      {
+        "ifsc": "BARB0VJAMEX",
+        "bank": "Bank of Baroda",
+        "branch": "Ahmedabad Ellisbridge",
+        "district": "Ahmedabad",
+        "city": "Ahmedabad",
+        "state": "Gujarat",
+        "address": "Opposite Town Hall, Ellis Bridge, Ahmedabad, Gujarat - 380006",
+        "contact": "079-26578000",
+        "micr": "380012015",
+        "upi": true,
+        "rtgs": true,
+        "neft": true,
+        "imps": true
+      },
+      {
+        "ifsc": "HDFC0000006",
+        "bank": "HDFC Bank",
+        "branch": "Ahmedabad Navrangpura",
+        "district": "Ahmedabad",
+        "city": "Ahmedabad",
+        "state": "Gujarat",
+        "address": "Mithakhali Six Roads, Navrangpura, Ahmedabad, Gujarat - 380009",
+        "contact": "079-61606161",
+        "micr": "380240002",
+        "upi": true,
+        "rtgs": true,
+        "neft": true,
+        "imps": true
+      },
+      {
+        "ifsc": "BARB0SURATM",
+        "bank": "Bank of Baroda",
+        "branch": "Surat Main Branch",
+        "district": "Surat",
+        "city": "Surat",
+        "state": "Gujarat",
+        "address": "Bhaga Talav, Surat, Gujarat - 395003",
+        "contact": "0261-2423000",
+        "micr": "395012002",
+        "upi": true,
+        "rtgs": true,
+        "neft": true,
+        "imps": true
+      }
+    ],
+    "offices": [
+      {
+        "id": "gj-off-01",
+        "name": "Ahmedabad Collectorate & District Magistrate Office",
+        "hindiName": "जिलाधिकारी एवं समाहर्ता कार्यालय अहमदाबाद",
+        "category": "District Magistrate / DC Office",
+        "district": "Ahmedabad",
+        "state": "Gujarat",
+        "address": "Collector Office, Near Subhash Bridge, Ashram Road, Ahmedabad, Gujarat - 380027",
+        "pincode": "380027",
+        "helpline": "079-27551681 / 079-27551682",
+        "email": "collector-ahd@gujarat.gov.in",
+        "website": "https://ahmedabad.gujarat.gov.in",
+        "publicHours": "10:30 AM - 06:10 PM (Mon-Sat, 2nd & 4th Sat off)",
+        "services": [
+          "Digital Gujarat Portal Services",
+          "Jati (Caste), Income & Domicile Certificates",
+          "E-Dhara Land Records (AnyRoR)",
+          "Revenue Court Proceedings",
+          "Senior Citizen & Widow Pension"
+        ]
+      },
+      {
+        "id": "gj-off-02",
+        "name": "Jan Seva Kendra (Digital Gujarat Civic Centre Ahmedabad)",
+        "hindiName": "जन सेवा केंद्र (डिजिटल गुजरात नागरिक सेवा केंद्र)",
+        "category": "Jan Seva Kendra / Civic Centre",
+        "district": "Ahmedabad",
+        "state": "Gujarat",
+        "address": "Collector Compound, Subhash Bridge, Ahmedabad, Gujarat",
+        "pincode": "380027",
+        "helpline": "1800-233-5500",
+        "email": "digitalgujarat@gujarat.gov.in",
+        "website": "https://www.digitalgujarat.gov.in",
+        "publicHours": "10:30 AM - 05:00 PM (Mon-Sat)",
+        "services": [
+          "OBC / SEBC Certificate",
+          "EWS Certificate Gujarat",
+          "Ration Card (NFSA Gujarat)",
+          "Mukhyamantri Amrutam (MAA) / PM-JAY Card",
+          "Farmer 7/12 8A Land Extract"
+        ]
+      },
+      {
+        "id": "gj-off-03",
+        "name": "Prant Officer / SDM Office Ahmedabad City",
+        "hindiName": "प्रांत अधिकारी / एसडीएम कार्यालय अहमदाबाद",
+        "category": "Sub-Divisional Magistrate (SDM)",
+        "district": "Ahmedabad",
+        "state": "Gujarat",
+        "address": "Prant Office, Old Collectorate Building, Lal Darwaja, Ahmedabad, Gujarat",
+        "pincode": "380001",
+        "helpline": "079-25507300",
+        "email": "prant-ahdcity@gujarat.gov.in",
+        "website": "https://ahmedabad.gujarat.gov.in",
+        "publicHours": "11:00 AM - 05:00 PM (Mon-Fri)",
+        "services": [
+          "Magisterial NOCs",
+          "Tenancy & Land Dispute Appeals",
+          "Arms License Endorsement",
+          "Election Electoral Registration"
+        ]
+      }
+    ]
+  },
+  "karnataka": {
+    "pincodes": [
+      {
+        "pin": "560001",
+        "area": "MG Road, Brigade Road, Vidhana Soudha, High Court, Cubbon Park",
+        "district": "Bengaluru Urban",
+        "postOffice": "Bengaluru GPO",
+        "stdCode": "080"
+      },
+      {
+        "pin": "560025",
+        "area": "Richmond Town, Ashok Nagar, Museum Road, Residency Road",
+        "district": "Bengaluru Urban",
+        "postOffice": "Richmond Town SO",
+        "stdCode": "080"
+      },
+      {
+        "pin": "560034",
+        "area": "Koramangala (1st to 8th Block), St. John's Hospital, Forum Mall",
+        "district": "Bengaluru Urban",
+        "postOffice": "Koramangala SO",
+        "stdCode": "080"
+      },
+      {
+        "pin": "560038",
+        "area": "Indiranagar (1st & 2nd Stage), Defence Colony, 100 Feet Road",
+        "district": "Bengaluru Urban",
+        "postOffice": "Indiranagar SO",
+        "stdCode": "080"
+      },
+      {
+        "pin": "560066",
+        "area": "Whitefield, ITPL, Brookefield, Hope Farm Junction",
+        "district": "Bengaluru Urban",
+        "postOffice": "Whitefield SO",
+        "stdCode": "080"
+      },
+      {
+        "pin": "560100",
+        "area": "Electronic City Phase 1 & 2, Infosys & Wipro Campus, Hosur Road",
+        "district": "Bengaluru Urban",
+        "postOffice": "Electronic City SO",
+        "stdCode": "080"
+      },
+      {
+        "pin": "570001",
+        "area": "Mysuru Palace, Devaraja Market, KR Circle, Sayyaji Rao Road",
+        "district": "Mysuru",
+        "postOffice": "Mysuru HO",
+        "stdCode": "0821"
+      },
+      {
+        "pin": "575001",
+        "area": "Hampankatta, State Bank, Mangaluru Central Station, Car Street",
+        "district": "Dakshina Kannada (Mangaluru)",
+        "postOffice": "Mangaluru HO",
+        "stdCode": "0824"
+      },
+      {
+        "pin": "580020",
+        "area": "Hubballi Central, Chennamma Circle, Station Road",
+        "district": "Dharwad (Hubballi)",
+        "postOffice": "Hubballi HO",
+        "stdCode": "0836"
+      }
+    ],
+    "hospitals": [
+      {
+        "id": "ka-hosp-01",
+        "name": "Victoria Hospital & Bangalore Medical College (BMCRI)",
+        "type": "State Govt Apex Hospital",
+        "district": "Bengaluru Urban",
+        "address": "Fort, KR Road, Near City Market (Kalasipalya), Bengaluru, Karnataka",
+        "pincode": "560002",
+        "emergencyNumber": "080-26701150 / 108",
+        "phone": "080-26701150",
+        "opdTimings": "09:00 AM - 01:00 PM (Mon-Sat) | 24x7 Emergency Casualty & Trauma",
+        "landmark": "Near Bengaluru Fort & KR Market Metro",
+        "bedCapacity": 1200,
+        "specialties": [
+          "24x7 Emergency Trauma",
+          "Mahabodhi Burns Centre",
+          "Nephrology",
+          "General Surgery",
+          "Pediatrics"
+        ],
+        "hasTraumaCenter": true,
+        "has24x7Emergency": true
+      },
+      {
+        "id": "ka-hosp-02",
+        "name": "NIMHANS (National Institute of Mental Health and Neurosciences)",
+        "type": "National Apex Autonomous Institute",
+        "district": "Bengaluru Urban",
+        "address": "Hosur Road, Near Dairy Circle, Bengaluru, Karnataka",
+        "pincode": "560029",
+        "emergencyNumber": "080-26995530 / 080-26995000",
+        "phone": "080-26995000",
+        "opdTimings": "08:30 AM - 01:30 PM (Mon-Sat) | 24x7 Neuro & Psychiatric Casualty",
+        "landmark": "Near Dairy Circle",
+        "bedCapacity": 1000,
+        "specialties": [
+          "Neurotrauma",
+          "Neurosurgery",
+          "Neurology",
+          "Psychiatry",
+          "Neuropathology"
+        ],
+        "hasTraumaCenter": true,
+        "has24x7Emergency": true
+      },
+      {
+        "id": "ka-hosp-03",
+        "name": "Jayadeva Institute of Cardiovascular Sciences and Research",
+        "type": "Autonomous Govt Super Specialty",
+        "district": "Bengaluru Urban",
+        "address": "Bannerghatta Road, 9th Block Jayanagar, Bengaluru, Karnataka",
+        "pincode": "560069",
+        "emergencyNumber": "080-22977400 / 108",
+        "phone": "080-22977400",
+        "opdTimings": "08:30 AM - 02:00 PM (Mon-Sat) | 24x7 Cardiac Emergency",
+        "landmark": "Bannerghatta Main Road",
+        "bedCapacity": 1150,
+        "specialties": [
+          "24x7 Interventional Cardiology",
+          "Cardiothoracic Surgery",
+          "Pediatric Cardiology",
+          "Cardiac ICU"
+        ],
+        "hasTraumaCenter": true,
+        "has24x7Emergency": true
+      },
+      {
+        "id": "ka-hosp-04",
+        "name": "KR Hospital & Mysore Medical College (MMCRI)",
+        "type": "State Govt Hospital",
+        "district": "Mysuru",
+        "address": "Irwin Road, Near Mysore Palace, Mysuru, Karnataka",
+        "pincode": "570001",
+        "emergencyNumber": "0821-2520512 / 108",
+        "phone": "0821-2520512",
+        "opdTimings": "08:30 AM - 01:00 PM (Mon-Sat) | 24x7 Emergency",
+        "landmark": "Opposite MMCRI Campus",
+        "bedCapacity": 1050,
+        "specialties": [
+          "Trauma Care",
+          "Obstetrics & Gynecology",
+          "Pediatrics (Cheluvamba)",
+          "General Medicine"
+        ],
+        "hasTraumaCenter": true,
+        "has24x7Emergency": true
+      }
+    ],
+    "police": [
+      {
+        "id": "ka-ps-01",
+        "name": "Cubbon Park Police Station",
+        "hindiName": "थाना कब्बन पार्क (बेंगलुरु)",
+        "district": "Bengaluru City (Central Division)",
+        "address": "Kasturba Road, Near High Court & Cubbon Park, Bengaluru, Karnataka",
+        "pincode": "560001",
+        "phone": "080-22942583",
+        "shoPhone": "080-22942584 / 9480801001",
+        "pcrNumber": "112",
+        "jurisdictionAreas": [
+          "Cubbon Park",
+          "MG Road",
+          "Lavelle Road",
+          "Kasturba Road",
+          "Vidhana Soudha Periphery"
+        ],
+        "landmark": "Near Kanteerava Stadium"
+      },
+      {
+        "id": "ka-ps-02",
+        "name": "Koramangala Police Station",
+        "hindiName": "थाना कोरमंगला",
+        "district": "Bengaluru City (South East Division)",
+        "address": "80 Feet Road, 6th Block, Koramangala, Bengaluru, Karnataka",
+        "pincode": "560095",
+        "phone": "080-22942566",
+        "shoPhone": "080-22942567 / 9480801002",
+        "pcrNumber": "112",
+        "jurisdictionAreas": [
+          "Koramangala (Blocks 1 to 8)",
+          "Sony World Signal",
+          "Ejipura",
+          "National Games Village"
+        ],
+        "landmark": "Near 80 Feet Road"
+      },
+      {
+        "id": "ka-ps-03",
+        "name": "Indiranagar Police Station",
+        "hindiName": "थाना इंदिरा नगर",
+        "district": "Bengaluru City (East Division)",
+        "address": "100 Feet Road, HAL 2nd Stage, Indiranagar, Bengaluru, Karnataka",
+        "pincode": "560038",
+        "phone": "080-22942561",
+        "shoPhone": "080-22942562 / 9480801003",
+        "pcrNumber": "112",
+        "jurisdictionAreas": [
+          "Indiranagar",
+          "100 Feet Road",
+          "12th Main",
+          "HAL 2nd & 3rd Stage",
+          "Defence Colony"
+        ],
+        "landmark": "100 Feet Road Junction"
+      },
+      {
+        "id": "ka-ps-04",
+        "name": "Devaraja Police Station (Mysuru)",
+        "hindiName": "थाना देवराजा (मैसूरु)",
+        "district": "Mysuru City",
+        "address": "Near Devaraja Market, KR Circle, Mysuru, Karnataka",
+        "pincode": "570001",
+        "phone": "0821-2418306",
+        "shoPhone": "0821-2418307 / 9480802001",
+        "pcrNumber": "112",
+        "jurisdictionAreas": [
+          "Devaraja Market",
+          "Sayyaji Rao Road",
+          "KR Circle",
+          "Dhanvantri Road"
+        ],
+        "landmark": "Opposite Mysore Medical College"
+      }
+    ],
+    "rto": [
+      {
+        "id": "ka-rto-01",
+        "rtoCode": "KA-01",
+        "zoneName": "RTO Bengaluru Central (Koramangala)",
+        "district": "Bengaluru Urban",
+        "state": "Karnataka",
+        "address": "B-Block, TTMC Complex, BMTC Bus Stand, 2nd Floor, Koramangala, Bengaluru, Karnataka",
+        "pincode": "560034",
+        "phone": "080-25533525",
+        "email": "rtobngc-ka@nic.in",
+        "timings": "10:00 AM - 05:30 PM (Mon-Sat)",
+        "landmark": "Inside Koramangala BMTC TTMC Bus Stand",
+        "jurisdictionAreas": [
+          "Koramangala",
+          "Shanthinagar",
+          "Ashok Nagar",
+          "Richmond Town",
+          "Wilson Garden",
+          "Adugodi"
+        ],
+        "servicesOffered": [
+          "Computerized DL Test",
+          "Vehicle RC Registration",
+          "Smart Card DL Issue",
+          "Transfer of Vehicle Ownership",
+          "HSRP Verification",
+          "International Driving Permit"
+        ],
+        "automatedTrackAvailable": true,
+        "mloIncharge": "Regional Transport Officer (Bengaluru Central)"
+      },
+      {
+        "id": "ka-rto-03",
+        "rtoCode": "KA-03",
+        "zoneName": "RTO Bengaluru East (Indiranagar / Kasturinagar)",
+        "district": "Bengaluru Urban",
+        "state": "Karnataka",
+        "address": "2nd Floor, BDA Complex, Indira Nagar, Bengaluru, Karnataka",
+        "pincode": "560038",
+        "phone": "080-25254555",
+        "email": "rtobnge-ka@nic.in",
+        "timings": "10:00 AM - 05:30 PM (Mon-Sat)",
+        "landmark": "Near Indiranagar BDA Complex",
+        "jurisdictionAreas": [
+          "Indiranagar",
+          "HAL",
+          "Domlur",
+          "Old Airport Road",
+          "Marathahalli",
+          "CV Raman Nagar"
+        ],
+        "servicesOffered": [
+          "DL Issue & Endorsement",
+          "Fitness Certificate",
+          "RC Duplicate",
+          "Automated Driving Test"
+        ],
+        "automatedTrackAvailable": true,
+        "mloIncharge": "Regional Transport Officer (Bengaluru East)"
+      },
+      {
+        "id": "ka-rto-09",
+        "rtoCode": "KA-09",
+        "zoneName": "RTO Mysuru West",
+        "district": "Mysuru",
+        "state": "Karnataka",
+        "address": "Near Ballal Circle, Krishnamurthypuram, Mysuru, Karnataka",
+        "pincode": "570004",
+        "phone": "0821-2330899",
+        "email": "rtomys-ka@nic.in",
+        "timings": "10:00 AM - 05:30 PM (Mon-Sat)",
+        "landmark": "Near Ballal Circle",
+        "jurisdictionAreas": [
+          "Mysuru City",
+          "Jayalakshmipuram",
+          "Kuvempunagar",
+          "Saraswathipuram",
+          "Vijayanagar"
+        ],
+        "servicesOffered": [
+          "Permanent License",
+          "RC Transfer",
+          "NOC Clearance",
+          "Road Tax"
+        ],
+        "automatedTrackAvailable": true,
+        "mloIncharge": "Regional Transport Officer (Mysuru)"
+      }
+    ],
+    "ifsc": [
+      {
+        "ifsc": "SBIN0000813",
+        "bank": "State Bank of India",
+        "branch": "Bengaluru Main Branch (St. Mark's Road)",
+        "district": "Bengaluru Urban",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "address": "State Bank Road, St. Mark's Road, Bengaluru, Karnataka - 560001",
+        "contact": "080-25943000",
+        "micr": "560002002",
+        "upi": true,
+        "rtgs": true,
+        "neft": true,
+        "imps": true
+      },
+      {
+        "ifsc": "CNRB0000001",
+        "bank": "Canara Bank",
+        "branch": "Bengaluru Town Hall Branch",
+        "district": "Bengaluru Urban",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "address": "JC Road, Near Town Hall, Bengaluru, Karnataka - 560002",
+        "contact": "080-22221234",
+        "micr": "560015002",
+        "upi": true,
+        "rtgs": true,
+        "neft": true,
+        "imps": true
+      },
+      {
+        "ifsc": "HDFC0000053",
+        "bank": "HDFC Bank",
+        "branch": "Bengaluru Koramangala",
+        "district": "Bengaluru Urban",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "address": "No. 548/D, 80 Feet Road, 6th Block, Koramangala, Bengaluru, Karnataka - 560095",
+        "contact": "080-61606161",
+        "micr": "560240003",
+        "upi": true,
+        "rtgs": true,
+        "neft": true,
+        "imps": true
+      },
+      {
+        "ifsc": "SBIN0000876",
+        "bank": "State Bank of India",
+        "branch": "Mysuru Main Branch",
+        "district": "Mysuru",
+        "city": "Mysuru",
+        "state": "Karnataka",
+        "address": "Sayyaji Rao Road, Near Palace, Mysuru, Karnataka - 570001",
+        "contact": "0821-2420455",
+        "micr": "570002002",
+        "upi": true,
+        "rtgs": true,
+        "neft": true,
+        "imps": true
+      }
+    ],
+    "offices": [
+      {
+        "id": "ka-off-01",
+        "name": "Deputy Commissioner (DC) Office Bengaluru Urban",
+        "hindiName": "उपायुक्त कार्यालय बेंगलुरु शहरी (DC Office)",
+        "category": "Deputy Commissioner / DM Office",
+        "district": "Bengaluru Urban",
+        "state": "Karnataka",
+        "address": "DC Office Building, Near KG Road, Revenue Complex, Bengaluru, Karnataka - 560009",
+        "pincode": "560009",
+        "helpline": "080-22211292 / 080-22211293",
+        "email": "dcbangaloreurban@karnataka.gov.in",
+        "website": "https://bengaluruurban.nic.in",
+        "publicHours": "10:00 AM - 05:30 PM (Mon-Sat, 2nd & 4th Sat off)",
+        "services": [
+          "Seva Sindhu Portal Verification",
+          "Caste & Income Certificate (Nadakacheri)",
+          "Bhoomi Land Mutation & RTC Extract",
+          "Grievance Redressal (Janaspandana)",
+          "Senior Citizen Cards"
+        ]
+      },
+      {
+        "id": "ka-off-02",
+        "name": "Bengaluru One / Nadakacheri Civic Service Centre (Koramangala)",
+        "hindiName": "बेंगलुरु वन / नादकचेरी नागरिक सेवा केंद्र",
+        "category": "Civic Centre / Nadakacheri",
+        "district": "Bengaluru Urban",
+        "state": "Karnataka",
+        "address": "BDA Complex, 80 Feet Road, 3rd Block, Koramangala, Bengaluru, Karnataka",
+        "pincode": "560034",
+        "helpline": "080-22221188",
+        "email": "onebangalore@karnataka.gov.in",
+        "website": "https://www.karnatakaone.gov.in",
+        "publicHours": "08:00 AM - 07:00 PM (All 7 Days)",
+        "services": [
+          "Gruha Lakshmi & Gruha Jyothi Guarantee Registration",
+          "Ration Card (Ahara Karnataka)",
+          "Birth & Death Certificates",
+          "BESCOM & BWSSB Utility Payments",
+          "Property Tax (e-Aasthi BBMP)"
+        ]
+      },
+      {
+        "id": "ka-off-03",
+        "name": "Assistant Commissioner / SDM Office Bengaluru North",
+        "hindiName": "सहायक आयुक्त / एसडीएम कार्यालय बेंगलुरु उत्तर",
+        "category": "Sub-Divisional Magistrate (SDM)",
+        "district": "Bengaluru Urban",
+        "state": "Karnataka",
+        "address": "Kandaya Bhavan, KG Road, Bengaluru, Karnataka",
+        "pincode": "560009",
+        "helpline": "080-22211155",
+        "email": "acnorth-bng@karnataka.gov.in",
+        "website": "https://bengaluruurban.nic.in",
+        "publicHours": "10:30 AM - 04:30 PM (Mon-Fri)",
+        "services": [
+          "Revenue Appeals",
+          "Legal Heir Inquiries",
+          "Maintenance of Parents & Senior Citizens Tribunal",
+          "Land Conversion Appeals"
+        ]
+      }
+    ]
+  },
+  "west-bengal": {
+    "pincodes": [
+      {
+        "pin": "700001",
+        "area": "BBD Bagh, Dalhousie Square, High Court, Writers' Building, Netaji Subhas Road",
+        "district": "Kolkata",
+        "postOffice": "Kolkata GPO",
+        "stdCode": "033"
+      },
+      {
+        "pin": "700016",
+        "area": "Park Street, Camac Street, Russell Street, Free School Street",
+        "district": "Kolkata",
+        "postOffice": "Park Street SO",
+        "stdCode": "033"
+      },
+      {
+        "pin": "700029",
+        "area": "Gariahat, Ballygunge, Golpark, Dover Lane",
+        "district": "Kolkata",
+        "postOffice": "Gariahat SO",
+        "stdCode": "033"
+      },
+      {
+        "pin": "700091",
+        "area": "Salt Lake Sector V, Electronics Complex, Technopolis",
+        "district": "North 24 Parganas (Kolkata)",
+        "postOffice": "Salt Lake Sector V SO",
+        "stdCode": "033"
+      },
+      {
+        "pin": "700156",
+        "area": "New Town Rajarhat, Action Area 1, 2, 3, Eco Park",
+        "district": "North 24 Parganas",
+        "postOffice": "New Town SO",
+        "stdCode": "033"
+      },
+      {
+        "pin": "711101",
+        "area": "Howrah Station, Howrah Maidan, GT Road, Shibpur",
+        "district": "Howrah",
+        "postOffice": "Howrah HO",
+        "stdCode": "033"
+      },
+      {
+        "pin": "734001",
+        "area": "Siliguri Town, Hill Cart Road, Sevoke Road, Venus More",
+        "district": "Darjeeling / Jalpaiguri",
+        "postOffice": "Siliguri HO",
+        "stdCode": "0353"
+      },
+      {
+        "pin": "713201",
+        "area": "Durgapur Steel Township, City Centre, Benachity",
+        "district": "Paschim Bardhaman",
+        "postOffice": "Durgapur HO",
+        "stdCode": "0343"
+      }
+    ],
+    "hospitals": [
+      {
+        "id": "wb-hosp-01",
+        "name": "SSKM Hospital & IPGMER (Institute of Post Graduate Medical Education and Research)",
+        "type": "State Govt Apex Hospital",
+        "district": "Kolkata",
+        "address": "244, AJC Bose Road, Bhowanipore, Kolkata, West Bengal",
+        "pincode": "700020",
+        "emergencyNumber": "033-22231589 / 102",
+        "phone": "033-22231589",
+        "opdTimings": "09:00 AM - 01:00 PM (Mon-Sat) | 24x7 Emergency Trauma",
+        "landmark": "Near Rabindra Sadan Metro Station & Victoria Memorial",
+        "bedCapacity": 2200,
+        "specialties": [
+          "24x7 Emergency Casualty",
+          "Cardiothoracic Surgery",
+          "Neurosurgery",
+          "Sashthi Swasthya Super Specialty",
+          "Trauma Care"
+        ],
+        "hasTraumaCenter": true,
+        "has24x7Emergency": true
+      },
+      {
+        "id": "wb-hosp-02",
+        "name": "Medical College & Hospital Kolkata (First Medical College in Asia)",
+        "type": "State Govt Medical College",
+        "district": "Kolkata",
+        "address": "88, College Street, Bowbazar, Kolkata, West Bengal",
+        "pincode": "700073",
+        "emergencyNumber": "033-22551000 / 102",
+        "phone": "033-22551000",
+        "opdTimings": "08:30 AM - 01:30 PM (Mon-Sat) | 24x7 Emergency",
+        "landmark": "Near College Square & Central Metro",
+        "bedCapacity": 1800,
+        "specialties": [
+          "Eden Hospital for Obstetrics",
+          "Pediatric Medicine",
+          "General Medicine & Surgery",
+          "Burn Unit"
+        ],
+        "hasTraumaCenter": true,
+        "has24x7Emergency": true
+      },
+      {
+        "id": "wb-hosp-03",
+        "name": "AIIMS Kalyani",
+        "type": "Central Govt Apex Institute",
+        "district": "Nadia",
+        "address": "NH-34 Connector, Basantapur, Kalyani, Nadia, West Bengal",
+        "pincode": "741245",
+        "emergencyNumber": "033-29516005",
+        "phone": "033-29516000",
+        "opdTimings": "08:30 AM - 02:00 PM (Mon-Sat) | 24x7 Emergency",
+        "landmark": "Near Kalyani Expressway",
+        "bedCapacity": 960,
+        "specialties": [
+          "Apex Trauma",
+          "Cardiology",
+          "Neurology",
+          "Oncology",
+          "Pediatric Surgery"
+        ],
+        "hasTraumaCenter": true,
+        "has24x7Emergency": true
+      }
+    ],
+    "police": [
+      {
+        "id": "wb-ps-01",
+        "name": "Hare Street Police Station",
+        "hindiName": "थाना हेयर स्ट्रीट (कोलकाता)",
+        "district": "Kolkata Central Division",
+        "address": "42, BB Ganguly Street / Hare Street, BBD Bagh, Kolkata, West Bengal",
+        "pincode": "700001",
+        "phone": "033-22481001",
+        "shoPhone": "033-22481002 / 9830010001",
+        "pcrNumber": "100 / 112",
+        "jurisdictionAreas": [
+          "BBD Bagh",
+          "High Court",
+          "Dalhousie Square",
+          "Old Post Office Street",
+          "Writers' Building"
+        ],
+        "landmark": "Near Kolkata High Court"
+      },
+      {
+        "id": "wb-ps-02",
+        "name": "Park Street Police Station",
+        "hindiName": "थाना पार्क स्ट्रीट",
+        "district": "Kolkata South Division",
+        "address": "1, Park Street, Near Chowringhee, Kolkata, West Bengal",
+        "pincode": "700016",
+        "phone": "033-22268001",
+        "shoPhone": "033-22268002 / 9830010002",
+        "pcrNumber": "100 / 112",
+        "jurisdictionAreas": [
+          "Park Street",
+          "Camac Street",
+          "Russell Street",
+          "Middleton Row",
+          "Free School Street"
+        ],
+        "landmark": "Near Park Street Metro Station"
+      },
+      {
+        "id": "wb-ps-03",
+        "name": "Electronic Complex Police Station (Salt Lake)",
+        "hindiName": "थाना इलेक्ट्रॉनिक कॉम्प्लेक्स (सॉल्ट लेक)",
+        "district": "Bidhannagar Police Commissionerate",
+        "address": "Sector V, Salt Lake, Kolkata, West Bengal",
+        "pincode": "700091",
+        "phone": "033-23572001",
+        "shoPhone": "033-23572002 / 9830020001",
+        "pcrNumber": "100 / 112",
+        "jurisdictionAreas": [
+          "Sector V IT Hub",
+          "Technopolis",
+          "College More",
+          "Godrej Waterside",
+          "RDB Boulevard"
+        ],
+        "landmark": "Near College More Sector V"
+      }
+    ],
+    "rto": [
+      {
+        "id": "wb-rto-01",
+        "rtoCode": "WB-01",
+        "zoneName": "Public Vehicles Department (PVD) Beltala Kolkata",
+        "district": "Kolkata",
+        "state": "West Bengal",
+        "address": "38, Beltala Road, Bhowanipore, Kolkata, West Bengal",
+        "pincode": "700020",
+        "phone": "033-24751621",
+        "email": "pvd-kol-wb@nic.in",
+        "timings": "10:30 AM - 05:00 PM (Mon-Sat)",
+        "landmark": "Near Lansdowne & Hazra Crossing",
+        "jurisdictionAreas": [
+          "Kolkata South",
+          "Kolkata Central",
+          "Alipore",
+          "Ballygunge",
+          "Bhowanipore"
+        ],
+        "servicesOffered": [
+          "Smart Card Driving License",
+          "Vehicle RC Transfer",
+          "Fitness Inspection",
+          "Trade License",
+          "Commercial Vehicle Permit"
+        ],
+        "automatedTrackAvailable": true,
+        "mloIncharge": "Director, Public Vehicles Department"
+      },
+      {
+        "id": "wb-rto-02",
+        "rtoCode": "WB-02",
+        "zoneName": "PVD Kolkata North (Kasba / Salt Lake)",
+        "district": "Kolkata / North 24 Parganas",
+        "state": "West Bengal",
+        "address": "Kasba Transport Complex, EM Bypass, Kolkata, West Bengal",
+        "pincode": "700107",
+        "phone": "033-24420011",
+        "email": "pvdkasba-wb@nic.in",
+        "timings": "10:30 AM - 05:00 PM (Mon-Sat)",
+        "landmark": "Near Ruby General Hospital EM Bypass",
+        "jurisdictionAreas": [
+          "Kasba",
+          "EM Bypass",
+          "Garia",
+          "Jadavpur",
+          "Salt Lake City"
+        ],
+        "servicesOffered": [
+          "DL Issue & Endorsement",
+          "Permanent RC",
+          "Automated Driving Test"
+        ],
+        "automatedTrackAvailable": true,
+        "mloIncharge": "Regional Transport Officer (Kasba)"
+      }
+    ],
+    "ifsc": [
+      {
+        "ifsc": "SBIN0000001",
+        "bank": "State Bank of India",
+        "branch": "Kolkata Main Branch (Samriddhi Bhavan, Strand Road)",
+        "district": "Kolkata",
+        "city": "Kolkata",
+        "state": "West Bengal",
+        "address": "1, Strand Road, Samriddhi Bhavan, Kolkata, West Bengal - 700001",
+        "contact": "033-22486681",
+        "micr": "700002021",
+        "upi": true,
+        "rtgs": true,
+        "neft": true,
+        "imps": true
+      },
+      {
+        "ifsc": "PUNB0008700",
+        "bank": "Punjab National Bank",
+        "branch": "Kolkata Brabourne Road (United Bank HQ Heritage)",
+        "district": "Kolkata",
+        "city": "Kolkata",
+        "state": "West Bengal",
+        "address": "11, Hemanta Basu Sarani, Kolkata, West Bengal - 700001",
+        "contact": "033-22484000",
+        "micr": "700024005",
+        "upi": true,
+        "rtgs": true,
+        "neft": true,
+        "imps": true
+      },
+      {
+        "ifsc": "HDFC0000014",
+        "bank": "HDFC Bank",
+        "branch": "Kolkata Central Plaza",
+        "district": "Kolkata",
+        "city": "Kolkata",
+        "state": "West Bengal",
+        "address": "2/6, Sarat Bose Road, Central Plaza, Kolkata, West Bengal - 700020",
+        "contact": "033-61606161",
+        "micr": "700240002",
+        "upi": true,
+        "rtgs": true,
+        "neft": true,
+        "imps": true
+      }
+    ],
+    "offices": [
+      {
+        "id": "wb-off-01",
+        "name": "District Magistrate (DM) Office Kolkata / Collectorate",
+        "hindiName": "जिलाधिकारी कार्यालय कोलकाता समाहरणालय",
+        "category": "District Magistrate / DC Office",
+        "district": "Kolkata",
+        "state": "West Bengal",
+        "address": "11, Netaji Subhas Road, BBD Bagh, Kolkata, West Bengal - 700001",
+        "pincode": "700001",
+        "helpline": "033-22483804 / 033-22485573",
+        "email": "dm-kol@nic.in",
+        "website": "https://kolkata.gov.in",
+        "publicHours": "10:00 AM - 05:30 PM (Mon-Sat, 2nd & 4th Sat off)",
+        "services": [
+          "Duare Sarkar Portal Services",
+          "Caste Certificate (OBC/SC/ST)",
+          "Income & Residential Domicile Certificate",
+          "Banglarbhumi Land Mutation & Records",
+          "Jai Bangla Pension Scheme"
+        ]
+      },
+      {
+        "id": "wb-off-02",
+        "name": "Bangla Sahayata Kendra (BSK Kolkata Central)",
+        "hindiName": "बांग्ला सहायता केंद्र (BSK मध्य कोलकाता)",
+        "category": "Bangla Sahayata Kendra (BSK)",
+        "district": "Kolkata",
+        "state": "West Bengal",
+        "address": "BBD Bagh Post Office Building Campus, Kolkata, West Bengal",
+        "pincode": "700001",
+        "helpline": "1800-345-5555",
+        "email": "bsk-support@wb.gov.in",
+        "website": "https://bsk.wb.gov.in",
+        "publicHours": "10:00 AM - 05:00 PM (Mon-Sat)",
+        "services": [
+          "Lakshmir Bhandar Registration",
+          "Swasthya Sathi Smart Card",
+          "Kanyashree & Rupashree Scheme",
+          "Digital Ration Card (Khadya Sathi)",
+          "Student Credit Card Scheme"
+        ]
+      }
+    ]
+  },
+  "tamil-nadu": {
+    "pincodes": [
+      {
+        "pin": "600001",
+        "area": "George Town, Parrys Corner, High Court, Beach Station, Rajaji Salai",
+        "district": "Chennai",
+        "postOffice": "Chennai GPO",
+        "stdCode": "044"
+      },
+      {
+        "pin": "600002",
+        "area": "Mount Road, Anna Salai, Triplicane, LIC Building, Express Avenue",
+        "district": "Chennai",
+        "postOffice": "Anna Salai SO",
+        "stdCode": "044"
+      },
+      {
+        "pin": "600004",
+        "area": "Mylapore, Kapaleeshwarar Temple, Luz Corner, Santhome",
+        "district": "Chennai",
+        "postOffice": "Mylapore SO",
+        "stdCode": "044"
+      },
+      {
+        "pin": "600017",
+        "area": "T. Nagar, Panagal Park, Pondy Bazaar, Usman Road",
+        "district": "Chennai",
+        "postOffice": "Theagaraya Nagar HO",
+        "stdCode": "044"
+      },
+      {
+        "pin": "600020",
+        "area": "Adyar, Gandhi Nagar, Shastri Nagar, Besant Nagar Beach",
+        "district": "Chennai",
+        "postOffice": "Adyar SO",
+        "stdCode": "044"
+      },
+      {
+        "pin": "600040",
+        "area": "Anna Nagar, Shanthi Colony, Roundtana, Tower Park",
+        "district": "Chennai",
+        "postOffice": "Anna Nagar SO",
+        "stdCode": "044"
+      },
+      {
+        "pin": "641001",
+        "area": "Coimbatore Central, Town Hall, Oppanakara Street, Railway Station",
+        "district": "Coimbatore",
+        "postOffice": "Coimbatore HO",
+        "stdCode": "0422"
+      },
+      {
+        "pin": "625001",
+        "area": "Madurai Central, Meenakshi Temple, West Masi Street, Town Hall",
+        "district": "Madurai",
+        "postOffice": "Madurai HO",
+        "stdCode": "0452"
+      }
+    ],
+    "hospitals": [
+      {
+        "id": "tn-hosp-01",
+        "name": "Rajiv Gandhi Government General Hospital (RGGGH) & MMC Chennai",
+        "type": "State Govt Apex Hospital",
+        "district": "Chennai",
+        "address": "EVR Periyar Salai, Park Town, Chennai, Tamil Nadu",
+        "pincode": "600003",
+        "emergencyNumber": "044-25305000 / 108",
+        "phone": "044-25305000",
+        "opdTimings": "08:00 AM - 12:30 PM (Mon-Sat) | 24x7 Trauma & Emergency",
+        "landmark": "Opposite Chennai Central Railway Station",
+        "bedCapacity": 3000,
+        "specialties": [
+          "24x7 Apex Trauma",
+          "Cardiology & Cardiothoracic",
+          "Nephrology & Urology",
+          "Neurology",
+          "Vascular Surgery"
+        ],
+        "hasTraumaCenter": true,
+        "has24x7Emergency": true
+      },
+      {
+        "id": "tn-hosp-02",
+        "name": "Government Stanley Medical College Hospital",
+        "type": "State Govt Hospital",
+        "district": "Chennai",
+        "address": "Old Jail Road, Royapuram, Chennai, Tamil Nadu",
+        "pincode": "600001",
+        "emergencyNumber": "044-25281351 / 108",
+        "phone": "044-25281351",
+        "opdTimings": "08:00 AM - 01:00 PM (Mon-Sat) | 24x7 Emergency",
+        "landmark": "Near Royapuram Railway Station",
+        "bedCapacity": 1580,
+        "specialties": [
+          "World-Renowned Plastic & Hand Surgery Unit",
+          "Gastroenterology & Liver Transplant",
+          "Pediatrics",
+          "Trauma Care"
+        ],
+        "hasTraumaCenter": true,
+        "has24x7Emergency": true
+      },
+      {
+        "id": "tn-hosp-03",
+        "name": "AIIMS Madurai (Campus Site)",
+        "type": "Central Govt Apex Institute",
+        "district": "Madurai",
+        "address": "Thoppur, Madurai, Tamil Nadu",
+        "pincode": "625008",
+        "emergencyNumber": "0452-2532535 / 108",
+        "phone": "0452-2532535",
+        "opdTimings": "08:30 AM - 02:00 PM (Mon-Sat) | 24x7 Emergency",
+        "landmark": "Thoppur NH-44",
+        "bedCapacity": 750,
+        "specialties": [
+          "General Medicine",
+          "Trauma Care",
+          "Super Specialty OPDs",
+          "Cardiology"
+        ],
+        "hasTraumaCenter": true,
+        "has24x7Emergency": true
+      }
+    ],
+    "police": [
+      {
+        "id": "tn-ps-01",
+        "name": "Mylapore Police Station (E-1)",
+        "hindiName": "थाना मायलापुर (चेन्नई)",
+        "district": "Greater Chennai Police (East Zone)",
+        "address": "Kutchery Road, Mylapore, Chennai, Tamil Nadu",
+        "pincode": "600004",
+        "phone": "044-23452581",
+        "shoPhone": "044-23452582 / 9498100001",
+        "pcrNumber": "100 / 112",
+        "jurisdictionAreas": [
+          "Mylapore",
+          "Luz Corner",
+          "Kapaleeshwarar Temple Area",
+          "Santhome High Road",
+          "Mandaveli"
+        ],
+        "landmark": "Near Luz Church Road"
+      },
+      {
+        "id": "tn-ps-02",
+        "name": "T. Nagar Police Station (R-1)",
+        "hindiName": "थाना टी. नगर (चेन्नई)",
+        "district": "Greater Chennai Police (South Zone)",
+        "address": "Thyagaraya Road, Near Panagal Park, T. Nagar, Chennai, Tamil Nadu",
+        "pincode": "600017",
+        "phone": "044-23452591",
+        "shoPhone": "044-23452592 / 9498100002",
+        "pcrNumber": "100 / 112",
+        "jurisdictionAreas": [
+          "T. Nagar",
+          "Panagal Park",
+          "Pondy Bazaar",
+          "Usman Road",
+          "G.N. Chetty Road"
+        ],
+        "landmark": "Near Panagal Park"
+      },
+      {
+        "id": "tn-ps-03",
+        "name": "Anna Nagar Police Station (K-4)",
+        "hindiName": "थाना अन्ना नगर (चेन्नई)",
+        "district": "Greater Chennai Police (West Zone)",
+        "address": "2nd Avenue, Near Roundtana, Anna Nagar, Chennai, Tamil Nadu",
+        "pincode": "600040",
+        "phone": "044-23452601",
+        "shoPhone": "044-23452602 / 9498100003",
+        "pcrNumber": "100 / 112",
+        "jurisdictionAreas": [
+          "Anna Nagar East/West",
+          "Shanthi Colony",
+          "Tower Park",
+          "Roundtana",
+          "Thirumangalam"
+        ],
+        "landmark": "Near Anna Nagar Roundtana"
+      }
+    ],
+    "rto": [
+      {
+        "id": "tn-rto-01",
+        "rtoCode": "TN-01",
+        "zoneName": "RTO Chennai Central (Ayanavaram)",
+        "district": "Chennai",
+        "state": "Tamil Nadu",
+        "address": "Anderson Road, Ayanavaram, Chennai, Tamil Nadu",
+        "pincode": "600023",
+        "phone": "044-26741200",
+        "email": "rtochnc-tn@nic.in",
+        "timings": "10:00 AM - 05:45 PM (Mon-Sat)",
+        "landmark": "Near Ayanavaram Bus Depot",
+        "jurisdictionAreas": [
+          "Ayanavaram",
+          "Kilpauk",
+          "Purasawalkam",
+          "Perambur",
+          "Otteri"
+        ],
+        "servicesOffered": [
+          "Computerized LL & DL Test",
+          "Vehicle RC Registration",
+          "Smart Card DL Renewal",
+          "Transfer of Vehicle Ownership",
+          "FC Renewal"
+        ],
+        "automatedTrackAvailable": true,
+        "mloIncharge": "Regional Transport Officer (Chennai Central)"
+      },
+      {
+        "id": "tn-rto-07",
+        "rtoCode": "TN-07",
+        "zoneName": "RTO Chennai South (Thiruvanmiyur)",
+        "district": "Chennai",
+        "state": "Tamil Nadu",
+        "address": "East Coast Road (ECR), Thiruvanmiyur, Chennai, Tamil Nadu",
+        "pincode": "600041",
+        "phone": "044-24410100",
+        "email": "rtochns-tn@nic.in",
+        "timings": "10:00 AM - 05:45 PM (Mon-Sat)",
+        "landmark": "Near Thiruvanmiyur Signal & ECR Junction",
+        "jurisdictionAreas": [
+          "Thiruvanmiyur",
+          "Adyar",
+          "Besant Nagar",
+          "Velachery",
+          "Sholinganallur (OMR)"
+        ],
+        "servicesOffered": [
+          "DL Issue & Endorsement",
+          "Vehicle Registration",
+          "Automated Driving Test"
+        ],
+        "automatedTrackAvailable": true,
+        "mloIncharge": "Regional Transport Officer (Chennai South)"
+      }
+    ],
+    "ifsc": [
+      {
+        "ifsc": "SBIN0000800",
+        "bank": "State Bank of India",
+        "branch": "Chennai Main Branch (George Town)",
+        "district": "Chennai",
+        "city": "Chennai",
+        "state": "Tamil Nadu",
+        "address": "22, Rajaji Salai, George Town, Chennai, Tamil Nadu - 600001",
+        "contact": "044-25301000",
+        "micr": "600002002",
+        "upi": true,
+        "rtgs": true,
+        "neft": true,
+        "imps": true
+      },
+      {
+        "ifsc": "IDIB000M001",
+        "bank": "Indian Bank",
+        "branch": "Chennai Corporate HQ & Main Branch",
+        "district": "Chennai",
+        "city": "Chennai",
+        "state": "Tamil Nadu",
+        "address": "66, Rajaji Salai, Chennai, Tamil Nadu - 600001",
+        "contact": "044-25221201",
+        "micr": "600019002",
+        "upi": true,
+        "rtgs": true,
+        "neft": true,
+        "imps": true
+      },
+      {
+        "ifsc": "HDFC0000004",
+        "bank": "HDFC Bank",
+        "branch": "Chennai ITC Centre (Anna Salai)",
+        "district": "Chennai",
+        "city": "Chennai",
+        "state": "Tamil Nadu",
+        "address": "ITC Centre, 759, Anna Salai, Chennai, Tamil Nadu - 600002",
+        "contact": "044-61606161",
+        "micr": "600240002",
+        "upi": true,
+        "rtgs": true,
+        "neft": true,
+        "imps": true
+      }
+    ],
+    "offices": [
+      {
+        "id": "tn-off-01",
+        "name": "District Collectorate & DM Office Chennai",
+        "hindiName": "जिलाधिकारी एवं समाहर्ता कार्यालय चेन्नई",
+        "category": "District Magistrate / DC Office",
+        "district": "Chennai",
+        "state": "Tamil Nadu",
+        "address": "Singaravelar Maaligai, 62, Rajaji Salai, George Town, Chennai, Tamil Nadu - 600001",
+        "pincode": "600001",
+        "helpline": "044-25268344 / 044-25268345",
+        "email": "collrchn@nic.in",
+        "website": "https://chennai.nic.in",
+        "publicHours": "10:00 AM - 05:45 PM (Mon-Sat, 2nd & 4th Sat off)",
+        "services": [
+          "TNeGA e-Sevai Services",
+          "Community / Caste Certificate",
+          "Income & Nativity Certificate",
+          "Patta / Chitta Land Records (e-Services)",
+          "Chief Minister's Comprehensive Health Insurance (CMCHIS)"
+        ]
+      },
+      {
+        "id": "tn-off-02",
+        "name": "e-Sevai Common Service Centre (TNeGA Chennai Central)",
+        "hindiName": "ई-सेवई नागरिक सेवा केंद्र (चेन्नई)",
+        "category": "e-Sevai / CSC Centre",
+        "district": "Chennai",
+        "state": "Tamil Nadu",
+        "address": "Ripon Building Campus, Sydenhams Road, Periyamet, Chennai, Tamil Nadu",
+        "pincode": "600003",
+        "helpline": "1800-425-1333",
+        "email": "tnega.helpdesk@tn.gov.in",
+        "website": "https://www.tnesevai.tn.gov.in",
+        "publicHours": "09:30 AM - 05:30 PM (Mon-Sat)",
+        "services": [
+          "Kalaignar Magalir Urimai Thogai Scheme",
+          "First Graduate Certificate",
+          "Legal Heir Certificate",
+          "Smart Family Card (TNPDS)",
+          "Disability Identity Card (UDID)"
+        ]
+      }
+    ]
+  }
+}

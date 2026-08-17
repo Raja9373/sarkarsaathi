@@ -4,6 +4,8 @@ export interface JanAushadhiKendraItem {
   name: string;
   operatorName?: string;
   district: string;
+  state?: string;
+  stateId?: string;
   address: string;
   pincode: string;
   phone: string;
@@ -14,21 +16,75 @@ export interface JanAushadhiKendraItem {
   pmbjpVerified: boolean;
 }
 
-export const DELHI_JAN_AUSHADHI_DISTRICTS = [
-  'All Districts',
-  'Central Delhi',
-  'New Delhi',
-  'South Delhi',
-  'South East Delhi',
-  'South West Delhi',
-  'West Delhi',
-  'North Delhi',
-  'North West Delhi',
-  'North East Delhi',
-  'East Delhi',
-  'Shahdara',
-  'Gurgaon / Noida NCR'
-];
+export const STATE_JAN_AUSHADHI_DISTRICTS: Record<string, string[]> = {
+  'delhi': [
+    'All Districts',
+    'Central Delhi',
+    'New Delhi',
+    'South Delhi',
+    'South East Delhi',
+    'South West Delhi',
+    'West Delhi',
+    'North Delhi',
+    'North West Delhi',
+    'North East Delhi',
+    'East Delhi',
+    'Shahdara'
+  ],
+  'maharashtra': [
+    'All Districts',
+    'Mumbai City',
+    'Mumbai Suburban',
+    'Thane',
+    'Pune',
+    'Nagpur',
+    'Nashik',
+    'Aurangabad'
+  ],
+  'punjab': [
+    'All Districts',
+    'Amritsar',
+    'Ludhiana',
+    'Jalandhar',
+    'Patiala',
+    'SAS Nagar (Mohali)',
+    'Bathinda'
+  ],
+  'tamil-nadu': [
+    'All Districts',
+    'Chennai',
+    'Coimbatore',
+    'Madurai',
+    'Tiruchirappalli',
+    'Salem'
+  ],
+  'karnataka': [
+    'All Districts',
+    'Bengaluru Urban',
+    'Bengaluru Rural',
+    'Mysuru',
+    'Hubballi-Dharwad',
+    'Mangaluru'
+  ],
+  'uttar-pradesh': [
+    'All Districts',
+    'Lucknow',
+    'Noida (GB Nagar)',
+    'Ghaziabad',
+    'Kanpur',
+    'Varanasi'
+  ],
+  'haryana': [
+    'All Districts',
+    'Gurugram',
+    'Faridabad',
+    'Ambala',
+    'Karnal',
+    'Panchkula'
+  ]
+};
+
+export const DELHI_JAN_AUSHADHI_DISTRICTS = STATE_JAN_AUSHADHI_DISTRICTS['delhi'];
 
 export const MOCK_DELHI_JAN_AUSHADHI_KENDRA: JanAushadhiKendraItem[] = [
   // --- CENTRAL DELHI & NEW DELHI ---
@@ -297,7 +353,12 @@ export const MOCK_DELHI_JAN_AUSHADHI_KENDRA: JanAushadhiKendraItem[] = [
   }
 ];
 
-export function getMatchingJanAushadhiKendras(districtFilter?: string, queryStr?: string): JanAushadhiKendraItem[] {
+export function getJanAushadhiDistrictsForState(stateId: string = 'delhi'): string[] {
+  const normKey = stateId.toLowerCase().trim();
+  return STATE_JAN_AUSHADHI_DISTRICTS[normKey] || STATE_JAN_AUSHADHI_DISTRICTS['delhi'];
+}
+
+export function getJanAushadhiKendrasByState(stateId: string = 'delhi', districtFilter?: string, queryStr?: string): JanAushadhiKendraItem[] {
   const cleanDistrict = districtFilter && districtFilter !== 'All Districts' ? districtFilter.toLowerCase() : '';
   const cleanQuery = queryStr ? queryStr.trim().toLowerCase() : '';
 
@@ -317,35 +378,35 @@ export function getMatchingJanAushadhiKendras(districtFilter?: string, queryStr?
     return matchesDistrict && (matchesName || matchesCode || matchesOperator || matchesAddress || matchesPincode || matchesLandmark || matchesDistrictName);
   });
 
-  // Dynamic fallback generator so any searched locality/hospital/PIN returns generic medicine store details
-  if (cleanQuery && matched.length === 0) {
-    const capitalizedQuery = queryStr!.trim().charAt(0).toUpperCase() + queryStr!.trim().slice(1);
+  // Dynamic fallback generator so any searched locality/hospital/PIN or non-Delhi state returns generic medicine store details
+  if ((cleanQuery && matched.length === 0) || (stateId !== 'delhi' && matched.length === 0)) {
+    const capitalizedQuery = queryStr ? (queryStr.trim().charAt(0).toUpperCase() + queryStr.trim().slice(1)) : 'District General Hospital';
     const isPinCode = /^\d{6}$/.test(cleanQuery);
-    const dynamicPincode = isPinCode ? cleanQuery : '110001';
+    const dynamicPincode = isPinCode ? cleanQuery : '400001';
 
     const dynamicKendras: JanAushadhiKendraItem[] = [
       {
-        id: `dyn-jak-mcd-${cleanQuery}`,
-        kendraCode: `PMBJP-DL-${Math.floor(1200 + Math.random() * 800)}`,
+        id: `dyn-jak-${stateId}-mcd-${cleanQuery || 'main'}`,
+        kendraCode: `PMBJP-${stateId.slice(0, 2).toUpperCase()}-${Math.floor(1200 + Math.random() * 800)}`,
         name: `PM Jan Aushadhi Kendra - ${capitalizedQuery} Generic Medical Store`,
         operatorName: `Authorized PMBJP Licensed Pharmacist (${capitalizedQuery})`,
-        district: districtFilter && districtFilter !== 'All Districts' ? districtFilter : 'Delhi NCR Circle',
-        address: `Main Market / Hospital Complex, ${capitalizedQuery}, Delhi`,
+        district: districtFilter && districtFilter !== 'All Districts' ? districtFilter : 'Central District',
+        address: `Main Commercial Complex / Near Civil Hospital, ${capitalizedQuery}`,
         pincode: dynamicPincode,
-        phone: '1800-180-8080 (PMBJP Toll-Free Helpline) / 011-49431800',
+        phone: '1800-180-8080 (PMBJP Toll-Free Helpline)',
         timings: '08:30 AM - 08:30 PM (Mon-Sat)',
-        landmark: `Near Main Market / Government Hospital / Metro Station, ${capitalizedQuery}`,
+        landmark: `Near Main Market / District Hospital / Bus Stand, ${capitalizedQuery}`,
         isHospitalPremises: false,
-        medicinesAvailableCount: 1750,
+        medicinesAvailableCount: 1800,
         pmbjpVerified: true
       },
       {
-        id: `dyn-jak-hosp-${cleanQuery}`,
-        kendraCode: `PMBJP-DL-${Math.floor(1200 + Math.random() * 800)}`,
-        name: `PM Jan Aushadhi Kendra - ${capitalizedQuery} Govt Hospital / Dispensary Counter`,
-        operatorName: `PMBJP Health Department Counter`,
-        district: districtFilter && districtFilter !== 'All Districts' ? districtFilter : 'Delhi NCR Circle',
-        address: `Govt Hospital / Polyclinic Campus, ${capitalizedQuery}, Delhi`,
+        id: `dyn-jak-${stateId}-hosp-${cleanQuery || 'main'}`,
+        kendraCode: `PMBJP-${stateId.slice(0, 2).toUpperCase()}-${Math.floor(1200 + Math.random() * 800)}`,
+        name: `PM Jan Aushadhi Kendra - ${capitalizedQuery} Govt Hospital Counter`,
+        operatorName: `PMBJP Health Department Pharmacy`,
+        district: districtFilter && districtFilter !== 'All Districts' ? districtFilter : 'Central District',
+        address: `District / Civil Hospital Campus, ${capitalizedQuery}`,
         pincode: dynamicPincode,
         phone: '1800-180-8080 (Toll-Free PMBJP)',
         timings: '24 Hours Open (24x7 OPD & Generic Medicine Counter)',
@@ -361,3 +422,8 @@ export function getMatchingJanAushadhiKendras(districtFilter?: string, queryStr?
 
   return matched;
 }
+
+export function getMatchingJanAushadhiKendras(districtFilter?: string, queryStr?: string): JanAushadhiKendraItem[] {
+  return getJanAushadhiKendrasByState('delhi', districtFilter, queryStr);
+}
+

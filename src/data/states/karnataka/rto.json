@@ -1,0 +1,53 @@
+[
+  {
+    "id": "ka-rto-01",
+    "rtoCode": "KA-01",
+    "zoneName": "RTO Bengaluru Central (Koramangala)",
+    "district": "Bengaluru Urban",
+    "state": "Karnataka",
+    "address": "B-Block, TTMC Complex, BMTC Bus Stand, 2nd Floor, Koramangala, Bengaluru, Karnataka",
+    "pincode": "560034",
+    "phone": "080-25533525",
+    "email": "rtobngc-ka@nic.in",
+    "timings": "10:00 AM - 05:30 PM (Mon-Sat)",
+    "landmark": "Inside Koramangala BMTC TTMC Bus Stand",
+    "jurisdictionAreas": ["Koramangala", "Shanthinagar", "Ashok Nagar", "Richmond Town", "Wilson Garden", "Adugodi"],
+    "servicesOffered": ["Computerized DL Test", "Vehicle RC Registration", "Smart Card DL Issue", "Transfer of Vehicle Ownership", "HSRP Verification", "International Driving Permit"],
+    "automatedTrackAvailable": true,
+    "mloIncharge": "Regional Transport Officer (Bengaluru Central)"
+  },
+  {
+    "id": "ka-rto-03",
+    "rtoCode": "KA-03",
+    "zoneName": "RTO Bengaluru East (Indiranagar / Kasturinagar)",
+    "district": "Bengaluru Urban",
+    "state": "Karnataka",
+    "address": "2nd Floor, BDA Complex, Indira Nagar, Bengaluru, Karnataka",
+    "pincode": "560038",
+    "phone": "080-25254555",
+    "email": "rtobnge-ka@nic.in",
+    "timings": "10:00 AM - 05:30 PM (Mon-Sat)",
+    "landmark": "Near Indiranagar BDA Complex",
+    "jurisdictionAreas": ["Indiranagar", "HAL", "Domlur", "Old Airport Road", "Marathahalli", "CV Raman Nagar"],
+    "servicesOffered": ["DL Issue & Endorsement", "Fitness Certificate", "RC Duplicate", "Automated Driving Test"],
+    "automatedTrackAvailable": true,
+    "mloIncharge": "Regional Transport Officer (Bengaluru East)"
+  },
+  {
+    "id": "ka-rto-09",
+    "rtoCode": "KA-09",
+    "zoneName": "RTO Mysuru West",
+    "district": "Mysuru",
+    "state": "Karnataka",
+    "address": "Near Ballal Circle, Krishnamurthypuram, Mysuru, Karnataka",
+    "pincode": "570004",
+    "phone": "0821-2330899",
+    "email": "rtomys-ka@nic.in",
+    "timings": "10:00 AM - 05:30 PM (Mon-Sat)",
+    "landmark": "Near Ballal Circle",
+    "jurisdictionAreas": ["Mysuru City", "Jayalakshmipuram", "Kuvempunagar", "Saraswathipuram", "Vijayanagar"],
+    "servicesOffered": ["Permanent License", "RC Transfer", "NOC Clearance", "Road Tax"],
+    "automatedTrackAvailable": true,
+    "mloIncharge": "Regional Transport Officer (Mysuru)"
+  }
+]

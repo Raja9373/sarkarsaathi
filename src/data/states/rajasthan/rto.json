@@ -1,0 +1,19 @@
+[
+  {
+    "id": "rj-rto-14",
+    "rtoCode": "RJ-14",
+    "zoneName": "Regional Transport Office Jaipur South",
+    "district": "Jaipur",
+    "state": "Rajasthan",
+    "address": "Jhalana Doongri, Jaipur, Rajasthan",
+    "pincode": "302004",
+    "phone": "0141-2706100",
+    "email": "rto.jaipur@rajasthan.gov.in",
+    "timings": "09:30 AM - 06:00 PM (Mon-Fri)",
+    "landmark": "Near OTS & Jhalana Doongri",
+    "jurisdictionAreas": ["Jaipur South", "Malviya Nagar", "Mansarovar", "Sanganer", "Tonk Road"],
+    "servicesOffered": ["Permanent Driving License", "Automated Sensor Track Test", "RC Transfer", "Fitness"],
+    "automatedTrackAvailable": true,
+    "mloIncharge": "Regional Transport Officer Jaipur"
+  }
+]

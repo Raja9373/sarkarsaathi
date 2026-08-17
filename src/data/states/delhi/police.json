@@ -1,0 +1,58 @@
+[
+  {
+    "id": "dl-ps-01",
+    "name": "Police Station Parliament Street",
+    "hindiName": "थाना पार्लियामेंट स्ट्रीट",
+    "district": "New Delhi District",
+    "state": "Delhi",
+    "address": "Parliament Street, Opp. NDMC Building, Patel Chowk, New Delhi",
+    "pincode": "110001",
+    "phone": "011-23361100",
+    "shoPhone": "011-23747100 / 8750870121",
+    "pcrNumber": "112",
+    "jurisdictionAreas": ["Connaught Place", "Janpath", "Patel Chowk", "Jantar Mantar", "Tolstoy Marg", "Windsor Place", "Parliament House"],
+    "landmark": "Near Patel Chowk Metro Station"
+  },
+  {
+    "id": "dl-ps-02",
+    "name": "Police Station Connaught Place",
+    "hindiName": "थाना कनॉट प्लेस",
+    "district": "New Delhi District",
+    "state": "Delhi",
+    "address": "Atul Grove Road, Near Janpath, Connaught Place, New Delhi",
+    "pincode": "110001",
+    "phone": "011-23341800",
+    "shoPhone": "011-23341801 / 8750870122",
+    "pcrNumber": "112",
+    "jurisdictionAreas": ["Inner Circle CP", "Outer Circle CP", "Middle Circle", "Palika Bazar", "Regal Building", "Scindia House", "Kasturba Gandhi Marg"],
+    "landmark": "Near Janpath Market & Palika Bazar"
+  },
+  {
+    "id": "dl-ps-03",
+    "name": "Police Station Daryaganj",
+    "hindiName": "थाना दरियागंज",
+    "district": "Central Delhi District",
+    "state": "Delhi",
+    "address": "Ansari Road, Daryaganj, New Delhi",
+    "pincode": "110002",
+    "phone": "011-23274647",
+    "shoPhone": "011-23275000 / 8750870221",
+    "pcrNumber": "112",
+    "jurisdictionAreas": ["Daryaganj", "Delhi Gate", "Asaf Ali Road", "Ansari Road", "Golcha Cinema Area", "LNJP Hospital Zone", "Bahadur Shah Zafar Marg (BSZ Marg)"],
+    "landmark": "Near Delhi Gate & Golcha Cinema"
+  },
+  {
+    "id": "dl-ps-04",
+    "name": "Police Station Hauz Khas",
+    "hindiName": "थाना हौज खास",
+    "district": "South Delhi District",
+    "state": "Delhi",
+    "address": "Aurobindo Marg, Near Hauz Khas Metro Station, New Delhi",
+    "pincode": "110016",
+    "phone": "011-26862500",
+    "shoPhone": "011-26852500 / 8750870421",
+    "pcrNumber": "112",
+    "jurisdictionAreas": ["Hauz Khas Village", "Hauz Khas Enclave", "Green Park Main/Ext", "IIT Delhi Outer", "SDA Market", "Kalu Sarai"],
+    "landmark": "Near Hauz Khas Metro Station Gate 3"
+  }
+]

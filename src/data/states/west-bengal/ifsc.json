@@ -1,0 +1,47 @@
+[
+  {
+    "ifsc": "SBIN0000001",
+    "bank": "State Bank of India",
+    "branch": "Kolkata Main Branch (Samriddhi Bhavan, Strand Road)",
+    "district": "Kolkata",
+    "city": "Kolkata",
+    "state": "West Bengal",
+    "address": "1, Strand Road, Samriddhi Bhavan, Kolkata, West Bengal - 700001",
+    "contact": "033-22486681",
+    "micr": "700002021",
+    "upi": true,
+    "rtgs": true,
+    "neft": true,
+    "imps": true
+  },
+  {
+    "ifsc": "PUNB0008700",
+    "bank": "Punjab National Bank",
+    "branch": "Kolkata Brabourne Road (United Bank HQ Heritage)",
+    "district": "Kolkata",
+    "city": "Kolkata",
+    "state": "West Bengal",
+    "address": "11, Hemanta Basu Sarani, Kolkata, West Bengal - 700001",
+    "contact": "033-22484000",
+    "micr": "700024005",
+    "upi": true,
+    "rtgs": true,
+    "neft": true,
+    "imps": true
+  },
+  {
+    "ifsc": "HDFC0000014",
+    "bank": "HDFC Bank",
+    "branch": "Kolkata Central Plaza",
+    "district": "Kolkata",
+    "city": "Kolkata",
+    "state": "West Bengal",
+    "address": "2/6, Sarat Bose Road, Central Plaza, Kolkata, West Bengal - 700020",
+    "contact": "033-61606161",
+    "micr": "700240002",
+    "upi": true,
+    "rtgs": true,
+    "neft": true,
+    "imps": true
+  }
+]

@@ -1,0 +1,44 @@
+[
+  {
+    "id": "mh-ps-01",
+    "name": "Colaba Police Station",
+    "hindiName": "थाना कोलाबा मुंबई",
+    "district": "Mumbai City",
+    "state": "Maharashtra",
+    "address": "SBS Road, Near Regal Cinema, Colaba, Mumbai, Maharashtra",
+    "pincode": "400001",
+    "phone": "022-22856817",
+    "shoPhone": "9821000101",
+    "pcrNumber": "112",
+    "jurisdictionAreas": ["Colaba Causeway", "Gateway of India", "Taj Mahal Palace Hotel", "Cuffe Parade", "Regal Cinema Area"],
+    "landmark": "Near Regal Cinema & Gateway of India"
+  },
+  {
+    "id": "mh-ps-02",
+    "name": "Bandra Police Station",
+    "hindiName": "थाना बांद्रा मुंबई",
+    "district": "Mumbai Suburban",
+    "state": "Maharashtra",
+    "address": "Hill Road, Near Mehboob Studio, Bandra West, Mumbai, Maharashtra",
+    "pincode": "400050",
+    "phone": "022-26422002",
+    "shoPhone": "9821000102",
+    "pcrNumber": "112",
+    "jurisdictionAreas": ["Bandra West", "Bandstand", "Carter Road", "Linking Road", "Pali Hill", "Hill Road"],
+    "landmark": "Near Mehboob Studio & Bandra Fort"
+  },
+  {
+    "id": "mh-ps-03",
+    "name": "Shivajinagar Police Station Pune",
+    "hindiName": "थाना शिवाजीनगर पुणे",
+    "district": "Pune",
+    "state": "Maharashtra",
+    "address": "FC Road, Near Ferguson College, Shivajinagar, Pune, Maharashtra",
+    "pincode": "411005",
+    "phone": "020-25536263",
+    "shoPhone": "9823000101",
+    "pcrNumber": "112",
+    "jurisdictionAreas": ["FC Road", "JM Road", "Shivajinagar Railway Station", "District Court Pune", "Ferguson College Area"],
+    "landmark": "Near Ferguson College Campus"
+  }
+]

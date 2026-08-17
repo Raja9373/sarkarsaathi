@@ -1,0 +1,50 @@
+[
+  {
+    "id": "wb-hosp-01",
+    "name": "SSKM Hospital & IPGMER (Institute of Post Graduate Medical Education and Research)",
+    "type": "State Govt Apex Hospital",
+    "district": "Kolkata",
+    "address": "244, AJC Bose Road, Bhowanipore, Kolkata, West Bengal",
+    "pincode": "700020",
+    "emergencyNumber": "033-22231589 / 102",
+    "phone": "033-22231589",
+    "opdTimings": "09:00 AM - 01:00 PM (Mon-Sat) | 24x7 Emergency Trauma",
+    "landmark": "Near Rabindra Sadan Metro Station & Victoria Memorial",
+    "bedCapacity": 2200,
+    "specialties": ["24x7 Emergency Casualty", "Cardiothoracic Surgery", "Neurosurgery", "Sashthi Swasthya Super Specialty", "Trauma Care"],
+    "hasTraumaCenter": true,
+    "has24x7Emergency": true
+  },
+  {
+    "id": "wb-hosp-02",
+    "name": "Medical College & Hospital Kolkata (First Medical College in Asia)",
+    "type": "State Govt Medical College",
+    "district": "Kolkata",
+    "address": "88, College Street, Bowbazar, Kolkata, West Bengal",
+    "pincode": "700073",
+    "emergencyNumber": "033-22551000 / 102",
+    "phone": "033-22551000",
+    "opdTimings": "08:30 AM - 01:30 PM (Mon-Sat) | 24x7 Emergency",
+    "landmark": "Near College Square & Central Metro",
+    "bedCapacity": 1800,
+    "specialties": ["Eden Hospital for Obstetrics", "Pediatric Medicine", "General Medicine & Surgery", "Burn Unit"],
+    "hasTraumaCenter": true,
+    "has24x7Emergency": true
+  },
+  {
+    "id": "wb-hosp-03",
+    "name": "AIIMS Kalyani",
+    "type": "Central Govt Apex Institute",
+    "district": "Nadia",
+    "address": "NH-34 Connector, Basantapur, Kalyani, Nadia, West Bengal",
+    "pincode": "741245",
+    "emergencyNumber": "033-29516005",
+    "phone": "033-29516000",
+    "opdTimings": "08:30 AM - 02:00 PM (Mon-Sat) | 24x7 Emergency",
+    "landmark": "Near Kalyani Expressway",
+    "bedCapacity": 960,
+    "specialties": ["Apex Trauma", "Cardiology", "Neurology", "Oncology", "Pediatric Surgery"],
+    "hasTraumaCenter": true,
+    "has24x7Emergency": true
+  }
+]

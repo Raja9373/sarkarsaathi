@@ -1,25 +1,45 @@
 import React, { useState } from 'react';
-import { Search, ShieldCheck, Lock, CheckCircle2, FileText, ArrowRight, Sparkles } from 'lucide-react';
-import { ServiceItem } from '../types';
+import { Search, ShieldCheck, Lock, CheckCircle2, FileText, ArrowRight, Sparkles, MapPin } from 'lucide-react';
+import { ServiceItem, StateId } from '../types';
+import { getStateInfo } from '../data/statesData';
 
 interface HeroSectionProps {
   allServices: ServiceItem[];
   onSelectService: (service: ServiceItem) => void;
   onSearchQuery: (query: string) => void;
+  currentStateId?: StateId;
+  onOpenStateSelector?: () => void;
+  onNavigateToFinder?: (finderId: string) => void;
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({
   allServices,
   onSelectService,
-  onSearchQuery
+  onSearchQuery,
+  currentStateId = 'delhi',
+  onOpenStateSelector,
+  onNavigateToFinder
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [isFocused, setIsFocused] = useState(false);
+
+  const stateInfo = getStateInfo(currentStateId);
 
   const sampleKeywords = [
     'Aadhaar', 'PAN', 'Passport', 'Driving Licence', 'Birth Certificate',
     'Marriage Certificate', 'Income Certificate', 'Current Account', 'Saving Account',
     'SWIFT Code', 'IFSC Code', 'Property Tax', 'Water Bill', 'Electricity Bill', 'Traffic Challan'
+  ];
+
+  const quickFinders = [
+    { id: 'pincode', label: '📍 Find Pincode', hindi: 'पिनकोड खोजें' },
+    { id: 'ifsc', label: '🏦 Find IFSC Code', hindi: 'IFSC बैंक कोड' },
+    { id: 'hospital', label: '🏥 Find Hospital', hindi: 'सरकारी अस्पताल' },
+    { id: 'police-station', label: '👮 Find Police Station', hindi: 'थाना खोजें' },
+    { id: 'rto-office', label: '🚗 Find RTO Office', hindi: 'RTO कार्यालय' },
+    { id: 'govt-offices', label: '🏛️ Find Govt Office / Court', hindi: 'SDM व कचहरी' },
+    { id: 'aadhaar-centre', label: '🆔 Aadhaar Seva Kendra', hindi: 'आधार सेवा केंद्र' },
+    { id: 'jan-aushadhi', label: '💊 Jan Aushadhi Kendra', hindi: 'जन औषधि केंद्र' },
   ];
 
   // Matching services for auto-suggestions
@@ -42,10 +62,24 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 bg-gradient-to-r from-[#FF6B00]/10 via-amber-500/5 to-orange-600/10 blur-3xl pointer-events-none rounded-full" />
 
       <div className="relative max-w-5xl mx-auto space-y-6">
-        {/* Official Delhi Tag */}
+        {/* Dynamic Official State / India Tag */}
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-900/90 border border-zinc-700/80 text-xs font-semibold text-zinc-300 shadow-md">
           <span className="w-2 h-2 rounded-full bg-[#FF6B00] animate-ping" />
-          <span>SarkarSaathi.org • Delhi Government Citizen Portal</span>
+          <span>
+            {currentStateId === 'delhi'
+              ? 'SarkarSaathi.org • Delhi Government Citizen Portal'
+              : currentStateId === 'national'
+              ? 'SarkarSaathi.org • All India Central Services Portal'
+              : `SarkarSaathi.org • ${stateInfo.name} (${stateInfo.hindiName}) Citizen Portal`}
+          </span>
+          {onOpenStateSelector && (
+            <button
+              onClick={onOpenStateSelector}
+              className="ml-1 text-[11px] text-[#FF6B00] hover:underline font-bold"
+            >
+              (Change)
+            </button>
+          )}
         </div>
 
         {/* Main Title */}
@@ -55,7 +89,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
         {/* Subtitle */}
         <p className="max-w-3xl mx-auto text-sm sm:text-base md:text-lg text-zinc-300 leading-relaxed font-normal">
-          Delhi Government Services, Government Guides, Banking Guides, Official Links, Government Tools, Finders, Calculators and Step-by-Step Help.
+          {currentStateId === 'delhi'
+            ? 'Delhi Government Services, Government Guides, Banking Guides, Official Links, Government Tools, Finders, Calculators and Step-by-Step Help.'
+            : `${stateInfo.name} & Central Government Services, Official Portals, Banking Guides, Finders, Calculators and 100% Verified Step-by-Step Help.`}
         </p>
 
         {/* Large Smart Search Bar */}
@@ -130,6 +166,38 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 {kw}
               </button>
             ))}
+          </div>
+
+          {/* Quick Government Finders Bar */}
+          <div className="mt-6 pt-5 border-t border-zinc-800/60">
+            <div className="flex items-center justify-between mb-3 px-1">
+              <span className="text-xs font-bold text-amber-400 flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5 text-[#FF6B00]" />
+                Direct Government Finders for <strong className="text-white underline decoration-[#FF6B00]">{stateInfo.name}</strong>:
+              </span>
+              <span className="text-[11px] text-zinc-400 font-medium hidden sm:inline">
+                Click any tool to locate in {stateInfo.name}
+              </span>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+              {quickFinders.map((f) => (
+                <button
+                  key={f.id}
+                  onClick={() => {
+                    if (onNavigateToFinder) {
+                      onNavigateToFinder(f.id);
+                    }
+                  }}
+                  className="p-2.5 rounded-xl bg-[#141D2E] hover:bg-[#FF6B00]/15 border border-zinc-800 hover:border-[#FF6B00] transition text-left flex flex-col justify-between group shadow-sm"
+                >
+                  <span className="text-xs font-bold text-zinc-200 group-hover:text-[#FF6B00] flex items-center justify-between">
+                    {f.label}
+                    <ArrowRight className="w-3 h-3 text-zinc-500 group-hover:text-[#FF6B00] group-hover:translate-x-0.5 transition-transform" />
+                  </span>
+                  <span className="text-[10px] text-zinc-400 group-hover:text-zinc-300 mt-1">{f.hindi}</span>
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 

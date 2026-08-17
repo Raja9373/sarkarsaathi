@@ -1,0 +1,16 @@
+[
+  {
+    "id": "rj-ps-01",
+    "name": "Police Station Ashok Nagar Jaipur",
+    "hindiName": "थाना अशोक नगर जयपुर",
+    "district": "Jaipur",
+    "state": "Rajasthan",
+    "address": "Statue Circle, Ashok Nagar, Jaipur, Rajasthan",
+    "pincode": "302001",
+    "phone": "0141-2385100",
+    "shoPhone": "9414000101",
+    "pcrNumber": "112",
+    "jurisdictionAreas": ["Statue Circle", "C-Scheme", "M.I. Road", "Secretariat Area", "Central Park"],
+    "landmark": "Near Statue Circle & Secretariat"
+  }
+]

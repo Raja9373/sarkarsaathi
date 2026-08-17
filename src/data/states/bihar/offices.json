@@ -1,0 +1,47 @@
+[
+  {
+    "id": "br-off-01",
+    "name": "Patna Collectorate & District Magistrate Office",
+    "hindiName": "पटना समाहरणालय एवं जिलाधिकारी कार्यालय",
+    "category": "District Magistrate / DC Office",
+    "district": "Patna",
+    "state": "Bihar",
+    "address": "Collectorate Ghat, Near Gandhi Maidan, Patna, Bihar - 800001",
+    "pincode": "800001",
+    "helpline": "0612-2219545 / 0612-2223838",
+    "email": "dm-patna.bih@nic.in",
+    "website": "https://patna.nic.in",
+    "publicHours": "10:00 AM - 05:00 PM (Mon-Sat)",
+    "services": ["RTPS Bihar Portal Services", "Jati (Caste), Aay (Income), Niwas (Residential) Certificate", "Land Mutation & Dakhil-Kharij", "Bihar Grievance Redressal (Janta Darbar)", "Senior Citizen ID"]
+  },
+  {
+    "id": "br-off-02",
+    "name": "RTPS Counter (Right to Public Services Center Patna Sadar)",
+    "hindiName": "लोक सेवाओं का अधिकार केंद्र (RTPS पटना सदर)",
+    "category": "CSC / RTPS Counter",
+    "district": "Patna",
+    "state": "Bihar",
+    "address": "Patna Sadar Block Campus, Near Hindi Sahitya Sammelan, Kadamkuan, Patna, Bihar",
+    "pincode": "800003",
+    "helpline": "1800-345-6284",
+    "email": "serviceonline.bihar@gov.in",
+    "website": "https://serviceonline.bihar.gov.in",
+    "publicHours": "09:30 AM - 05:30 PM (Mon-Sat)",
+    "services": ["OBC (Non-Creamy Layer) Certificate", "EWS Certificate", "Character (Acharan) Certificate", "Ration Card (EPDS Bihar)", "Kanya Utthan Yojana Registration"]
+  },
+  {
+    "id": "br-off-03",
+    "name": "SDM Office Patna Sadar",
+    "hindiName": "एसडीएम कार्यालय पटना सदर",
+    "category": "Sub-Divisional Magistrate (SDM)",
+    "district": "Patna",
+    "state": "Bihar",
+    "address": "Collectorate Campus, Patna, Bihar",
+    "pincode": "800001",
+    "helpline": "0612-2222588",
+    "email": "sdmpatnasadar@gmail.com",
+    "website": "https://patna.nic.in",
+    "publicHours": "10:00 AM - 04:30 PM (Mon-Fri)",
+    "services": ["Court Proceedings", "Magisterial Permissions", "Law and Order Certificates", "Legal Heir Certificate"]
+  }
+]

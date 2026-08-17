@@ -1,0 +1,170 @@
+[
+  {
+    "pin": "141001",
+    "area": "Ludhiana Head Post Office, Civil Lines, Court Complex, Bharat Nagar, Ferozepur Road, Fountain Chowk, Rakh Bagh",
+    "district": "Ludhiana",
+    "postOffice": "Ludhiana Head Post Office (HO)",
+    "stdCode": "0161",
+    "state": "Punjab"
+  },
+  {
+    "pin": "141002",
+    "area": "Miller Ganj, Gill Road, Dashmesh Nagar, Vishwakarma Chowk, Industrial Area B",
+    "district": "Ludhiana",
+    "postOffice": "Miller Ganj Sub Post Office",
+    "stdCode": "0161",
+    "state": "Punjab"
+  },
+  {
+    "pin": "141003",
+    "area": "Model Town, Pritm Nagar, Model Town Extension, Jawaddi, Gulchaman Gali",
+    "district": "Ludhiana",
+    "postOffice": "Model Town Ludhiana SO",
+    "stdCode": "0161",
+    "state": "Punjab"
+  },
+  {
+    "pin": "141008",
+    "area": "Sundar Nagar, Basti Jodhewal, Rahon Road, Subhash Nagar, Kakowal Road",
+    "district": "Ludhiana",
+    "postOffice": "Sundar Nagar SO",
+    "stdCode": "0161",
+    "state": "Punjab"
+  },
+  {
+    "pin": "141012",
+    "area": "PAU Campus, Punjab Agricultural University, Sarabha Nagar, Gurdev Nagar, Malhar Road",
+    "district": "Ludhiana",
+    "postOffice": "PAU Ludhiana SO",
+    "stdCode": "0161",
+    "state": "Punjab"
+  },
+  {
+    "pin": "143001",
+    "area": "Amritsar GPO, Golden Temple Area, Hall Bazar, Katra Ahluwalia, Town Hall, Lawrence Road, Court Road",
+    "district": "Amritsar",
+    "postOffice": "Amritsar General Post Office (GPO)",
+    "stdCode": "0183",
+    "state": "Punjab"
+  },
+  {
+    "pin": "143002",
+    "area": "Majitha Road, Medical College Campus, Guru Nanak Dev Hospital Area, Green Avenue",
+    "district": "Amritsar",
+    "postOffice": "Majitha Road SO",
+    "stdCode": "0183",
+    "state": "Punjab"
+  },
+  {
+    "pin": "143005",
+    "area": "Guru Nanak Dev University (GNDU), Chheharta, Kabir Park, Model Town Amritsar",
+    "district": "Amritsar",
+    "postOffice": "GNDU Campus SO",
+    "stdCode": "0183",
+    "state": "Punjab"
+  },
+  {
+    "pin": "144001",
+    "area": "Jalandhar City HO, Company Bagh, GT Road, Jyoti Chowk, Model Town Jalandhar, Rainak Bazar",
+    "district": "Jalandhar",
+    "postOffice": "Jalandhar City Head Post Office",
+    "stdCode": "0181",
+    "state": "Punjab"
+  },
+  {
+    "pin": "144005",
+    "area": "Jalandhar Cantt HO, Rama Mandi, Deep Nagar, Military Camp, PAP Complex",
+    "district": "Jalandhar",
+    "postOffice": "Jalandhar Cantt Head Post Office",
+    "stdCode": "0181",
+    "state": "Punjab"
+  },
+  {
+    "pin": "147001",
+    "area": "Patiala Head Post Office, The Mall, Baradari Gardens, Leela Bhawan, Rajpura Colony, Qila Mubarak Area",
+    "district": "Patiala",
+    "postOffice": "Patiala Head Post Office (HO)",
+    "stdCode": "0175",
+    "state": "Punjab"
+  },
+  {
+    "pin": "147002",
+    "area": "Punjabi University Campus, Urban Estate Phase 1 & 2, Rajpura Road",
+    "district": "Patiala",
+    "postOffice": "Punjabi University SO",
+    "stdCode": "0175",
+    "state": "Punjab"
+  },
+  {
+    "pin": "151001",
+    "area": "Bathinda Head Post Office, Mall Road, Civil Lines, Court Complex, GT Road Bathinda, Thermal Colony",
+    "district": "Bathinda",
+    "postOffice": "Bathinda Head Post Office (HO)",
+    "stdCode": "0164",
+    "state": "Punjab"
+  },
+  {
+    "pin": "160055",
+    "area": "SAS Nagar Mohali, Phase 1, Phase 2, Phase 3B2, Phase 5, Phase 7, Industrial Area Phase 1-5",
+    "district": "SAS Nagar (Mohali)",
+    "postOffice": "Mohali Sub Post Office",
+    "stdCode": "0172",
+    "state": "Punjab"
+  },
+  {
+    "pin": "160059",
+    "area": "Sector 59 Mohali, Phase 9, Phase 10, Phase 11, PCA Stadium Area, Sector 70 Mohali",
+    "district": "SAS Nagar (Mohali)",
+    "postOffice": "Sector 59 Mohali SO",
+    "stdCode": "0172",
+    "state": "Punjab"
+  },
+  {
+    "pin": "160071",
+    "area": "Sector 71 Mohali, Sohana, Knowledge City, IISER Campus, ISB Mohali",
+    "district": "SAS Nagar (Mohali)",
+    "postOffice": "Sector 71 Mohali SO",
+    "stdCode": "0172",
+    "state": "Punjab"
+  },
+  {
+    "pin": "140401",
+    "area": "Rajpura City, Focal Point Rajpura, ITI Chowk, Kasturba Sewa Mandir",
+    "district": "Patiala",
+    "postOffice": "Rajpura Head Post Office",
+    "stdCode": "01762",
+    "state": "Punjab"
+  },
+  {
+    "pin": "142001",
+    "area": "Moga Head Post Office, GT Road Moga, Main Bazar, New Town, Bagha Purana Road",
+    "district": "Moga",
+    "postOffice": "Moga Head Post Office",
+    "stdCode": "01636",
+    "state": "Punjab"
+  },
+  {
+    "pin": "143521",
+    "area": "Gurdaspur Head Post Office, Tibber Road, Jail Road, Civil Lines Gurdaspur",
+    "district": "Gurdaspur",
+    "postOffice": "Gurdaspur Head Post Office",
+    "stdCode": "01874",
+    "state": "Punjab"
+  },
+  {
+    "pin": "152001",
+    "area": "Firozpur City HO, Delhi Gate, Bagdadi Gate, Cantonment Road",
+    "district": "Firozpur",
+    "postOffice": "Firozpur City Head Post Office",
+    "stdCode": "01632",
+    "state": "Punjab"
+  },
+  {
+    "pin": "146001",
+    "area": "Hoshiarpur Head Post Office, Clock Tower, Mall Road, Civil Lines Hoshiarpur",
+    "district": "Hoshiarpur",
+    "postOffice": "Hoshiarpur Head Post Office",
+    "stdCode": "01882",
+    "state": "Punjab"
+  }
+]

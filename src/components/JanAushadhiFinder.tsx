@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Pill, 
   Search, 
@@ -20,17 +20,32 @@ import {
   Award
 } from 'lucide-react';
 import { 
-  DELHI_JAN_AUSHADHI_DISTRICTS, 
-  getMatchingJanAushadhiKendras, 
+  getJanAushadhiKendrasByState,
+  getJanAushadhiDistrictsForState,
   JanAushadhiKendraItem 
 } from '../data/janAushadhiData';
+import { getStateInfo } from '../data/statesData';
 
-export const JanAushadhiFinder: React.FC = () => {
+interface JanAushadhiFinderProps {
+  currentStateId?: string;
+}
+
+export const JanAushadhiFinder: React.FC<JanAushadhiFinderProps> = ({ currentStateId = 'delhi' }) => {
+  const [selectedState, setSelectedState] = useState<string>(currentStateId);
   const [query, setQuery] = useState<string>('');
   const [selectedDistrict, setSelectedDistrict] = useState<string>('All Districts');
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
-  const kendras = getMatchingJanAushadhiKendras(selectedDistrict, query);
+  useEffect(() => {
+    if (currentStateId) {
+      setSelectedState(currentStateId);
+      setSelectedDistrict('All Districts');
+    }
+  }, [currentStateId]);
+
+  const stateInfo = getStateInfo(selectedState);
+  const districts = getJanAushadhiDistrictsForState(selectedState);
+  const kendras = getJanAushadhiKendrasByState(selectedState, selectedDistrict, query);
 
   const handleCopyKendraDetails = (kendra: JanAushadhiKendraItem) => {
     const textToCopy = `${kendra.name} (${kendra.kendraCode})\nOperator: ${kendra.operatorName || 'PMBJP Certified Pharmacist'}\nDistrict: ${kendra.district}\nAddress: ${kendra.address} - ${kendra.pincode}\nLandmark: ${kendra.landmark}\nTimings: ${kendra.timings}\nPhone/Helpline: ${kendra.phone}\nAvailable Generic Medicines: ~${kendra.medicinesAvailableCount || 1800}+ items`;
@@ -38,18 +53,6 @@ export const JanAushadhiFinder: React.FC = () => {
     setCopiedId(kendra.id);
     setTimeout(() => setCopiedId(null), 2000);
   };
-
-  const QUICK_LOCATIONS = [
-    { label: 'AIIMS OPD (24x7)', q: 'AIIMS' },
-    { label: 'LNJP Hospital', q: 'LNJP' },
-    { label: 'RML Hospital (24x7)', q: 'RML' },
-    { label: 'Safdarjung Hospital', q: 'Safdarjung' },
-    { label: 'GTB Hospital Shahdara', q: 'GTB' },
-    { label: 'Connaught Place', q: 'Connaught' },
-    { label: 'Karol Bagh', q: 'Karol Bagh' },
-    { label: 'Dwarka Sec 12', q: 'Dwarka' },
-    { label: 'Rohini Sec 7', q: 'Rohini' }
-  ];
 
   return (
     <div className="space-y-6 text-zinc-100">
@@ -61,13 +64,13 @@ export const JanAushadhiFinder: React.FC = () => {
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h3 className="text-base font-black text-white">Pradhan Mantri Bharatiya Janaushadhi Kendra (PMBJP) Finder</h3>
+              <h3 className="text-base font-black text-white">{stateInfo.name} PM Jan Aushadhi Kendra (PMBJP) Finder</h3>
               <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-bold uppercase">
                 PMBI Govt of India Verified
               </span>
             </div>
             <p className="text-xs text-zinc-300 mt-0.5">
-              Locate official Pradhan Mantri Jan Aushadhi generic medicine stores across Delhi NCT & NCR for high-quality generic medicines & surgical items at 50% to 90% lower prices compared to branded medicines.
+              Locate official Pradhan Mantri Jan Aushadhi generic medicine stores across {stateInfo.name} for high-quality generic medicines & surgical items at 50% to 90% lower prices.
             </p>
           </div>
         </div>
@@ -97,10 +100,10 @@ export const JanAushadhiFinder: React.FC = () => {
         <Sparkles className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
         <div className="space-y-1">
           <p className="font-bold text-emerald-200">
-            Key Highlights of PM Jan Aushadhi Generic Medicine Kendras:
+            Key Highlights of PM Jan Aushadhi Generic Medicine Kendras in {stateInfo.name}:
           </p>
           <p className="text-zinc-300">
-            Over <strong className="text-white">2,000+ quality generic medicines</strong> and <strong className="text-white">300+ surgical items</strong> available. All products manufactured in WHO-GMP compliant facilities and tested at NABL accredited laboratories. Download the <em>"Jan Aushadhi Sugam"</em> mobile app to check live stock & prices.
+            Over <strong className="text-white">2,000+ quality generic medicines</strong> and <strong className="text-white">300+ surgical items</strong> available across {stateInfo.name}. All products manufactured in WHO-GMP compliant facilities.
           </p>
         </div>
       </div>
@@ -115,7 +118,7 @@ export const JanAushadhiFinder: React.FC = () => {
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search by hospital (AIIMS, LNJP, RML, Safdarjung), area (Connaught Place, Dwarka, Rohini), PIN code, or Kendra ID..."
+              placeholder={`Search hospital, locality, area, PIN code in ${stateInfo.name}...`}
               className="w-full bg-zinc-950 border border-zinc-800 rounded-xl pl-9 pr-8 py-2.5 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-emerald-500"
             />
             {query && (
@@ -135,28 +138,11 @@ export const JanAushadhiFinder: React.FC = () => {
               onChange={(e) => setSelectedDistrict(e.target.value)}
               className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-emerald-500"
             >
-              {DELHI_JAN_AUSHADHI_DISTRICTS.map((dist) => (
+              {districts.map((dist) => (
                 <option key={dist} value={dist}>{dist}</option>
               ))}
             </select>
           </div>
-        </div>
-
-        {/* Quick Search Chips */}
-        <div className="flex flex-wrap items-center gap-2 text-xs">
-          <span className="text-zinc-400 font-semibold text-[11px]">Popular Jan Aushadhi Stores:</span>
-          {QUICK_LOCATIONS.map((item, idx) => (
-            <button
-              key={idx}
-              onClick={() => {
-                setQuery(item.q);
-                setSelectedDistrict('All Districts');
-              }}
-              className="px-2.5 py-1 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-emerald-500 text-zinc-300 hover:text-white transition text-[11px]"
-            >
-              {item.label}
-            </button>
-          ))}
         </div>
       </div>
 
@@ -165,7 +151,7 @@ export const JanAushadhiFinder: React.FC = () => {
         <div className="flex items-center gap-2">
           <Info className="w-4 h-4 text-emerald-400" />
           <span className="text-zinc-300 font-medium">
-            Showing <strong className="text-white">{kendras.length}</strong> Jan Aushadhi Kendra{kendras.length !== 1 ? 's' : ''} in {selectedDistrict !== 'All Districts' ? selectedDistrict : 'Delhi NCR'}
+            Showing <strong className="text-white">{kendras.length}</strong> Jan Aushadhi Kendra{kendras.length !== 1 ? 's' : ''} in {selectedDistrict !== 'All Districts' ? selectedDistrict : stateInfo.name}
           </span>
         </div>
         {(query || selectedDistrict !== 'All Districts') && (

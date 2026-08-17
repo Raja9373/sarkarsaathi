@@ -1,0 +1,47 @@
+[
+  {
+    "id": "mh-off-01",
+    "name": "Mantralaya & Maharashtra State Administrative HQ",
+    "hindiName": "मंत्रालय एवं महाराष्ट्र राज्य प्रशासनिक मुख्यालय",
+    "category": "Secretariat / State HQ",
+    "district": "Mumbai City",
+    "state": "Maharashtra",
+    "address": "Madam Cama Road, Nariman Point, Mumbai, Maharashtra - 400032",
+    "pincode": "400032",
+    "helpline": "022-22025151 / 1800-120-8040",
+    "email": "cmo@maharashtra.gov.in",
+    "website": "https://maharashtra.gov.in",
+    "publicHours": "09:45 AM - 06:15 PM (Mon-Fri)",
+    "services": ["Aaple Sarkar Portal Services", "State Policy & Resolutions", "Disaster Response", "Right to Services (RTS) Commission"]
+  },
+  {
+    "id": "mh-off-02",
+    "name": "Collector & District Magistrate Office Mumbai City",
+    "hindiName": "जिल्हाधिकारी कार्यालय मुंबई शहर",
+    "category": "District Magistrate / DC Office",
+    "district": "Mumbai City",
+    "state": "Maharashtra",
+    "address": "Old Custom House, Fort, Mumbai, Maharashtra - 400001",
+    "pincode": "400001",
+    "helpline": "022-22661231",
+    "email": "collector.mumbaicity@maharashtra.gov.in",
+    "website": "https://mumbaicity.gov.in",
+    "publicHours": "10:00 AM - 05:00 PM (Mon-Fri)",
+    "services": ["Aaple Sarkar Domicile / Income / Caste Verification", "Land Revenue & 7/12 Extract (Satbara)", "Non-Creamy Layer Certificate", "Election & Rationing"]
+  },
+  {
+    "id": "mh-off-03",
+    "name": "Aaple Sarkar Seva Kendra (MahaOnline CSC Center Mumbai)",
+    "hindiName": "आपले सरकार सेवा केंद्र (महाऑनलाईन केंद्र)",
+    "category": "CSC / MahaOnline Kendra",
+    "district": "Mumbai City",
+    "state": "Maharashtra",
+    "address": "Opp. GPO, Fort, Mumbai, Maharashtra",
+    "pincode": "400001",
+    "helpline": "1800-120-8040",
+    "email": "support@mahaonline.gov.in",
+    "website": "https://aaplesarkar.mahaonline.gov.in",
+    "publicHours": "09:30 AM - 06:00 PM (Mon-Sat)",
+    "services": ["Age, Nationality and Domicile Certificate", "Caste Certificate", "Income Certificate", "Ration Card Application", "Senior Citizen Card", "Farmer 7/12 Extract"]
+  }
+]

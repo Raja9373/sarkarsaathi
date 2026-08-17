@@ -1,0 +1,49 @@
+name: Daily Scheme Auto-Sync (SarkarSaathi)
+
+on:
+  schedule:
+    # Runs everyday at 06:00 AM IST (00:30 UTC)
+    - cron: '30 0 * * *'
+  workflow_dispatch: # Allows manual trigger from GitHub Actions UI
+
+permissions:
+  contents: write
+
+jobs:
+  sync-schemes:
+    name: Auto-Fetch & AI-Summarize Daily Schemes
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci || npm install
+
+      - name: Run Auto-Sync Script with Gemini AI
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: node scripts/auto-sync.js
+
+      - name: Commit and Push Updated Schemes Data
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/data/schemes.json
+          
+          # Only commit if there are actual new additions
+          if git diff --staged --quiet; then
+            echo "No new changes detected. All schemes are up-to-date."
+          else
+            git commit -m "Auto-sync: Daily Government Schemes update [skip ci]"
+            git push origin main || git push origin master || git push
+            echo "Successfully pushed latest scheme updates."
+          fi

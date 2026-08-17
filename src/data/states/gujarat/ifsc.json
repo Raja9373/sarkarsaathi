@@ -1,0 +1,62 @@
+[
+  {
+    "ifsc": "SBIN0000301",
+    "bank": "State Bank of India",
+    "branch": "Ahmedabad Main Branch (Bhadra)",
+    "district": "Ahmedabad",
+    "city": "Ahmedabad",
+    "state": "Gujarat",
+    "address": "Bhadra, Near Lal Darwaja, Ahmedabad, Gujarat - 380001",
+    "contact": "079-25507111",
+    "micr": "380002002",
+    "upi": true,
+    "rtgs": true,
+    "neft": true,
+    "imps": true
+  },
+  {
+    "ifsc": "BARB0VJAMEX",
+    "bank": "Bank of Baroda",
+    "branch": "Ahmedabad Ellisbridge",
+    "district": "Ahmedabad",
+    "city": "Ahmedabad",
+    "state": "Gujarat",
+    "address": "Opposite Town Hall, Ellis Bridge, Ahmedabad, Gujarat - 380006",
+    "contact": "079-26578000",
+    "micr": "380012015",
+    "upi": true,
+    "rtgs": true,
+    "neft": true,
+    "imps": true
+  },
+  {
+    "ifsc": "HDFC0000006",
+    "bank": "HDFC Bank",
+    "branch": "Ahmedabad Navrangpura",
+    "district": "Ahmedabad",
+    "city": "Ahmedabad",
+    "state": "Gujarat",
+    "address": "Mithakhali Six Roads, Navrangpura, Ahmedabad, Gujarat - 380009",
+    "contact": "079-61606161",
+    "micr": "380240002",
+    "upi": true,
+    "rtgs": true,
+    "neft": true,
+    "imps": true
+  },
+  {
+    "ifsc": "BARB0SURATM",
+    "bank": "Bank of Baroda",
+    "branch": "Surat Main Branch",
+    "district": "Surat",
+    "city": "Surat",
+    "state": "Gujarat",
+    "address": "Bhaga Talav, Surat, Gujarat - 395003",
+    "contact": "0261-2423000",
+    "micr": "395012002",
+    "upi": true,
+    "rtgs": true,
+    "neft": true,
+    "imps": true
+  }
+]

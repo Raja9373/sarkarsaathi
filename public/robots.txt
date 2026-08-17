@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+Allow: /yojana/
+Allow: /scheme/
+Allow: /service/
+Allow: /blog/
+Allow: /state/
+Disallow: /api/
+Disallow: /faq/
+Disallow: /faqs
+
+Sitemap: https://www.sarkarsaathi.org/sitemap.xml

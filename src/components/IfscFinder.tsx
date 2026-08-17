@@ -27,13 +27,57 @@ import {
 } from '../data/ifscData';
 import { IfscBranch } from '../types';
 
-export const IfscFinder: React.FC = () => {
+interface IfscFinderProps {
+  currentStateId?: string;
+}
+
+const STATE_ID_TO_NAME: Record<string, string> = {
+  'delhi': 'Delhi',
+  'punjab': 'Punjab',
+  'pb': 'Punjab',
+  'haryana': 'Haryana',
+  'hr': 'Haryana',
+  'up': 'Uttar Pradesh',
+  'uttar-pradesh': 'Uttar Pradesh',
+  'maharashtra': 'Maharashtra',
+  'mh': 'Maharashtra',
+  'rajasthan': 'Rajasthan',
+  'rj': 'Rajasthan',
+  'bihar': 'Bihar',
+  'br': 'Bihar',
+  'gujarat': 'Gujarat',
+  'gj': 'Gujarat',
+  'karnataka': 'Karnataka',
+  'ka': 'Karnataka',
+  'west-bengal': 'West Bengal',
+  'wb': 'West Bengal',
+  'tamil-nadu': 'Tamil Nadu',
+  'tn': 'Tamil Nadu',
+  'kerala': 'Kerala',
+  'madhya-pradesh': 'Madhya Pradesh',
+  'telangana': 'Telangana',
+};
+
+export const IfscFinder: React.FC<IfscFinderProps> = ({ currentStateId = 'delhi' }) => {
+  const initialMapped = STATE_ID_TO_NAME[currentStateId?.toLowerCase()] || 'Delhi';
   // Input search states
   const [directIfscInput, setDirectIfscInput] = useState<string>('');
   const [selectedBankId, setSelectedBankId] = useState<string>('');
-  const [selectedState, setSelectedState] = useState<string>('Delhi');
-  const [selectedCity, setSelectedCity] = useState<string>('New Delhi');
+  const [selectedState, setSelectedState] = useState<string>(initialMapped);
+  const [selectedCity, setSelectedCity] = useState<string>(CITIES_BY_STATE[initialMapped]?.[0] || 'New Delhi');
   const [selectedBranchIfsc, setSelectedBranchIfsc] = useState<string>('');
+
+  // Sync if currentStateId changes
+  useEffect(() => {
+    if (currentStateId) {
+      const targetState = STATE_ID_TO_NAME[currentStateId.toLowerCase()] || 'Delhi';
+      setSelectedState(targetState);
+      const cities = CITIES_BY_STATE[targetState] || [];
+      if (cities.length > 0) {
+        setSelectedCity(cities[0]);
+      }
+    }
+  }, [currentStateId]);
 
   // General text search filter
   const [generalSearchQuery, setGeneralSearchQuery] = useState<string>('');

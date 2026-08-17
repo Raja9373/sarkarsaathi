@@ -1,0 +1,62 @@
+[
+  {
+    "ifsc": "SBIN0000152",
+    "bank": "State Bank of India",
+    "branch": "Patna Main Branch (Gandhi Maidan)",
+    "district": "Patna",
+    "city": "Patna",
+    "state": "Bihar",
+    "address": "West Gandhi Maidan, Patna, Bihar - 800001",
+    "contact": "0612-2224500",
+    "micr": "800002002",
+    "upi": true,
+    "rtgs": true,
+    "neft": true,
+    "imps": true
+  },
+  {
+    "ifsc": "PUNB0002400",
+    "bank": "Punjab National Bank",
+    "branch": "Patna Fraser Road",
+    "district": "Patna",
+    "city": "Patna",
+    "state": "Bihar",
+    "address": "Fraser Road, Dak Bungalow Chowk, Patna, Bihar - 800001",
+    "contact": "0612-2223800",
+    "micr": "800024002",
+    "upi": true,
+    "rtgs": true,
+    "neft": true,
+    "imps": true
+  },
+  {
+    "ifsc": "HDFC0000096",
+    "bank": "HDFC Bank",
+    "branch": "Patna Exhibition Road",
+    "district": "Patna",
+    "city": "Patna",
+    "state": "Bihar",
+    "address": "Exhibition Road, Near Big Bazar, Patna, Bihar - 800001",
+    "contact": "0612-6160616",
+    "micr": "800240002",
+    "upi": true,
+    "rtgs": true,
+    "neft": true,
+    "imps": true
+  },
+  {
+    "ifsc": "SBIN0000078",
+    "bank": "State Bank of India",
+    "branch": "Gaya Main Branch",
+    "district": "Gaya",
+    "city": "Gaya",
+    "state": "Bihar",
+    "address": "GB Road, Near Tower Chowk, Gaya, Bihar - 823001",
+    "contact": "0631-2220400",
+    "micr": "823002002",
+    "upi": true,
+    "rtgs": true,
+    "neft": true,
+    "imps": true
+  }
+]

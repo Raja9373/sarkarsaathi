@@ -1,0 +1,10 @@
+[
+  { "pin": "600001", "area": "George Town, Parrys Corner, High Court, Beach Station, Rajaji Salai", "district": "Chennai", "postOffice": "Chennai GPO", "stdCode": "044" },
+  { "pin": "600002", "area": "Mount Road, Anna Salai, Triplicane, LIC Building, Express Avenue", "district": "Chennai", "postOffice": "Anna Salai SO", "stdCode": "044" },
+  { "pin": "600004", "area": "Mylapore, Kapaleeshwarar Temple, Luz Corner, Santhome", "district": "Chennai", "postOffice": "Mylapore SO", "stdCode": "044" },
+  { "pin": "600017", "area": "T. Nagar, Panagal Park, Pondy Bazaar, Usman Road", "district": "Chennai", "postOffice": "Theagaraya Nagar HO", "stdCode": "044" },
+  { "pin": "600020", "area": "Adyar, Gandhi Nagar, Shastri Nagar, Besant Nagar Beach", "district": "Chennai", "postOffice": "Adyar SO", "stdCode": "044" },
+  { "pin": "600040", "area": "Anna Nagar, Shanthi Colony, Roundtana, Tower Park", "district": "Chennai", "postOffice": "Anna Nagar SO", "stdCode": "044" },
+  { "pin": "641001", "area": "Coimbatore Central, Town Hall, Oppanakara Street, Railway Station", "district": "Coimbatore", "postOffice": "Coimbatore HO", "stdCode": "0422" },
+  { "pin": "625001", "area": "Madurai Central, Meenakshi Temple, West Masi Street, Town Hall", "district": "Madurai", "postOffice": "Madurai HO", "stdCode": "0452" }
+]

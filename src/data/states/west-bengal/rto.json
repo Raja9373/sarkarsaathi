@@ -1,0 +1,36 @@
+[
+  {
+    "id": "wb-rto-01",
+    "rtoCode": "WB-01",
+    "zoneName": "Public Vehicles Department (PVD) Beltala Kolkata",
+    "district": "Kolkata",
+    "state": "West Bengal",
+    "address": "38, Beltala Road, Bhowanipore, Kolkata, West Bengal",
+    "pincode": "700020",
+    "phone": "033-24751621",
+    "email": "pvd-kol-wb@nic.in",
+    "timings": "10:30 AM - 05:00 PM (Mon-Sat)",
+    "landmark": "Near Lansdowne & Hazra Crossing",
+    "jurisdictionAreas": ["Kolkata South", "Kolkata Central", "Alipore", "Ballygunge", "Bhowanipore"],
+    "servicesOffered": ["Smart Card Driving License", "Vehicle RC Transfer", "Fitness Inspection", "Trade License", "Commercial Vehicle Permit"],
+    "automatedTrackAvailable": true,
+    "mloIncharge": "Director, Public Vehicles Department"
+  },
+  {
+    "id": "wb-rto-02",
+    "rtoCode": "WB-02",
+    "zoneName": "PVD Kolkata North (Kasba / Salt Lake)",
+    "district": "Kolkata / North 24 Parganas",
+    "state": "West Bengal",
+    "address": "Kasba Transport Complex, EM Bypass, Kolkata, West Bengal",
+    "pincode": "700107",
+    "phone": "033-24420011",
+    "email": "pvdkasba-wb@nic.in",
+    "timings": "10:30 AM - 05:00 PM (Mon-Sat)",
+    "landmark": "Near Ruby General Hospital EM Bypass",
+    "jurisdictionAreas": ["Kasba", "EM Bypass", "Garia", "Jadavpur", "Salt Lake City"],
+    "servicesOffered": ["DL Issue & Endorsement", "Permanent RC", "Automated Driving Test"],
+    "automatedTrackAvailable": true,
+    "mloIncharge": "Regional Transport Officer (Kasba)"
+  }
+]

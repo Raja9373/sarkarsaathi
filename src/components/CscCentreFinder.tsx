@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Laptop, 
   Search, 
@@ -19,34 +19,37 @@ import {
 } from 'lucide-react';
 import { 
   MCD_ZONES, 
-  getMatchingCscCentres, 
+  getCscCentresByState, 
   CscCentreItem 
 } from '../data/cscData';
+import { getStateInfo } from '../data/statesData';
 
-export const CscCentreFinder: React.FC = () => {
+interface CscCentreFinderProps {
+  currentStateId?: string;
+}
+
+export const CscCentreFinder: React.FC<CscCentreFinderProps> = ({ currentStateId = 'delhi' }) => {
+  const [selectedState, setSelectedState] = useState<string>(currentStateId);
   const [query, setQuery] = useState<string>('');
-  const [selectedZone, setSelectedZone] = useState<string>('All MCD Zones');
+  const [selectedZone, setSelectedZone] = useState<string>('All Zones');
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
-  const centres = getMatchingCscCentres(selectedZone, query);
+  useEffect(() => {
+    if (currentStateId) {
+      setSelectedState(currentStateId);
+      setSelectedZone('All Zones');
+    }
+  }, [currentStateId]);
+
+  const stateInfo = getStateInfo(selectedState);
+  const centres = getCscCentresByState(selectedState, selectedZone, query);
 
   const handleCopyCentreDetails = (centre: CscCentreItem) => {
-    const textToCopy = `${centre.name}\nVLE: ${centre.vleName || 'MCD Official'}\nMCD Zone: ${centre.mcdZone}\nAddress: ${centre.address} - ${centre.pincode}\nLandmark: ${centre.landmark}\nTimings: ${centre.timings}\nPhone/Helpline: ${centre.phone}\nServices: ${centre.servicesOffered.join(', ')}`;
+    const textToCopy = `${centre.name}\nVLE: ${centre.vleName || 'Citizen Service Official'}\nZone/District: ${centre.mcdZone}\nAddress: ${centre.address} - ${centre.pincode}\nLandmark: ${centre.landmark}\nTimings: ${centre.timings}\nPhone/Helpline: ${centre.phone}\nServices: ${centre.servicesOffered.join(', ')}`;
     navigator.clipboard.writeText(textToCopy);
     setCopiedId(centre.id);
     setTimeout(() => setCopiedId(null), 2000);
   };
-
-  const QUICK_AREAS = [
-    { label: 'Lajpat Nagar (Central)', q: 'Lajpat Nagar' },
-    { label: 'Kalkaji', q: 'Kalkaji' },
-    { label: 'Saket (South)', q: 'Saket' },
-    { label: 'Rajouri Garden (West)', q: 'Rajouri Garden' },
-    { label: 'Dwarka Sec 12', q: 'Dwarka' },
-    { label: 'Rohini Sec 17', q: 'Rohini' },
-    { label: 'Civil Lines', q: 'Civil Lines' },
-    { label: 'Laxmi Nagar (East)', q: 'Laxmi Nagar' }
-  ];
 
   return (
     <div className="space-y-6 text-zinc-100">
@@ -58,33 +61,33 @@ export const CscCentreFinder: React.FC = () => {
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h3 className="text-base font-black text-white">Delhi Common Service Centre (CSC) & MCD Citizen Facilitation Finder</h3>
+              <h3 className="text-base font-black text-white">{stateInfo.name} Common Service Centre (CSC) & Citizen Facilitation Finder</h3>
               <span className="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30 font-bold uppercase">
-                MCD Govt Verified
+                Digital India Verified
               </span>
             </div>
             <p className="text-xs text-zinc-300 mt-0.5">
-              Locate authorized Common Service Centres (CSC) and MCD Citizen Facilitation Centres across all 12 Delhi MCD Zones for Property Tax, Birth/Death Certificates, e-District services, and Trade Licenses.
+              Locate authorized Common Service Centres (CSC) and Citizen Facilitation Centres across {stateInfo.name} for Certificates, e-District services, utility bills, and welfare scheme registrations.
             </p>
           </div>
         </div>
 
         <div className="flex items-center gap-2 flex-wrap flex-shrink-0">
           <a
-            href="https://mcdonline.nic.in/portal/cscList"
+            href="https://findmycsc.nic.in"
             target="_blank"
             rel="noopener noreferrer"
             className="px-3.5 py-2 rounded-xl bg-[#FF6B00] hover:bg-[#FF6B00]/90 text-white font-bold text-xs inline-flex items-center gap-1.5 shadow-md transition"
           >
             <ExternalLink className="w-4 h-4" />
-            <span>MCD Official CSC Portal</span>
+            <span>Digital India CSC Locator</span>
           </a>
           <a
-            href="tel:155305"
+            href="tel:14599"
             className="px-3 py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-amber-400 border border-amber-800/60 text-xs font-bold inline-flex items-center gap-1.5"
           >
             <PhoneCall className="w-3.5 h-3.5" />
-            <span>MCD Helpline 155305</span>
+            <span>CSC National 14599</span>
           </a>
         </div>
       </div>
@@ -137,23 +140,6 @@ export const CscCentreFinder: React.FC = () => {
               ))}
             </select>
           </div>
-        </div>
-
-        {/* Quick Search Chips */}
-        <div className="flex flex-wrap items-center gap-2 text-xs">
-          <span className="text-zinc-400 font-semibold text-[11px]">Popular MCD CSC Centers:</span>
-          {QUICK_AREAS.map((item, idx) => (
-            <button
-              key={idx}
-              onClick={() => {
-                setQuery(item.q);
-                setSelectedZone('All MCD Zones');
-              }}
-              className="px-2.5 py-1 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-[#FF6B00] text-zinc-300 hover:text-white transition text-[11px]"
-            >
-              {item.label}
-            </button>
-          ))}
         </div>
       </div>
 

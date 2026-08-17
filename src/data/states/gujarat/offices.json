@@ -1,0 +1,47 @@
+[
+  {
+    "id": "gj-off-01",
+    "name": "Ahmedabad Collectorate & District Magistrate Office",
+    "hindiName": "जिलाधिकारी एवं समाहर्ता कार्यालय अहमदाबाद",
+    "category": "District Magistrate / DC Office",
+    "district": "Ahmedabad",
+    "state": "Gujarat",
+    "address": "Collector Office, Near Subhash Bridge, Ashram Road, Ahmedabad, Gujarat - 380027",
+    "pincode": "380027",
+    "helpline": "079-27551681 / 079-27551682",
+    "email": "collector-ahd@gujarat.gov.in",
+    "website": "https://ahmedabad.gujarat.gov.in",
+    "publicHours": "10:30 AM - 06:10 PM (Mon-Sat, 2nd & 4th Sat off)",
+    "services": ["Digital Gujarat Portal Services", "Jati (Caste), Income & Domicile Certificates", "E-Dhara Land Records (AnyRoR)", "Revenue Court Proceedings", "Senior Citizen & Widow Pension"]
+  },
+  {
+    "id": "gj-off-02",
+    "name": "Jan Seva Kendra (Digital Gujarat Civic Centre Ahmedabad)",
+    "hindiName": "जन सेवा केंद्र (डिजिटल गुजरात नागरिक सेवा केंद्र)",
+    "category": "Jan Seva Kendra / Civic Centre",
+    "district": "Ahmedabad",
+    "state": "Gujarat",
+    "address": "Collector Compound, Subhash Bridge, Ahmedabad, Gujarat",
+    "pincode": "380027",
+    "helpline": "1800-233-5500",
+    "email": "digitalgujarat@gujarat.gov.in",
+    "website": "https://www.digitalgujarat.gov.in",
+    "publicHours": "10:30 AM - 05:00 PM (Mon-Sat)",
+    "services": ["OBC / SEBC Certificate", "EWS Certificate Gujarat", "Ration Card (NFSA Gujarat)", "Mukhyamantri Amrutam (MAA) / PM-JAY Card", "Farmer 7/12 8A Land Extract"]
+  },
+  {
+    "id": "gj-off-03",
+    "name": "Prant Officer / SDM Office Ahmedabad City",
+    "hindiName": "प्रांत अधिकारी / एसडीएम कार्यालय अहमदाबाद",
+    "category": "Sub-Divisional Magistrate (SDM)",
+    "district": "Ahmedabad",
+    "state": "Gujarat",
+    "address": "Prant Office, Old Collectorate Building, Lal Darwaja, Ahmedabad, Gujarat",
+    "pincode": "380001",
+    "helpline": "079-25507300",
+    "email": "prant-ahdcity@gujarat.gov.in",
+    "website": "https://ahmedabad.gujarat.gov.in",
+    "publicHours": "11:00 AM - 05:00 PM (Mon-Fri)",
+    "services": ["Magisterial NOCs", "Tenancy & Land Dispute Appeals", "Arms License Endorsement", "Election Electoral Registration"]
+  }
+]

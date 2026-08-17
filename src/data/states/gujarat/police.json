@@ -1,0 +1,54 @@
+[
+  {
+    "id": "gj-ps-01",
+    "name": "Navrangpura Police Station",
+    "hindiName": "थाना नवरंगपुरा",
+    "district": "Ahmedabad City",
+    "address": "Near Mithakhali Six Roads, Navrangpura, Ahmedabad, Gujarat",
+    "pincode": "380009",
+    "phone": "079-26561100",
+    "shoPhone": "079-26561101 / 9978405001",
+    "pcrNumber": "100 / 112",
+    "jurisdictionAreas": ["Navrangpura", "CG Road", "Mithakhali", "Law Garden", "Gujarat University Area"],
+    "landmark": "Near Mithakhali Cross Road"
+  },
+  {
+    "id": "gj-ps-02",
+    "name": "Vastrapur Police Station",
+    "hindiName": "थाना वस्त्रपुर",
+    "district": "Ahmedabad City (Zone 1)",
+    "address": "Near Vastrapur Lake, Vastrapur, Ahmedabad, Gujarat",
+    "pincode": "380015",
+    "phone": "079-26760100",
+    "shoPhone": "079-26760101 / 9978405002",
+    "pcrNumber": "100 / 112",
+    "jurisdictionAreas": ["Vastrapur", "IIM Ahmedabad", "Bodakdev", "Alpha One Mall Area", "Judges Bungalow Road"],
+    "landmark": "Near Vastrapur Lake"
+  },
+  {
+    "id": "gj-ps-03",
+    "name": "Umra Police Station",
+    "hindiName": "थाना उमरा (सूरत)",
+    "district": "Surat City",
+    "address": "Athwalines, Near Court Building, Surat, Gujarat",
+    "pincode": "395001",
+    "phone": "0261-2224100",
+    "shoPhone": "0261-2224101 / 9978406001",
+    "pcrNumber": "100 / 112",
+    "jurisdictionAreas": ["Umra", "Athwalines", "Piplod", "Dumas Road", "Ghod Dod Road"],
+    "landmark": "Opposite District Court Surat"
+  },
+  {
+    "id": "gj-ps-04",
+    "name": "Sayajiganj Police Station",
+    "hindiName": "थाना सयाजीगंज (वडोदरा)",
+    "district": "Vadodara City",
+    "address": "Near Railway Station, Sayajiganj, Vadodara, Gujarat",
+    "pincode": "390005",
+    "phone": "0265-2361100",
+    "shoPhone": "0265-2361101 / 9978407001",
+    "pcrNumber": "100 / 112",
+    "jurisdictionAreas": ["Sayajiganj", "MS University Campus", "Alkapuri", "Station Area"],
+    "landmark": "Opposite Vadodara Central Bus Station"
+  }
+]

@@ -1,0 +1,122 @@
+[
+  {
+    "pin": "201301",
+    "area": "Noida Sector 16, Sector 1, Sector 2, Sector 15, Atta Market, Sector 18 Commercial Hub, Film City",
+    "district": "Gautam Buddha Nagar (Noida)",
+    "postOffice": "Noida Sector 16 Head Post Office",
+    "stdCode": "0120",
+    "state": "Uttar Pradesh"
+  },
+  {
+    "pin": "201307",
+    "area": "Noida Sector 62, Sector 63, Electronic City, Fortis Hospital Area, JSS Academy Campus",
+    "district": "Gautam Buddha Nagar (Noida)",
+    "postOffice": "Sector 62 Noida Sub Post Office",
+    "stdCode": "0120",
+    "state": "Uttar Pradesh"
+  },
+  {
+    "pin": "201304",
+    "area": "Noida Sector 37, Sector 34, Sector 39, Botanical Garden Metro, District Hospital Sector 39",
+    "district": "Gautam Buddha Nagar (Noida)",
+    "postOffice": "Sector 37 Noida SO",
+    "stdCode": "0120",
+    "state": "Uttar Pradesh"
+  },
+  {
+    "pin": "201310",
+    "area": "Greater Noida Alpha 1, Pari Chowk, Beta 1, Gamma 2, Knowledge Park 1 to 3",
+    "district": "Gautam Buddha Nagar (Noida)",
+    "postOffice": "Greater Noida Head Post Office",
+    "stdCode": "0120",
+    "state": "Uttar Pradesh"
+  },
+  {
+    "pin": "201001",
+    "area": "Ghaziabad Head Post Office, Navyug Market, Old Bus Stand, GT Road, Ghantaghar, Nehru Nagar",
+    "district": "Ghaziabad",
+    "postOffice": "Ghaziabad Head Post Office (HO)",
+    "stdCode": "0120",
+    "state": "Uttar Pradesh"
+  },
+  {
+    "pin": "201014",
+    "area": "Indirapuram, Kaushambi, Vaishali Sector 4, Shipra Sun City, Ahinsa Khand",
+    "district": "Ghaziabad",
+    "postOffice": "Indirapuram SO",
+    "stdCode": "0120",
+    "state": "Uttar Pradesh"
+  },
+  {
+    "pin": "226001",
+    "area": "Lucknow General Post Office (GPO), Hazratganj, Vidhan Sabha Marg, Ashok Marg, Raj Bhavan",
+    "district": "Lucknow",
+    "postOffice": "Lucknow General Post Office (GPO)",
+    "stdCode": "0522",
+    "state": "Uttar Pradesh"
+  },
+  {
+    "pin": "226010",
+    "area": "Gomti Nagar, Vibhuti Khand, Patrakarpuram, Manoj Pandey Chowk, Lohia Hospital Area",
+    "district": "Lucknow",
+    "postOffice": "Gomti Nagar SO",
+    "stdCode": "0522",
+    "state": "Uttar Pradesh"
+  },
+  {
+    "pin": "226003",
+    "area": "Chowk Lucknow, KGMU Campus, Shah Mina Road, King George Medical University, Victoria Street",
+    "district": "Lucknow",
+    "postOffice": "Chowk Lucknow SO",
+    "stdCode": "0522",
+    "state": "Uttar Pradesh"
+  },
+  {
+    "pin": "208001",
+    "area": "Kanpur Head Post Office, Mall Road, Phool Bagh, Civil Lines, Naveen Market, Somdutt Plaza",
+    "district": "Kanpur Nagar",
+    "postOffice": "Kanpur Head Post Office (HO)",
+    "stdCode": "0512",
+    "state": "Uttar Pradesh"
+  },
+  {
+    "pin": "282001",
+    "area": "Agra Fort Head Post Office, Sanjay Place, MG Road Agra, Raja Ki Mandi, Sadar Bazar",
+    "district": "Agra",
+    "postOffice": "Agra Fort Head Post Office",
+    "stdCode": "0562",
+    "state": "Uttar Pradesh"
+  },
+  {
+    "pin": "221001",
+    "area": "Varanasi Cantt Head Post Office, Nadesar, Kashi Vishwanath Route, Godowlia, Dashashwamedh Ghat",
+    "district": "Varanasi",
+    "postOffice": "Varanasi Cantt Head Post Office",
+    "stdCode": "0542",
+    "state": "Uttar Pradesh"
+  },
+  {
+    "pin": "211001",
+    "area": "Prayagraj Head Post Office, Civil Lines, MG Marg, High Court Compound, Subhash Chauraha",
+    "district": "Prayagraj",
+    "postOffice": "Prayagraj Head Post Office (HO)",
+    "stdCode": "0532",
+    "state": "Uttar Pradesh"
+  },
+  {
+    "pin": "250001",
+    "area": "Meerut Cantt Head Post Office, Sadar Bazar, Begum Bridge, Abu Lane, Civil Lines Meerut",
+    "district": "Meerut",
+    "postOffice": "Meerut Cantt Head Post Office",
+    "stdCode": "0121",
+    "state": "Uttar Pradesh"
+  },
+  {
+    "pin": "273001",
+    "area": "Gorakhpur Head Post Office, Golghar, Civil Lines, Gorakhnath Mandir Road, University Chowk",
+    "district": "Gorakhpur",
+    "postOffice": "Gorakhpur Head Post Office",
+    "stdCode": "0551",
+    "state": "Uttar Pradesh"
+  }
+]

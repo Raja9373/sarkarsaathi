@@ -1,0 +1,11 @@
+[
+  { "pin": "380001", "area": "Bhadra, Lal Darwaja, Relief Road, Ellis Bridge", "district": "Ahmedabad", "postOffice": "Ahmedabad GPO", "stdCode": "079" },
+  { "pin": "380009", "area": "Navrangpura, CG Road, University Area, Ashram Road", "district": "Ahmedabad", "postOffice": "Navrangpura SO", "stdCode": "079" },
+  { "pin": "380015", "area": "Vastrapur, IIM Ahmedabad, Satellite, Bodakdev, SG Highway", "district": "Ahmedabad", "postOffice": "Vastrapur SO", "stdCode": "079" },
+  { "pin": "380054", "area": "Thaltej, SG Highway, Science City Road", "district": "Ahmedabad", "postOffice": "Thaltej SO", "stdCode": "079" },
+  { "pin": "395001", "area": "Chowk Bazar, Nanpura, Ring Road, Station Area", "district": "Surat", "postOffice": "Surat HO", "stdCode": "0261" },
+  { "pin": "395007", "area": "Vesu, Dumas Road, Piplod, SVNIT Campus", "district": "Surat", "postOffice": "SVNIT SO", "stdCode": "0261" },
+  { "pin": "390001", "area": "Mandvi, Raopura, Alkapuri, Vadodara Station", "district": "Vadodara", "postOffice": "Vadodara HO", "stdCode": "0265" },
+  { "pin": "360001", "area": "Dharmendrasinhji Road, Gundawadi, Rajkot Central", "district": "Rajkot", "postOffice": "Rajkot HO", "stdCode": "0281" },
+  { "pin": "382010", "area": "Sector 10, Sachivalaya, Vidhan Sabha, Infocity", "district": "Gandhinagar", "postOffice": "Sachivalaya SO", "stdCode": "079" }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "id": "tn-hosp-01",
+    "name": "Rajiv Gandhi Government General Hospital (RGGGH) & MMC Chennai",
+    "type": "State Govt Apex Hospital",
+    "district": "Chennai",
+    "address": "EVR Periyar Salai, Park Town, Chennai, Tamil Nadu",
+    "pincode": "600003",
+    "emergencyNumber": "044-25305000 / 108",
+    "phone": "044-25305000",
+    "opdTimings": "08:00 AM - 12:30 PM (Mon-Sat) | 24x7 Trauma & Emergency",
+    "landmark": "Opposite Chennai Central Railway Station",
+    "bedCapacity": 3000,
+    "specialties": ["24x7 Apex Trauma", "Cardiology & Cardiothoracic", "Nephrology & Urology", "Neurology", "Vascular Surgery"],
+    "hasTraumaCenter": true,
+    "has24x7Emergency": true
+  },
+  {
+    "id": "tn-hosp-02",
+    "name": "Government Stanley Medical College Hospital",
+    "type": "State Govt Hospital",
+    "district": "Chennai",
+    "address": "Old Jail Road, Royapuram, Chennai, Tamil Nadu",
+    "pincode": "600001",
+    "emergencyNumber": "044-25281351 / 108",
+    "phone": "044-25281351",
+    "opdTimings": "08:00 AM - 01:00 PM (Mon-Sat) | 24x7 Emergency",
+    "landmark": "Near Royapuram Railway Station",
+    "bedCapacity": 1580,
+    "specialties": ["World-Renowned Plastic & Hand Surgery Unit", "Gastroenterology & Liver Transplant", "Pediatrics", "Trauma Care"],
+    "hasTraumaCenter": true,
+    "has24x7Emergency": true
+  },
+  {
+    "id": "tn-hosp-03",
+    "name": "AIIMS Madurai (Campus Site)",
+    "type": "Central Govt Apex Institute",
+    "district": "Madurai",
+    "address": "Thoppur, Madurai, Tamil Nadu",
+    "pincode": "625008",
+    "emergencyNumber": "0452-2532535 / 108",
+    "phone": "0452-2532535",
+    "opdTimings": "08:30 AM - 02:00 PM (Mon-Sat) | 24x7 Emergency",
+    "landmark": "Thoppur NH-44",
+    "bedCapacity": 750,
+    "specialties": ["General Medicine", "Trauma Care", "Super Specialty OPDs", "Cardiology"],
+    "hasTraumaCenter": true,
+    "has24x7Emergency": true
+  }
+]

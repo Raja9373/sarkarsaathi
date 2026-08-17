@@ -1,0 +1,32 @@
+[
+  {
+    "id": "wb-off-01",
+    "name": "District Magistrate (DM) Office Kolkata / Collectorate",
+    "hindiName": "जिलाधिकारी कार्यालय कोलकाता समाहरणालय",
+    "category": "District Magistrate / DC Office",
+    "district": "Kolkata",
+    "state": "West Bengal",
+    "address": "11, Netaji Subhas Road, BBD Bagh, Kolkata, West Bengal - 700001",
+    "pincode": "700001",
+    "helpline": "033-22483804 / 033-22485573",
+    "email": "dm-kol@nic.in",
+    "website": "https://kolkata.gov.in",
+    "publicHours": "10:00 AM - 05:30 PM (Mon-Sat, 2nd & 4th Sat off)",
+    "services": ["Duare Sarkar Portal Services", "Caste Certificate (OBC/SC/ST)", "Income & Residential Domicile Certificate", "Banglarbhumi Land Mutation & Records", "Jai Bangla Pension Scheme"]
+  },
+  {
+    "id": "wb-off-02",
+    "name": "Bangla Sahayata Kendra (BSK Kolkata Central)",
+    "hindiName": "बांग्ला सहायता केंद्र (BSK मध्य कोलकाता)",
+    "category": "Bangla Sahayata Kendra (BSK)",
+    "district": "Kolkata",
+    "state": "West Bengal",
+    "address": "BBD Bagh Post Office Building Campus, Kolkata, West Bengal",
+    "pincode": "700001",
+    "helpline": "1800-345-5555",
+    "email": "bsk-support@wb.gov.in",
+    "website": "https://bsk.wb.gov.in",
+    "publicHours": "10:00 AM - 05:00 PM (Mon-Sat)",
+    "services": ["Lakshmir Bhandar Registration", "Swasthya Sathi Smart Card", "Kanyashree & Rupashree Scheme", "Digital Ration Card (Khadya Sathi)", "Student Credit Card Scheme"]
+  }
+]

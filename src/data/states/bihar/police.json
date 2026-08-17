@@ -1,0 +1,16 @@
+[
+  {
+    "id": "br-ps-01",
+    "name": "Police Station Kotwali Patna",
+    "hindiName": "थाना कोतवाली पटना",
+    "district": "Patna",
+    "state": "Bihar",
+    "address": "Buddha Marg, Near Kotwali Chauraha, Patna, Bihar",
+    "pincode": "800001",
+    "phone": "0612-2222100",
+    "shoPhone": "9431800101",
+    "pcrNumber": "112",
+    "jurisdictionAreas": ["Dak Bungalow", "Fraser Road", "Buddha Marg", "Station Road Patna", "Exhibition Road"],
+    "landmark": "Near Kotwali Chauraha & Patna Junction"
+  }
+]

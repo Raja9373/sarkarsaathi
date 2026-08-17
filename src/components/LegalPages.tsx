@@ -6,7 +6,17 @@ interface LegalPagesProps {
 }
 
 export const LegalPages: React.FC<LegalPagesProps> = ({ initialPage = 'about' }) => {
-  const [activePage, setActivePage] = useState<string>(initialPage);
+  const [activePage, setActivePage] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      const path = window.location.pathname.replace('/', '');
+      if (path === 'contact-us' || path === 'contact') return 'contact';
+      if (path === 'privacy-policy' || path === 'privacy') return 'privacy';
+      if (path === 'terms-of-service' || path === 'terms') return 'terms';
+      if (path === 'disclaimer-policy' || path === 'disclaimer') return 'disclaimer';
+      if (path === 'about') return 'about';
+    }
+    return initialPage;
+  });
   const [submittedMessage, setSubmittedMessage] = useState(false);
 
   const legalNavItems = [

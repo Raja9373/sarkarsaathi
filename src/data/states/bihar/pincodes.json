@@ -1,0 +1,42 @@
+[
+  {
+    "pin": "800001",
+    "area": "Patna General Post Office (GPO), Beer Chand Patel Marg, Fraser Road, Dak Bungalow Chowk, Gandhi Maidan",
+    "district": "Patna",
+    "postOffice": "Patna General Post Office (GPO)",
+    "stdCode": "0612",
+    "state": "Bihar"
+  },
+  {
+    "pin": "800020",
+    "area": "Kankarbagh Patna, Doctor's Colony, Chiraiyatand, Old Bypass Road",
+    "district": "Patna",
+    "postOffice": "Kankarbagh SO",
+    "stdCode": "0612",
+    "state": "Bihar"
+  },
+  {
+    "pin": "823001",
+    "area": "Gaya Head Post Office, Civil Lines, GB Road, Tower Chowk, Bodh Gaya Route",
+    "district": "Gaya",
+    "postOffice": "Gaya Head Post Office (HO)",
+    "stdCode": "0631",
+    "state": "Bihar"
+  },
+  {
+    "pin": "812001",
+    "area": "Bhagalpur Head Post Office, Station Road, Sujaganj, Adampur",
+    "district": "Bhagalpur",
+    "postOffice": "Bhagalpur Head Post Office",
+    "stdCode": "0641",
+    "state": "Bihar"
+  },
+  {
+    "pin": "842001",
+    "area": "Muzaffarpur Head Post Office, Saraiyaganj, Kalyani Chowk, Motijheel",
+    "district": "Muzaffarpur",
+    "postOffice": "Muzaffarpur Head Post Office",
+    "stdCode": "0621",
+    "state": "Bihar"
+  }
+]

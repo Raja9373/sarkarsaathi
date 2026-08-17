@@ -1,0 +1,54 @@
+[
+  {
+    "id": "ka-ps-01",
+    "name": "Cubbon Park Police Station",
+    "hindiName": "थाना कब्बन पार्क (बेंगलुरु)",
+    "district": "Bengaluru City (Central Division)",
+    "address": "Kasturba Road, Near High Court & Cubbon Park, Bengaluru, Karnataka",
+    "pincode": "560001",
+    "phone": "080-22942583",
+    "shoPhone": "080-22942584 / 9480801001",
+    "pcrNumber": "112",
+    "jurisdictionAreas": ["Cubbon Park", "MG Road", "Lavelle Road", "Kasturba Road", "Vidhana Soudha Periphery"],
+    "landmark": "Near Kanteerava Stadium"
+  },
+  {
+    "id": "ka-ps-02",
+    "name": "Koramangala Police Station",
+    "hindiName": "थाना कोरमंगला",
+    "district": "Bengaluru City (South East Division)",
+    "address": "80 Feet Road, 6th Block, Koramangala, Bengaluru, Karnataka",
+    "pincode": "560095",
+    "phone": "080-22942566",
+    "shoPhone": "080-22942567 / 9480801002",
+    "pcrNumber": "112",
+    "jurisdictionAreas": ["Koramangala (Blocks 1 to 8)", "Sony World Signal", "Ejipura", "National Games Village"],
+    "landmark": "Near 80 Feet Road"
+  },
+  {
+    "id": "ka-ps-03",
+    "name": "Indiranagar Police Station",
+    "hindiName": "थाना इंदिरा नगर",
+    "district": "Bengaluru City (East Division)",
+    "address": "100 Feet Road, HAL 2nd Stage, Indiranagar, Bengaluru, Karnataka",
+    "pincode": "560038",
+    "phone": "080-22942561",
+    "shoPhone": "080-22942562 / 9480801003",
+    "pcrNumber": "112",
+    "jurisdictionAreas": ["Indiranagar", "100 Feet Road", "12th Main", "HAL 2nd & 3rd Stage", "Defence Colony"],
+    "landmark": "100 Feet Road Junction"
+  },
+  {
+    "id": "ka-ps-04",
+    "name": "Devaraja Police Station (Mysuru)",
+    "hindiName": "थाना देवराजा (मैसूरु)",
+    "district": "Mysuru City",
+    "address": "Near Devaraja Market, KR Circle, Mysuru, Karnataka",
+    "pincode": "570001",
+    "phone": "0821-2418306",
+    "shoPhone": "0821-2418307 / 9480802001",
+    "pcrNumber": "112",
+    "jurisdictionAreas": ["Devaraja Market", "Sayyaji Rao Road", "KR Circle", "Dhanvantri Road"],
+    "landmark": "Opposite Mysore Medical College"
+  }
+]

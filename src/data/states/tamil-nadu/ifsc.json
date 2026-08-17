@@ -1,0 +1,47 @@
+[
+  {
+    "ifsc": "SBIN0000800",
+    "bank": "State Bank of India",
+    "branch": "Chennai Main Branch (George Town)",
+    "district": "Chennai",
+    "city": "Chennai",
+    "state": "Tamil Nadu",
+    "address": "22, Rajaji Salai, George Town, Chennai, Tamil Nadu - 600001",
+    "contact": "044-25301000",
+    "micr": "600002002",
+    "upi": true,
+    "rtgs": true,
+    "neft": true,
+    "imps": true
+  },
+  {
+    "ifsc": "IDIB000M001",
+    "bank": "Indian Bank",
+    "branch": "Chennai Corporate HQ & Main Branch",
+    "district": "Chennai",
+    "city": "Chennai",
+    "state": "Tamil Nadu",
+    "address": "66, Rajaji Salai, Chennai, Tamil Nadu - 600001",
+    "contact": "044-25221201",
+    "micr": "600019002",
+    "upi": true,
+    "rtgs": true,
+    "neft": true,
+    "imps": true
+  },
+  {
+    "ifsc": "HDFC0000004",
+    "bank": "HDFC Bank",
+    "branch": "Chennai ITC Centre (Anna Salai)",
+    "district": "Chennai",
+    "city": "Chennai",
+    "state": "Tamil Nadu",
+    "address": "ITC Centre, 759, Anna Salai, Chennai, Tamil Nadu - 600002",
+    "contact": "044-61606161",
+    "micr": "600240002",
+    "upi": true,
+    "rtgs": true,
+    "neft": true,
+    "imps": true
+  }
+]

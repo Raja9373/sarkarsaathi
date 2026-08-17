@@ -1,0 +1,53 @@
+[
+  {
+    "id": "dl-rto-01",
+    "rtoCode": "DL-01",
+    "zoneName": "North Zone RTO Office (Mall Road / Civil Lines)",
+    "district": "North Delhi",
+    "state": "Delhi",
+    "address": "Transport Department, Zonal Office North, 5/9 Under Hill Road, Mall Road, Civil Lines, Delhi",
+    "pincode": "110054",
+    "phone": "011-23930260 / 011-23930261",
+    "email": "mlo.north@delhi.gov.in",
+    "timings": "08:30 AM - 02:00 PM (Mon-Sat)",
+    "landmark": "Near Vishwavidyalaya Metro Station & Old Secretariat",
+    "jurisdictionAreas": ["Civil Lines", "Chandni Chowk", "Kashmere Gate", "Delhi University North Campus", "Kamla Nagar", "Roop Nagar", "Timarpur", "Sadar Bazar"],
+    "servicesOffered": ["Permanent Driving License (DL)", "Learner License (LL) Test", "Vehicle RC Registration", "Transfer of Ownership", "NOC Issue", "HSRP & RC Renewal"],
+    "automatedTrackAvailable": true,
+    "mloIncharge": "Motor Licensing Officer (North Zone)"
+  },
+  {
+    "id": "dl-rto-02",
+    "rtoCode": "DL-02",
+    "zoneName": "Central Zone RTO Office (IP Estate / ITO)",
+    "district": "Central Delhi",
+    "state": "Delhi",
+    "address": "Transport Department Zonal Office, MLO Building, IP Estate, Near Tilak Bridge, New Delhi",
+    "pincode": "110002",
+    "phone": "011-23318288 / 011-23318289",
+    "email": "mlo.central@delhi.gov.in",
+    "timings": "08:30 AM - 02:00 PM (Mon-Sat)",
+    "landmark": "Near Tilak Bridge Railway Station & ITO Metro",
+    "jurisdictionAreas": ["Daryaganj", "Karol Bagh", "Paharganj", "Rajendra Nagar", "Patel Nagar", "Connaught Place", "ITO", "Delhi Gate"],
+    "servicesOffered": ["Faceless DL Services", "Permanent Driving License Test", "Duplicate Driving License", "Commercial Permit Endorsement", "International Driving Permit (IDP)"],
+    "automatedTrackAvailable": false,
+    "mloIncharge": "Motor Licensing Officer (Central Zone)"
+  },
+  {
+    "id": "dl-rto-04",
+    "rtoCode": "DL-04",
+    "zoneName": "West Zone-I RTO Office (Janakpuri)",
+    "district": "West Delhi",
+    "state": "Delhi",
+    "address": "Transport Department Zonal Office, B-Block, Community Centre, Janakpuri, New Delhi",
+    "pincode": "110058",
+    "phone": "011-25553555",
+    "email": "mlo.west1@delhi.gov.in",
+    "timings": "08:30 AM - 02:00 PM (Mon-Sat)",
+    "landmark": "Near Janakpuri West Metro & Bharti College",
+    "jurisdictionAreas": ["Janakpuri", "Vikaspuri", "Uttam Nagar", "Tilak Nagar", "Hari Nagar", "Najafgarh Road", "Subhash Nagar"],
+    "servicesOffered": ["Permanent DL on Automated Track", "Learner License E-Test", "RC Hypothecation Addition/Deletion", "Vehicle Ownership Transfer", "Road Tax Assessment"],
+    "automatedTrackAvailable": true,
+    "mloIncharge": "Motor Licensing Officer (West Zone-I)"
+  }
+]

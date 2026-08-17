@@ -1,0 +1,36 @@
+[
+  {
+    "id": "br-hosp-01",
+    "name": "Patna Medical College and Hospital (PMCH)",
+    "type": "Bihar Govt Apex Teaching Hospital",
+    "district": "Patna",
+    "state": "Bihar",
+    "address": "Ashok Rajpath, Muradpur, Patna, Bihar",
+    "pincode": "800004",
+    "emergencyNumber": "0612-2300080 / 108",
+    "phone": "0612-2300080",
+    "opdTimings": "08:30 AM - 01:30 PM (Mon-Sat) | 24x7 Emergency",
+    "landmark": "Near Patna Science College & Ashok Rajpath",
+    "bedCapacity": 1750,
+    "specialties": ["24x7 Emergency & Trauma", "General Surgery", "Cardiology", "Burn Care", "Pediatrics"],
+    "hasTraumaCenter": true,
+    "has24x7Emergency": true
+  },
+  {
+    "id": "br-hosp-02",
+    "name": "All India Institute of Medical Sciences (AIIMS Patna)",
+    "type": "Central Govt Apex Medical Institute",
+    "district": "Patna",
+    "state": "Bihar",
+    "address": "Phulwarisharif, Patna, Bihar",
+    "pincode": "801507",
+    "emergencyNumber": "0612-2451070 / 108",
+    "phone": "0612-2451070",
+    "opdTimings": "08:30 AM - 01:00 PM (Mon-Sat) | 24x7 Emergency",
+    "landmark": "Near Phulwarisharif & Khagaul Road",
+    "bedCapacity": 960,
+    "specialties": ["Level-1 Apex Trauma", "Cardiothoracic Surgery", "Neurosurgery", "Medical Oncology", "Dialysis"],
+    "hasTraumaCenter": true,
+    "has24x7Emergency": true
+  }
+]

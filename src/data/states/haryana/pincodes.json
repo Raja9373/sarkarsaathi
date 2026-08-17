@@ -1,0 +1,114 @@
+[
+  {
+    "pin": "122001",
+    "area": "Gurugram Old Railway Road Head Post Office, Sadar Bazar, Civil Lines, Court Complex, Rajiv Chowk",
+    "district": "Gurugram",
+    "postOffice": "Gurgaon Head Post Office (HO)",
+    "stdCode": "0124",
+    "state": "Haryana"
+  },
+  {
+    "pin": "122002",
+    "area": "DLF Phase 1, DLF Phase 2, Sikanderpur, Cyber City, MG Road, Bristol Chowk, Heritage City",
+    "district": "Gurugram",
+    "postOffice": "DLF Phase 2 Sub Post Office",
+    "stdCode": "0124",
+    "state": "Haryana"
+  },
+  {
+    "pin": "122003",
+    "area": "Sector 45, Sector 46, Sector 47, South City 1, Mayfield Garden, Bakhtawar Chowk",
+    "district": "Gurugram",
+    "postOffice": "Sector 45 Gurgaon SO",
+    "stdCode": "0124",
+    "state": "Haryana"
+  },
+  {
+    "pin": "122018",
+    "area": "Sector 14, Sector 15 Part 1 & 2, Old DLF Colony, Civil Hospital Area, Atul Kataria Chowk",
+    "district": "Gurugram",
+    "postOffice": "Sector 14 Gurgaon SO",
+    "stdCode": "0124",
+    "state": "Haryana"
+  },
+  {
+    "pin": "122051",
+    "area": "Manesar IMT, Sector 1 to 8 IMT Manesar, NSG Camp, KMP Expressway Junction",
+    "district": "Gurugram",
+    "postOffice": "Manesar Sub Post Office",
+    "stdCode": "0124",
+    "state": "Haryana"
+  },
+  {
+    "pin": "121001",
+    "area": "Faridabad NIT Head Post Office, BK Chowk, Neelam Flyover, KLJ Complex, AC Nagar",
+    "district": "Faridabad",
+    "postOffice": "Faridabad NIT Head Post Office",
+    "stdCode": "0129",
+    "state": "Haryana"
+  },
+  {
+    "pin": "121002",
+    "area": "Faridabad Sector 15, Sector 14, Sector 16, Mathura Road, Old Faridabad",
+    "district": "Faridabad",
+    "postOffice": "Sector 15 Faridabad SO",
+    "stdCode": "0129",
+    "state": "Haryana"
+  },
+  {
+    "pin": "132103",
+    "area": "Panipat Head Post Office, Model Town, GT Road, Textile Market, Sanjay Chowk",
+    "district": "Panipat",
+    "postOffice": "Panipat Head Post Office",
+    "stdCode": "0180",
+    "state": "Haryana"
+  },
+  {
+    "pin": "133001",
+    "area": "Ambala Cantt Head Post Office, Sadar Bazar, Nicholson Road, Staff Road, Railway Station Area",
+    "district": "Ambala",
+    "postOffice": "Ambala Cantt Head Post Office",
+    "stdCode": "0171",
+    "state": "Haryana"
+  },
+  {
+    "pin": "134112",
+    "area": "Panchkula Sector 8, Sector 4, Sector 7, Sector 9, DC Office Complex, Mansa Devi Complex",
+    "district": "Panchkula",
+    "postOffice": "Sector 8 Panchkula SO",
+    "stdCode": "0172",
+    "state": "Haryana"
+  },
+  {
+    "pin": "124001",
+    "area": "Rohtak Head Post Office, Delhi Road, Mansarover Park, Medical Mor, PGIMS Campus",
+    "district": "Rohtak",
+    "postOffice": "Rohtak Head Post Office",
+    "stdCode": "01262",
+    "state": "Haryana"
+  },
+  {
+    "pin": "131001",
+    "area": "Sonipat Head Post Office, Subhash Chowk, Railway Road, Model Town Sonipat",
+    "district": "Sonipat",
+    "postOffice": "Sonipat Head Post Office",
+    "stdCode": "0130",
+    "state": "Haryana"
+  },
+  {
+    "pin": "132001",
+    "area": "Karnal Head Post Office, Mall Road, Kunjpura Road, NDRI Campus, Sector 13 Karnal",
+    "district": "Karnal",
+    "postOffice": "Karnal Head Post Office",
+    "stdCode": "0184",
+    "state": "Haryana"
+  },
+  {
+    "pin": "125001",
+    "area": "Hisar Head Post Office, Town Park, Auto Market, Rajgarh Road, HAU Campus",
+    "district": "Hisar",
+    "postOffice": "Hisar Head Post Office",
+    "stdCode": "01662",
+    "state": "Haryana"
+  }
+]

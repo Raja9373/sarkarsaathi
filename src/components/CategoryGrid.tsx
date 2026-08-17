@@ -34,6 +34,8 @@ interface CategoryGridProps {
   onOpenEmergency?: () => void;
   onSelectGovtOffices?: () => void;
   onSelectGovernmentFinders?: () => void;
+  currentStateId?: string;
+  onNavigateToFinder?: (finderId: string) => void;
 }
 
 export const CategoryGrid: React.FC<CategoryGridProps> = ({
@@ -41,7 +43,9 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
   setActiveTab,
   onOpenEmergency,
   onSelectGovtOffices,
-  onSelectGovernmentFinders
+  onSelectGovernmentFinders,
+  currentStateId = 'delhi',
+  onNavigateToFinder
 }) => {
   const getCategoryIcon = (cat: string) => {
     switch (cat) {
@@ -142,6 +146,58 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
             </div>
           </button>
         ))}
+      </div>
+
+      {/* State-Aware Government Finders Directory */}
+      <div className="mt-12 pt-8 border-t border-zinc-800">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6">
+          <div>
+            <span className="text-xs font-bold text-amber-400 uppercase tracking-wider">State & Central Directory</span>
+            <h3 className="text-xl sm:text-2xl font-black text-white mt-0.5">Government Finders & Locators</h3>
+          </div>
+          <button
+            onClick={() => {
+              if (onNavigateToFinder) onNavigateToFinder('pincode');
+              else setActiveTab('finders');
+            }}
+            className="text-xs font-bold text-[#FF6B00] hover:underline flex items-center gap-1 self-start sm:self-auto"
+          >
+            <span>View All 18 Locators</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </button>
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+          {[
+            { id: 'pincode', title: 'Pincode Finder', hindi: 'पिनकोड खोजें', icon: '📍', desc: 'STD & Area Locator' },
+            { id: 'ifsc', title: 'IFSC Code Finder', hindi: 'IFSC बैंक कोड', icon: '🏦', desc: 'RBI Bank Branches' },
+            { id: 'hospital', title: 'Govt Hospitals', hindi: 'सरकारी अस्पताल', icon: '🏥', desc: 'Emergency & Beds' },
+            { id: 'police-station', title: 'Police Stations', hindi: 'थाना खोजें', icon: '👮', desc: 'SHO & Helpline' },
+            { id: 'rto-office', title: 'RTO Offices', hindi: 'RTO कार्यालय', icon: '🚗', desc: 'Driving & RC Zone' },
+            { id: 'govt-offices', title: 'Court & Offices', hindi: 'SDM व कचहरी', icon: '🏛️', desc: 'Revenue & Tehsils' },
+          ].map((item) => (
+            <button
+              key={item.id}
+              onClick={() => {
+                if (onNavigateToFinder) {
+                  onNavigateToFinder(item.id);
+                } else {
+                  setActiveTab('finders');
+                }
+              }}
+              className="p-3.5 rounded-xl bg-[#121824] border border-zinc-800 hover:border-[#FF6B00] hover:bg-[#161F30] transition text-left group flex flex-col justify-between gap-2 shadow-sm"
+            >
+              <div className="text-2xl">{item.icon}</div>
+              <div>
+                <h4 className="text-xs sm:text-sm font-bold text-white group-hover:text-[#FF6B00] transition">
+                  {item.title}
+                </h4>
+                <p className="text-[10px] text-zinc-400 font-medium">{item.hindi}</p>
+                <p className="text-[10px] text-zinc-500 mt-1">{item.desc}</p>
+              </div>
+            </button>
+          ))}
+        </div>
       </div>
     </section>
   );

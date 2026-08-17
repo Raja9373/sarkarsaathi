@@ -1,0 +1,17 @@
+[
+  {
+    "ifsc": "SBIN0000656",
+    "bank": "State Bank of India",
+    "branch": "Jaipur Main Branch",
+    "district": "Jaipur",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "address": "Tilak Marg, C-Scheme, Jaipur, Rajasthan - 302005",
+    "contact": "0141-2227100",
+    "micr": "302002002",
+    "upi": true,
+    "rtgs": true,
+    "neft": true,
+    "imps": true
+  }
+]

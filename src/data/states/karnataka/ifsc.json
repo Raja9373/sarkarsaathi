@@ -1,0 +1,62 @@
+[
+  {
+    "ifsc": "SBIN0000813",
+    "bank": "State Bank of India",
+    "branch": "Bengaluru Main Branch (St. Mark's Road)",
+    "district": "Bengaluru Urban",
+    "city": "Bengaluru",
+    "state": "Karnataka",
+    "address": "State Bank Road, St. Mark's Road, Bengaluru, Karnataka - 560001",
+    "contact": "080-25943000",
+    "micr": "560002002",
+    "upi": true,
+    "rtgs": true,
+    "neft": true,
+    "imps": true
+  },
+  {
+    "ifsc": "CNRB0000001",
+    "bank": "Canara Bank",
+    "branch": "Bengaluru Town Hall Branch",
+    "district": "Bengaluru Urban",
+    "city": "Bengaluru",
+    "state": "Karnataka",
+    "address": "JC Road, Near Town Hall, Bengaluru, Karnataka - 560002",
+    "contact": "080-22221234",
+    "micr": "560015002",
+    "upi": true,
+    "rtgs": true,
+    "neft": true,
+    "imps": true
+  },
+  {
+    "ifsc": "HDFC0000053",
+    "bank": "HDFC Bank",
+    "branch": "Bengaluru Koramangala",
+    "district": "Bengaluru Urban",
+    "city": "Bengaluru",
+    "state": "Karnataka",
+    "address": "No. 548/D, 80 Feet Road, 6th Block, Koramangala, Bengaluru, Karnataka - 560095",
+    "contact": "080-61606161",
+    "micr": "560240003",
+    "upi": true,
+    "rtgs": true,
+    "neft": true,
+    "imps": true
+  },
+  {
+    "ifsc": "SBIN0000876",
+    "bank": "State Bank of India",
+    "branch": "Mysuru Main Branch",
+    "district": "Mysuru",
+    "city": "Mysuru",
+    "state": "Karnataka",
+    "address": "Sayyaji Rao Road, Near Palace, Mysuru, Karnataka - 570001",
+    "contact": "0821-2420455",
+    "micr": "570002002",
+    "upi": true,
+    "rtgs": true,
+    "neft": true,
+    "imps": true
+  }
+]

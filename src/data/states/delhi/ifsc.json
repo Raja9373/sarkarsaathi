@@ -1,0 +1,62 @@
+[
+  {
+    "ifsc": "SBIN0000691",
+    "bank": "State Bank of India",
+    "branch": "New Delhi Main Branch (Parliament Street)",
+    "district": "New Delhi",
+    "city": "New Delhi",
+    "state": "Delhi",
+    "address": "11, Parliament Street, Near Patel Chowk, New Delhi - 110001",
+    "contact": "011-23374100",
+    "micr": "110002001",
+    "upi": true,
+    "rtgs": true,
+    "neft": true,
+    "imps": true
+  },
+  {
+    "ifsc": "PUNB0000100",
+    "bank": "Punjab National Bank",
+    "branch": "Connaught Place Head Office",
+    "district": "New Delhi",
+    "city": "New Delhi",
+    "state": "Delhi",
+    "address": "ECE House, 28 Kasturba Gandhi Marg, Connaught Place, New Delhi - 110001",
+    "contact": "011-23321550",
+    "micr": "110024001",
+    "upi": true,
+    "rtgs": true,
+    "neft": true,
+    "imps": true
+  },
+  {
+    "ifsc": "HDFC0000003",
+    "bank": "HDFC Bank",
+    "branch": "Kasturba Gandhi Marg CP",
+    "district": "New Delhi",
+    "city": "New Delhi",
+    "state": "Delhi",
+    "address": "Surya Kiran Building, 19 KG Marg, Connaught Place, New Delhi - 110001",
+    "contact": "011-6160616",
+    "micr": "110240001",
+    "upi": true,
+    "rtgs": true,
+    "neft": true,
+    "imps": true
+  },
+  {
+    "ifsc": "ICIC0000007",
+    "bank": "ICICI Bank",
+    "branch": "Connaught Place",
+    "district": "New Delhi",
+    "city": "New Delhi",
+    "state": "Delhi",
+    "address": "9A, Phelps Building, Inner Circle, Connaught Place, New Delhi - 110001",
+    "contact": "011-43555000",
+    "micr": "110229001",
+    "upi": true,
+    "rtgs": true,
+    "neft": true,
+    "imps": true
+  }
+]

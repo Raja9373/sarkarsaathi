@@ -1,0 +1,66 @@
+[
+  {
+    "pin": "400001",
+    "area": "Mumbai General Post Office (GPO), Fort, Nariman Point, Horniman Circle, Ballard Estate, Churchgate, CST Station",
+    "district": "Mumbai City",
+    "postOffice": "Mumbai General Post Office (GPO)",
+    "stdCode": "022",
+    "state": "Maharashtra"
+  },
+  {
+    "pin": "400050",
+    "area": "Bandra West, Bandstand, Hill Road, Linking Road, Pali Hill, Mount Mary",
+    "district": "Mumbai Suburban",
+    "postOffice": "Bandra West SO",
+    "stdCode": "022",
+    "state": "Maharashtra"
+  },
+  {
+    "pin": "400076",
+    "area": "Powai, IIT Bombay Campus, Hiranandani Gardens, Powai Lake, Saki Vihar",
+    "district": "Mumbai Suburban",
+    "postOffice": "IIT Powai SO",
+    "stdCode": "022",
+    "state": "Maharashtra"
+  },
+  {
+    "pin": "411001",
+    "area": "Pune Head Post Office, Pune Camp, Sadhu Vaswani Chowk, Station Road, MG Road Pune, Sassoon Road",
+    "district": "Pune",
+    "postOffice": "Pune Head Post Office (HO)",
+    "stdCode": "020",
+    "state": "Maharashtra"
+  },
+  {
+    "pin": "411038",
+    "area": "Kothrud, Paud Road, Ideal Colony, MIT College Campus, Karve Road",
+    "district": "Pune",
+    "postOffice": "Kothrud SO",
+    "stdCode": "020",
+    "state": "Maharashtra"
+  },
+  {
+    "pin": "440001",
+    "area": "Nagpur General Post Office (GPO), Civil Lines, Sitabuldi, Zero Mile, High Court Area",
+    "district": "Nagpur",
+    "postOffice": "Nagpur General Post Office (GPO)",
+    "stdCode": "0712",
+    "state": "Maharashtra"
+  },
+  {
+    "pin": "400601",
+    "area": "Thane Head Post Office, Station Road, Talao Pali, Charai, Jambhli Naka",
+    "district": "Thane",
+    "postOffice": "Thane Head Post Office",
+    "stdCode": "022",
+    "state": "Maharashtra"
+  },
+  {
+    "pin": "422001",
+    "area": "Nashik Head Post Office, MG Road, CBS, Shalimar, Canada Corner",
+    "district": "Nashik",
+    "postOffice": "Nashik Head Post Office",
+    "stdCode": "0253",
+    "state": "Maharashtra"
+  }
+]

@@ -1,0 +1,47 @@
+[
+  {
+    "id": "hr-off-01",
+    "name": "District Administration & Deputy Commissioner Office Gurugram",
+    "hindiName": "उपायुक्त कार्यालय एवं जिला प्रशासन गुरुग्राम",
+    "category": "District Magistrate / DC Office",
+    "district": "Gurugram",
+    "state": "Haryana",
+    "address": "Mini Secretariat, Rajiv Chowk, Gurugram, Haryana - 122001",
+    "pincode": "122001",
+    "helpline": "0124-2321144 / 0124-2325500",
+    "email": "dcgrg@hry.nic.in",
+    "website": "https://gurugram.gov.in",
+    "publicHours": "09:00 AM - 05:00 PM (Mon-Fri)",
+    "services": ["Antyodaya SARAL Haryana Services", "Revenue & Registry Verification", "Parivar Pehchan Patra (PPP)", "Caste / Income / Domicile Certificate", "Redressal of Public Grievances (CM Window)"]
+  },
+  {
+    "id": "hr-off-02",
+    "name": "Antyodaya SARAL Kendra Gurugram (Citizen Facilitation Center)",
+    "hindiName": "अंत्योदय सरल केंद्र गुरुग्राम",
+    "category": "CSC / SARAL Kendra",
+    "district": "Gurugram",
+    "state": "Haryana",
+    "address": "Ground Floor, Mini Secretariat, Rajiv Chowk, Gurugram, Haryana",
+    "pincode": "122001",
+    "helpline": "1800-180-2084",
+    "email": "saral.haryana@gov.in",
+    "website": "https://saralharyana.gov.in",
+    "publicHours": "09:00 AM - 05:00 PM (Mon-Sat)",
+    "services": ["Parivar Pehchan Patra (Family ID)", "Old Age Pension Scheme", "BPL Ration Card Enrollment", "Water & Sewer Connection", "Disability ID Card (UDID)"]
+  },
+  {
+    "id": "hr-off-03",
+    "name": "SDM Office Gurugram (Badshahpur)",
+    "hindiName": "एसडीएम कार्यालय बादशाहपुर (गुरुग्राम)",
+    "category": "Sub-Divisional Magistrate (SDM)",
+    "district": "Gurugram",
+    "state": "Haryana",
+    "address": "Vikas Sadan Complex, Near Rajiv Chowk, Gurugram, Haryana",
+    "pincode": "122001",
+    "helpline": "0124-2321234",
+    "email": "sdmbadshahpur@hry.gov.in",
+    "website": "https://gurugram.gov.in",
+    "publicHours": "09:30 AM - 04:30 PM (Mon-Fri)",
+    "services": ["Land Mutations", "Marriage Registration", "OBC/EWS Certificate", "Local Inquiries"]
+  }
+]

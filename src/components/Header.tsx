@@ -21,11 +21,14 @@ import {
   Landmark,
   Layers,
   HeartHandshake,
-  HelpCircle,
+  Gift,
+  Newspaper,
   MessageSquare
 } from 'lucide-react';
 import { ActiveTab, StateId } from '../types';
-import { STATES_LIST } from '../data/statesData';
+import { STATES_LIST, getStateInfo } from '../data/statesData';
+import { LanguageSwitcher } from './LanguageSwitcher';
+import { useTranslation } from '../lib/i18nContext';
 
 interface HeaderProps {
   activeTab: ActiveTab;
@@ -50,8 +53,10 @@ export const Header: React.FC<HeaderProps> = ({
   highContrast,
   setHighContrast,
 }) => {
+  const { t, lang } = useTranslation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [stateDropdownOpen, setStateDropdownOpen] = useState(false);
+  const [stateSearchQuery, setStateSearchQuery] = useState('');
 
   const currentState = STATES_LIST.find(s => s.id === currentStateId) || STATES_LIST[0];
 
@@ -61,6 +66,37 @@ export const Header: React.FC<HeaderProps> = ({
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const filteredStates = STATES_LIST.filter(st => {
+    const q = stateSearchQuery.trim().toLowerCase();
+    if (!q) return true;
+    return (
+      st.name.toLowerCase().includes(q) ||
+      st.hindiName.includes(stateSearchQuery) ||
+      st.code.toLowerCase().includes(q) ||
+      st.capital.toLowerCase().includes(q) ||
+      (st.popularCities && st.popularCities.some(c => c.toLowerCase().includes(q)))
+    );
+  });
+
+  const popularQuickSelections = [
+    { id: 'national', label: 'All India' },
+    { id: 'delhi', label: 'Delhi' },
+    { id: 'maharashtra', label: 'Mumbai / Pune' },
+    { id: 'karnataka', label: 'Bangalore' },
+    { id: 'uttar-pradesh', label: 'UP (Lucknow)' },
+    { id: 'bihar', label: 'Bihar (Patna)' },
+    { id: 'gujarat', label: 'Gujarat (Ahmedabad)' },
+    { id: 'rajasthan', label: 'Rajasthan (Jaipur)' },
+    { id: 'telangana', label: 'Hyderabad' },
+    { id: 'tamil-nadu', label: 'Chennai' },
+    { id: 'west-bengal', label: 'Kolkata' },
+    { id: 'madhya-pradesh', label: 'MP (Bhopal)' },
+    { id: 'punjab', label: 'Punjab' },
+    { id: 'kerala', label: 'Kerala' },
+    { id: 'assam', label: 'Assam' },
+    { id: 'chandigarh', label: 'Chandigarh' }
+  ];
+
   return (
     <header className="sticky top-0 z-50 bg-[#0B0F17]/95 backdrop-blur-md border-b border-zinc-800 text-zinc-100 transition-colors duration-200">
       {/* Top Utility Ticker Bar */}
@@ -69,23 +105,22 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Left: Free & Official Banner */}
           <div className="flex items-center gap-3">
             <span className="inline-flex items-center gap-1 text-[#FF6B00] font-semibold">
-              <Sparkles className="w-3.5 h-3.5" /> 100% Free & Official Portal
-            </span>
-            <span className="hidden sm:inline text-zinc-600">|</span>
-            <span className="hidden sm:inline text-zinc-400">
-              No Login Required • No Personal Data Collected • .gov.in Links
+              <Sparkles className="w-3.5 h-3.5" /> {t('free_official_banner', '100% Free & Official Portal • Direct .gov.in Links')}
             </span>
           </div>
 
-          {/* Right: Emergency & Accessibility */}
-          <div className="flex items-center gap-3">
+          {/* Right: Language Switcher, Emergency & Accessibility */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            {/* Multi-Language Switcher (13 Languages) */}
+            <LanguageSwitcher />
+
             <button
               onClick={onOpenEmergency}
               className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-red-950/80 text-red-400 border border-red-800/50 hover:bg-red-900/80 text-xs font-medium transition"
               id="emergency-top-btn"
             >
               <PhoneCall className="w-3 h-3 text-red-400 animate-pulse" />
-              <span>Delhi Emergency Numbers (112)</span>
+              <span>{currentState.name} {t('emergency_helpline', 'Emergency (112)')}</span>
             </button>
 
             {/* Font Adjuster */}
@@ -139,11 +174,11 @@ export const Header: React.FC<HeaderProps> = ({
                 SarkarSaathi<span className="text-[#FF6B00]">.org</span>
               </span>
               <span className="hidden sm:inline-block px-2 py-0.5 text-[10px] uppercase font-bold rounded bg-[#FF6B00]/10 text-[#FF6B00] border border-[#FF6B00]/30">
-                Delhi
+                {currentState.name}
               </span>
             </div>
             <p className="text-xs text-zinc-400 font-medium">
-              सभी सरकारी काम एक जगह, बिल्कुल फ्री
+              {t('tagline', 'सभी सरकारी काम एक जगह, बिल्कुल फ्री')}
             </p>
           </div>
         </div>
@@ -151,52 +186,144 @@ export const Header: React.FC<HeaderProps> = ({
         {/* State Selector Badge Dropdown */}
         <div className="relative">
           <button
-            onClick={() => setStateDropdownOpen(!stateDropdownOpen)}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-700/80 text-xs font-semibold text-zinc-200 transition"
+            onClick={() => {
+              setStateDropdownOpen(!stateDropdownOpen);
+              setStateSearchQuery('');
+            }}
+            className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-amber-500/40 text-xs font-semibold text-zinc-100 transition shadow-sm hover:border-[#FF6B00]"
             id="state-selector-btn"
+            title="Change State or City"
           >
             <MapPin className="w-3.5 h-3.5 text-[#FF6B00]" />
-            <span>State: {currentState.name}</span>
-            <ChevronDown className="w-3.5 h-3.5 text-zinc-400" />
+            <span className="max-w-[140px] sm:max-w-none truncate font-bold text-white">
+              {currentState.name}
+            </span>
+            <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800/80">
+              {currentState.code}
+            </span>
+            <ChevronDown className={`w-3.5 h-3.5 text-zinc-400 transition-transform ${stateDropdownOpen ? 'rotate-180' : ''}`} />
           </button>
 
           {stateDropdownOpen && (
-            <div className="absolute right-0 mt-2 w-64 bg-[#121824] border border-zinc-700 rounded-xl shadow-2xl p-2 z-50 text-xs">
-              <div className="px-2 py-1.5 text-[11px] font-bold text-zinc-400 uppercase tracking-wider border-b border-zinc-800 mb-1">
-                Select State Architecture (Phase 1 Focus)
-              </div>
-              {STATES_LIST.map((st) => (
+            <div className="fixed sm:absolute right-2 sm:right-0 top-16 sm:top-auto sm:mt-2 w-[calc(100vw-1rem)] sm:w-96 max-w-sm bg-[#121824] border border-zinc-700 rounded-2xl shadow-2xl p-3 z-50 text-xs text-zinc-200 animate-in fade-in zoom-in-95 duration-150">
+              <div className="flex items-center justify-between pb-2 border-b border-zinc-800">
+                <div className="flex items-center gap-1.5">
+                  <MapPin className="w-4 h-4 text-[#FF6B00]" />
+                  <span className="font-bold text-white text-sm">{t('select_state', 'Select State / City (राज्य चुनें)')}</span>
+                </div>
                 <button
-                  key={st.id}
-                  onClick={() => {
-                    if (st.isAvailable) {
-                      setCurrentStateId(st.id);
-                    }
-                    setStateDropdownOpen(false);
-                  }}
-                  className={`w-full text-left px-3 py-2 rounded-lg flex items-center justify-between transition ${
-                    st.id === currentStateId 
-                      ? 'bg-[#FF6B00]/20 text-[#FF6B00] font-bold border border-[#FF6B00]/40' 
-                      : st.isAvailable 
-                        ? 'hover:bg-zinc-800 text-zinc-200' 
-                        : 'opacity-50 cursor-not-allowed text-zinc-500'
-                  }`}
+                  onClick={() => setStateDropdownOpen(false)}
+                  className="p-1 text-zinc-400 hover:text-white rounded-lg hover:bg-zinc-800"
                 >
-                  <div>
-                    <span className="font-medium">{st.name}</span>
-                    <span className="block text-[10px] text-zinc-400">{st.hindiName}</span>
-                  </div>
-                  {st.isAvailable ? (
-                    <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800">
-                      Active
-                    </span>
-                  ) : (
-                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-400">
-                      Phase 2
-                    </span>
-                  )}
+                  <X className="w-4 h-4" />
                 </button>
-              ))}
+              </div>
+
+              {/* Instant Search Bar */}
+              <div className="mt-2.5 mb-2">
+                <div className="relative">
+                  <Search className="w-3.5 h-3.5 text-zinc-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                  <input
+                    type="text"
+                    value={stateSearchQuery}
+                    onChange={(e) => setStateSearchQuery(e.target.value)}
+                    placeholder="Search: Punjab, Maharashtra, Bangalore, UP..."
+                    className="w-full pl-8 pr-3 py-1.5 bg-zinc-900/90 border border-zinc-700 rounded-lg text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-[#FF6B00]"
+                    autoFocus
+                  />
+                  {stateSearchQuery && (
+                    <button
+                      onClick={() => setStateSearchQuery('')}
+                      className="absolute right-2.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white"
+                    >
+                      <X className="w-3 h-3" />
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              {/* Popular Quick Filter Chips */}
+              {!stateSearchQuery && (
+                <div className="mb-2">
+                  <div className="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider mb-1 px-1">
+                    Popular Quick Select:
+                  </div>
+                  <div className="flex flex-wrap gap-1 max-h-16 overflow-y-auto scrollbar-thin pr-1">
+                    {popularQuickSelections.map((pop) => (
+                      <button
+                        key={pop.id}
+                        onClick={() => {
+                          setCurrentStateId(pop.id);
+                          setStateDropdownOpen(false);
+                        }}
+                        className={`px-2 py-0.5 rounded-md text-[11px] font-medium transition ${
+                          currentStateId === pop.id
+                            ? 'bg-[#FF6B00] text-white font-bold'
+                            : 'bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border border-zinc-800'
+                        }`}
+                      >
+                        {pop.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* States & UTs Scrollable List (All 28 States + 8 UTs Active) */}
+              <div className="max-h-64 overflow-y-auto space-y-1 pr-1 divide-y divide-zinc-800/50">
+                {filteredStates.length === 0 ? (
+                  <div className="py-6 text-center text-zinc-400">
+                    <p className="font-semibold text-zinc-300">No matching state or city found</p>
+                    <p className="text-[11px] text-zinc-500 mt-1">Try typing Mumbai, Punjab, Bangalore, Patna, Kerala, etc.</p>
+                  </div>
+                ) : (
+                  filteredStates.map((st) => {
+                    const isSelected = st.id === currentStateId;
+                    return (
+                      <button
+                        key={st.id}
+                        onClick={() => {
+                          setCurrentStateId(st.id);
+                          setStateDropdownOpen(false);
+                        }}
+                        className={`w-full text-left px-2.5 py-2 rounded-xl flex items-center justify-between transition mt-1 ${
+                          isSelected
+                            ? 'bg-[#FF6B00]/15 text-white font-bold border border-[#FF6B00]/50 shadow-inner'
+                            : 'hover:bg-zinc-800/80 text-zinc-200'
+                        }`}
+                      >
+                        <div className="flex-1 min-w-0 pr-2">
+                          <div className="flex items-center gap-1.5">
+                            <span className="font-semibold text-xs text-white truncate">{st.name}</span>
+                            <span className="text-[10px] text-zinc-400 font-normal">({st.hindiName})</span>
+                          </div>
+                          <div className="text-[10px] text-zinc-400 truncate mt-0.5">
+                            Capital: <span className="text-zinc-300">{st.capital}</span>
+                            {st.popularCities && st.popularCities.length > 0 && (
+                              <span className="text-zinc-500"> • {st.popularCities.slice(0, 3).join(', ')}</span>
+                            )}
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-1.5 shrink-0">
+                          <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-950/80 text-emerald-400 border border-emerald-800/80">
+                            Active ({st.code})
+                          </span>
+                          {isSelected && (
+                            <span className="w-2 h-2 rounded-full bg-[#FF6B00]" />
+                          )}
+                        </div>
+                      </button>
+                    );
+                  })
+                )}
+              </div>
+
+              {/* Footer Notice */}
+              <div className="mt-2 pt-2 border-t border-zinc-800 text-[10px] text-zinc-400 text-center flex items-center justify-center gap-1">
+                <Sparkles className="w-3 h-3 text-amber-400" />
+                <span>All 28 States & 8 UTs Active • 100% Free Access</span>
+              </div>
             </div>
           )}
         </div>
@@ -213,14 +340,22 @@ export const Header: React.FC<HeaderProps> = ({
             onClick={() => handleNavClick('schemes')}
             className={`px-3 py-2 rounded-lg transition flex items-center gap-1 ${activeTab === 'schemes' ? 'bg-[#FF6B00] text-white font-bold' : 'hover:bg-zinc-800 hover:text-white'}`}
           >
-            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-            <span>Schemes & Subsidies</span>
+            <Gift className="w-3.5 h-3.5 text-rose-400" />
+            <span>Yojana & Subsidy</span>
+          </button>
+          <button
+            onClick={() => handleNavClick('finders')}
+            className={`px-3 py-2 rounded-lg transition flex items-center gap-1 ${activeTab === 'finders' ? 'bg-[#FF6B00] text-white font-bold' : 'hover:bg-zinc-800 hover:text-white'}`}
+          >
+            <Compass className="w-3.5 h-3.5 text-amber-400" />
+            <span>40+ Finders</span>
           </button>
           <button
             onClick={() => handleNavClick('delhi-govt')}
-            className={`px-3 py-2 rounded-lg transition ${activeTab === 'delhi-govt' ? 'bg-[#FF6B00] text-white font-bold' : 'hover:bg-zinc-800 hover:text-white'}`}
+            className={`px-3 py-2 rounded-lg transition flex items-center gap-1 ${activeTab === 'delhi-govt' ? 'bg-[#FF6B00] text-white font-bold' : 'hover:bg-zinc-800 hover:text-white'}`}
           >
-            Delhi Govt
+            <Building2 className="w-3.5 h-3.5 text-cyan-400" />
+            <span>{currentState.name} Portal</span>
           </button>
           <button
             onClick={() => handleNavClick('life-events')}
@@ -234,14 +369,7 @@ export const Header: React.FC<HeaderProps> = ({
             className={`px-3 py-2 rounded-lg transition flex items-center gap-1 ${activeTab === 'banking' ? 'bg-[#FF6B00] text-white font-bold' : 'hover:bg-zinc-800 hover:text-white'}`}
           >
             <Landmark className="w-3.5 h-3.5 text-blue-400" />
-            <span>Banking</span>
-          </button>
-          <button
-            onClick={() => handleNavClick('finders')}
-            className={`px-3 py-2 rounded-lg transition flex items-center gap-1 ${activeTab === 'finders' ? 'bg-[#FF6B00] text-white font-bold' : 'hover:bg-zinc-800 hover:text-white'}`}
-          >
-            <Compass className="w-3.5 h-3.5 text-amber-400" />
-            <span>Finders</span>
+            <span>Banking Hub</span>
           </button>
           <button
             onClick={() => handleNavClick('calculators')}
@@ -254,23 +382,16 @@ export const Header: React.FC<HeaderProps> = ({
             onClick={() => handleNavClick('blog')}
             className={`px-3 py-2 rounded-lg transition flex items-center gap-1 ${activeTab === 'blog' ? 'bg-[#FF6B00] text-white font-bold' : 'hover:bg-zinc-800 hover:text-white'}`}
           >
-            <BookOpen className="w-3.5 h-3.5 text-cyan-400" />
-            <span>Blog</span>
-          </button>
-          <button
-            onClick={() => handleNavClick('faqs')}
-            className={`px-3 py-2 rounded-lg transition flex items-center gap-1 ${activeTab === 'faqs' ? 'bg-[#FF6B00] text-white font-bold' : 'hover:bg-zinc-800 hover:text-white'}`}
-          >
-            <HelpCircle className="w-3.5 h-3.5 text-amber-400" />
-            <span>1000+ FAQs</span>
+            <BookOpen className="w-3.5 h-3.5 text-indigo-400" />
+            <span>Guides</span>
           </button>
           <button
             onClick={() => handleNavClick('auto-update')}
             className={`px-3 py-2 rounded-lg transition flex items-center gap-1 text-amber-300 ${activeTab === 'auto-update' ? 'bg-[#FF6B00] text-white font-bold' : 'hover:bg-zinc-800 hover:text-white'}`}
-            title="Auto Update Engine"
+            title="Sarkari Live Updates"
           >
-            <Sparkles className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
-            <span>Auto Updates</span>
+            <Newspaper className="w-3.5 h-3.5 text-amber-400" />
+            <span>Sarkari News</span>
           </button>
         </nav>
 
@@ -286,13 +407,51 @@ export const Header: React.FC<HeaderProps> = ({
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="xl:hidden bg-[#0D121F] border-b border-zinc-800 px-4 py-4 space-y-2 text-sm text-zinc-200">
+        <div className="xl:hidden bg-[#0D121F] border-b border-zinc-800 px-4 py-4 space-y-3 text-sm text-zinc-200">
+          {/* Quick State Switcher in Mobile Drawer */}
+          <div className="p-2.5 rounded-xl bg-zinc-900/90 border border-zinc-700/80 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <MapPin className="w-4 h-4 text-[#FF6B00]" />
+              <div>
+                <div className="text-xs font-bold text-white">Active State: {currentState.name}</div>
+                <div className="text-[10px] text-zinc-400">{currentState.hindiName}</div>
+              </div>
+            </div>
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                setStateDropdownOpen(true);
+              }}
+              className="px-2.5 py-1 rounded-lg bg-[#FF6B00] text-white text-xs font-bold shadow"
+            >
+              {t('change_state', 'Change State')}
+            </button>
+          </div>
+
           <div className="grid grid-cols-2 gap-2 pb-3 border-b border-zinc-800">
             <button
               onClick={() => handleNavClick('home')}
               className={`p-2.5 rounded-lg text-left font-medium ${activeTab === 'home' ? 'bg-[#FF6B00] text-white font-bold' : 'bg-zinc-900 text-zinc-200'}`}
             >
               🏠 Home
+            </button>
+            <button
+              onClick={() => handleNavClick('schemes')}
+              className={`p-2.5 rounded-lg text-left font-medium ${activeTab === 'schemes' ? 'bg-[#FF6B00] text-white font-bold' : 'bg-zinc-900 text-zinc-200'}`}
+            >
+              🎁 Yojana & Subsidy
+            </button>
+            <button
+              onClick={() => handleNavClick('finders')}
+              className={`p-2.5 rounded-lg text-left font-medium ${activeTab === 'finders' ? 'bg-[#FF6B00] text-white font-bold' : 'bg-zinc-900 text-zinc-200'}`}
+            >
+              🔍 40+ Finders
+            </button>
+            <button
+              onClick={() => handleNavClick('delhi-govt')}
+              className={`p-2.5 rounded-lg text-left font-medium ${activeTab === 'delhi-govt' ? 'bg-[#FF6B00] text-white font-bold' : 'bg-zinc-900 text-zinc-200'}`}
+            >
+              🏛️ {currentState.name} Portal
             </button>
             <button
               onClick={() => handleNavClick('life-events')}
@@ -305,12 +464,6 @@ export const Header: React.FC<HeaderProps> = ({
               className={`p-2.5 rounded-lg text-left font-medium ${activeTab === 'banking' ? 'bg-[#FF6B00] text-white font-bold' : 'bg-zinc-900 text-zinc-200'}`}
             >
               🏦 Banking Hub
-            </button>
-            <button
-              onClick={() => handleNavClick('finders')}
-              className={`p-2.5 rounded-lg text-left font-medium ${activeTab === 'finders' ? 'bg-[#FF6B00] text-white font-bold' : 'bg-zinc-900 text-zinc-200'}`}
-            >
-              🔍 Finders Hub
             </button>
             <button
               onClick={() => handleNavClick('status-check')}
@@ -337,16 +490,10 @@ export const Header: React.FC<HeaderProps> = ({
               🧮 Calculators
             </button>
             <button
-              onClick={() => handleNavClick('delhi-govt')}
-              className={`p-2.5 rounded-lg text-left font-medium ${activeTab === 'delhi-govt' ? 'bg-[#FF6B00] text-white font-bold' : 'bg-zinc-900 text-zinc-200'}`}
-            >
-              🏛️ Delhi Govt
-            </button>
-            <button
               onClick={() => handleNavClick('complaints')}
               className={`p-2.5 rounded-lg text-left font-medium ${activeTab === 'complaints' ? 'bg-[#FF6B00] text-white font-bold' : 'bg-zinc-900 text-zinc-200'}`}
             >
-              📢 Complaints & Grievances
+              📢 Complaints
             </button>
             <button
               onClick={() => handleNavClick('downloads')}
@@ -355,16 +502,10 @@ export const Header: React.FC<HeaderProps> = ({
               📄 Downloads
             </button>
             <button
-              onClick={() => handleNavClick('blog')}
-              className={`p-2.5 rounded-lg text-left font-medium ${activeTab === 'blog' ? 'bg-[#FF6B00] text-white font-bold' : 'bg-zinc-900 text-zinc-200'}`}
+              onClick={() => handleNavClick('auto-update')}
+              className={`p-2.5 rounded-lg text-left font-medium col-span-2 ${activeTab === 'auto-update' ? 'bg-[#FF6B00] text-white font-bold' : 'bg-zinc-900 text-amber-300 border border-amber-500/30'}`}
             >
-              📚 Knowledge Base
-            </button>
-            <button
-              onClick={() => handleNavClick('faqs')}
-              className={`p-2.5 rounded-lg text-left font-medium col-span-2 ${activeTab === 'faqs' ? 'bg-[#FF6B00] text-white font-bold' : 'bg-zinc-900 text-amber-300 border border-amber-500/30'}`}
-            >
-              ❓ 1000+ Sarkari Seva FAQs Hub
+              📰 Sarkari News & PIB Updates
             </button>
           </div>
         </div>

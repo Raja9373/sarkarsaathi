@@ -1,0 +1,72 @@
+[
+  {
+    "id": "hr-ps-01",
+    "name": "Police Station DLF Phase 1",
+    "hindiName": "थाना डीएलएफ फेज 1 गुरुग्राम",
+    "district": "Gurugram",
+    "state": "Haryana",
+    "address": "Golf Course Road, Near Bristol Hotel, DLF Phase 1, Gurugram, Haryana",
+    "pincode": "122002",
+    "phone": "0124-2351100",
+    "shoPhone": "0124-2351101 / 9999981801",
+    "pcrNumber": "112",
+    "jurisdictionAreas": ["DLF Phase 1", "Sikanderpur", "Golf Course Road", "Chakkarpur", "Bristol Chowk"],
+    "landmark": "Near Sikanderpur Metro Station"
+  },
+  {
+    "id": "hr-ps-02",
+    "name": "Police Station Sector 29",
+    "hindiName": "थाना सेक्टर 29 गुरुग्राम",
+    "district": "Gurugram",
+    "state": "Haryana",
+    "address": "Sector 29, Leisure Valley Road, Gurugram, Haryana",
+    "pincode": "122001",
+    "phone": "0124-2388100",
+    "shoPhone": "9999981802",
+    "pcrNumber": "112",
+    "jurisdictionAreas": ["Sector 29 Food Hub", "Leisure Valley Park", "HUDA City Centre Metro", "IFFCO Chowk", "Kingdom of Dreams Area"],
+    "landmark": "Near Millennium City Centre Metro"
+  },
+  {
+    "id": "hr-ps-03",
+    "name": "Police Station Civil Lines Gurugram",
+    "hindiName": "थाना सिविल लाइन्स गुरुग्राम",
+    "district": "Gurugram",
+    "state": "Haryana",
+    "address": "Opposite Rajiv Chowk, Near Court Complex, Gurugram, Haryana",
+    "pincode": "122001",
+    "phone": "0124-2321100",
+    "shoPhone": "9999981803",
+    "pcrNumber": "112",
+    "jurisdictionAreas": ["Civil Lines", "Sadar Bazar", "Rajiv Chowk", "District Courts", "Mini Secretariat"],
+    "landmark": "Near Rajiv Chowk Flyover"
+  },
+  {
+    "id": "hr-ps-04",
+    "name": "Police Station Central Faridabad",
+    "hindiName": "थाना सेंट्रल फरीदाबाद",
+    "district": "Faridabad",
+    "state": "Haryana",
+    "address": "Sector 12, Court Complex Road, Faridabad, Haryana",
+    "pincode": "121007",
+    "phone": "0129-2228100",
+    "shoPhone": "9582200101",
+    "pcrNumber": "112",
+    "jurisdictionAreas": ["Sector 12", "Sector 15", "Mathura Road", "Crown Plaza Area", "Mini Secretariat Faridabad"],
+    "landmark": "Near Sector 12 DC Office"
+  },
+  {
+    "id": "hr-ps-05",
+    "name": "Police Station Sector 5 Panchkula",
+    "hindiName": "थाना सेक्टर 5 पंचकूला",
+    "district": "Panchkula",
+    "state": "Haryana",
+    "address": "Sector 5, Near HUDA Ground, Panchkula, Haryana",
+    "pincode": "134109",
+    "phone": "0172-2567100",
+    "shoPhone": "9729990101",
+    "pcrNumber": "112",
+    "jurisdictionAreas": ["Sector 5", "Sector 6", "Sector 8", "Town Park", "Indradhanush Auditorium Area"],
+    "landmark": "Opposite Indradhanush Auditorium"
+  }
+]

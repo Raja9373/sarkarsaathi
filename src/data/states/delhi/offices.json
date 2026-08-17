@@ -1,0 +1,47 @@
+[
+  {
+    "id": "dl-off-01",
+    "name": "Delhi Secretariat & Chief Minister Office (CMO)",
+    "hindiName": "दिल्ली सचिवालय एवं मुख्यमंत्री कार्यालय",
+    "category": "Secretariat / State HQ",
+    "district": "Central Delhi",
+    "state": "Delhi",
+    "address": "Delhi Secretariat, IP Estate, New Delhi",
+    "pincode": "110002",
+    "helpline": "011-23392020 / 1076",
+    "email": "cmdelhi@nic.in",
+    "website": "https://delhi.gov.in",
+    "publicHours": "09:30 AM - 06:00 PM (Mon-Fri)",
+    "services": ["Government Policy & Administration", "Cabinet Decisions", "e-District Delhi Oversight", "Doorstep Delivery of Public Services (1076)"]
+  },
+  {
+    "id": "dl-off-02",
+    "name": "District Magistrate (DM) Office New Delhi",
+    "hindiName": "जिलाधिकारी कार्यालय नई दिल्ली",
+    "category": "District Magistrate / DC Office",
+    "district": "New Delhi",
+    "state": "Delhi",
+    "address": "12/1, Jam Nagar House, Shahjahan Road, New Delhi",
+    "pincode": "110011",
+    "helpline": "011-23070637",
+    "email": "dcnd@nic.in",
+    "website": "https://dcmagistrate.delhigovt.nic.in",
+    "publicHours": "10:00 AM - 05:00 PM (Mon-Fri)",
+    "services": ["e-District Certificate Approval", "Revenue Records & Land Demarcation", "Civil Defense & Relief", "Court Hearings"]
+  },
+  {
+    "id": "dl-off-03",
+    "name": "SDM Office Chanakyapuri",
+    "hindiName": "एसडीएम कार्यालय चाणक्यपुरी",
+    "category": "Sub-Divisional Magistrate (SDM)",
+    "district": "New Delhi",
+    "state": "Delhi",
+    "address": "Jam Nagar House, Shahjahan Road, New Delhi",
+    "pincode": "110011",
+    "helpline": "011-23070637",
+    "email": "sdmchp.delhi@nic.in",
+    "website": "https://edistrict.delhigovt.nic.in",
+    "publicHours": "10:00 AM - 04:00 PM (Mon-Fri)",
+    "services": ["Income Certificate", "SC/ST/OBC Certificate", "Marriage Registration", "Domicile Certificate", "Lal Dora Certificate"]
+  }
+]

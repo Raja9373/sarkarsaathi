@@ -1,0 +1,36 @@
+[
+  {
+    "id": "tn-rto-01",
+    "rtoCode": "TN-01",
+    "zoneName": "RTO Chennai Central (Ayanavaram)",
+    "district": "Chennai",
+    "state": "Tamil Nadu",
+    "address": "Anderson Road, Ayanavaram, Chennai, Tamil Nadu",
+    "pincode": "600023",
+    "phone": "044-26741200",
+    "email": "rtochnc-tn@nic.in",
+    "timings": "10:00 AM - 05:45 PM (Mon-Sat)",
+    "landmark": "Near Ayanavaram Bus Depot",
+    "jurisdictionAreas": ["Ayanavaram", "Kilpauk", "Purasawalkam", "Perambur", "Otteri"],
+    "servicesOffered": ["Computerized LL & DL Test", "Vehicle RC Registration", "Smart Card DL Renewal", "Transfer of Vehicle Ownership", "FC Renewal"],
+    "automatedTrackAvailable": true,
+    "mloIncharge": "Regional Transport Officer (Chennai Central)"
+  },
+  {
+    "id": "tn-rto-07",
+    "rtoCode": "TN-07",
+    "zoneName": "RTO Chennai South (Thiruvanmiyur)",
+    "district": "Chennai",
+    "state": "Tamil Nadu",
+    "address": "East Coast Road (ECR), Thiruvanmiyur, Chennai, Tamil Nadu",
+    "pincode": "600041",
+    "phone": "044-24410100",
+    "email": "rtochns-tn@nic.in",
+    "timings": "10:00 AM - 05:45 PM (Mon-Sat)",
+    "landmark": "Near Thiruvanmiyur Signal & ECR Junction",
+    "jurisdictionAreas": ["Thiruvanmiyur", "Adyar", "Besant Nagar", "Velachery", "Sholinganallur (OMR)"],
+    "servicesOffered": ["DL Issue & Endorsement", "Vehicle Registration", "Automated Driving Test"],
+    "automatedTrackAvailable": true,
+    "mloIncharge": "Regional Transport Officer (Chennai South)"
+  }
+]
