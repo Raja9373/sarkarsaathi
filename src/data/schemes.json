@@ -1,1 +1,52 @@
-[]
+[
+  {
+    "id": "lakhpati-didi-yojana-women-self-help-gro-7271",
+    "title": "Lakhpati Didi Yojana - Women Self Help Group Enterprise Scheme",
+    "hindiTitle": "Lakhpati Didi Yojana - Women Self Help Group Enterprise Scheme",
+    "shortDesc": "Empowering 3 crore rural women across Self Help Groups with financial assistance, micro-loans, digital literacy, and market access to earn annual income exceeding Rs 1 Lakh.",
+    "hindiDesc": "यह योजना भारत सरकार द्वारा नागरिकों के कल्याण और सहायता हेतु शुरू की गई है। विस्तृत पात्रता और आवेदन प्रक्रिया के लिए आधिकारिक पोर्टल पर जाएं।",
+    "benefits": [
+      "वित्तीय सहायता और प्रत्यक्ष लाभ अंतरण (DBT)",
+      "पात्र नागरिकों के लिए 100% निशुल्क पंजीकरण",
+      "डिजिटल एवं पारदर्शी सत्यापन प्रक्रिया"
+    ],
+    "eligibility": "भारतीय नागरिक (विशिष्ट श्रेणी अनुसार पात्रता)",
+    "documents": [
+      "आधार कार्ड (Aadhaar Card)",
+      "बैंक खाता विवरण (Bank Passbook)",
+      "आय प्रमाण पत्र / निवास प्रमाण पत्र"
+    ],
+    "applyUrl": "https://nrlm.gov.in",
+    "department": "Ministry of Rural Development",
+    "category": "Women & Child Development",
+    "state": "national",
+    "addedDate": "2026-08-18",
+    "source": "myScheme.gov.in / PIB India",
+    "isAutoSynced": true
+  },
+  {
+    "id": "pm-surya-ghar-muft-bijli-yojana-free-sol-7271",
+    "title": "PM Surya Ghar Muft Bijli Yojana - Free Solar Rooftop Scheme 2026",
+    "hindiTitle": "PM Surya Ghar Muft Bijli Yojana - Free Solar Rooftop Scheme 2026",
+    "shortDesc": "Government provides subsidy up to Rs 78,000 for installing rooftop solar panels, providing up to 300 units free electricity per month for households across India.",
+    "hindiDesc": "यह योजना भारत सरकार द्वारा नागरिकों के कल्याण और सहायता हेतु शुरू की गई है। विस्तृत पात्रता और आवेदन प्रक्रिया के लिए आधिकारिक पोर्टल पर जाएं।",
+    "benefits": [
+      "वित्तीय सहायता और प्रत्यक्ष लाभ अंतरण (DBT)",
+      "पात्र नागरिकों के लिए 100% निशुल्क पंजीकरण",
+      "डिजिटल एवं पारदर्शी सत्यापन प्रक्रिया"
+    ],
+    "eligibility": "भारतीय नागरिक (विशिष्ट श्रेणी अनुसार पात्रता)",
+    "documents": [
+      "आधार कार्ड (Aadhaar Card)",
+      "बैंक खाता विवरण (Bank Passbook)",
+      "आय प्रमाण पत्र / निवास प्रमाण पत्र"
+    ],
+    "applyUrl": "https://pmsuryaghar.gov.in",
+    "department": "Ministry of New and Renewable Energy",
+    "category": "Energy & Utility",
+    "state": "national",
+    "addedDate": "2026-08-18",
+    "source": "myScheme.gov.in / PIB India",
+    "isAutoSynced": true
+  }
+]
