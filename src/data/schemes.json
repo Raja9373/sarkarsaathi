@@ -1,5 +1,30 @@
 [
   {
+    "id": "pm-internship-scheme-2026-youth-professi-5057",
+    "title": "PM Internship Scheme 2026 - Youth Professional Training",
+    "hindiTitle": "PM Internship Scheme 2026 - Youth Professional Training",
+    "shortDesc": "Providing 1.25 crore youth with 12-month internships in top 500 companies with Rs 5,000 monthly stipend and Rs 6,000 one-time grant.",
+    "hindiDesc": "यह योजना भारत सरकार द्वारा नागरिकों के कल्याण और सहायता हेतु शुरू की गई है। विस्तृत पात्रता और आवेदन प्रक्रिया के लिए आधिकारिक पोर्टल पर जाएं।",
+    "benefits": [
+      "वित्तीय सहायता और प्रत्यक्ष लाभ अंतरण (DBT)",
+      "पात्र नागरिकों के लिए 100% निशुल्क पंजीकरण",
+      "डिजिटल एवं पारदर्शी सत्यापन प्रक्रिया"
+    ],
+    "eligibility": "भारतीय नागरिक (विशिष्ट श्रेणी अनुसार पात्रता)",
+    "documents": [
+      "आधार कार्ड (Aadhaar Card)",
+      "बैंक खाता विवरण (Bank Passbook)",
+      "आय प्रमाण पत्र / निवास प्रमाण पत्र"
+    ],
+    "applyUrl": "https://pminternship.mca.gov.in",
+    "department": "Ministry of Corporate Affairs",
+    "category": "Education & Youth",
+    "state": "national",
+    "addedDate": "2026-08-19",
+    "source": "myScheme.gov.in / PIB India",
+    "isAutoSynced": true
+  },
+  {
     "id": "lakhpati-didi-yojana-women-self-help-gro-7271",
     "title": "Lakhpati Didi Yojana - Women Self Help Group Enterprise Scheme",
     "hindiTitle": "Lakhpati Didi Yojana - Women Self Help Group Enterprise Scheme",
