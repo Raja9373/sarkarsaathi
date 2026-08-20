@@ -1,5 +1,30 @@
 [
   {
+    "id": "pm-vishwakarma-kaushal-samman-yojana-202-2508",
+    "title": "PM Vishwakarma Kaushal Samman Yojana 2026",
+    "hindiTitle": "PM Vishwakarma Kaushal Samman Yojana 2026",
+    "shortDesc": "Comprehensive scheme offering financial collateral-free credit up to Rs 3 Lakh at 5% interest, Rs 15,000 toolkit incentive, and skill training for traditional artisans and craftspeople.",
+    "hindiDesc": "यह योजना भारत सरकार द्वारा नागरिकों के कल्याण और सहायता हेतु शुरू की गई है। विस्तृत पात्रता और आवेदन प्रक्रिया के लिए आधिकारिक पोर्टल पर जाएं।",
+    "benefits": [
+      "वित्तीय सहायता और प्रत्यक्ष लाभ अंतरण (DBT)",
+      "पात्र नागरिकों के लिए 100% निशुल्क पंजीकरण",
+      "डिजिटल एवं पारदर्शी सत्यापन प्रक्रिया"
+    ],
+    "eligibility": "भारतीय नागरिक (विशिष्ट श्रेणी अनुसार पात्रता)",
+    "documents": [
+      "आधार कार्ड (Aadhaar Card)",
+      "बैंक खाता विवरण (Bank Passbook)",
+      "आय प्रमाण पत्र / निवास प्रमाण पत्र"
+    ],
+    "applyUrl": "https://pmvishwakarma.gov.in",
+    "department": "Ministry of Micro, Small and Medium Enterprises",
+    "category": "Employment & Skill Development",
+    "state": "national",
+    "addedDate": "2026-08-20",
+    "source": "myScheme.gov.in / PIB India",
+    "isAutoSynced": true
+  },
+  {
     "id": "pm-internship-scheme-2026-youth-professi-5057",
     "title": "PM Internship Scheme 2026 - Youth Professional Training",
     "hindiTitle": "PM Internship Scheme 2026 - Youth Professional Training",
