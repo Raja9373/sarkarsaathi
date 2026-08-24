@@ -12,13 +12,13 @@ interface SEOHeadProps {
 }
 
 export const SEOHead: React.FC<SEOHeadProps> = ({
-  title = "SarkarSaathi.org | सभी सरकारी काम एक जगह, बिल्कुल फ्री - Delhi Govt Services & Schemes",
-  description = "Official Delhi Government Services, Government Schemes, Delhi Lakshmi Yojana, Subsidies, Pensions, Calculators, Finders and step-by-step guides. 100% Free & Official links.",
-  canonicalUrl = "https://sarkarsaathi.org/",
-  ogImage = "https://sarkarsaathi.org/og-image.jpg",
+  title = "SarkarSaathi.org — Independent Citizen Guidance Portal | Indian Govt Services & Schemes",
+  description = "Independent Indian citizen assistance portal providing verified procedural guides, eligibility checklists, direct official .gov.in links, finders, and calculators.",
+  canonicalUrl = "https://www.sarkarsaathi.org/",
+  ogImage = "https://www.sarkarsaathi.org/og-image.jpg",
   activeService,
   activeBlogPost,
-  breadcrumbs = [{ name: 'Home', url: 'https://sarkarsaathi.org/' }]
+  breadcrumbs = [{ name: 'Home', url: 'https://www.sarkarsaathi.org/' }]
 }) => {
   const currentTitle = activeService
     ? `${activeService.title} - Official Details, Apply & Eligibility | SarkarSaathi`
@@ -27,9 +27,9 @@ export const SEOHead: React.FC<SEOHeadProps> = ({
     : title;
 
   const currentDesc = activeService
-    ? `${activeService.shortDesc} Official link: ${activeService.officialGovUrl}. Learn eligibility, required documents, and step-by-step online application.`
+    ? `${activeService.shortDesc} Official portal: ${activeService.officialGovUrl}. Learn eligibility, required documents, and step-by-step application.`
     : activeBlogPost
-    ? `${activeBlogPost.summary} Read complete step-by-step guide with official government sources.`
+    ? `${activeBlogPost.summary} Read complete step-by-step guide with verified official government sources.`
     : description;
 
   useEffect(() => {
@@ -43,6 +43,15 @@ export const SEOHead: React.FC<SEOHeadProps> = ({
       document.head.appendChild(metaDesc);
     }
     metaDesc.setAttribute('content', currentDesc);
+
+    // Update canonical link
+    let canonical = document.querySelector('link[rel="canonical"]');
+    if (!canonical) {
+      canonical = document.createElement('link');
+      canonical.setAttribute('rel', 'canonical');
+      document.head.appendChild(canonical);
+    }
+    canonical.setAttribute('href', canonicalUrl);
 
     // Update OG Title
     let ogTitle = document.querySelector('meta[property="og:title"]');
@@ -61,18 +70,18 @@ export const SEOHead: React.FC<SEOHeadProps> = ({
         "@context": "https://schema.org",
         "@type": "Organization",
         "name": "SarkarSaathi.org",
-        "url": "https://sarkarsaathi.org",
-        "logo": "https://sarkarsaathi.org/og-image.jpg",
-        "description": "India's Government Assistance Platform - Official .gov.in links, Delhi services, and schemes."
+        "url": "https://www.sarkarsaathi.org",
+        "logo": "https://www.sarkarsaathi.org/og-image.jpg",
+        "description": "Independent Citizen Guidance Platform for Indian Government Services, Schemes, and official .gov.in links."
       },
       {
         "@context": "https://schema.org",
         "@type": "WebSite",
         "name": "SarkarSaathi.org",
-        "url": "https://sarkarsaathi.org",
+        "url": "https://www.sarkarsaathi.org",
         "potentialAction": {
           "@type": "SearchAction",
-          "target": "https://sarkarsaathi.org/?search={search_term_string}",
+          "target": "https://www.sarkarsaathi.org/?search={search_term_string}",
           "query-input": "required name=search_term_string"
         }
       }

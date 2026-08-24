@@ -302,5 +302,105 @@ The **Delhi Government Electricity Subsidy Scheme** provides domestic electricit
     author: 'SarkarSaathi Utility Cell',
     readTime: '5 min read',
     relatedServiceIds: ['delhi-zero-power-bill-scheme', 'delhi-electric-vehicle-subsidy']
+  },
+  {
+    id: 'all-india-ration-card-onorc-guide-2026',
+    title: 'One Nation One Ration Card (ONORC): Portability, e-Ration PDF Download & Family Member Addition Guide',
+    hindiTitle: 'वन नेशन वन राशन कार्ड (ONORC): राशन कार्ड डाउनलोड, नया सदस्य जोड़ना एवं राशन पोर्टेबिलिटी गाइड',
+    slug: 'all-india-ration-card-onorc-guide-2026',
+    category: 'Government Schemes',
+    summary: 'Comprehensive procedural guide to One Nation One Ration Card (ONORC) national portability, applying online under NFSA at nfsa.gov.in, adding family members, and downloading digital e-Ration card PDF.',
+    contentMarkdown: `# One Nation One Ration Card (ONORC): Complete Citizen Guide
+
+---
+
+## Table of Contents
+1. [What is One Nation One Ration Card (ONORC)?](#what-is-one-nation-one-ration-card-onorc)
+2. [Entitlement & Subsidized Grain Scale](#entitlement--subsidized-grain-scale)
+3. [Eligibility Criteria for NFSA Ration Cards](#eligibility-criteria-for-nfsa-ration-cards)
+4. [Mandatory Documents Checklist](#mandatory-documents-checklist)
+5. [How to Apply for New Ration Card Online](#how-to-apply-for-new-ration-card-online)
+6. [How to Add a New Family Member](#how-to-add-a-new-family-member)
+7. [How to Download Digital e-Ration Card PDF](#how-to-download-digital-e-ration-card-pdf)
+8. [Frequently Asked Questions (FAQs)](#frequently-asked-questions-faqs)
+9. [Official Government Portals](#official-government-portals)
+
+---
+
+## What is One Nation One Ration Card (ONORC)?
+The **One Nation One Ration Card (ONORC)** plan is a national welfare initiative managed by the **Department of Food & Public Distribution, Ministry of Consumer Affairs, Government of India**. It enables National Food Security Act (NFSA) ration cardholders, particularly migrant workers, to lift their entitled subsidized foodgrains from **any Fair Price Shop (FPS)** across India using biometric authentication on electronic Point of Sale (e-PoS) devices.
+
+---
+
+## Entitlement & Subsidized Grain Scale
+* **Antyodaya Anna Yojana (AAY):** 35 kg of foodgrains per family per month.
+* **Priority Household (PHH):** 5 kg of foodgrains per person per month.
+* **Under PMGKAY (Pradhan Mantri Garib Kalyan Anna Yojana):** Free foodgrains are provided to eligible NFSA beneficiaries as per Central Government directives.
+
+---
+
+## Eligibility Criteria for NFSA Ration Cards
+1. **Citizenship:** Must be a resident citizen of India.
+2. **Economic Slab:** Must fall below state-specific household income limits for PHH or AAY criteria.
+3. **Head of Family:** Section 12 of the NFSA mandates that the senior-most female member aged 18+ is recognized as the Head of Family (HOF).
+
+---
+
+## Mandatory Documents Checklist
+* Aadhaar Cards of all family members.
+* Address Proof (Electricity bill, water bill, or registered rent agreement).
+* Active Bank Passbook of the Head of the Family (Aadhaar linked).
+* Income Certificate issued by Revenue Authority / Tehsildar.
+* Birth Certificate (for adding children below 5 years).
+
+---
+
+## How to Apply for New Ration Card Online
+1. Visit the **National Food Security Portal** at [nfsa.gov.in](https://nfsa.gov.in/) or your State Food Portal.
+2. Click **Ration Cards -> Apply for New Ration Card**.
+3. Register using mobile OTP and select your State, District, and Tehsil/Block.
+4. Input details of the Head of the Family and add family members with their 12-digit Aadhaar numbers.
+5. Upload clear scanned PDFs of address proof, income certificate, and photographs.
+6. Submit the form and print the **Application Reference Acknowledgment Receipt**.
+7. Following field inspection by the Food Inspector, the digital ration card is approved.
+
+---
+
+## How to Add a New Family Member
+1. Log in to your state food or e-District portal.
+2. Select **Service: Addition of Member in Existing Ration Card**.
+3. Enter existing Ration Card Number.
+4. Enter the new member's name, DOB, relation to HOF, and Aadhaar number.
+5. Attach Birth Certificate (for child) or Marriage Certificate (for spouse).
+6. Submit for verification and approval.
+
+---
+
+## How to Download Digital e-Ration Card PDF
+1. Download the **DigiLocker** mobile app or visit [digilocker.gov.in](https://www.digilocker.gov.in/).
+2. Search for **Food & Civil Supplies Department** of your respective state.
+3. Enter your **Ration Card Number** and Aadhaar details.
+4. Click **Get Document** to download the digitally verified e-Ration card PDF with official QR code.
+
+---
+
+## Frequently Asked Questions (FAQs)
+
+#### Q1: Is there any fee for ONORC portability or ration card application?
+**Answer:** No. Government application for NFSA ration cards is **100% free of charge**.
+
+#### Q2: Can a migrant worker in Delhi collect rations with a Bihar or UP ration card?
+**Answer:** Yes. Under the One Nation One Ration Card system, you can visit any Fair Price Shop with your Aadhaar card and authenticate via biometric e-PoS.
+
+---
+
+## Official Government Portals
+* National Food Security Portal: [nfsa.gov.in](https://nfsa.gov.in/)
+* DigiLocker Portal: [digilocker.gov.in](https://www.digilocker.gov.in/)
+* Department of Food & Public Distribution: [dfpd.gov.in](https://dfpd.gov.in/)`,
+    publishedDate: '2026-08-18',
+    author: 'SarkarSaathi Welfare Research Cell',
+    readTime: '6 min read',
+    relatedServiceIds: ['ration-card-all-india-nfsa', 'delhi-ration-card-e-food-security']
   }
 ];

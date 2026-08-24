@@ -102,10 +102,10 @@ export const Header: React.FC<HeaderProps> = ({
       {/* Top Utility Ticker Bar */}
       <div className="bg-[#121824] border-b border-zinc-800/80 px-3 py-1.5 text-xs text-zinc-400">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
-          {/* Left: Free & Official Banner */}
+          {/* Left: Free Citizen Guidance Banner */}
           <div className="flex items-center gap-3">
             <span className="inline-flex items-center gap-1 text-[#FF6B00] font-semibold">
-              <Sparkles className="w-3.5 h-3.5" /> {t('free_official_banner', '100% Free & Official Portal • Direct .gov.in Links')}
+              <Sparkles className="w-3.5 h-3.5" /> {t('free_official_banner', '100% Free Citizen Assistance Guide • Direct Official .gov.in Links')}
             </span>
           </div>
 

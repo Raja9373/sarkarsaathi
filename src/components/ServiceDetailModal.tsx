@@ -109,6 +109,14 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
 
         {/* Modal Scrollable Body */}
         <div className="p-4 sm:p-6 overflow-y-auto space-y-6 custom-scrollbar text-xs sm:text-sm flex-1 min-h-0">
+          {/* Prominent Independence Disclaimer */}
+          <div className="p-3 rounded-xl bg-amber-950/40 border border-amber-800/50 text-amber-200 text-xs flex items-start gap-2.5">
+            <Info className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" />
+            <div>
+              <span className="font-bold text-amber-300">Independent Citizen Guide:</span> SarkarSaathi.org is an independent informational portal and is not affiliated with the government. All official applications, document verification, and fee transactions must be completed directly on the destination government portal ({service.officialWebsiteName}).
+            </div>
+          </div>
+
           {/* Quick Metrics Header Bar */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <div className="p-3 rounded-xl bg-zinc-900 border border-zinc-800">
@@ -307,7 +315,7 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
             rel="noopener noreferrer"
             className="w-full sm:w-auto px-6 py-3 rounded-xl bg-gradient-to-r from-[#FF6B00] to-[#E65100] text-white text-xs font-bold shadow-lg hover:brightness-110 transition flex items-center justify-center gap-2"
           >
-            <span>Apply / Access Official .gov.in Website</span>
+            <span>Proceed to Official Government Portal ({service.officialWebsiteName})</span>
             <ExternalLink className="w-4 h-4" />
           </a>
         </div>

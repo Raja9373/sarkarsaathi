@@ -32,6 +32,71 @@ export const MAIN_CATEGORIES = [
 
 export const SERVICES_LIST: ServiceItem[] = [
   {
+    id: 'ration-card-all-india-nfsa',
+    title: 'All India Ration Card (NFSA / ONORC / AAY / PHH / Member Addition & e-Ration)',
+    hindiTitle: 'राशन कार्ड (राष्ट्रीय खाद्य सुरक्षा / वन नेशन वन राशन कार्ड)',
+    category: 'Family Services',
+    secondaryCategories: ['Government Schemes', 'Identity & Documents', 'Online Apply', 'Corrections'],
+    state: 'national',
+    department: 'Department of Food & Public Distribution, Ministry of Consumer Affairs, Govt. of India',
+    shortDesc: 'Complete citizen guide for new Ration Card application, NFSA Priority Household (PHH), Antyodaya (AAY), adding family member, address change, and ONORC national portability.',
+    overview: 'The National Food Security Act (NFSA) entitles eligible Indian households to receive subsidized food grains (rice, wheat, coarse grains) through the Public Distribution System (PDS). Under One Nation One Ration Card (ONORC), beneficiaries can lift their entitled grains from any Fair Price Shop (FPS) across India using biometric authentication.',
+    eligibility: [
+      'Indian citizens residing within eligible socio-economic criteria defined by respective State Governments',
+      'Antyodaya Anna Yojana (AAY): Poorest of the poor families, widows, disabled persons with no regular source of income',
+      'Priority Household (PHH): Families meeting income criteria (usually annual family income below state thresholds, e.g. ₹1 Lakh to ₹1.5 Lakh)',
+      'Head of Family must preferably be the senior-most female member (aged 18+)'
+    ],
+    requiredDocs: [
+      'Aadhaar Card of all family members to be linked',
+      'Passport size photograph of Head of Family (preferably senior female member)',
+      'Proof of Residence (Electricity Bill, Water Bill, Rent Agreement, or Domicile Certificate)',
+      'Bank Account Passbook (Aadhaar seeded bank account of Head of Family)',
+      'Income Certificate issued by Tehsildar / Revenue Authority',
+      'Birth Certificate (for adding children below 5 years)'
+    ],
+    onlineProcess: [
+      'Visit the National Food Security Portal at nfsa.gov.in or your respective State Food & Civil Supplies portal',
+      'Navigate to "Ration Cards" -> "Apply for New Ration Card" or "Online Citizen Services"',
+      'Select Head of Family details, marital status, and fill residential address',
+      'Add family members along with their 12-digit Aadhaar numbers and relationships',
+      'Upload required documents (Income proof, residence proof, Aadhaar copies)',
+      'Submit the application and download the Acknowledgement Slip with Application Number',
+      'Track field verification status and download digital e-Ration Card PDF with QR code'
+    ],
+    offlineProcess: [
+      'Visit nearest Circle Food & Supplies Office, Gram Panchayat, or Common Service Centre (CSC)',
+      'Collect Form for New Ration Card / Member Addition free of charge',
+      'Attach self-attested photocopies of Aadhaar cards, income proof, and residence proof',
+      'Submit form to Food & Civil Supplies Inspector and collect stamped acknowledgment receipt'
+    ],
+    fees: 'Application: ₹0 Free | State e-District Portal Fee: ₹0 to ₹30 max',
+    processingTime: '15 to 30 Working Days',
+    officialWebsiteName: 'National Food Security Portal (NFSA)',
+    officialGovUrl: 'https://nfsa.gov.in/',
+    downloadForms: [
+      { name: 'Standard NFSA Application Form (PDF)', url: 'https://nfsa.gov.in/portal/ration_card_state_portals', isOfficialPdf: true }
+    ],
+    faqs: [
+      { question: 'What is One Nation One Ration Card (ONORC)?', answer: 'ONORC is a national portability scheme enabling migrant workers and beneficiaries to collect their foodgrain quota from any Fair Price Shop across all 36 States/UTs in India using biometric authentication (e-PoS).' },
+      { question: 'How can I add a new member (child/spouse) to my Ration Card?', answer: 'Log in to your State Food Portal / e-District portal, select "Addition of Member", upload the child birth certificate/marriage certificate and Aadhaar card, and submit for verification.' },
+      { question: 'How to download digital e-Ration Card PDF?', answer: 'Go to your State Food Portal or the DigiLocker app, search for "Ration Card", enter your Ration Card Number and State, and fetch the digitally verified PDF document.' }
+    ],
+    commonMistakes: [
+      'Senior female member not designated as Head of Family (HOF) as required under NFSA Section 12',
+      'Mismatched name or spelling in Aadhaar card compared with school/birth certificates',
+      'Failing to link mobile number and Aadhaar for all adult family members'
+    ],
+    importantNotes: [
+      'NFSA ration cards are 100% free of government application fees.',
+      'Check Fair Price Shop (FPS) dealer allocation through Mera Ration Mobile App.'
+    ],
+    lastUpdated: '2026-08-18',
+    relatedServiceIds: ['aadhaar-card-new-update', 'delhi-ration-card-e-food-security'],
+    tags: ['Ration Card', 'NFSA', 'ONORC', 'AAY', 'Food Security', 'Mera Ration', 'PDS', 'Rashan'],
+    isPopular: true
+  },
+  {
     id: 'aadhaar-card-new-update',
     title: 'Aadhaar Card (New Enrolment & Correction)',
     hindiTitle: 'आधार कार्ड (नया बनवाएं व सुधार करें)',

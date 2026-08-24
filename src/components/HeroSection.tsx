@@ -62,22 +62,22 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 bg-gradient-to-r from-[#FF6B00]/10 via-amber-500/5 to-orange-600/10 blur-3xl pointer-events-none rounded-full" />
 
       <div className="relative max-w-5xl mx-auto space-y-6">
-        {/* Dynamic Official State / India Tag */}
+        {/* Dynamic State / India Tag */}
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-900/90 border border-zinc-700/80 text-xs font-semibold text-zinc-300 shadow-md">
           <span className="w-2 h-2 rounded-full bg-[#FF6B00] animate-ping" />
           <span>
             {currentStateId === 'delhi'
-              ? 'SarkarSaathi.org • Delhi Government Citizen Portal'
+              ? 'SarkarSaathi.org • Independent Citizen Guide for Delhi Services'
               : currentStateId === 'national'
-              ? 'SarkarSaathi.org • All India Central Services Portal'
-              : `SarkarSaathi.org • ${stateInfo.name} (${stateInfo.hindiName}) Citizen Portal`}
+              ? 'SarkarSaathi.org • Independent Pan-India Citizen Assistance Portal'
+              : `SarkarSaathi.org • Independent Citizen Guide for ${stateInfo.name} (${stateInfo.hindiName})`}
           </span>
           {onOpenStateSelector && (
             <button
               onClick={onOpenStateSelector}
               className="ml-1 text-[11px] text-[#FF6B00] hover:underline font-bold"
             >
-              (Change)
+              (Change State)
             </button>
           )}
         </div>
@@ -90,9 +90,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         {/* Subtitle */}
         <p className="max-w-3xl mx-auto text-sm sm:text-base md:text-lg text-zinc-300 leading-relaxed font-normal">
           {currentStateId === 'delhi'
-            ? 'Delhi Government Services, Government Guides, Banking Guides, Official Links, Government Tools, Finders, Calculators and Step-by-Step Help.'
-            : `${stateInfo.name} & Central Government Services, Official Portals, Banking Guides, Finders, Calculators and 100% Verified Step-by-Step Help.`}
+            ? 'Independent procedural guides, eligibility checklists, direct official .gov.in links, banking directories, finders, and calculators for Delhi NCR.'
+            : `Independent procedural guides, eligibility checklists, direct official .gov.in links, banking directories, finders, and calculators for ${stateInfo.name} & Central Government.`}
         </p>
+
+        {/* Independent Portal Clarification Notice */}
+        <div className="max-w-2xl mx-auto px-4 py-2 rounded-xl bg-zinc-900/80 border border-zinc-800 text-[11px] sm:text-xs text-zinc-400">
+          <span className="text-amber-400 font-semibold">Transparency Note:</span> SarkarSaathi.org is an independent informational portal and is not affiliated with or operated by any government authority. All official applications must be completed on respective government portals.
+        </div>
 
         {/* Large Smart Search Bar */}
         <div className="relative max-w-3xl mx-auto pt-2">
