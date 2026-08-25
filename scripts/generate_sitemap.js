@@ -183,14 +183,18 @@ if (fs.existsSync(distDir)) {
 // Build Robots.txt
 const robotsTxt = `User-agent: *
 Allow: /
-Allow: /state/
-Allow: /yojana/
-Allow: /scheme/
-Allow: /service/
-Allow: /blog/
-Disallow: /api/
-Disallow: /faq/
-Disallow: /faqs
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: AdsBot-Google
+Allow: /
+
+User-agent: Mediapartners-Google
+Allow: /
+
+User-agent: Google-Display-Ads-Bot
+Allow: /
 
 Sitemap: ${BASE_URL}/sitemap.xml
 `;

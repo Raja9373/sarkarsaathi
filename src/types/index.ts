@@ -225,7 +225,7 @@ export interface BlogPost {
   title: string;
   hindiTitle: string;
   slug: string;
-  category: 'Document Guides' | 'Banking Guides' | 'Delhi Services' | 'Government Updates' | 'Citizen Rights';
+  category: 'Document Guides' | 'Banking Guides' | 'Delhi Services' | 'Government Updates' | 'Citizen Rights' | 'Government Schemes';
   summary: string;
   contentMarkdown: string;
   publishedDate: string;

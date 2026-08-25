@@ -29,6 +29,7 @@ import { StateNoticeBanner } from './components/StateNoticeBanner';
 import { NewsTicker } from './components/NewsTicker';
 import { SarkariNewsSection } from './components/SarkariNewsSection';
 import { YojanaFinder } from './components/YojanaFinder';
+import { BharatSaathiChatbot } from './components/BharatSaathiChatbot';
 
 import { ActiveTab, ServiceItem, StateId } from './types';
 import { SERVICES_LIST } from './data/servicesData';
@@ -414,6 +415,20 @@ export default function App() {
         onSelectDeptById={handleSelectDept}
         onOpenSitemap={() => setSitemapOpen(true)}
         currentStateId={currentStateId}
+      />
+
+      {/* Bharat Saathi Pan-India AI Assistant Chatbot */}
+      <BharatSaathiChatbot
+        currentStateId={currentStateId}
+        onNavigateTab={(tab, itemId) => {
+          setActiveTab(tab as ActiveTab);
+          if (itemId && tab === 'finders') {
+            setFinderInitialId(itemId);
+          }
+        }}
+        onSelectService={(service) => {
+          setSelectedService(service);
+        }}
       />
     </div>
   );
