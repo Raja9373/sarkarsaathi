@@ -114,7 +114,7 @@ export default function App() {
         setActiveTab('services');
       } else if (path === '/schemes' || path === '/find-yojana') {
         setActiveTab('schemes');
-      } else if (path === '/services' || path === '/eligibility' || path === '/documents' || path === '/news') {
+      } else if (path === '/services' || path === '/eligibility' || path === '/documents') {
         setActiveTab('services');
       } else if (path === '/blog') {
         setActiveTab('blog');
