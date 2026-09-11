@@ -351,13 +351,6 @@ export const Header: React.FC<HeaderProps> = ({
             <span>40+ Finders</span>
           </button>
           <button
-            onClick={() => handleNavClick('delhi-govt')}
-            className={`px-3 py-2 rounded-lg transition flex items-center gap-1 ${activeTab === 'delhi-govt' ? 'bg-[#FF6B00] text-white font-bold' : 'hover:bg-zinc-800 hover:text-white'}`}
-          >
-            <Building2 className="w-3.5 h-3.5 text-cyan-400" />
-            <span>{currentState.name} Portal</span>
-          </button>
-          <button
             onClick={() => handleNavClick('life-events')}
             className={`px-3 py-2 rounded-lg transition flex items-center gap-1 ${activeTab === 'life-events' ? 'bg-[#FF6B00] text-white font-bold' : 'hover:bg-zinc-800 hover:text-white'}`}
           >
@@ -446,12 +439,6 @@ export const Header: React.FC<HeaderProps> = ({
               className={`p-2.5 rounded-lg text-left font-medium ${activeTab === 'finders' ? 'bg-[#FF6B00] text-white font-bold' : 'bg-zinc-900 text-zinc-200'}`}
             >
               🔍 40+ Finders
-            </button>
-            <button
-              onClick={() => handleNavClick('delhi-govt')}
-              className={`p-2.5 rounded-lg text-left font-medium ${activeTab === 'delhi-govt' ? 'bg-[#FF6B00] text-white font-bold' : 'bg-zinc-900 text-zinc-200'}`}
-            >
-              🏛️ {currentState.name} Portal
             </button>
             <button
               onClick={() => handleNavClick('life-events')}

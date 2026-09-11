@@ -1,5 +1,9 @@
 import React, { useEffect } from 'react';
 import { ServiceItem, BlogPost } from '../types';
+import { Investment } from '../types/investment';
+import { NewsRecord } from '../types/news';
+import { TenderRecord } from '../types/tender';
+import { OpportunityRecord } from '../types/opportunity';
 
 interface SEOHeadProps {
   title?: string;
@@ -8,6 +12,10 @@ interface SEOHeadProps {
   ogImage?: string;
   activeService?: ServiceItem | null;
   activeBlogPost?: BlogPost | null;
+  activeInvestment?: Investment | null;
+  activeNews?: NewsRecord | null;
+  activeTender?: TenderRecord | null;
+  activeOpportunity?: OpportunityRecord | null;
   breadcrumbs?: { name: string; url: string }[];
 }
 
@@ -18,15 +26,35 @@ export const SEOHead: React.FC<SEOHeadProps> = ({
   ogImage = "https://www.sarkarsaathi.org/og-image.jpg",
   activeService,
   activeBlogPost,
+  activeInvestment,
+  activeNews,
+  activeTender,
+  activeOpportunity,
   breadcrumbs = [{ name: 'Home', url: 'https://www.sarkarsaathi.org/' }]
 }) => {
-  const currentTitle = activeService
+  const currentTitle = activeOpportunity
+    ? `${activeOpportunity.title} - Official Govt Opportunity | SarkarSaathi`
+    : activeTender
+    ? `${activeTender.title} - Official Govt Tender | SarkarSaathi`
+    : activeNews
+    ? `${activeNews.title} - Official Govt Update | SarkarSaathi`
+    : activeInvestment
+    ? `${activeInvestment.name} - Investment Details, Eligibility & Official Sources | SarkarSaathi`
+    : activeService
     ? `${activeService.title} - Official Details, Apply & Eligibility | SarkarSaathi`
     : activeBlogPost
     ? `${activeBlogPost.title} | SarkarSaathi.org`
     : title;
 
-  const currentDesc = activeService
+  const currentDesc = activeOpportunity
+    ? `${activeOpportunity.description} Authority: ${activeOpportunity.authority}.`
+    : activeTender
+    ? `${activeTender.description} Issuing Authority: ${activeTender.issuingAuthority}. Deadline: ${activeTender.submissionDeadline}.`
+    : activeNews
+    ? `${activeNews.shortSummary} Official authority: ${activeNews.sourceAuthority}.`
+    : activeInvestment
+    ? `${activeInvestment.plainLanguageSummary || activeInvestment.description || 'Verified investment details.'} Official authority: ${activeInvestment.authority}. Learn eligibility, taxation, and application.`
+    : activeService
     ? `${activeService.shortDesc} Official portal: ${activeService.officialGovUrl}. Learn eligibility, required documents, and step-by-step application.`
     : activeBlogPost
     ? `${activeBlogPost.summary} Read complete step-by-step guide with verified official government sources.`
@@ -97,6 +125,46 @@ export const SEOHead: React.FC<SEOHeadProps> = ({
           "name": b.name,
           "item": b.url
         }))
+      });
+    }
+
+    if (activeInvestment) {
+      schemas.push({
+        "@context": "https://schema.org",
+        "@type": "FinancialProduct",
+        "name": activeInvestment.name,
+        "description": activeInvestment.plainLanguageSummary || activeInvestment.description,
+        "provider": {
+          "@type": "Organization",
+          "name": activeInvestment.authority
+        },
+        "url": activeInvestment.officialInformationUrl
+      });
+    }
+
+    if (activeTender) {
+      schemas.push({
+        "@context": "https://schema.org",
+        "@type": "GovernmentPermit",
+        "name": activeTender.title,
+        "description": activeTender.description,
+        "provider": {
+          "@type": "GovernmentOrganization",
+          "name": activeTender.issuingAuthority
+        }
+      });
+    }
+
+    if (activeOpportunity) {
+      schemas.push({
+        "@context": "https://schema.org",
+        "@type": "GovernmentService",
+        "name": activeOpportunity.title,
+        "description": activeOpportunity.description,
+        "provider": {
+          "@type": "GovernmentOrganization",
+          "name": activeOpportunity.authority
+        }
       });
     }
 

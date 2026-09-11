@@ -1,0 +1,40 @@
+export type OpportunityStatus = 'OPEN' | 'ACTIVE' | 'UPCOMING' | 'ONGOING' | 'CLOSED' | 'COMPLETED' | 'CANCELLED' | 'SUSPENDED' | 'ARCHIVED' | 'UNKNOWN';
+export type VerificationStatus = 'VERIFIED' | 'NEEDS_REVIEW' | 'ARCHIVED';
+
+export interface OpportunityRecord {
+  id: string;
+  slug: string;
+  title: string;
+  shortSummary: string;
+  description: string;
+  opportunityType: string;
+  sector: string;
+  industry: string;
+  authority: string;
+  organisation: string;
+  state: string;
+  city?: string;
+  projectStage: string;
+  participationType: string;
+  investmentRequired?: string;
+  projectValue?: string;
+  expectedReturns?: string;
+  eligibility: string;
+  applicationProcess: string;
+  openingDate?: string;
+  closingDate?: string;
+  status: OpportunityStatus;
+  officialSourceUrl: string;
+  sourceAuthority: string;
+  sourceType: string;
+  sourcePublishedDate?: string;
+  effectiveDate?: string;
+  lastVerifiedAt: string;
+  verificationStatus: VerificationStatus;
+  relatedInvestmentIds?: string[];
+  relatedTenderIds?: string[];
+  tags: string[];
+  seoTitle: string;
+  seoDescription: string;
+  canonicalUrl: string;
+}

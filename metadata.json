@@ -1,6 +1,6 @@
 {
   "name": "SarkarSaathi.org",
-  "description": "India's Independent Citizen Guidance Platform - Official .gov.in links, Pan-India & State services, step-by-step guides, calculators, finders, banking hub, and life events.",
+  "description": "India's Government Investment, Tender & Opportunity Information Platform",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

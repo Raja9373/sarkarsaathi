@@ -105,7 +105,7 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
     } else if (cat === 'Online Apply') {
       setActiveTab('online-apply');
     } else if (cat === 'Government Departments') {
-      setActiveTab('delhi-govt');
+      setActiveTab('finders');
     } else if (cat === 'Emergency & Helplines') {
       if (onOpenEmergency) onOpenEmergency();
       else onSelectCategory(cat);
@@ -122,7 +122,7 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
           <h2 className="text-2xl sm:text-3xl font-black text-white mt-1">Main Categories & Hubs</h2>
         </div>
         <p className="text-xs text-zinc-400 max-w-md">
-          Access 100+ official Delhi NCT and Central Government services directly grouped by category.
+          Access 100+ official Indian State and Central Government services directly grouped by category.
         </p>
       </div>
 

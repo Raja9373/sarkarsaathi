@@ -66,9 +66,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-900/90 border border-zinc-700/80 text-xs font-semibold text-zinc-300 shadow-md">
           <span className="w-2 h-2 rounded-full bg-[#FF6B00] animate-ping" />
           <span>
-            {currentStateId === 'delhi'
-              ? 'SarkarSaathi.org • Independent Citizen Guide for Delhi Services'
-              : currentStateId === 'national'
+            {currentStateId === 'national'
               ? 'SarkarSaathi.org • Independent Pan-India Citizen Assistance Portal'
               : `SarkarSaathi.org • Independent Citizen Guide for ${stateInfo.name} (${stateInfo.hindiName})`}
           </span>
@@ -89,9 +87,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
         {/* Subtitle */}
         <p className="max-w-3xl mx-auto text-sm sm:text-base md:text-lg text-zinc-300 leading-relaxed font-normal">
-          {currentStateId === 'delhi'
-            ? 'Independent procedural guides, eligibility checklists, direct official .gov.in links, banking directories, finders, and calculators for Delhi NCR.'
-            : `Independent procedural guides, eligibility checklists, direct official .gov.in links, banking directories, finders, and calculators for ${stateInfo.name} & Central Government.`}
+          {`Independent procedural guides, eligibility checklists, direct official .gov.in links, banking directories, finders, and calculators for ${currentStateId === 'national' ? 'India' : stateInfo.name} & Central Government.`}
         </p>
 
         {/* Independent Portal Clarification Notice */}

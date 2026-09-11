@@ -18,9 +18,9 @@ export const Footer: React.FC<FooterProps> = ({
   onSelectServiceById,
   onSelectDeptById,
   onOpenSitemap,
-  currentStateId = 'delhi',
+  currentStateId = 'all',
 }) => {
-  const stateInfo = useMemo(() => getStateInfo(currentStateId || 'delhi'), [currentStateId]);
+  const stateInfo = useMemo(() => getStateInfo(currentStateId || 'all'), [currentStateId]);
   const stateUpper = (stateInfo?.name || 'ALL INDIA').toUpperCase();
   const stateSlug = (stateInfo?.id || 'national').toLowerCase();
   const stateName = stateInfo?.name || 'India';
@@ -39,7 +39,7 @@ export const Footer: React.FC<FooterProps> = ({
   };
 
   const handleDeptClick = (deptId?: string) => {
-    if (stateSlug === 'delhi' && onSelectDeptById && deptId) {
+    if (onSelectDeptById && deptId) {
       onSelectDeptById(deptId);
     } else {
       handleNav('finders');

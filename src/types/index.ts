@@ -225,7 +225,7 @@ export interface BlogPost {
   title: string;
   hindiTitle: string;
   slug: string;
-  category: 'Document Guides' | 'Banking Guides' | 'Delhi Services' | 'Government Updates' | 'Citizen Rights' | 'Government Schemes';
+  category: 'Document Guides' | 'Banking Guides' | 'Government Updates' | 'Citizen Rights' | 'Government Schemes';
   summary: string;
   contentMarkdown: string;
   publishedDate: string;
@@ -247,10 +247,18 @@ export type ActiveTab =
   | 'payments' 
   | 'downloads' 
   | 'calculators' 
-  | 'delhi-govt' 
   | 'auto-update'
   | 'complaints'
   | 'blog' 
   | 'faqs'
   | 'legal' 
+  | 'comparisons'
+  | 'investments'
+  | 'investment-detail'
+  | 'news'
+  | 'news-detail'
+  | 'tenders'
+  | 'tenders-detail'
+  | 'opportunities'
+  | 'opportunities-detail'
   | 'service-detail';

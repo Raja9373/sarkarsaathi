@@ -10,7 +10,6 @@ import { OnlineApplyHub } from './components/OnlineApplyHub';
 import { PaymentsHub } from './components/PaymentsHub';
 import { DownloadCentre } from './components/DownloadCentre';
 import { CalculatorsHub } from './components/CalculatorsHub';
-import { DelhiGovtHub } from './components/DelhiGovtHub';
 import { ComplaintsHub } from './components/ComplaintsHub';
 import { BlogHub } from './components/BlogHub';
 import { ServicesFaqPage } from './components/ServicesFaqPage';
@@ -18,6 +17,15 @@ import { LegalPages } from './components/LegalPages';
 import { ServiceDetailModal } from './components/ServiceDetailModal';
 import { EmergencyModal } from './components/EmergencyModal';
 import { Footer } from './components/Footer';
+import { ComparisonsHub } from './components/ComparisonsHub';
+import { InvestmentsHub } from './components/InvestmentsHub';
+import { InvestmentDetail } from './components/InvestmentDetail';
+import { NewsHub } from './components/NewsHub';
+import { NewsDetail } from './components/NewsDetail';
+import { TendersHub } from './components/TendersHub';
+import { TenderDetail } from './components/TenderDetail';
+import { OpportunitiesHub } from './components/OpportunitiesHub';
+import { OpportunityDetail } from './components/OpportunityDetail';
 
 // New Infrastructure Components
 import { SEOHead } from './components/SEOHead';
@@ -41,7 +49,7 @@ import { ExternalLink, CheckCircle2, Search, ArrowRight, ShieldCheck, Sparkles, 
 export default function App() {
   const [servicesData, setServicesData] = useState<ServiceItem[]>(SERVICES_LIST);
   const [activeTab, setActiveTab] = useState<ActiveTab>('home');
-  const [currentStateId, setCurrentStateId] = useState<StateId>('delhi');
+  const [currentStateId, setCurrentStateId] = useState<StateId>('all');
   const [selectedService, setSelectedService] = useState<ServiceItem | null>(null);
   const [emergencyOpen, setEmergencyOpen] = useState(false);
   const [voiceSearchOpen, setVoiceSearchOpen] = useState(false);
@@ -49,6 +57,10 @@ export default function App() {
 
   const [finderInitialId, setFinderInitialId] = useState<string>('govt-offices');
   const [selectedDeptId, setSelectedDeptId] = useState<string | null>(null);
+  const [selectedInvestmentSlug, setSelectedInvestmentSlug] = useState<string | null>(null);
+  const [selectedNewsSlug, setSelectedNewsSlug] = useState<string | null>(null);
+  const [selectedTenderSlug, setSelectedTenderSlug] = useState<string | null>(null);
+  const [selectedOpportunitySlug, setSelectedOpportunitySlug] = useState<string | null>(null);
   const [selectedCategoryFilter, setSelectedCategoryFilter] = useState<string>('all');
   const [searchFilterQuery, setSearchFilterQuery] = useState<string>('');
   const [fontSizeLevel, setFontSizeLevel] = useState<number>(0);
@@ -116,10 +128,48 @@ export default function App() {
         setActiveTab('finders');
       } else if (path === '/calculators') {
         setActiveTab('calculators');
-      } else if (path === '/delhi-govt' || path.startsWith('/dept/') || path.startsWith('/department/')) {
-        const deptId = path.split('/')[2];
-        if (deptId) setSelectedDeptId(deptId);
-        setActiveTab('delhi-govt');
+      } else if (path === '/comparisons') {
+        setActiveTab('comparisons');
+      } else if (path === '/investments') {
+        setActiveTab('investments');
+      } else if (path.startsWith('/investments/')) {
+        const slug = path.split('/')[2];
+        if (slug) {
+          setSelectedInvestmentSlug(slug);
+          setActiveTab('investment-detail');
+        } else {
+          setActiveTab('investments');
+        }
+      } else if (path === '/news') {
+        setActiveTab('news');
+      } else if (path.startsWith('/news/')) {
+        const slug = path.split('/')[2];
+        if (slug) {
+          setSelectedNewsSlug(slug);
+          setActiveTab('news-detail');
+        } else {
+          setActiveTab('news');
+        }
+      } else if (path === '/tenders') {
+        setActiveTab('tenders');
+      } else if (path.startsWith('/tenders/')) {
+        const slug = path.split('/')[2];
+        if (slug) {
+          setSelectedTenderSlug(slug);
+          setActiveTab('tenders-detail');
+        } else {
+          setActiveTab('tenders');
+        }
+      } else if (path === '/opportunities') {
+        setActiveTab('opportunities');
+      } else if (path.startsWith('/opportunities/')) {
+        const slug = path.split('/')[2];
+        if (slug) {
+          setSelectedOpportunitySlug(slug);
+          setActiveTab('opportunities-detail');
+        } else {
+          setActiveTab('opportunities');
+        }
       } else if (path === '/complaints') {
         setActiveTab('complaints');
       } else if (path === '/downloads') {
@@ -181,7 +231,7 @@ export default function App() {
 
   const handleSelectDept = (deptId: string) => {
     setSelectedDeptId(deptId);
-    setActiveTab('delhi-govt');
+    setActiveTab('finders');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -364,12 +414,15 @@ export default function App() {
         {activeTab === 'payments' && <PaymentsHub />}
         {activeTab === 'downloads' && <DownloadCentre />}
         {activeTab === 'calculators' && <CalculatorsHub />}
-        {activeTab === 'delhi-govt' && (
-          <DelhiGovtHub
-            initialDeptId={selectedDeptId}
-            onResetDept={() => setSelectedDeptId(null)}
-          />
-        )}
+        {activeTab === 'comparisons' && <ComparisonsHub />}
+        {activeTab === 'investments' && <InvestmentsHub />}
+        {activeTab === 'investment-detail' && selectedInvestmentSlug && <InvestmentDetail slug={selectedInvestmentSlug} />}
+        {activeTab === 'news' && <NewsHub />}
+        {activeTab === 'news-detail' && selectedNewsSlug && <NewsDetail slug={selectedNewsSlug} />}
+        {activeTab === 'tenders' && <TendersHub />}
+        {activeTab === 'tenders-detail' && selectedTenderSlug && <TenderDetail slug={selectedTenderSlug} />}
+        {activeTab === 'opportunities' && <OpportunitiesHub />}
+        {activeTab === 'opportunities-detail' && selectedOpportunitySlug && <OpportunityDetail slug={selectedOpportunitySlug} />}
         {activeTab === 'complaints' && <ComplaintsHub />}
         {activeTab === 'blog' && <BlogHub />}
         {activeTab === 'faqs' && <ServicesFaqPage />}

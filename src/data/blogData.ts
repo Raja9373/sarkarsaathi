@@ -6,7 +6,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: 'How to Pay MCD Property Tax Online in Delhi (Step-by-Step Guide)',
     hindiTitle: 'दिल्ली एमसीडी प्रॉपर्टी टैक्स ऑनलाइन कैसे भरें (स्टेप-बाय-स्टेप गाइड)',
     slug: 'how-to-apply-mcd-property-tax-delhi-2026',
-    category: 'Delhi Services',
+    category: 'Government Schemes',
     summary: 'Learn how to generate UPIC, calculate Unit Area Value tax rebate, and download MCD G-8 tax receipt online.',
     contentMarkdown: `### Overview of MCD Property Tax in Delhi
 
@@ -74,7 +74,7 @@ Instant e-PAN is a digitally signed Permanent Account Number issued in PDF forma
     title: 'How to Pass Delhi Faceless Learner Driving Licence Test from Home',
     hindiTitle: 'घर बैठे दिल्ली लर्नेर ड्राइविंग लाइसेंस टेस्ट कैसे पास करें',
     slug: 'delhi-faceless-learner-driving-licence-guide',
-    category: 'Delhi Services',
+    category: 'Government Schemes',
     summary: 'Delhi Transport Department offers 100% online faceless Learner Licence. Learn the test pattern, tutorial videos, and camera guidelines.',
     contentMarkdown: `### Delhi Faceless Scheme for Learner Licence
 Delhi citizens can apply and appear for the official Learner Licence test from home on a laptop or desktop computer with a working webcam.
@@ -106,7 +106,7 @@ Delhi citizens can apply and appear for the official Learner Licence test from h
     title: 'Delhi Lakshmi Yojana 2026: Complete Application Guide, Eligibility & Online Apply at dly.delhi.gov.in',
     hindiTitle: 'दिल्ली लक्ष्मी योजना 2026: संपूर्ण आवेदन प्रक्रिया, पात्रता एवं dly.delhi.gov.in पर ऑनलाइन पंजीकरण',
     slug: 'delhi-lakshmi-yojana-complete-guide-2026',
-    category: 'Delhi Services',
+    category: 'Government Schemes',
     summary: 'Detailed guide on Delhi Lakshmi Yojana managed by the Dept. of Women & Child Development (dly.delhi.gov.in) for financial assistance and education deposits for girl children in Delhi.',
     contentMarkdown: `# Delhi Lakshmi Yojana 2026: Complete Application & Registration Guide
 
@@ -249,7 +249,7 @@ If you prefer submitting a physical application:
     title: 'Delhi Free Electricity Scheme: How to Get 200 Units Free & WhatsApp Opt-In Guide',
     hindiTitle: 'दिल्ली 200 यूनिट फ्री बिजली योजना: व्हाट्सएप एवं मिस कॉल से सब्सिडी एक्टिवेट करने की पूरी जानकारी',
     slug: 'delhi-free-electricity-200-units-guide',
-    category: 'Delhi Services',
+    category: 'Government Schemes',
     summary: 'Comprehensive guide on Delhi Government 200 units free power scheme, 50% subsidy up to 400 units, and instant WhatsApp opt-in procedure via 7011311111.',
     contentMarkdown: `# Delhi Free Electricity Scheme: Complete Guide to 200 Units Zero Power Bill
 
