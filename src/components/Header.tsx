@@ -114,14 +114,7 @@ export const Header: React.FC<HeaderProps> = ({
             {/* Multi-Language Switcher (13 Languages) */}
             <LanguageSwitcher />
 
-            <button
-              onClick={onOpenEmergency}
-              className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-red-950/80 text-red-400 border border-red-800/50 hover:bg-red-900/80 text-xs font-medium transition"
-              id="emergency-top-btn"
-            >
-              <PhoneCall className="w-3 h-3 text-red-400 animate-pulse" />
-              <span>{currentState.name} {t('emergency_helpline', 'Emergency (112)')}</span>
-            </button>
+{/* Removed legacy emergency helpline button */}
 
             {/* Font Adjuster */}
             <div className="hidden md:flex items-center gap-1 bg-zinc-900 border border-zinc-800 rounded px-1.5 py-0.5 text-zinc-300">

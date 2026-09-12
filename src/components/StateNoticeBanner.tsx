@@ -43,7 +43,7 @@ export const StateNoticeBanner: React.FC<StateNoticeBannerProps> = ({
                 
                 {isNational ? (
                   <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800">
-                    All-India Services Active
+                    National Services Active
                   </span>
                 ) : (
                   <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-amber-950/80 text-amber-300 border border-amber-700/60 flex items-center gap-1">
@@ -51,13 +51,13 @@ export const StateNoticeBanner: React.FC<StateNoticeBannerProps> = ({
                   </span>
                 )}
               </div>
-
+              
               <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed">
                 {isNational ? (
-                  <>Showing all Central Government Schemes, Pan-India Portals, UIDAI, Income Tax, Banking, and Calculators.</>
+                  <>Showing all National Investment Opportunities, Schemes, Portals, and Financial Services.</>
                 ) : (
                   <>
-                    <strong className="text-white">{stateInfo.name}</strong> is active. Showing all Central Government Services & Welfare Schemes valid across {stateInfo.name}. State-specific local municipal portal integration is currently updating.
+                    <strong className="text-white">{stateInfo.name}</strong> is active. Showing all National Investment & Opportunity services valid across {stateInfo.name}. State-specific local municipal portal integration is currently updating.
                   </>
                 )}
               </p>
@@ -87,7 +87,7 @@ export const StateNoticeBanner: React.FC<StateNoticeBannerProps> = ({
                 onClick={onExploreSchemesClick}
                 className="px-3 py-1.5 rounded-xl bg-[#FF6B00] hover:bg-[#E65100] text-white text-xs font-bold transition flex items-center gap-1 shadow"
               >
-                <span>View Central Schemes</span>
+                <span>View National Schemes</span>
                 <ChevronRight className="w-3.5 h-3.5" />
               </button>
             )}

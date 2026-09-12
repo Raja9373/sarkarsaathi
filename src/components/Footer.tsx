@@ -301,7 +301,7 @@ export const Footer: React.FC<FooterProps> = ({
               </span>
             </div>
             <p className="text-zinc-400 max-w-md text-xs leading-relaxed">
-              सभी सरकारी काम एक जगह, बिल्कुल फ्री • India's most comprehensive Government Assistance Platform for {stateName}.
+              Government Investments, Opportunities & Tenders.
             </p>
           </div>
 
@@ -311,7 +311,7 @@ export const Footer: React.FC<FooterProps> = ({
               onClick={onOpenEmergency}
               className="px-4 py-2 rounded-xl bg-red-950/80 text-red-400 border border-red-800/60 font-bold text-xs hover:bg-red-900 transition flex items-center gap-1.5 shadow-sm"
             >
-              <span>🚨 {stateName} 24x7 Helplines (112)</span>
+              <span>🚨 {stateName} Support</span>
             </button>
             <button
               id="footer-disclaimer-btn"
