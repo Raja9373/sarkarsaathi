@@ -265,3 +265,8 @@ export type ActiveTab =
   | 'opportunities'
   | 'opportunities-detail'
   | 'service-detail';
+
+export interface InvestmentFAQ {
+  question: string;
+  answer: string;
+}

@@ -1,4 +1,5 @@
 import { VerificationMetadata, FreshnessStatus } from './infrastructure';
+import { InvestmentFAQ } from './index';
 
 export type InvestmentSchemeStatus = 'ACTIVE' | 'ARCHIVED' | 'UNKNOWN';
 
@@ -35,6 +36,15 @@ export interface GovernmentInvestmentSchemeRecord {
   
   verificationMetadata?: VerificationMetadata;
   freshness?: FreshnessStatus;
+
+  keyBenefits?: string[];
+  availabilityNote?: string;
+  statusNote?: string;
+  faqItems?: InvestmentFAQ[];
+  seoTitle?: string;
+  seoDescription?: string;
+  primaryKeywords?: string[];
+  secondaryKeywords?: string[];
 
   // Relations
   relatedInvestmentProductIds?: string[];

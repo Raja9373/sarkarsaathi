@@ -1,4 +1,5 @@
 import { VerificationMetadata, FreshnessStatus } from './infrastructure';
+import { InvestmentFAQ } from './index';
 
 export interface Investment {
   id: string;
@@ -55,6 +56,15 @@ export interface Investment {
   documentsRequired?: string;
   whereToApply?: string;
   officialContact?: string;
+  
+  keyBenefits?: string[];
+  availabilityNote?: string;
+  statusNote?: string;
+  faqItems?: InvestmentFAQ[];
+  seoTitle?: string;
+  seoDescription?: string;
+  primaryKeywords?: string[];
+  secondaryKeywords?: string[];
   
   changeHistory?: string;
   relatedInvestments?: string[];

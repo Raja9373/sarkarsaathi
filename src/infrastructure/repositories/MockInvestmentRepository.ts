@@ -160,7 +160,7 @@ const MOCK_INVESTMENTS: Investment[] = [
     name: 'Post Office Savings Account',
     category: 'Government Savings',
     authority: 'Ministry of Finance',
-    status: 'ACTIVE',
+    status: 'LEGACY',
     interestRate: '4.0%',
     eligibility: 'Resident Indians',
     taxation: 'Taxable (with 80TTA/TTB benefit)',
@@ -206,7 +206,7 @@ const MOCK_INVESTMENTS: Investment[] = [
     name: 'PM-SYM (Shram Yogi Maandhan)',
     category: 'Social Security',
     authority: 'Ministry of Labour',
-    status: 'ACTIVE',
+    status: 'LEGACY',
     interestRate: 'Guaranteed pension',
     tenure: 'Until 60',
     eligibility: 'Unorganized workers',
@@ -220,7 +220,7 @@ const MOCK_INVESTMENTS: Investment[] = [
     name: 'NPS Vatsalya',
     category: 'Pension',
     authority: 'PFRDA',
-    status: 'ACTIVE',
+    status: 'LEGACY',
     interestRate: 'Market Linked',
     eligibility: 'Minors',
     officialSource: 'PFRDA',
@@ -268,7 +268,14 @@ const MOCK_INVESTMENTS: Investment[] = [
     interestRate: 'Variable',
     officialSource: 'Ministry of Finance',
     officialInformationUrl: 'https://finmin.nic.in',
-    lastVerified: '2026-09-11'
+    lastVerified: '2026-09-11',
+    verificationMetadata: {
+      sourceId: 'min-finance-dea',
+      sourceUrl: 'https://finmin.nic.in',
+      authority: 'Ministry of Finance',
+      verificationStatus: 'NEEDS_REVIEW',
+      lastVerified: '2026-09-12'
+    }
   },
   {
     id: 'ups',
@@ -329,7 +336,7 @@ const MOCK_INVESTMENTS: Investment[] = [
     name: 'RBI Retail Direct',
     category: 'Government Securities',
     authority: 'RBI',
-    status: 'ACTIVE',
+    status: 'LEGACY',
     interestRate: 'Market Linked',
     eligibility: 'Resident Indians',
     officialSource: 'RBI',
