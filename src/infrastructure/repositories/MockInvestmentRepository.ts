@@ -21,8 +21,8 @@ const MOCK_INVESTMENTS: Investment[] = [
     maturityRules: '15 Years',
     riskInformation: 'Low',
     officialSource: 'India Post / Ministry of Finance',
-    officialInformationUrl: 'https://www.indiapost.gov.in',
-    lastVerified: '2026-09-11'
+    officialInformationUrl: 'https://nsiindia.gov.in/',
+    lastVerified: '2026-09-12'
   },
   {
     id: 'nps',
@@ -77,8 +77,8 @@ const MOCK_INVESTMENTS: Investment[] = [
     taxation: 'Taxable',
     taxBenefits: '80C',
     officialSource: 'India Post',
-    officialInformationUrl: 'https://www.indiapost.gov.in',
-    lastVerified: '2026-09-11'
+    officialInformationUrl: 'https://nsiindia.gov.in/',
+    lastVerified: '2026-09-12'
   },
   {
     id: 'kvp',
@@ -95,8 +95,8 @@ const MOCK_INVESTMENTS: Investment[] = [
     eligibility: 'Resident Indians',
     taxation: 'Taxable',
     officialSource: 'India Post',
-    officialInformationUrl: 'https://www.indiapost.gov.in',
-    lastVerified: '2026-09-11'
+    officialInformationUrl: 'https://nsiindia.gov.in/',
+    lastVerified: '2026-09-12'
   },
   {
     id: 'scss',
@@ -114,7 +114,7 @@ const MOCK_INVESTMENTS: Investment[] = [
     taxation: 'Taxable',
     taxBenefits: '80C',
     officialSource: 'India Post / Ministry of Finance',
-    officialInformationUrl: 'https://www.indiapost.gov.in',
+    officialInformationUrl: 'https://nsiindia.gov.in/',
     lastVerified: '2026-09-12',
     keyBenefits: [
       'Government-backed safety',
@@ -147,8 +147,8 @@ const MOCK_INVESTMENTS: Investment[] = [
     taxation: 'EEE',
     taxBenefits: '80C',
     officialSource: 'India Post',
-    officialInformationUrl: 'https://www.indiapost.gov.in',
-    lastVerified: '2026-09-11'
+    officialInformationUrl: 'https://nsiindia.gov.in/',
+    lastVerified: '2026-09-12'
   },
   {
     id: 'po-rd',
@@ -163,7 +163,7 @@ const MOCK_INVESTMENTS: Investment[] = [
     eligibility: 'Resident Indians',
     taxation: 'Taxable',
     officialSource: 'India Post / Ministry of Finance',
-    officialInformationUrl: 'https://www.indiapost.gov.in',
+    officialInformationUrl: 'https://nsiindia.gov.in/',
     lastVerified: '2026-09-12',
     keyBenefits: [
       'Government-backed security',
@@ -194,7 +194,7 @@ const MOCK_INVESTMENTS: Investment[] = [
     eligibility: 'Resident Indians',
     taxation: 'Taxable',
     officialSource: 'India Post / Ministry of Finance',
-    officialInformationUrl: 'https://www.indiapost.gov.in',
+    officialInformationUrl: 'https://nsiindia.gov.in/',
     lastVerified: '2026-09-12',
     keyBenefits: [
       'Fixed monthly income',
@@ -222,8 +222,8 @@ const MOCK_INVESTMENTS: Investment[] = [
     eligibility: 'Resident Indians',
     taxation: 'Taxable (with 80TTA/TTB benefit)',
     officialSource: 'India Post',
-    officialInformationUrl: 'https://www.indiapost.gov.in',
-    lastVerified: '2026-09-11'
+    officialInformationUrl: 'https://nsiindia.gov.in/',
+    lastVerified: '2026-09-12'
   },
   {
     id: 'po-td',
@@ -239,7 +239,7 @@ const MOCK_INVESTMENTS: Investment[] = [
     taxation: 'Taxable',
     taxBenefits: '80C (for 5yr TD only)',
     officialSource: 'India Post / Ministry of Finance',
-    officialInformationUrl: 'https://www.indiapost.gov.in',
+    officialInformationUrl: 'https://nsiindia.gov.in/',
     lastVerified: '2026-09-12',
     keyBenefits: [
       'Government-backed safety',
