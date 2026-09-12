@@ -130,29 +130,15 @@ for (const page of corePages) {
   addUrl(page.url, page.changefreq, page.priority);
 }
 
-// 2. Add State Index Pages (/state/${stateSlug})
-for (const stateSlug of STATES) {
-  addUrl(`${BASE_URL}/state/${stateSlug}`, 'daily', '0.9');
-}
-
-// 3. Add Pan-India State-Specific Services (36 states x 42 services = ~1512 URLs)
-for (const stateSlug of STATES) {
-  for (const serviceSlug of CORE_SERVICES) {
-    addUrl(`${BASE_URL}/${stateSlug}/${serviceSlug}`, 'weekly', '0.85');
-  }
-}
-
-// 4. Backward Compatibility: Maintain /yojana/* and /service/* entries
-const servicesDataPath = path.join(process.cwd(), 'src', 'data', 'servicesData.ts');
+// 4. Backward Compatibility: Maintain /yojana/* and /service/* entries (Simplified to core only)
+/* const servicesDataPath = path.join(process.cwd(), 'src', 'data', 'servicesData.ts');
 if (fs.existsSync(servicesDataPath)) {
   const content = fs.readFileSync(servicesDataPath, 'utf-8');
   const serviceMatches = [...content.matchAll(/id:\s*['"]([^'"]+)['"]/g)].map(m => m[1]);
   for (const id of serviceMatches) {
-    addUrl(`${BASE_URL}/yojana/${id}`, 'weekly', '0.8');
     addUrl(`${BASE_URL}/service/${id}`, 'weekly', '0.8');
-    addUrl(`${BASE_URL}/scheme/${id}`, 'weekly', '0.8');
   }
-}
+} */
 
 // 5. Load Blog Posts
 const blogDataPath = path.join(process.cwd(), 'src', 'data', 'blogData.ts');

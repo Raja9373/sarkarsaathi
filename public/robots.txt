@@ -13,4 +13,4 @@ Allow: /
 User-agent: Google-Display-Ads-Bot
 Allow: /
 
-Sitemap: https://www.sarkarsaathi.org/sitemap.xml
+Sitemap: https://sarkarsaathi.org/sitemap.xml

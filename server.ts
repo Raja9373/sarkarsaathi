@@ -7,6 +7,11 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 const PORT = 3000;
 
+// Block Legacy URLs
+app.get(['/delhi/driving-licence', '/delhi/pan-card-apply', '/delhi/faqs', '/delhi/disclaimer', '/delhi/mcd'], (req, res) => {
+  res.status(404).send('Not Found');
+});
+
 async function startServer() {
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({
