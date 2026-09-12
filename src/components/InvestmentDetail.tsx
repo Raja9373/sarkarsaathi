@@ -49,34 +49,65 @@ export const InvestmentDetail: React.FC<InvestmentDetailProps> = ({ slug }) => {
 
       {investment.description && <p className="text-lg text-zinc-300 mb-8">{investment.description}</p>}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        {investment.interestRate && (
-            <div className="bg-zinc-900 p-4 rounded-lg border border-zinc-800">
-                <h4 className="text-zinc-400 text-xs uppercase">Interest/Return</h4>
-                <p className="text-xl font-bold">{investment.interestRate}</p>
-            </div>
-        )}
-        {investment.tenure && (
-            <div className="bg-zinc-900 p-4 rounded-lg border border-zinc-800">
-                <h4 className="text-zinc-400 text-xs uppercase">Tenure</h4>
-                <p className="text-xl font-bold">{investment.tenure}</p>
-            </div>
-        )}
-      </div>
+      {/* Quick Facts */}
+      {investment.interestRate || investment.tenure || investment.minimumInvestment || investment.maximumInvestment ? (
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+          {investment.interestRate && <div className="bg-zinc-900 p-4 rounded-lg border border-zinc-800"><h4 className="text-zinc-400 text-xs uppercase">Interest/Return</h4><p className="text-lg font-bold">{investment.interestRate}</p></div>}
+          {investment.tenure && <div className="bg-zinc-900 p-4 rounded-lg border border-zinc-800"><h4 className="text-zinc-400 text-xs uppercase">Tenure</h4><p className="text-lg font-bold">{investment.tenure}</p></div>}
+          {investment.minimumInvestment && <div className="bg-zinc-900 p-4 rounded-lg border border-zinc-800"><h4 className="text-zinc-400 text-xs uppercase">Min Investment</h4><p className="text-lg font-bold">{investment.minimumInvestment}</p></div>}
+          {investment.maximumInvestment && <div className="bg-zinc-900 p-4 rounded-lg border border-zinc-800"><h4 className="text-zinc-400 text-xs uppercase">Max Investment</h4><p className="text-lg font-bold">{investment.maximumInvestment}</p></div>}
+        </div>
+      ) : null}
 
-      <div className="space-y-6">
-        <h2 className="text-2xl font-bold">Key Information</h2>
-        {investment.eligibility && (
-            <div>
-                <h3 className="font-semibold text-zinc-300">Who can invest</h3>
-                <p className="text-zinc-400">{investment.eligibility}</p>
-            </div>
+      <div className="space-y-12">
+        {investment.plainLanguageSummary && (
+          <section>
+            <h2 className="text-2xl font-bold mb-4">What is {investment.shortName || investment.name}?</h2>
+            <p className="text-zinc-300">{investment.plainLanguageSummary}</p>
+          </section>
         )}
-        {investment.taxation && (
-            <div>
-                <h3 className="font-semibold text-zinc-300">Taxation</h3>
-                <p className="text-zinc-400">{investment.taxation}</p>
+
+        {investment.keyBenefits && investment.keyBenefits.length > 0 && (
+          <section>
+            <h2 className="text-2xl font-bold mb-4">Key Features</h2>
+            <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {investment.keyBenefits.map((benefit, i) => (
+                <li key={i} className="bg-zinc-900 p-4 rounded border border-zinc-800 flex items-center gap-3">
+                  <span className="text-[#FF6B00] text-xl">✓</span> {benefit}
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {investment.eligibility && (
+            <section>
+              <h3 className="text-xl font-bold mb-2">Who can invest?</h3>
+              <p className="text-zinc-400">{investment.eligibility}</p>
+            </section>
+          )}
+          {investment.taxation && (
+            <section>
+              <h3 className="text-xl font-bold mb-2">Taxation</h3>
+              <p className="text-zinc-400">{investment.taxation}</p>
+              {investment.taxBenefits && <p className="text-sm text-zinc-500 mt-1">{investment.taxBenefits}</p>}
+            </section>
+          )}
+        </div>
+
+        {investment.faqItems && investment.faqItems.length > 0 && (
+          <section>
+            <h2 className="text-2xl font-bold mb-6">Frequently Asked Questions</h2>
+            <div className="space-y-4">
+              {investment.faqItems.map((faq, i) => (
+                <div key={i} className="border-b border-zinc-800 pb-4">
+                  <h4 className="font-semibold text-zinc-200 mb-1">{faq.question}</h4>
+                  <p className="text-zinc-400 text-sm">{faq.answer}</p>
+                </div>
+              ))}
             </div>
+          </section>
         )}
       </div>
       
