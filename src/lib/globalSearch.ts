@@ -41,7 +41,7 @@ export async function globalSearch(query: string): Promise<SearchResult[]> {
   });
 
   schemes.forEach(item => {
-    if (matches(item.schemeName) || matches(item.description)) {
+    if (matches(item.schemeName) || matches(item.shortDescription)) {
       results.push({ id: item.id, type: 'Scheme', title: item.schemeName, authority: item.ministry, status: item.status, slug: item.slug });
     }
   });

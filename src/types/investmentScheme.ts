@@ -1,7 +1,7 @@
 import { VerificationMetadata, FreshnessStatus } from './infrastructure';
 import { InvestmentFAQ } from './index';
 
-export type InvestmentSchemeStatus = 'ACTIVE' | 'ARCHIVED' | 'UNKNOWN';
+export type InvestmentSchemeStatus = 'ACTIVE' | 'CLOSED' | 'DISCONTINUED' | 'UPCOMING' | 'NEEDS_REVIEW';
 
 export interface GovernmentInvestmentSchemeRecord {
   id: string;
@@ -9,37 +9,50 @@ export interface GovernmentInvestmentSchemeRecord {
   slug: string;
   ministry: string;
   department: string;
-  implementingAuthority: string;
+  implementingAgency: string;
   level: 'Central' | 'State' | 'UT';
   state?: string;
   category: string;
   subCategory?: string;
-  investmentPurpose: string; // The reason it qualifies as investment-related
+  shortDescription: string;
+  detailedDescription: string;
+  
   targetBeneficiary: string;
-  description: string;
-  benefits: string;
   eligibility: string;
+  eligibleBeneficiaries?: string;
+  ageCriteria?: string;
+  incomeCriteria?: string;
+  businessCriteria?: string;
+  
+  benefits: string; // Legacy field
+  keyBenefits?: string[];
+  benefitAmount?: string;
+  benefitType?: string;
+  
+  minimumInvestment?: string;
+  maximumInvestment?: string;
+  subsidy?: string;
+  incentive?: string;
+  contribution?: string;
+  tenure?: string;
+  lockIn?: string;
+  withdrawalRules?: string;
+  
   applicationProcess: string;
   documentsRequired: string;
-  officialApplicationUrl?: string;
+  applicationUrl?: string;
+  
   officialSourceUrl: string;
   mySchemeUrl?: string;
+  sourceType: 'myScheme' | 'Ministry' | 'Department' | 'StatePortal';
+  
   status: InvestmentSchemeStatus;
-  publishedDate?: string;
-  lastUpdatedDate?: string;
+  statusNote?: string;
+  availabilityNote?: string;
   
   lastVerifiedAt: string;
   verificationStatus: 'VERIFIED' | 'NEEDS_REVIEW' | 'ARCHIVED';
   
-  sourceAuthority: string;
-  sourceType: 'myScheme' | 'Ministry' | 'Department' | 'StatePortal';
-  
-  verificationMetadata?: VerificationMetadata;
-  freshness?: FreshnessStatus;
-
-  keyBenefits?: string[];
-  availabilityNote?: string;
-  statusNote?: string;
   faqItems?: InvestmentFAQ[];
   seoTitle?: string;
   seoDescription?: string;
@@ -49,6 +62,5 @@ export interface GovernmentInvestmentSchemeRecord {
   // Relations
   relatedInvestmentProductIds?: string[];
   relatedOpportunityIds?: string[];
-  relatedProjectIds?: string[];
   relatedTenderIds?: string[];
 }
