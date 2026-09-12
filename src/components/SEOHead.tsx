@@ -20,8 +20,8 @@ interface SEOHeadProps {
 }
 
 export const SEOHead: React.FC<SEOHeadProps> = ({
-  title = "SarkarSaathi.org — Independent Citizen Guidance Portal | Indian Govt Services & Schemes",
-  description = "Independent Indian citizen assistance portal providing verified procedural guides, eligibility checklists, direct official .gov.in links, finders, and calculators.",
+  title = "SarkarSaathi.org — Government Investments, Tenders & Opportunities | Independent Platform",
+  description = "SarkarSaathi.org is an independent information platform for government investments, tenders, opportunities, and official updates. Verified information from official sources.",
   canonicalUrl = "https://www.sarkarsaathi.org/",
   ogImage = "https://www.sarkarsaathi.org/og-image.jpg",
   activeService,
@@ -33,15 +33,15 @@ export const SEOHead: React.FC<SEOHeadProps> = ({
   breadcrumbs = [{ name: 'Home', url: 'https://www.sarkarsaathi.org/' }]
 }) => {
   const currentTitle = activeOpportunity
-    ? `${activeOpportunity.title} - Official Govt Opportunity | SarkarSaathi`
+    ? `${activeOpportunity.title} - Government Opportunity | SarkarSaathi`
     : activeTender
-    ? `${activeTender.title} - Official Govt Tender | SarkarSaathi`
+    ? `${activeTender.title} - Government Tender | SarkarSaathi`
     : activeNews
-    ? `${activeNews.title} - Official Govt Update | SarkarSaathi`
+    ? `${activeNews.title} - Government Update | SarkarSaathi`
     : activeInvestment
     ? `${activeInvestment.name} - Investment Details, Eligibility & Official Sources | SarkarSaathi`
     : activeService
-    ? `${activeService.title} - Official Details, Apply & Eligibility | SarkarSaathi`
+    ? `${activeService.title} - Government Scheme Details | SarkarSaathi`
     : activeBlogPost
     ? `${activeBlogPost.title} | SarkarSaathi.org`
     : title;
@@ -53,11 +53,11 @@ export const SEOHead: React.FC<SEOHeadProps> = ({
     : activeNews
     ? `${activeNews.shortSummary} Official authority: ${activeNews.sourceAuthority}.`
     : activeInvestment
-    ? `${activeInvestment.plainLanguageSummary || activeInvestment.description || 'Verified investment details.'} Official authority: ${activeInvestment.authority}. Learn eligibility, taxation, and application.`
+    ? `${activeInvestment.plainLanguageSummary || activeInvestment.description || 'Verified investment details.'} Official authority: ${activeInvestment.authority}. Learn eligibility, and application.`
     : activeService
-    ? `${activeService.shortDesc} Official portal: ${activeService.officialGovUrl}. Learn eligibility, required documents, and step-by-step application.`
+    ? `${activeService.shortDesc} Official portal: ${activeService.officialGovUrl}. Learn eligibility, documents, and application.`
     : activeBlogPost
-    ? `${activeBlogPost.summary} Read complete step-by-step guide with verified official government sources.`
+    ? `${activeBlogPost.summary} Verified official information.`
     : description;
 
   useEffect(() => {

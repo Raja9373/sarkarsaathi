@@ -329,64 +329,50 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden xl:flex items-center gap-1 text-xs font-semibold text-zinc-300">
-          <button
-            onClick={() => handleNavClick('home')}
-            className={`px-3 py-2 rounded-lg transition ${activeTab === 'home' ? 'bg-[#FF6B00] text-white font-bold' : 'hover:bg-zinc-800 hover:text-white'}`}
-          >
-            Home
-          </button>
-          <button
-            onClick={() => handleNavClick('schemes')}
-            className={`px-3 py-2 rounded-lg transition flex items-center gap-1 ${activeTab === 'schemes' ? 'bg-[#FF6B00] text-white font-bold' : 'hover:bg-zinc-800 hover:text-white'}`}
-          >
-            <Gift className="w-3.5 h-3.5 text-rose-400" />
-            <span>Yojana & Subsidy</span>
-          </button>
-          <button
-            onClick={() => handleNavClick('finders')}
-            className={`px-3 py-2 rounded-lg transition flex items-center gap-1 ${activeTab === 'finders' ? 'bg-[#FF6B00] text-white font-bold' : 'hover:bg-zinc-800 hover:text-white'}`}
-          >
-            <Compass className="w-3.5 h-3.5 text-amber-400" />
-            <span>40+ Finders</span>
-          </button>
-          <button
-            onClick={() => handleNavClick('life-events')}
-            className={`px-3 py-2 rounded-lg transition flex items-center gap-1 ${activeTab === 'life-events' ? 'bg-[#FF6B00] text-white font-bold' : 'hover:bg-zinc-800 hover:text-white'}`}
-          >
-            <HeartHandshake className="w-3.5 h-3.5 text-pink-400" />
-            <span>Life Events</span>
-          </button>
-          <button
-            onClick={() => handleNavClick('banking')}
-            className={`px-3 py-2 rounded-lg transition flex items-center gap-1 ${activeTab === 'banking' ? 'bg-[#FF6B00] text-white font-bold' : 'hover:bg-zinc-800 hover:text-white'}`}
-          >
-            <Landmark className="w-3.5 h-3.5 text-blue-400" />
-            <span>Banking Hub</span>
-          </button>
-          <button
-            onClick={() => handleNavClick('calculators')}
-            className={`px-3 py-2 rounded-lg transition flex items-center gap-1 ${activeTab === 'calculators' ? 'bg-[#FF6B00] text-white font-bold' : 'hover:bg-zinc-800 hover:text-white'}`}
-          >
-            <Calculator className="w-3.5 h-3.5 text-emerald-400" />
-            <span>Calculators</span>
-          </button>
-          <button
-            onClick={() => handleNavClick('blog')}
-            className={`px-3 py-2 rounded-lg transition flex items-center gap-1 ${activeTab === 'blog' ? 'bg-[#FF6B00] text-white font-bold' : 'hover:bg-zinc-800 hover:text-white'}`}
-          >
-            <BookOpen className="w-3.5 h-3.5 text-indigo-400" />
-            <span>Guides</span>
-          </button>
-          <button
-            onClick={() => handleNavClick('auto-update')}
-            className={`px-3 py-2 rounded-lg transition flex items-center gap-1 text-amber-300 ${activeTab === 'auto-update' ? 'bg-[#FF6B00] text-white font-bold' : 'hover:bg-zinc-800 hover:text-white'}`}
-            title="Sarkari Live Updates"
-          >
-            <Newspaper className="w-3.5 h-3.5 text-amber-400" />
-            <span>Sarkari News</span>
-          </button>
-        </nav>
+          <nav className="hidden xl:flex items-center gap-1 text-xs font-semibold text-zinc-300">
+            <button
+              onClick={() => handleNavClick('home')}
+              className={`px-3 py-2 rounded-lg transition ${activeTab === 'home' ? 'bg-[#FF6B00] text-white font-bold' : 'hover:bg-zinc-800 hover:text-white'}`}
+            >
+              Home
+            </button>
+            <button
+              onClick={() => handleNavClick('investments')}
+              className={`px-3 py-2 rounded-lg transition ${activeTab === 'investments' ? 'bg-[#FF6B00] text-white font-bold' : 'hover:bg-zinc-800 hover:text-white'}`}
+            >
+              Investments
+            </button>
+            <button
+              onClick={() => handleNavClick('opportunities')}
+              className={`px-3 py-2 rounded-lg transition ${activeTab === 'opportunities' ? 'bg-[#FF6B00] text-white font-bold' : 'hover:bg-zinc-800 hover:text-white'}`}
+            >
+              Opportunities
+            </button>
+            <button
+              onClick={() => handleNavClick('tenders')}
+              className={`px-3 py-2 rounded-lg transition ${activeTab === 'tenders' ? 'bg-[#FF6B00] text-white font-bold' : 'hover:bg-zinc-800 hover:text-white'}`}
+            >
+              Tenders
+            </button>
+            <button
+              onClick={() => handleNavClick('news')}
+              className={`px-3 py-2 rounded-lg transition ${activeTab === 'news' ? 'bg-[#FF6B00] text-white font-bold' : 'hover:bg-zinc-800 hover:text-white'}`}
+            >
+              News & Updates
+            </button>
+            <button
+              onClick={() => handleNavClick('comparisons')}
+              className={`px-3 py-2 rounded-lg transition ${activeTab === 'comparisons' ? 'bg-[#FF6B00] text-white font-bold' : 'hover:bg-zinc-800 hover:text-white'}`}
+            >
+              Comparisons
+            </button>
+            <button
+              onClick={() => handleNavClick('investment-schemes')}
+              className={`px-3 py-2 rounded-lg transition ${activeTab === 'investment-schemes' ? 'bg-[#FF6B00] text-white font-bold' : 'hover:bg-zinc-800 hover:text-white'}`}
+            >
+              Investment Schemes
+            </button>
+          </nav>
 
         {/* Mobile Menu Toggle Button */}
         <button
@@ -429,70 +415,40 @@ export const Header: React.FC<HeaderProps> = ({
               🏠 Home
             </button>
             <button
-              onClick={() => handleNavClick('schemes')}
-              className={`p-2.5 rounded-lg text-left font-medium ${activeTab === 'schemes' ? 'bg-[#FF6B00] text-white font-bold' : 'bg-zinc-900 text-zinc-200'}`}
+              onClick={() => handleNavClick('investments')}
+              className={`p-2.5 rounded-lg text-left font-medium ${activeTab === 'investments' ? 'bg-[#FF6B00] text-white font-bold' : 'bg-zinc-900 text-zinc-200'}`}
             >
-              🎁 Yojana & Subsidy
+              📈 Investments
             </button>
             <button
-              onClick={() => handleNavClick('finders')}
-              className={`p-2.5 rounded-lg text-left font-medium ${activeTab === 'finders' ? 'bg-[#FF6B00] text-white font-bold' : 'bg-zinc-900 text-zinc-200'}`}
+              onClick={() => handleNavClick('opportunities')}
+              className={`p-2.5 rounded-lg text-left font-medium ${activeTab === 'opportunities' ? 'bg-[#FF6B00] text-white font-bold' : 'bg-zinc-900 text-zinc-200'}`}
             >
-              🔍 40+ Finders
+              💼 Opportunities
             </button>
             <button
-              onClick={() => handleNavClick('life-events')}
-              className={`p-2.5 rounded-lg text-left font-medium ${activeTab === 'life-events' ? 'bg-[#FF6B00] text-white font-bold' : 'bg-zinc-900 text-zinc-200'}`}
+              onClick={() => handleNavClick('tenders')}
+              className={`p-2.5 rounded-lg text-left font-medium ${activeTab === 'tenders' ? 'bg-[#FF6B00] text-white font-bold' : 'bg-zinc-900 text-zinc-200'}`}
             >
-              ❤️ Life Events
+              📄 Tenders
             </button>
             <button
-              onClick={() => handleNavClick('banking')}
-              className={`p-2.5 rounded-lg text-left font-medium ${activeTab === 'banking' ? 'bg-[#FF6B00] text-white font-bold' : 'bg-zinc-900 text-zinc-200'}`}
+              onClick={() => handleNavClick('investment-schemes')}
+              className={`p-2.5 rounded-lg text-left font-medium ${activeTab === 'investment-schemes' ? 'bg-[#FF6B00] text-white font-bold' : 'bg-zinc-900 text-zinc-200'}`}
             >
-              🏦 Banking Hub
+              📜 Investment Schemes
             </button>
             <button
-              onClick={() => handleNavClick('status-check')}
-              className={`p-2.5 rounded-lg text-left font-medium ${activeTab === 'status-check' ? 'bg-[#FF6B00] text-white font-bold' : 'bg-zinc-900 text-zinc-200'}`}
+              onClick={() => handleNavClick('news')}
+              className={`p-2.5 rounded-lg text-left font-medium ${activeTab === 'news' ? 'bg-[#FF6B00] text-white font-bold' : 'bg-zinc-900 text-zinc-200'}`}
             >
-              📋 Status Check
+              📰 News & Updates
             </button>
             <button
-              onClick={() => handleNavClick('online-apply')}
-              className={`p-2.5 rounded-lg text-left font-medium ${activeTab === 'online-apply' ? 'bg-[#FF6B00] text-white font-bold' : 'bg-zinc-900 text-zinc-200'}`}
+              onClick={() => handleNavClick('comparisons')}
+              className={`p-2.5 rounded-lg text-left font-medium ${activeTab === 'comparisons' ? 'bg-[#FF6B00] text-white font-bold' : 'bg-zinc-900 text-zinc-200'}`}
             >
-              ⚡ Online Apply
-            </button>
-            <button
-              onClick={() => handleNavClick('payments')}
-              className={`p-2.5 rounded-lg text-left font-medium ${activeTab === 'payments' ? 'bg-[#FF6B00] text-white font-bold' : 'bg-zinc-900 text-zinc-200'}`}
-            >
-              💳 Payments
-            </button>
-            <button
-              onClick={() => handleNavClick('calculators')}
-              className={`p-2.5 rounded-lg text-left font-medium ${activeTab === 'calculators' ? 'bg-[#FF6B00] text-white font-bold' : 'bg-zinc-900 text-zinc-200'}`}
-            >
-              🧮 Calculators
-            </button>
-            <button
-              onClick={() => handleNavClick('complaints')}
-              className={`p-2.5 rounded-lg text-left font-medium ${activeTab === 'complaints' ? 'bg-[#FF6B00] text-white font-bold' : 'bg-zinc-900 text-zinc-200'}`}
-            >
-              📢 Complaints
-            </button>
-            <button
-              onClick={() => handleNavClick('downloads')}
-              className={`p-2.5 rounded-lg text-left font-medium ${activeTab === 'downloads' ? 'bg-[#FF6B00] text-white font-bold' : 'bg-zinc-900 text-zinc-200'}`}
-            >
-              📄 Downloads
-            </button>
-            <button
-              onClick={() => handleNavClick('auto-update')}
-              className={`p-2.5 rounded-lg text-left font-medium col-span-2 ${activeTab === 'auto-update' ? 'bg-[#FF6B00] text-white font-bold' : 'bg-zinc-900 text-amber-300 border border-amber-500/30'}`}
-            >
-              📰 Sarkari News & PIB Updates
+              ⚖️ Comparisons
             </button>
           </div>
         </div>

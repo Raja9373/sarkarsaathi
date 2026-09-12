@@ -349,265 +349,38 @@ export const Footer: React.FC<FooterProps> = ({
 
         {/* 5-Column Navigation Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8">
-          {/* Col 1: Dynamic State Services */}
-          <div className="space-y-3">
-            <h3 className="font-bold text-white uppercase text-[11px] tracking-wider flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#FF6B00]" />
-              {stateUpper} SERVICES
-            </h3>
-            <ul className="space-y-2 text-zinc-400">
-              {stateServices.map((srv, idx) => (
-                <li key={`${stateSlug}-srv-${idx}`}>
-                  <a
-                    href={`/${stateSlug}/${srv.slug}`}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleServiceClick(srv.id);
-                    }}
-                    className="hover:text-[#FF6B00] text-left transition line-clamp-1 block"
-                    title={srv.name}
-                  >
-                    {srv.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Col 2: Dynamic State Departments */}
-          <div className="space-y-3">
-            <h3 className="font-bold text-white uppercase text-[11px] tracking-wider flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
-              {stateUpper} DEPARTMENTS
-            </h3>
-            <ul className="space-y-2 text-zinc-400">
-              {stateDepartments.map((dept, idx) => (
-                <li key={`${stateSlug}-dept-${idx}`}>
-                  <a
-                    href={`/${stateSlug}/${dept.slug}`}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleDeptClick(dept.id);
-                    }}
-                    className="hover:text-[#FF6B00] text-left transition line-clamp-1 block"
-                    title={dept.name}
-                  >
-                    {dept.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Col 3: Dynamic Hubs & Tools */}
-          <div className="space-y-3">
-            <h3 className="font-bold text-white uppercase text-[11px] tracking-wider">HUBS & TOOLS</h3>
-            <ul className="space-y-2 text-zinc-400">
-              <li>
-                <a
-                  href={`/${stateSlug}/life-events`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNav('life-events');
-                  }}
-                  className="hover:text-[#FF6B00] transition block"
-                >
-                  19 Life Events Roadmap
-                </a>
-              </li>
-              <li>
-                <a
-                  href={`/${stateSlug}/banking`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNav('banking');
-                  }}
-                  className="hover:text-[#FF6B00] transition block"
-                >
-                  Banking Hub & 21 Banks
-                </a>
-              </li>
-              <li>
-                <a
-                  href={`/${stateSlug}/finders`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNav('finders');
-                  }}
-                  className="hover:text-[#FF6B00] transition block"
-                >
-                  {stateName} PIN & IFSC Finders
-                </a>
-              </li>
-              <li>
-                <a
-                  href={`/${stateSlug}/calculators`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNav('calculators');
-                  }}
-                  className="hover:text-[#FF6B00] transition block"
-                >
-                  Tax & Property Calculators
-                </a>
-              </li>
-              <li>
-                <a
-                  href={`/${stateSlug}/downloads`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNav('downloads');
-                  }}
-                  className="hover:text-[#FF6B00] transition block"
-                >
-                  Download Forms & Formats
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Col 4: Dynamic Quick Actions */}
-          <div className="space-y-3">
-            <h3 className="font-bold text-white uppercase text-[11px] tracking-wider">QUICK ACTIONS</h3>
-            <ul className="space-y-2 text-zinc-400">
-              <li>
-                <a
-                  href={`/${stateSlug}/status-check`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNav('status-check');
-                  }}
-                  className="hover:text-[#FF6B00] transition block"
-                >
-                  Check Application Status
-                </a>
-              </li>
-              <li>
-                <a
-                  href={`/${stateSlug}/online-apply`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNav('online-apply');
-                  }}
-                  className="hover:text-[#FF6B00] transition block"
-                >
-                  Apply Online Direct Links
-                </a>
-              </li>
-              <li>
-                <a
-                  href={`/${stateSlug}/payments`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNav('payments');
-                  }}
-                  className="hover:text-[#FF6B00] transition block"
-                >
-                  Pay Tax & Utility Bills
-                </a>
-              </li>
-              <li>
-                <a
-                  href={`/${stateSlug}/blog`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNav('blog');
-                  }}
-                  className="hover:text-[#FF6B00] transition block"
-                >
-                  Knowledge Center Articles
-                </a>
-              </li>
-              <li>
-                <a
-                  href={`/${stateSlug}/faqs`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNav('faqs');
-                  }}
-                  className="hover:text-[#FF6B00] transition block"
-                >
-                  Citizen Help & FAQs
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Col 5: Legal & SEO */}
-          <div className="space-y-3">
-            <h3 className="font-bold text-white uppercase text-[11px] tracking-wider">LEGAL & PORTALS</h3>
-            <ul className="space-y-2 text-zinc-400">
-              <li>
-                <a
-                  href={`/${stateSlug}/about`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNav('legal');
-                  }}
-                  className="hover:text-[#FF6B00] transition block"
-                >
-                  About SarkarSaathi
-                </a>
-              </li>
-              <li>
-                <a
-                  href={`/${stateSlug}/privacy`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNav('legal');
-                  }}
-                  className="hover:text-[#FF6B00] transition block"
-                >
-                  Privacy Policy
-                </a>
-              </li>
-              <li>
-                <a
-                  href={`/${stateSlug}/disclaimer`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNav('legal');
-                  }}
-                  className="hover:text-[#FF6B00] transition block"
-                >
-                  Disclaimer Notice
-                </a>
-              </li>
-              <li>
-                {onOpenSitemap && (
-                  <button
-                    onClick={onOpenSitemap}
-                    className="hover:text-[#FF6B00] font-bold text-amber-400 transition text-left"
-                  >
-                    XML Sitemap & SEO
-                  </button>
-                )}
-              </li>
-              <li>
-                <a
-                  href={`/${stateSlug}/contact`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNav('legal');
-                  }}
-                  className="hover:text-[#FF6B00] transition block"
-                >
-                  Contact & Support
-                </a>
-              </li>
-            </ul>
-          </div>
+          {/* Col 1-5: New Navigation */}
+          {[
+            { title: 'Investments', action: 'investments' },
+            { title: 'Opportunities', action: 'opportunities' },
+            { title: 'Tenders', action: 'tenders' },
+            { title: 'News & Updates', action: 'news' },
+            { title: 'Comparisons', action: 'comparisons' }
+          ].map(item => (
+              <button key={item.title} onClick={() => handleNav(item.action as ActiveTab)} className="hover:text-[#FF6B00] transition text-left">
+                {item.title}
+              </button>
+          ))}
+          {[
+            { title: 'About', action: 'legal' },
+            { title: 'Contact', action: 'legal' },
+            { title: 'Privacy Policy', action: 'legal' },
+            { title: 'Terms', action: 'legal' },
+            { title: 'Disclaimer', action: 'legal' }
+          ].map(item => (
+              <button key={item.title} onClick={() => handleNav(item.action as ActiveTab)} className="hover:text-[#FF6B00] transition text-left">
+                {item.title}
+              </button>
+          ))}
         </div>
 
         {/* Disclaimer & Copyright Footer Bar */}
         <div className="pt-8 border-t border-zinc-800/80 space-y-4 text-center text-zinc-500 text-[11px]">
           <p className="max-w-4xl mx-auto leading-relaxed">
-            <strong>Disclaimer:</strong> SarkarSaathi.org is an independent citizen assistance portal designed to guide Indian citizens through official government procedures. SarkarSaathi is NOT affiliated with, authorized by, or endorsed by the Government of India, Government of {stateName}, or any government agency. All official services are executed solely on government domains ending in .gov.in or .nic.in.
+            <strong>Disclaimer:</strong> SarkarSaathi.org is an independent informational platform. It is not an official Government website and is not affiliated with or endorsed by any government department, ministry, PSU or regulator. Users should verify important information with the relevant official source before acting.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4 text-zinc-400 font-medium pt-2">
-            <span>© 2026 SarkarSaathi.org • Free Forever</span>
-            <span>•</span>
-            <span>Made with Care for Citizens of {stateName} & India</span>
+            <span>© 2026 SarkarSaathi.org</span>
           </div>
         </div>
       </div>

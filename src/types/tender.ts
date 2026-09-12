@@ -1,35 +1,58 @@
-export type TenderStatus = 'OPEN' | 'CLOSED' | 'AWARDED' | 'CANCELLED' | 'CORRIGENDUM' | 'UNKNOWN';
+export type TenderStatus = 'ACTIVE' | 'CLOSING_SOON' | 'CLOSED' | 'CANCELLED' | 'RETENDERED' | 'AWARDED' | 'ARCHIVED' | 'UNKNOWN';
 export type VerificationStatus = 'VERIFIED' | 'NEEDS_REVIEW' | 'ARCHIVED';
 
 export interface TenderRecord {
   id: string;
-  tenderReferenceNumber: string;
+  tenderId: string; // Unique ID from source
+  referenceNumber: string; // Official reference
   slug: string;
   title: string;
   description: string;
-  issuingAuthority: string;
-  department: string;
+  
+  // Organisation / Authority
   organisation: string;
+  department: string;
+  issuingAuthority: string;
+  
+  // Location
   state: string;
+  district?: string;
   city?: string;
-  tenderCategory: string;
-  procurementType: 'Goods' | 'Services' | 'Works' | 'Other';
-  estimatedValue?: string;
-  emdAmount?: string;
+  pincode?: string;
+  
+  // Category / Work
+  tenderCategory: string; // E.g., 'Goods', 'Works', 'Services'
+  procurementCategory: string; // Detailed category
+  workType?: string;
+  formOfContract?: string;
+  
+  // Financials
+  estimatedValue?: string; // Original currency string
   tenderFee?: string;
-  publicationDate: string;
-  submissionDeadline: string;
-  openingDate?: string;
+  emdAmount?: string;
+  
+  // Dates
+  publishDate: string; // ISO Date
+  submissionDeadline: string; // ISO Date
+  bidOpeningDate?: string; // ISO Date
+  
+  // Status
   status: TenderStatus;
-  officialSourceUrl: string;
-  sourceAuthority: string;
-  sourceType: string;
-  sourcePublishedDate?: string;
-  lastVerifiedAt: string;
+  corrigendumAvailable: boolean;
+  corrigendumCount: number;
+  awardStatus?: string;
+  
+  // Source
+  sourceName: string; // E.g., 'CPPP', 'State Portal X'
+  sourceUrl: string; // Direct link to tender
+  sourcePortal: string; // Portal hostname
+  officialTenderUrl?: string; // Deep link if different
+  
+  // Verification
+  lastVerifiedAt: string; // ISO Timestamp
   verificationStatus: VerificationStatus;
-  corrigendumInfo?: string;
-  eligibilitySummary?: string;
-  relatedCategories: string[];
+  
+  // SEO
   seoTitle: string;
   seoDescription: string;
   canonicalUrl: string;

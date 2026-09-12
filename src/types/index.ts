@@ -255,6 +255,8 @@ export type ActiveTab =
   | 'comparisons'
   | 'investments'
   | 'investment-detail'
+  | 'investment-schemes'
+  | 'investment-scheme-detail'
   | 'news'
   | 'news-detail'
   | 'tenders'
