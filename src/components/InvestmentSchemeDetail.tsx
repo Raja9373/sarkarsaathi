@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { MockInvestmentSchemeRepository } from '../infrastructure/repositories/InvestmentSchemeRepository';
 import { GovernmentInvestmentSchemeRecord } from '../types/investmentScheme';
 import { ExternalLink, ShieldCheck, Calendar, Info, Building } from 'lucide-react';
+import { RelatedContent } from './RelatedContent';
+import { globalSearch, SearchResult } from '../lib/globalSearch';
 
 interface InvestmentSchemeDetailProps {
   slug: string;
@@ -9,17 +11,19 @@ interface InvestmentSchemeDetailProps {
 
 export const InvestmentSchemeDetail: React.FC<InvestmentSchemeDetailProps> = ({ slug }) => {
   const [scheme, setScheme] = useState<GovernmentInvestmentSchemeRecord | null>(null);
+  const [allData, setAllData] = useState<SearchResult[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchScheme = async () => {
+    const fetchData = async () => {
       setLoading(true);
       const repo = new MockInvestmentSchemeRepository();
       const s = await repo.getBySlug(slug);
       setScheme(s);
+      setAllData(await globalSearch(' '));
       setLoading(false);
     };
-    fetchScheme();
+    fetchData();
   }, [slug]);
 
   if (loading) return <div className="text-white p-8 text-center">Loading scheme details...</div>;
@@ -69,6 +73,14 @@ export const InvestmentSchemeDetail: React.FC<InvestmentSchemeDetailProps> = ({ 
               <p className="text-sm text-zinc-300">{scheme.benefits}</p>
           </div>
       </div>
+      
+      {scheme.relatedInvestmentProductIds && (
+          <RelatedContent 
+            relatedIds={scheme.relatedInvestmentProductIds}
+            allResults={allData}
+            onNavigate={(type, slug) => window.location.href = `/${type.toLowerCase()}s/${slug}`}
+          />
+      )}
 
       <div className="bg-zinc-900 border border-zinc-800 p-8 rounded-3xl">
         <h3 className="font-bold text-xl mb-6 flex items-center gap-2"><ShieldCheck className="text-[#FF6B00]" /> Official Source & Verification</h3>

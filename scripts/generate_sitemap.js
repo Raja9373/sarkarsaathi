@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-const BASE_URL = 'https://www.sarkarsaathi.org';
+const BASE_URL = 'https://sarkarsaathi.org';
 const LASTMOD = '2026-08-17';
 
 const sitemapPath = path.join(process.cwd(), 'public', 'sitemap.xml');

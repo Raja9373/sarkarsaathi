@@ -1,3 +1,5 @@
+import { VerificationMetadata, FreshnessStatus } from './infrastructure';
+
 export type TenderStatus = 'ACTIVE' | 'CLOSING_SOON' | 'CLOSED' | 'CANCELLED' | 'RETENDERED' | 'AWARDED' | 'ARCHIVED' | 'UNKNOWN';
 export type VerificationStatus = 'VERIFIED' | 'NEEDS_REVIEW' | 'ARCHIVED';
 
@@ -51,6 +53,8 @@ export interface TenderRecord {
   // Verification
   lastVerifiedAt: string; // ISO Timestamp
   verificationStatus: VerificationStatus;
+  verificationMetadata?: VerificationMetadata;
+  freshness?: FreshnessStatus;
   
   // SEO
   seoTitle: string;

@@ -22,15 +22,15 @@ interface SEOHeadProps {
 export const SEOHead: React.FC<SEOHeadProps> = ({
   title = "SarkarSaathi.org — Government Investments, Tenders & Opportunities | Independent Platform",
   description = "SarkarSaathi.org is an independent information platform for government investments, tenders, opportunities, and official updates. Verified information from official sources.",
-  canonicalUrl = "https://www.sarkarsaathi.org/",
-  ogImage = "https://www.sarkarsaathi.org/og-image.jpg",
+  canonicalUrl = "https://sarkarsaathi.org/",
+  ogImage = "https://sarkarsaathi.org/og-image.jpg",
   activeService,
   activeBlogPost,
   activeInvestment,
   activeNews,
   activeTender,
   activeOpportunity,
-  breadcrumbs = [{ name: 'Home', url: 'https://www.sarkarsaathi.org/' }]
+  breadcrumbs = [{ name: 'Home', url: 'https://sarkarsaathi.org/' }]
 }) => {
   const currentTitle = activeOpportunity
     ? `${activeOpportunity.title} - Government Opportunity | SarkarSaathi`

@@ -1,5 +1,6 @@
+import { VerificationMetadata, FreshnessStatus } from './infrastructure';
+
 export type OpportunityStatus = 'OPEN' | 'ACTIVE' | 'UPCOMING' | 'ONGOING' | 'CLOSED' | 'COMPLETED' | 'CANCELLED' | 'SUSPENDED' | 'ARCHIVED' | 'UNKNOWN';
-export type VerificationStatus = 'VERIFIED' | 'NEEDS_REVIEW' | 'ARCHIVED';
 
 export interface OpportunityRecord {
   id: string;
@@ -24,13 +25,19 @@ export interface OpportunityRecord {
   openingDate?: string;
   closingDate?: string;
   status: OpportunityStatus;
+  
+  lastVerifiedAt: string;
+  verificationStatus: 'VERIFIED' | 'NEEDS_REVIEW' | 'ARCHIVED';
+  
+  verificationMetadata?: VerificationMetadata;
+  freshness?: FreshnessStatus;
+
   officialSourceUrl: string;
   sourceAuthority: string;
   sourceType: string;
   sourcePublishedDate?: string;
   effectiveDate?: string;
-  lastVerifiedAt: string;
-  verificationStatus: VerificationStatus;
+
   relatedInvestmentIds?: string[];
   relatedTenderIds?: string[];
   tags: string[];

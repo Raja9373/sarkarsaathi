@@ -21,8 +21,8 @@ import { OpportunitiesHub } from './components/OpportunitiesHub';
 import { OpportunityDetail } from './components/OpportunityDetail';
 import { InvestmentSchemesHub } from './components/InvestmentSchemesHub';
 import { InvestmentSchemeDetail } from './components/InvestmentSchemeDetail';
-// ... existing imports
-
+import { SearchResults } from './components/SearchResults';
+import { globalSearch, SearchResult } from './lib/globalSearch';
 // ... existing imports
 import { SEOHead } from './components/SEOHead';
 import { VoiceSearchModal } from './components/VoiceSearchModal';
@@ -42,6 +42,23 @@ export default function App() {
   const [emergencyOpen, setEmergencyOpen] = useState(false);
   const [voiceSearchOpen, setVoiceSearchOpen] = useState(false);
   const [sitemapOpen, setSitemapOpen] = useState(false);
+  
+  const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
+
+  const handleSearch = async (query: string) => {
+    const results = await globalSearch(query);
+    setSearchResults(results);
+    setActiveTab('home'); // Stay on home to show results
+  };
+
+  const handleNavigateFromSearch = (type: string, slug: string) => {
+    setSearchResults([]);
+    if (type === 'Investment') { setSelectedInvestmentSlug(slug); setActiveTab('investment-detail'); }
+    else if (type === 'News') { setSelectedNewsSlug(slug); setActiveTab('news-detail'); }
+    else if (type === 'Tender') { setSelectedTenderSlug(slug); setActiveTab('tenders-detail'); }
+    else if (type === 'Opportunity') { setSelectedOpportunitySlug(slug); setActiveTab('opportunities-detail'); }
+    else if (type === 'Scheme') { setSelectedInvestmentSchemeSlug(slug); setActiveTab('investment-scheme-detail'); }
+  };
 
   const [selectedInvestmentSlug, setSelectedInvestmentSlug] = useState<string | null>(null);
   const [selectedNewsSlug, setSelectedNewsSlug] = useState<string | null>(null);
@@ -147,9 +164,10 @@ export default function App() {
         {activeTab === 'home' && (
           <div className="space-y-12 pb-12">
             <NewHomepageHero 
-                onSearch={(query) => { console.log('Search:', query); setActiveTab('investments'); }}
+                onSearch={handleSearch}
                 onNavigate={(tab) => setActiveTab(tab as ActiveTab)}
             />
+            <SearchResults results={searchResults} onNavigate={handleNavigateFromSearch} />
             <HomepagePillars onNavigate={(tab) => setActiveTab(tab as ActiveTab)} />
             <InvestmentCategories />
             <OpportunitiesSection />

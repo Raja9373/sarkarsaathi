@@ -1,3 +1,5 @@
+import { VerificationMetadata, FreshnessStatus } from './infrastructure';
+
 export interface Investment {
   id: string;
   slug: string;
@@ -16,10 +18,18 @@ export interface Investment {
   launchDate?: string;
   closureDate?: string;
   lastUpdated?: string;
+  
   lastVerified: string;
   nextReviewDate?: string;
   officialSource: string;
   officialInformationUrl: string;
+
+  sourceLastChecked?: string;
+  sourceVerificationStatus?: string;
+
+  verificationMetadata?: VerificationMetadata;
+  freshness?: FreshnessStatus;
+
   officialApplicationUrl?: string;
   eligibility?: string;
   ageRules?: string;
@@ -45,8 +55,7 @@ export interface Investment {
   documentsRequired?: string;
   whereToApply?: string;
   officialContact?: string;
-  sourceVerificationStatus?: string;
-  sourceLastChecked?: string;
+  
   changeHistory?: string;
   relatedInvestments?: string[];
   tags?: string[];

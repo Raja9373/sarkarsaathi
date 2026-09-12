@@ -1,3 +1,5 @@
+import { VerificationMetadata, FreshnessStatus } from './infrastructure';
+
 export interface NewsRecord {
   id: string;
   slug: string;
@@ -14,6 +16,10 @@ export interface NewsRecord {
   sourcePublishedDate?: string;
   lastVerifiedAt: string;
   verificationStatus: 'VERIFIED' | 'NEEDS_REVIEW' | 'ARCHIVED';
+  
+  verificationMetadata?: VerificationMetadata;
+  freshness?: FreshnessStatus;
+  
   relatedInvestmentIds?: string[];
   tags: string[];
   seoTitle: string;

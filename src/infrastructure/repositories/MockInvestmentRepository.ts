@@ -363,8 +363,44 @@ const MOCK_INVESTMENTS: Investment[] = [
     officialSource: 'RBI',
     officialInformationUrl: 'https://www.rbi.org.in',
     lastVerified: '2026-09-11'
+  },
+  {
+    id: '54ec-bonds',
+    slug: '54ec-capital-gains-bonds',
+    name: '54EC Capital Gains Bonds',
+    category: 'Government Securities',
+    authority: 'NHAI / REC',
+    status: 'ACTIVE',
+    interestRate: 'As declared by issuing entity',
+    tenure: '5 Years',
+    lockIn: '5 Years',
+    minimumInvestment: '₹10,000',
+    eligibility: 'Resident Indians',
+    taxation: 'Interest Taxable',
+    taxBenefits: 'Section 54EC',
+    officialSource: 'NHAI / REC',
+    officialInformationUrl: 'https://nhai.gov.in',
+    lastVerified: '2026-09-12',
+    sourceLastChecked: '2026-09-12',
+    sourceVerificationStatus: 'VERIFIED'
+  },
+  {
+    id: 'sovereign-green-bonds',
+    slug: 'sovereign-green-bonds',
+    name: 'Sovereign Green Bonds',
+    category: 'Government Securities',
+    authority: 'RBI / Ministry of Finance',
+    status: 'ACTIVE',
+    interestRate: 'Market Linked',
+    eligibility: 'Resident Indians',
+    officialSource: 'RBI',
+    officialInformationUrl: 'https://www.rbi.org.in',
+    lastVerified: '2026-09-12',
+    sourceLastChecked: '2026-09-12',
+    sourceVerificationStatus: 'VERIFIED'
   }
 ];
+
 
 export class MockInvestmentRepository implements IInvestmentRepository {
   async getAll(): Promise<Investment[]> {

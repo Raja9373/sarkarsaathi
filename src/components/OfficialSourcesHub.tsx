@@ -9,10 +9,12 @@ export const OfficialSourcesHub: React.FC = () => {
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {OfficialSourceRegistry.map(source => (
-          <div key={source.id} className="bg-zinc-900 p-6 rounded-2xl border border-zinc-800">
-            <h3 className="text-xl font-bold mb-2">{source.name}</h3>
-            <p className="text-sm text-zinc-500 mb-4">{source.authority}</p>
-            <a href={source.officialUrl} target="_blank" rel="noopener noreferrer" className="text-[#FF6B00] font-bold">
+          <div key={source.id} className="bg-zinc-900 p-6 rounded-2xl border border-zinc-800 space-y-2">
+            <h3 className="text-xl font-bold">{source.name}</h3>
+            <p className="text-sm text-zinc-500">{source.authority}</p>
+            <p className="text-sm text-zinc-400">{source.description}</p>
+            <p className="text-xs text-zinc-600 uppercase tracking-wider">{source.sourceCategory}</p>
+            <a href={source.officialUrl} target="_blank" rel="noopener noreferrer" className="text-[#FF6B00] font-bold block pt-2">
               Visit Official Portal →
             </a>
           </div>

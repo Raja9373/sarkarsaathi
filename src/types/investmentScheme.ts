@@ -1,5 +1,6 @@
+import { VerificationMetadata, FreshnessStatus } from './infrastructure';
+
 export type InvestmentSchemeStatus = 'ACTIVE' | 'ARCHIVED' | 'UNKNOWN';
-export type VerificationStatus = 'VERIFIED' | 'NEEDS_REVIEW' | 'ARCHIVED';
 
 export interface GovernmentInvestmentSchemeRecord {
   id: string;
@@ -25,11 +26,16 @@ export interface GovernmentInvestmentSchemeRecord {
   status: InvestmentSchemeStatus;
   publishedDate?: string;
   lastUpdatedDate?: string;
+  
   lastVerifiedAt: string;
-  verificationStatus: VerificationStatus;
+  verificationStatus: 'VERIFIED' | 'NEEDS_REVIEW' | 'ARCHIVED';
+  
   sourceAuthority: string;
   sourceType: 'myScheme' | 'Ministry' | 'Department' | 'StatePortal';
   
+  verificationMetadata?: VerificationMetadata;
+  freshness?: FreshnessStatus;
+
   // Relations
   relatedInvestmentProductIds?: string[];
   relatedOpportunityIds?: string[];

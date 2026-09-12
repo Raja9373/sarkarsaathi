@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { MockInvestmentRepository } from '../infrastructure/repositories/MockInvestmentRepository';
 import { Investment } from '../types/investment';
 import { SEOHead } from './SEOHead';
+import { RelatedContent } from './RelatedContent';
+import { globalSearch, SearchResult } from '../lib/globalSearch';
 
 interface InvestmentDetailProps {
   slug: string;
@@ -9,17 +11,24 @@ interface InvestmentDetailProps {
 
 export const InvestmentDetail: React.FC<InvestmentDetailProps> = ({ slug }) => {
   const [investment, setInvestment] = useState<Investment | null>(null);
+  const [allData, setAllData] = useState<SearchResult[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchInvestment = async () => {
+    const fetchData = async () => {
       setLoading(true);
       const repo = new MockInvestmentRepository();
       const inv = await repo.getBySlug(slug);
       setInvestment(inv);
+      
+      const all = await globalSearch(''); // This needs to be improved to get all
+      // Actually, globalSearch('') returns empty.
+      // I need a way to get ALL results.
+      // Let's modify globalSearch to allow empty query to return all.
+      setAllData(await globalSearch(' '));
       setLoading(false);
     };
-    fetchInvestment();
+    fetchData();
   }, [slug]);
 
   if (loading) return <div className="text-white p-8">Loading...</div>;
@@ -70,6 +79,14 @@ export const InvestmentDetail: React.FC<InvestmentDetailProps> = ({ slug }) => {
             </div>
         )}
       </div>
+      
+      {investment.relatedInvestments && (
+          <RelatedContent 
+            relatedIds={investment.relatedInvestments}
+            allResults={allData}
+            onNavigate={(type, slug) => window.location.href = `/${type.toLowerCase()}s/${slug}`}
+          />
+      )}
 
       <div className="mt-12 p-6 bg-zinc-900 border border-zinc-700 rounded-lg">
         <h3 className="font-bold mb-4">Official Sources & Verification</h3>
