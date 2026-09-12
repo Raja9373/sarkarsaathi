@@ -79,7 +79,7 @@ export const Header: React.FC<HeaderProps> = ({
   });
 
   const popularQuickSelections = [
-    { id: 'national', label: 'All India' },
+    { id: 'national', label: 'National' },
     { id: 'delhi', label: 'Delhi' },
     { id: 'maharashtra', label: 'Mumbai / Pune' },
     { id: 'karnataka', label: 'Bangalore' },

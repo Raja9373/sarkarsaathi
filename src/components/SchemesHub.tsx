@@ -119,7 +119,7 @@ export const SchemesHub: React.FC<SchemesHubProps> = ({
                 {featuredScheme.isNew ? 'NEW • ' : ''}{featuredScheme.department}
               </span>
               <span className="text-xs text-zinc-300 font-medium">
-                {featuredScheme.state === 'national' ? 'Central Welfare Portal (All India)' : `${stateInfo.name} Portal`}
+                {featuredScheme.state === 'national' ? 'National Investment & Opportunity Portal' : `${stateInfo.name} Portal`}
               </span>
             </div>
 
