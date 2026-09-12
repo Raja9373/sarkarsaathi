@@ -100,7 +100,7 @@ export const SEOHead: React.FC<SEOHeadProps> = ({
         "name": "SarkarSaathi.org",
         "url": "https://www.sarkarsaathi.org",
         "logo": "https://www.sarkarsaathi.org/og-image.jpg",
-        "description": "Independent Citizen Guidance Platform for Indian Government Services, Schemes, and official .gov.in links."
+        "description": "Independent information platform for Indian government investments, tenders, and opportunities."
       },
       {
         "@context": "https://schema.org",
