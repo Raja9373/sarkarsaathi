@@ -65,12 +65,12 @@ export const InvestmentSchemeDetail: React.FC<InvestmentSchemeDetailProps> = ({ 
             </div>
           )}
 
-          <h2 className="text-2xl font-bold mb-4 text-zinc-900 dark:text-white">What is this scheme?</h2>
-          <p>{scheme.detailedDescription}</p>
+          <h2 className="text-2xl font-bold mb-4 text-zinc-100 dark:text-white">What is this scheme?</h2>
+          <p className="text-zinc-700 dark:text-zinc-300">{scheme.detailedDescription}</p>
 
           {scheme.keyBenefits && (
             <>
-              <h2 className="text-2xl font-bold mb-4 text-zinc-900 dark:text-white">Key Benefits</h2>
+              <h2 className="text-2xl font-bold mb-4 text-zinc-100 dark:text-white">Key Benefits</h2>
               <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 list-none p-0">
                   {scheme.keyBenefits.map((b, i) => <li key={i} className="flex gap-2 bg-zinc-100 dark:bg-zinc-800 p-4 rounded-xl text-zinc-900 dark:text-zinc-100"><CheckCircle className="text-[#FF6B00] flex-shrink-0" size={20} /> {b}</li>)}
               </ul>
@@ -79,8 +79,8 @@ export const InvestmentSchemeDetail: React.FC<InvestmentSchemeDetailProps> = ({ 
 
           {(scheme.benefitAmount || scheme.subsidy || scheme.incentive) && (
             <>
-              <h2 className="text-2xl font-bold mb-4 text-zinc-900 dark:text-white">Financial & Benefit Details</h2>
-              <div className="bg-zinc-100 dark:bg-zinc-800 p-6 rounded-2xl">
+              <h2 className="text-2xl font-bold mb-4 text-zinc-100 dark:text-white">Financial & Benefit Details</h2>
+              <div className="bg-zinc-100 dark:bg-zinc-800 p-6 rounded-2xl text-zinc-800 dark:text-zinc-200">
                 {scheme.benefitAmount && <p><strong>Benefit Amount:</strong> {scheme.benefitAmount}</p>}
                 {scheme.subsidy && <p><strong>Subsidy:</strong> {scheme.subsidy}</p>}
                 {scheme.incentive && <p><strong>Incentive:</strong> {scheme.incentive}</p>}
@@ -89,23 +89,23 @@ export const InvestmentSchemeDetail: React.FC<InvestmentSchemeDetailProps> = ({ 
             </>
           )}
 
-          <h2 className="text-2xl font-bold mb-4 text-zinc-900 dark:text-white">Who can apply?</h2>
-          <p><strong>Beneficiary Type:</strong> {scheme.targetBeneficiary}</p>
-          <p>{scheme.eligibility}</p>
+          <h2 className="text-2xl font-bold mb-4 text-zinc-100 dark:text-white">Who can apply?</h2>
+          <p className="text-zinc-700 dark:text-zinc-300"><strong>Beneficiary Type:</strong> {scheme.targetBeneficiary}</p>
+          <p className="text-zinc-700 dark:text-zinc-300">{scheme.eligibility}</p>
           
-          <h2 className="text-2xl font-bold mb-4 text-zinc-900 dark:text-white">Documents Required</h2>
-          <p>{scheme.documentsRequired}</p>
+          <h2 className="text-2xl font-bold mb-4 text-zinc-100 dark:text-white">Documents Required</h2>
+          <p className="text-zinc-700 dark:text-zinc-300">{scheme.documentsRequired}</p>
           
-          <h2 className="text-2xl font-bold mb-4 text-zinc-900 dark:text-white">How to apply?</h2>
-          <p>{scheme.applicationProcess}</p>
+          <h2 className="text-2xl font-bold mb-4 text-zinc-100 dark:text-white">How to apply?</h2>
+          <p className="text-zinc-700 dark:text-zinc-300">{scheme.applicationProcess}</p>
 
           {scheme.faqItems && scheme.faqItems.length > 0 && (
             <>
-              <h2 className="text-2xl font-bold mb-4 mt-8 text-zinc-900 dark:text-white">FAQs</h2>
+              <h2 className="text-2xl font-bold mb-4 mt-8 text-zinc-100 dark:text-white">FAQs</h2>
               {scheme.faqItems.map((faq, i) => (
                 <div key={i} className="mb-4">
-                  <h4 className="font-bold flex items-start gap-2 text-zinc-900 dark:text-white"><HelpCircle size={20} className="text-[#FF6B00] flex-shrink-0 mt-1"/> {faq.question}</h4>
-                  <p className="text-zinc-800 dark:text-zinc-200 mt-2">{faq.answer}</p>
+                  <h4 className="font-bold flex items-start gap-2 text-zinc-100 dark:text-white"><HelpCircle size={20} className="text-[#FF6B00] flex-shrink-0 mt-1"/> {faq.question}</h4>
+                  <p className="text-zinc-700 dark:text-zinc-300 mt-2">{faq.answer}</p>
                 </div>
               ))}
             </>
