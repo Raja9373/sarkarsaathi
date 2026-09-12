@@ -372,6 +372,12 @@ export const Header: React.FC<HeaderProps> = ({
             >
               Investment Schemes
             </button>
+            <button
+              onClick={() => handleNavClick('official-sources')}
+              className={`px-3 py-2 rounded-lg transition ${activeTab === 'official-sources' ? 'bg-[#FF6B00] text-white font-bold' : 'hover:bg-zinc-800 hover:text-white'}`}
+            >
+              Official Sources
+            </button>
           </nav>
 
         {/* Mobile Menu Toggle Button */}
@@ -437,6 +443,12 @@ export const Header: React.FC<HeaderProps> = ({
               className={`p-2.5 rounded-lg text-left font-medium ${activeTab === 'investment-schemes' ? 'bg-[#FF6B00] text-white font-bold' : 'bg-zinc-900 text-zinc-200'}`}
             >
               📜 Investment Schemes
+            </button>
+            <button
+              onClick={() => handleNavClick('official-sources')}
+              className={`p-2.5 rounded-lg text-left font-medium ${activeTab === 'official-sources' ? 'bg-[#FF6B00] text-white font-bold' : 'bg-zinc-900 text-zinc-200'}`}
+            >
+              🌐 Official Sources
             </button>
             <button
               onClick={() => handleNavClick('news')}

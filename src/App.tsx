@@ -3,6 +3,7 @@ import { Header } from './components/Header';
 import { NewHomepageHero } from './components/NewHomepageHero';
 import { HomepagePillars } from './components/HomepagePillars';
 import { InvestmentCategories, OpportunitiesSection, TendersSection, InvestmentSchemesSection, TrustSection, HowItWorks } from './components/HomepageSections';
+import { OfficialSourcesHub } from './components/OfficialSourcesHub';
 import { BlogHub } from './components/BlogHub';
 import { ServicesFaqPage } from './components/ServicesFaqPage';
 import { LegalPages } from './components/LegalPages';
@@ -102,6 +103,8 @@ export default function App() {
         }
       } else if (path === '/comparisons') {
         setActiveTab('comparisons');
+      } else if (path === '/official-sources') {
+        setActiveTab('official-sources');
       } else if (path === '/investment-schemes') {
         setActiveTab('investment-schemes');
       } else if (path.startsWith('/investment-schemes/')) {
@@ -166,6 +169,7 @@ export default function App() {
         {activeTab === 'opportunities' && <OpportunitiesHub />}
         {activeTab === 'opportunities-detail' && selectedOpportunitySlug && <OpportunityDetail slug={selectedOpportunitySlug} />}
         {activeTab === 'investment-schemes' && <InvestmentSchemesHub />}
+        {activeTab === 'official-sources' && <OfficialSourcesHub />}
         {activeTab === 'investment-scheme-detail' && selectedInvestmentSchemeSlug && <InvestmentSchemeDetail slug={selectedInvestmentSchemeSlug} />}
         {activeTab === 'comparisons' && <ComparisonsHub />}
         {activeTab === 'legal' && <LegalPages />}
