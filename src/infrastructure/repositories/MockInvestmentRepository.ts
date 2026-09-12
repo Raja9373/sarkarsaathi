@@ -32,7 +32,7 @@ const MOCK_INVESTMENTS: Investment[] = [
     authority: 'PFRDA',
     status: 'ACTIVE',
     interestRate: 'Market Linked',
-    tenure: 'Up to 60/70 Years',
+    tenure: 'Until 60/70 Years',
     lockIn: 'Until 60 Years',
     minimumInvestment: '₹500',
     maximumInvestment: 'No Limit',
@@ -41,10 +41,25 @@ const MOCK_INVESTMENTS: Investment[] = [
     taxBenefits: '80CCD(1B)',
     withdrawalRules: 'Partial at 60',
     maturityRules: '60 Years',
-    riskInformation: 'Moderate',
+    riskInformation: 'Moderate to High',
     officialSource: 'PFRDA',
     officialInformationUrl: 'https://www.npscra.nsdl.co.in',
-    lastVerified: '2026-09-11'
+    lastVerified: '2026-09-12',
+    keyBenefits: [
+      'Market-linked pension growth',
+      'Tax deduction under 80CCD(1B)',
+      'Low fund management costs',
+      'Portability across employment'
+    ],
+    availabilityNote: 'Continuously available',
+    statusNote: 'Active and operational for fresh subscribers',
+    faqItems: [
+      { question: 'Is NPS return guaranteed?', answer: 'No, NPS returns are market-linked.' }
+    ],
+    seoTitle: 'National Pension System (NPS) 2026: Eligibility & Benefits',
+    seoDescription: 'Understand NPS eligibility, tax benefits under 80CCD(1B), and market-linked retirement planning.',
+    primaryKeywords: ['NPS', 'pension', 'retirement planning'],
+    secondaryKeywords: ['NPS interest', 'NPS tax benefits', 'PFRDA']
   },
   {
     id: 'nsc',
@@ -90,7 +105,7 @@ const MOCK_INVESTMENTS: Investment[] = [
     category: 'Government Savings',
     authority: 'Ministry of Finance',
     status: 'ACTIVE',
-    interestRate: '8.2%',
+    interestRate: '8.2% (Jul-Sep 2026)',
     tenure: '5 Years',
     lockIn: '5 Years',
     minimumInvestment: '₹1000',
@@ -98,9 +113,23 @@ const MOCK_INVESTMENTS: Investment[] = [
     eligibility: '60+ Years',
     taxation: 'Taxable',
     taxBenefits: '80C',
-    officialSource: 'India Post',
+    officialSource: 'India Post / Ministry of Finance',
     officialInformationUrl: 'https://www.indiapost.gov.in',
-    lastVerified: '2026-09-11'
+    lastVerified: '2026-09-12',
+    keyBenefits: [
+      'Government-backed safety',
+      'Quarterly interest payment',
+      'Tax deduction under 80C'
+    ],
+    availabilityNote: 'Continuously available at post offices and banks',
+    statusNote: 'Active, rates revised quarterly',
+    faqItems: [
+      { question: 'Is interest taxable?', answer: 'Yes, interest is fully taxable.' }
+    ],
+    seoTitle: 'Senior Citizen Savings Scheme (SCSS) 2026: Interest Rate',
+    seoDescription: 'Details on SCSS eligibility, current 8.2% interest rate, and 5-year tenure.',
+    primaryKeywords: ['SCSS', 'senior citizen scheme', 'savings'],
+    secondaryKeywords: ['SCSS interest rate', 'SCSS tax benefit']
   },
   {
     id: 'ssa',
@@ -124,18 +153,32 @@ const MOCK_INVESTMENTS: Investment[] = [
   {
     id: 'po-rd',
     slug: 'post-office-recurring-deposit',
-    name: 'Post Office Recurring Deposit (PO-RD)',
+    name: 'Post Office Recurring Deposit (PORD)',
     category: 'Government Savings',
     authority: 'Ministry of Finance',
     status: 'ACTIVE',
-    interestRate: '6.7%',
+    interestRate: '6.7% (Jul-Sep 2026)',
     tenure: '5 Years',
     minimumInvestment: '₹100',
     eligibility: 'Resident Indians',
     taxation: 'Taxable',
-    officialSource: 'India Post',
+    officialSource: 'India Post / Ministry of Finance',
     officialInformationUrl: 'https://www.indiapost.gov.in',
-    lastVerified: '2026-09-11'
+    lastVerified: '2026-09-12',
+    keyBenefits: [
+      'Government-backed security',
+      'Small monthly contributions',
+      'Flexible deposit amounts'
+    ],
+    availabilityNote: 'Continuously available at post offices',
+    statusNote: 'Active, rates revised quarterly',
+    faqItems: [
+      { question: 'Is interest taxable?', answer: 'Yes, interest earned is taxable as per individual income slab.' }
+    ],
+    seoTitle: 'Post Office Recurring Deposit (PORD) 2026: Rates',
+    seoDescription: 'Check Post Office RD interest rates, eligibility, and maturity rules for 2026.',
+    primaryKeywords: ['Post Office RD', 'PORD', 'recurring deposit'],
+    secondaryKeywords: ['RD interest rate', 'Post Office savings']
   },
   {
     id: 'po-mis',
@@ -144,15 +187,29 @@ const MOCK_INVESTMENTS: Investment[] = [
     category: 'Government Savings',
     authority: 'Ministry of Finance',
     status: 'ACTIVE',
-    interestRate: '7.4%',
+    interestRate: '7.4% (Jul-Sep 2026)',
     tenure: '5 Years',
     minimumInvestment: '₹1000',
     maximumInvestment: '₹9 Lakh (Single) / ₹15 Lakh (Joint)',
     eligibility: 'Resident Indians',
     taxation: 'Taxable',
-    officialSource: 'India Post',
+    officialSource: 'India Post / Ministry of Finance',
     officialInformationUrl: 'https://www.indiapost.gov.in',
-    lastVerified: '2026-09-11'
+    lastVerified: '2026-09-12',
+    keyBenefits: [
+      'Fixed monthly income',
+      'Government-backed safety',
+      'Flexible joint account options'
+    ],
+    availabilityNote: 'Continuously available at post offices',
+    statusNote: 'Active, rates revised quarterly',
+    faqItems: [
+      { question: 'Is interest taxable?', answer: 'Yes, interest earned is taxable as per income slab.' }
+    ],
+    seoTitle: 'Post Office Monthly Income Scheme (MIS) 2026',
+    seoDescription: 'Get regular monthly income with the Post Office MIS. Check 7.4% interest rate and eligibility.',
+    primaryKeywords: ['Post Office MIS', 'monthly income scheme', 'savings'],
+    secondaryKeywords: ['MIS interest rate', 'MIS eligibility']
   },
   {
     id: 'po-sb',
@@ -175,15 +232,29 @@ const MOCK_INVESTMENTS: Investment[] = [
     category: 'Government Savings',
     authority: 'Ministry of Finance',
     status: 'ACTIVE',
-    interestRate: '6.9% - 7.5% (varies by tenure)',
+    interestRate: '6.9% to 7.5% (varies by tenure, Jul-Sep 2026)',
     tenure: '1, 2, 3, 5 Years',
     minimumInvestment: '₹1000',
     eligibility: 'Resident Indians',
     taxation: 'Taxable',
     taxBenefits: '80C (for 5yr TD only)',
-    officialSource: 'India Post',
+    officialSource: 'India Post / Ministry of Finance',
     officialInformationUrl: 'https://www.indiapost.gov.in',
-    lastVerified: '2026-09-11'
+    lastVerified: '2026-09-12',
+    keyBenefits: [
+      'Government-backed safety',
+      'Flexible tenures',
+      '80C benefit for 5-year deposit'
+    ],
+    availabilityNote: 'Continuously available at post offices',
+    statusNote: 'Active, rates revised quarterly',
+    faqItems: [
+      { question: 'Is interest taxable?', answer: 'Yes, interest earned is taxable as per income slab.' }
+    ],
+    seoTitle: 'Post Office Time Deposit (POTD) 2026: Interest Rates',
+    seoDescription: 'Check Post Office Time Deposit (POTD) interest rates for different tenures and tax benefits.',
+    primaryKeywords: ['Post Office Time Deposit', 'POTD', 'fixed deposit'],
+    secondaryKeywords: ['POTD interest rate', 'POTD tenure', '80C tax benefit']
   },
   {
     id: 'apy',
@@ -192,13 +263,27 @@ const MOCK_INVESTMENTS: Investment[] = [
     category: 'Pension',
     authority: 'PFRDA',
     status: 'ACTIVE',
-    interestRate: 'Guaranteed pension',
+    interestRate: 'Pension slabs based on contribution',
     tenure: 'Until 60',
     eligibility: '18-40 Years',
     taxation: 'Taxable',
     officialSource: 'PFRDA',
     officialInformationUrl: 'https://www.npscra.nsdl.co.in',
-    lastVerified: '2026-09-11'
+    lastVerified: '2026-09-12',
+    keyBenefits: [
+      'Guaranteed minimum pension',
+      'Spouse pension benefit',
+      'Government co-contribution (eligible cases)'
+    ],
+    availabilityNote: 'Continuously available through banks',
+    statusNote: 'Active for fresh subscribers',
+    faqItems: [
+      { question: 'Is the pension guaranteed?', answer: 'Yes, the scheme provides a defined minimum monthly pension.' }
+    ],
+    seoTitle: 'Atal Pension Yojana (APY) 2026: Pension Benefits',
+    seoDescription: 'Understand APY pension slabs, eligibility (18-40 years), and contribution rules.',
+    primaryKeywords: ['Atal Pension Yojana', 'APY', 'pension scheme'],
+    secondaryKeywords: ['APY pension amount', 'APY age limit']
   },
   {
     id: 'pm-sym',
@@ -249,14 +334,28 @@ const MOCK_INVESTMENTS: Investment[] = [
     category: 'Government Securities',
     authority: 'RBI',
     status: 'ACTIVE',
-    interestRate: 'Variable',
+    interestRate: 'Floating (linked to NSC rate + 0.35%)',
     tenure: '7 Years',
     minimumInvestment: '₹1000',
     eligibility: 'Resident Indians',
     taxation: 'Taxable',
     officialSource: 'RBI',
     officialInformationUrl: 'https://www.rbi.org.in',
-    lastVerified: '2026-09-11'
+    lastVerified: '2026-09-12',
+    keyBenefits: [
+      'Floating interest rate',
+      'Government-backed safety',
+      'Interest payable half-yearly'
+    ],
+    availabilityNote: 'Available through authorized banks',
+    statusNote: 'Active',
+    faqItems: [
+      { question: 'Is the interest rate fixed?', answer: 'No, it is a floating rate adjusted every six months.' }
+    ],
+    seoTitle: 'Floating Rate Savings Bonds (FRSB) 2026',
+    seoDescription: 'Details on RBI Floating Rate Savings Bonds, interest rate formula, and 7-year tenure.',
+    primaryKeywords: ['FRSB', 'Floating Rate Savings Bonds', 'RBI bonds'],
+    secondaryKeywords: ['FRSB interest rate', 'FRSB maturity']
   },
   {
     id: 'gms',
@@ -284,11 +383,25 @@ const MOCK_INVESTMENTS: Investment[] = [
     category: 'Pension',
     authority: 'Ministry of Finance',
     status: 'ACTIVE',
-    interestRate: 'Guaranteed',
-    eligibility: 'Govt Employees',
+    interestRate: 'Assured pension benefit',
+    eligibility: 'Government Employees',
     officialSource: 'Ministry of Finance',
     officialInformationUrl: 'https://finmin.nic.in',
-    lastVerified: '2026-09-11'
+    lastVerified: '2026-09-12',
+    keyBenefits: [
+      'Assured pension amount',
+      'Defined benefit structure',
+      'Family pension provision'
+    ],
+    availabilityNote: 'Applicable to eligible government employees',
+    statusNote: 'Active',
+    faqItems: [
+      { question: 'How is the pension calculated?', answer: 'Based on defined rules linked to service and salary.' }
+    ],
+    seoTitle: 'Unified Pension Scheme (UPS) 2026: Features',
+    seoDescription: 'Overview of the Unified Pension Scheme, assured payout structure, and eligibility.',
+    primaryKeywords: ['Unified Pension Scheme', 'UPS', 'govt pension'],
+    secondaryKeywords: ['UPS pension benefits', 'UPS rules']
   },
   {
     id: 'epf',
@@ -300,9 +413,23 @@ const MOCK_INVESTMENTS: Investment[] = [
     interestRate: 'Declared Annually',
     taxBenefits: '80C',
     eligibility: 'Employees',
-    officialSource: 'EPFO',
+    officialSource: 'EPFO / Ministry of Labour',
     officialInformationUrl: 'https://www.epfindia.gov.in',
-    lastVerified: '2026-09-11'
+    lastVerified: '2026-09-12',
+    keyBenefits: [
+      'Long-term retirement savings',
+      'Tax-efficient accumulation',
+      'Government-backed returns'
+    ],
+    availabilityNote: 'Mandatory for eligible employees',
+    statusNote: 'Active',
+    faqItems: [
+      { question: 'Is EPF interest taxable?', answer: 'Interest is tax-exempt subject to certain limits under Income Tax rules.' }
+    ],
+    seoTitle: 'Employees Provident Fund (EPF) 2026: Benefits',
+    seoDescription: 'Understand EPF contribution rules, tax benefits, and retirement saving features for employees.',
+    primaryKeywords: ['EPF', 'provident fund', 'retirement savings'],
+    secondaryKeywords: ['EPF interest', 'EPF withdrawal', 'EPFO']
   },
   {
     id: 'eps',
@@ -311,11 +438,25 @@ const MOCK_INVESTMENTS: Investment[] = [
     category: 'EPFO',
     authority: 'EPFO',
     status: 'ACTIVE',
-    interestRate: 'Not applicable',
-    eligibility: 'Employees',
-    officialSource: 'EPFO',
+    interestRate: 'Defined benefit based on service',
+    eligibility: 'Employees (EPF members)',
+    officialSource: 'EPFO / Ministry of Labour',
     officialInformationUrl: 'https://www.epfindia.gov.in',
-    lastVerified: '2026-09-11'
+    lastVerified: '2026-09-12',
+    keyBenefits: [
+      'Assured pension on retirement',
+      'Family pension provision',
+      'Service-linked benefits'
+    ],
+    availabilityNote: 'Applicable to EPF members',
+    statusNote: 'Active',
+    faqItems: [
+      { question: 'What is EPS?', answer: 'A pension scheme for employees providing retirement income.' }
+    ],
+    seoTitle: 'Employees Pension Scheme (EPS) 2026: Features',
+    seoDescription: 'Overview of the Employees Pension Scheme (EPS), pension benefits, and eligibility rules.',
+    primaryKeywords: ['EPS', 'pension scheme', 'retirement income'],
+    secondaryKeywords: ['EPS benefits', 'EPS eligibility']
   },
   {
     id: 'pm-kmy',
@@ -324,11 +465,25 @@ const MOCK_INVESTMENTS: Investment[] = [
     category: 'Pension',
     authority: 'Ministry of Agriculture',
     status: 'ACTIVE',
-    interestRate: 'Guaranteed',
+    interestRate: 'Contribution-linked guaranteed pension',
     eligibility: 'Small/Marginal Farmers',
     officialSource: 'Ministry of Agriculture',
     officialInformationUrl: 'https://maandhan.in',
-    lastVerified: '2026-09-11'
+    lastVerified: '2026-09-12',
+    keyBenefits: [
+      'Assured monthly pension',
+      'Old-age income support',
+      'Spouse pension provision'
+    ],
+    availabilityNote: 'Continuously available for eligible farmers',
+    statusNote: 'Active',
+    faqItems: [
+      { question: 'What is the pension amount?', answer: 'Provides a guaranteed monthly pension after age 60.' }
+    ],
+    seoTitle: 'PM-Kisan Maandhan (PM-KMY) 2026: Pension',
+    seoDescription: 'Details on PM-Kisan Maandhan eligibility, contribution, and pension benefits for small farmers.',
+    primaryKeywords: ['PM-Kisan Maandhan', 'PM-KMY', 'farmers pension'],
+    secondaryKeywords: ['PM-KMY pension', 'farmers social security']
   },
   {
     id: 'rbi-retail',
@@ -365,11 +520,25 @@ const MOCK_INVESTMENTS: Investment[] = [
     category: 'Government Securities',
     authority: 'RBI / State Governments',
     status: 'ACTIVE',
-    interestRate: 'Market Linked',
+    interestRate: 'Market Linked (Auction based)',
     eligibility: 'Resident Indians',
     officialSource: 'RBI',
     officialInformationUrl: 'https://www.rbi.org.in',
-    lastVerified: '2026-09-11'
+    lastVerified: '2026-09-12',
+    keyBenefits: [
+      'Sovereign-backed safety',
+      'Market-linked interest rates',
+      'Tradable in secondary market'
+    ],
+    availabilityNote: 'Issuance/auction based',
+    statusNote: 'Active',
+    faqItems: [
+      { question: 'Are SDLs safe?', answer: 'Yes, they are guaranteed by State Governments.' }
+    ],
+    seoTitle: 'State Development Loans (SDL) 2026: Features',
+    seoDescription: 'Overview of State Development Loans (SDL), auction mechanism, and investment features.',
+    primaryKeywords: ['SDL', 'State Development Loans', 'govt securities'],
+    secondaryKeywords: ['SDL interest rate', 'SDL investment']
   },
   {
     id: '54ec-bonds',
@@ -389,7 +558,21 @@ const MOCK_INVESTMENTS: Investment[] = [
     officialInformationUrl: 'https://nhai.gov.in',
     lastVerified: '2026-09-12',
     sourceLastChecked: '2026-09-12',
-    sourceVerificationStatus: 'VERIFIED'
+    sourceVerificationStatus: 'VERIFIED',
+    keyBenefits: [
+      'Capital gains tax exemption',
+      'Government-backed safety',
+      '5-year lock-in'
+    ],
+    availabilityNote: 'Depends on issue/issuer status',
+    statusNote: 'Active',
+    faqItems: [
+      { question: 'What is the lock-in?', answer: 'Bonds have a 5-year lock-in period.' }
+    ],
+    seoTitle: '54EC Capital Gains Bonds 2026: Tax Saving',
+    seoDescription: 'Learn about 54EC Capital Gains Bonds for tax saving on long-term capital gains.',
+    primaryKeywords: ['54EC bonds', 'capital gains tax', 'tax saving'],
+    secondaryKeywords: ['54EC lock-in', 'REC bonds']
   },
   {
     id: 'sovereign-green-bonds',
@@ -398,13 +581,27 @@ const MOCK_INVESTMENTS: Investment[] = [
     category: 'Government Securities',
     authority: 'RBI / Ministry of Finance',
     status: 'ACTIVE',
-    interestRate: 'Market Linked',
+    interestRate: 'Market Linked (Auction based)',
     eligibility: 'Resident Indians',
     officialSource: 'RBI',
     officialInformationUrl: 'https://www.rbi.org.in',
     lastVerified: '2026-09-12',
     sourceLastChecked: '2026-09-12',
-    sourceVerificationStatus: 'VERIFIED'
+    sourceVerificationStatus: 'VERIFIED',
+    keyBenefits: [
+      'Environment-friendly project funding',
+      'Sovereign-backed safety',
+      'Market-linked yields'
+    ],
+    availabilityNote: 'Issuance/auction based',
+    statusNote: 'Active',
+    faqItems: [
+      { question: 'What is a Green Bond?', answer: 'A security to fund environmentally sustainable projects.' }
+    ],
+    seoTitle: 'Sovereign Green Bonds 2026: Investment',
+    seoDescription: 'Overview of Sovereign Green Bonds, issuance mechanism, and environmental impact.',
+    primaryKeywords: ['green bonds', 'Sovereign Green Bonds', 'RBI bonds'],
+    secondaryKeywords: ['green investment', 'sustainable finance']
   }
 ];
 
