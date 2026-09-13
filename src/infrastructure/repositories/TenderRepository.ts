@@ -38,7 +38,7 @@ const MOCK_TENDERS: TenderRecord[] = [
   {
     id: 'active-tender-001',
     tenderId: 'CPPP-2026-0001-MEITY',
-    referenceNumber: 'MEITY/2026/IT/001',
+    referenceNumber: 'UNVERIFIED',
     slug: 'procurement-server-hardware-meity-2026',
     title: 'Procurement of Server Hardware for Data Center',
     description: 'Supply and installation of high-performance server hardware for data center upgrade.',
@@ -57,7 +57,7 @@ const MOCK_TENDERS: TenderRecord[] = [
     sourceUrl: 'https://eprocure.gov.in',
     sourcePortal: 'eprocure.gov.in',
     lastVerifiedAt: '2026-09-12',
-    verificationStatus: 'VERIFIED',
+    verificationStatus: 'NEEDS_REVIEW',
     seoTitle: 'Active Tender: Server Hardware Procurement 2026',
     seoDescription: 'Details of the active 2026 server hardware procurement tender by MeitY.',
     canonicalUrl: 'https://www.sarkarsaathi.org/tenders/procurement-server-hardware-meity-2026'
@@ -65,7 +65,7 @@ const MOCK_TENDERS: TenderRecord[] = [
   {
     id: 'active-tender-002',
     tenderId: 'CPPP-2026-0002-FCI',
-    referenceNumber: 'FCI/2026/INFRA/099',
+    referenceNumber: 'UNVERIFIED',
     slug: 'construction-silos-fci-2026',
     title: 'Construction of Silos for Food Corporation of India',
     description: 'Design, supply, and construction of steel silos for food grain storage.',
@@ -84,7 +84,7 @@ const MOCK_TENDERS: TenderRecord[] = [
     sourceUrl: 'https://eprocure.gov.in',
     sourcePortal: 'eprocure.gov.in',
     lastVerifiedAt: '2026-09-12',
-    verificationStatus: 'VERIFIED',
+    verificationStatus: 'NEEDS_REVIEW',
     seoTitle: 'Active Tender: Silo Construction FCI 2026',
     seoDescription: 'Details of the active 2026 silo construction tender by FCI.',
     canonicalUrl: 'https://www.sarkarsaathi.org/tenders/construction-silos-fci-2026'
