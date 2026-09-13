@@ -1,6 +1,22 @@
 import { VerificationMetadata, FreshnessStatus } from './infrastructure';
 import { InvestmentFAQ } from './index';
 
+export type CandidateStatus = 'DISCOVERED' | 'NEEDS_REVIEW' | 'APPROVED' | 'REJECTED' | 'DUPLICATE';
+
+export interface InvestmentCandidate {
+  id: string;
+  name: string;
+  slug: string;
+  category: Investment['category'];
+  description: string;
+  officialSource: string;
+  officialInformationUrl: string;
+  status: CandidateStatus;
+  verificationNote?: string;
+  lastVerified: string;
+  provenance: string;
+}
+
 export interface Investment {
   id: string;
   slug: string;

@@ -1,6 +1,46 @@
 export type VerificationStatus = 'VERIFIED' | 'NEEDS_REVIEW' | 'UNVERIFIED' | 'OUTDATED';
 export type FreshnessStatus = 'FRESH' | 'DUE_FOR_REVIEW' | 'STALE' | 'UNKNOWN';
 
+export interface PaginationParams {
+  page: number;
+  limit: number;
+}
+
+export interface FilterParams {
+  [key: string]: any;
+}
+
+export interface PaginatedResponse<T> {
+  data: T[];
+  total: number;
+  page: number;
+  limit: number;
+}
+
+export interface ImportResult<T> {
+  sourceType: 'OPPORTUNITY' | 'TENDER';
+  filename: string;
+  recordsRead: number;
+  recordsParsed: number;
+  recordsValid: number;
+  recordsInvalid: number;
+  duplicatesDetected: number;
+  recordsStaged: number;
+  recordsApproved: number;
+  recordsCommitted: number;
+  rejectedRecords: { record: Partial<T>, reason: string }[];
+  validationErrors: { recordId: string, error: string }[];
+  duplicateReasons: { recordId: string, reason: string }[];
+}
+
+export interface IStagingRepository<T> {
+  stage(data: T[]): Promise<void>;
+  getPending(): Promise<T[]>;
+  approve(recordId: string): Promise<void>;
+  reject(recordId: string): Promise<void>;
+  commitApproved(): Promise<void>;
+}
+
 export interface VerificationMetadata {
   sourceId: string;
   sourceUrl: string;

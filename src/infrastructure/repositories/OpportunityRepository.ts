@@ -1,7 +1,9 @@
 import { OpportunityRecord } from '../../types/opportunity';
+import { PaginationParams, FilterParams, PaginatedResponse } from '../../types/infrastructure';
 
 export interface IOpportunityRepository {
   getAll(): Promise<OpportunityRecord[]>;
+  getPaginated(params: PaginationParams, filters?: FilterParams): Promise<PaginatedResponse<OpportunityRecord>>;
   getBySlug(slug: string): Promise<OpportunityRecord | null>;
 }
 
@@ -86,6 +88,87 @@ const MOCK_OPPORTUNITIES: OpportunityRecord[] = [
     seoTitle: 'Electronic Components Manufacturing Opportunity | SarkarSaathi',
     seoDescription: 'Explore investment opportunities for electronic components manufacturing in India.',
     canonicalUrl: 'https://www.sarkarsaathi.org/opportunities/electronic-components-manufacturing-opportunity'
+  },
+  {
+    id: 'pli-semiconductor-design-001',
+    slug: 'pli-semiconductor-design-opportunity',
+    title: 'PLI Scheme for Semiconductor Design',
+    shortSummary: 'Support for semiconductor design-linked manufacturing.',
+    description: 'Government incentives for semiconductor design-linked manufacturing and deployment.',
+    opportunityType: 'Investment Opportunity',
+    sector: 'Electronics',
+    industry: 'Semiconductors',
+    authority: 'Ministry of Electronics and Information Technology (MeitY)',
+    organisation: 'DPIIT / MeitY',
+    state: 'Pan-India',
+    projectStage: 'Operational',
+    participationType: 'Investment',
+    eligibility: 'Manufacturing entities complying with MeitY guidelines',
+    applicationProcess: 'MeitY official portal',
+    status: 'ACTIVE',
+    officialSourceUrl: 'https://www.meity.gov.in',
+    sourceAuthority: 'MeitY',
+    sourceType: 'Government Portal',
+    lastVerifiedAt: '2026-09-13',
+    verificationStatus: 'VERIFIED',
+    tags: ['Semiconductor', 'PLI', 'Design'],
+    seoTitle: 'PLI Scheme for Semiconductor Design | SarkarSaathi',
+    seoDescription: 'Explore investment opportunities in Semiconductor Design under PLI schemes.',
+    canonicalUrl: 'https://www.sarkarsaathi.org/opportunities/pli-semiconductor-design-opportunity'
+  },
+  {
+    id: 'nlp-logistics-park-001',
+    slug: 'national-logistics-policy-logistics-park',
+    title: 'National Logistics Policy: Logistics Park Development',
+    shortSummary: 'Opportunities for developing multi-modal logistics parks.',
+    description: 'Infrastructure opportunities for multi-modal logistics parks under the National Logistics Policy.',
+    opportunityType: 'Infrastructure Opportunity',
+    sector: 'Logistics',
+    industry: 'Infrastructure / Logistics',
+    authority: 'Ministry of Road Transport and Highways (MoRTH)',
+    organisation: 'National Logistics Policy (NLP) Cell',
+    state: 'Pan-India',
+    projectStage: 'Implementation',
+    participationType: 'PPP / Investment',
+    eligibility: 'Infrastructure developers',
+    applicationProcess: 'MoRTH and NLP portals',
+    status: 'ACTIVE',
+    officialSourceUrl: 'https://logistics.gov.in',
+    sourceAuthority: 'MoRTH',
+    sourceType: 'Government Portal',
+    lastVerifiedAt: '2026-09-13',
+    verificationStatus: 'VERIFIED',
+    tags: ['Logistics', 'Infrastructure', 'NLP'],
+    seoTitle: 'National Logistics Policy: Logistics Park Development | SarkarSaathi',
+    seoDescription: 'Explore opportunities for Logistics Park development under National Logistics Policy.',
+    canonicalUrl: 'https://www.sarkarsaathi.org/opportunities/national-logistics-policy-logistics-park'
+  },
+  {
+    id: 'pm-gati-shakti-infra-001',
+    slug: 'pm-gati-shakti-integrated-infrastructure',
+    title: 'PM Gati Shakti: Integrated Infrastructure Development',
+    shortSummary: 'Investment in integrated infrastructure projects.',
+    description: 'Opportunities for private sector investment in projects aligned with PM Gati Shakti National Master Plan.',
+    opportunityType: 'Infrastructure Opportunity',
+    sector: 'Infrastructure',
+    industry: 'Integrated Infrastructure',
+    authority: 'Department for Promotion of Industry and Internal Trade (DPIIT)',
+    organisation: 'DPIIT',
+    state: 'Pan-India',
+    projectStage: 'Conceptualization',
+    participationType: 'Investment / Partnership',
+    eligibility: 'Infrastructure development firms',
+    applicationProcess: 'Gati Shakti portal and DPIIT',
+    status: 'ACTIVE',
+    officialSourceUrl: 'https://gati-shakti.gov.in',
+    sourceAuthority: 'DPIIT',
+    sourceType: 'Government Portal',
+    lastVerifiedAt: '2026-09-13',
+    verificationStatus: 'VERIFIED',
+    tags: ['Infrastructure', 'Gati Shakti', 'Investment'],
+    seoTitle: 'PM Gati Shakti: Integrated Infrastructure Development | SarkarSaathi',
+    seoDescription: 'Explore opportunities in integrated infrastructure under PM Gati Shakti.',
+    canonicalUrl: 'https://www.sarkarsaathi.org/opportunities/pm-gati-shakti-integrated-infrastructure'
   }
 
 ];
@@ -93,6 +176,9 @@ const MOCK_OPPORTUNITIES: OpportunityRecord[] = [
 export class MockOpportunityRepository implements IOpportunityRepository {
   async getAll(): Promise<OpportunityRecord[]> {
     return MOCK_OPPORTUNITIES;
+  }
+  async getPaginated(params: PaginationParams, filters?: FilterParams): Promise<PaginatedResponse<OpportunityRecord>> {
+    return { data: MOCK_OPPORTUNITIES, total: MOCK_OPPORTUNITIES.length, page: params.page, limit: params.limit };
   }
   async getBySlug(slug: string): Promise<OpportunityRecord | null> {
     return MOCK_OPPORTUNITIES.find(o => o.slug === slug) || null;

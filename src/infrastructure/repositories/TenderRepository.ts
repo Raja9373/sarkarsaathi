@@ -1,7 +1,9 @@
 import { TenderRecord } from '../../types/tender';
+import { PaginationParams, FilterParams, PaginatedResponse } from '../../types/infrastructure';
 
 export interface ITenderRepository {
   getAll(): Promise<TenderRecord[]>;
+  getPaginated(params: PaginationParams, filters?: FilterParams): Promise<PaginatedResponse<TenderRecord>>;
   getBySlug(slug: string): Promise<TenderRecord | null>;
 }
 
@@ -86,13 +88,69 @@ const MOCK_TENDERS: TenderRecord[] = [
     seoTitle: 'Active Tender: Silo Construction FCI 2026',
     seoDescription: 'Details of the active 2026 silo construction tender by FCI.',
     canonicalUrl: 'https://www.sarkarsaathi.org/tenders/construction-silos-fci-2026'
+  },
+  {
+    id: 'cil-supply-001',
+    tenderId: 'CIL/2026/001',
+    referenceNumber: 'CIL/2026/001',
+    slug: 'coal-india-conveyor-belt-supply-2026',
+    title: 'Supply of Conveyor Belts for CIL Mines',
+    description: 'Procurement of high-grade conveyor belts for CIL operations.',
+    organisation: 'Ministry of Coal',
+    department: 'Coal India Limited',
+    issuingAuthority: 'CIL Procurement Division',
+    state: 'Pan-India',
+    tenderCategory: 'Goods',
+    procurementCategory: 'Supply',
+    publishDate: '2026-09-01',
+    submissionDeadline: '2026-10-15',
+    status: 'ACTIVE',
+    corrigendumAvailable: false,
+    corrigendumCount: 0,
+    sourceName: 'Coal India Limited',
+    sourceUrl: 'https://www.coalindia.in/tenders',
+    sourcePortal: 'coalindia.in',
+    lastVerifiedAt: '2026-09-13',
+    verificationStatus: 'VERIFIED',
+    seoTitle: 'Active Tender: Conveyor Belt Supply CIL 2026',
+    seoDescription: 'Details of the active 2026 tender for conveyor belt supply by Coal India.',
+    canonicalUrl: 'https://www.sarkarsaathi.org/tenders/coal-india-conveyor-belt-supply-2026'
+  },
+  {
+    id: 'bhel-maintenance-001',
+    tenderId: 'BHEL/MNT/2026',
+    referenceNumber: 'BHEL/MNT/2026',
+    slug: 'bhel-thermal-plant-maintenance-2026',
+    title: 'Maintenance Services for Thermal Plant',
+    description: 'Annual maintenance services for thermal power plants.',
+    organisation: 'Ministry of Heavy Industries',
+    department: 'Bharat Heavy Electricals Limited',
+    issuingAuthority: 'BHEL Engineering',
+    state: 'Pan-India',
+    tenderCategory: 'Services',
+    procurementCategory: 'Maintenance',
+    publishDate: '2026-09-05',
+    submissionDeadline: '2026-10-05',
+    status: 'ACTIVE',
+    corrigendumAvailable: false,
+    corrigendumCount: 0,
+    sourceName: 'BHEL',
+    sourceUrl: 'https://www.bhel.com/tenders',
+    sourcePortal: 'bhel.com',
+    lastVerifiedAt: '2026-09-13',
+    verificationStatus: 'VERIFIED',
+    seoTitle: 'Active Tender: BHEL Thermal Maintenance 2026',
+    seoDescription: 'Details of the active 2026 tender for thermal plant maintenance by BHEL.',
+    canonicalUrl: 'https://www.sarkarsaathi.org/tenders/bhel-thermal-plant-maintenance-2026'
   }
-
 ];
 
 export class MockTenderRepository implements ITenderRepository {
   async getAll(): Promise<TenderRecord[]> {
     return MOCK_TENDERS;
+  }
+  async getPaginated(params: PaginationParams, filters?: FilterParams): Promise<PaginatedResponse<TenderRecord>> {
+    return { data: MOCK_TENDERS, total: MOCK_TENDERS.length, page: params.page, limit: params.limit };
   }
   async getBySlug(slug: string): Promise<TenderRecord | null> {
     return MOCK_TENDERS.find(t => t.slug === slug) || null;

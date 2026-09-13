@@ -75,7 +75,13 @@ export const TendersHub: React.FC = () => {
                 <div><span className="font-bold text-zinc-400">Tender ID:</span> {t.tenderId}</div>
                 <div><span className="font-bold text-zinc-400">State:</span> {t.state}</div>
                 <div><span className="font-bold text-zinc-400">Category:</span> {t.tenderCategory}</div>
-                <div><span className="font-bold text-zinc-400">Status:</span> <span className={`${t.status === 'ACTIVE' ? 'text-emerald-400' : 'text-zinc-400'} font-bold`}>{t.status}</span></div>
+                <div>
+                  <span className="font-bold text-zinc-400">Status:</span>{' '}
+                  <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase 
+                    ${t.status === 'ACTIVE' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-zinc-700 text-zinc-300'}`}>
+                    {t.status}
+                  </span>
+                </div>
               </div>
               
               <div className="mt-auto pt-4 border-t border-zinc-800 flex justify-between items-center">
