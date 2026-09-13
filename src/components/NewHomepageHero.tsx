@@ -12,8 +12,11 @@ export const NewHomepageHero: React.FC<Props> = ({ onSearch, onNavigate }) => {
   return (
     <div className="bg-[#0B0F17] text-white py-16 px-4">
       <div className="max-w-4xl mx-auto text-center space-y-6">
-        <h1 className="text-4xl md:text-6xl font-black">
-          India's Government Investment & Opportunity Platform
+        <div className="text-sm font-bold tracking-widest text-[#FF6B00] uppercase">
+          INDIA’S GOVERNMENT INVESTMENT & OPPORTUNITY PLATFORM
+        </div>
+        <h1 className="text-4xl md:text-6xl font-black text-white leading-tight">
+          Government Investments, Opportunities & Tenders — All in One Place
         </h1>
         <p className="text-xl text-zinc-400">
           Explore government investment products, development opportunities, projects, tenders and important updates — backed by official sources.
