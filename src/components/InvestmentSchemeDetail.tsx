@@ -46,9 +46,14 @@ export const InvestmentSchemeDetail: React.FC<InvestmentSchemeDetailProps> = ({ 
                 <div className="text-zinc-600 dark:text-zinc-400 text-xs">Implementing Agency</div>
                 <div className="font-bold text-zinc-900 dark:text-white">{scheme.implementingAgency}</div>
             </div>
-            <div className="p-4 bg-zinc-50 dark:bg-[#0B0F17] rounded-xl border border-zinc-200 dark:border-zinc-800">
-                <div className="text-zinc-600 dark:text-zinc-400 text-xs">Verification Status</div>
-                <div className="font-bold text-zinc-900 dark:text-white">{scheme.verificationStatus}</div>
+            <div className={`p-4 rounded-xl border ${scheme.verificationStatus === 'NEEDS_REVIEW' ? 'bg-amber-50 dark:bg-amber-950/20 border-amber-500' : 'bg-zinc-50 dark:bg-[#0B0F17] border-zinc-200 dark:border-zinc-800'}`}>
+                <div className="text-zinc-600 dark:text-zinc-400 text-xs flex items-center gap-1">
+                    Verification Status
+                    {scheme.verificationStatus === 'NEEDS_REVIEW' && <Info size={14} className="text-amber-600" />}
+                </div>
+                <div className={`font-bold ${scheme.verificationStatus === 'NEEDS_REVIEW' ? 'text-amber-900 dark:text-amber-200' : 'text-zinc-900 dark:text-white'}`}>
+                    {scheme.verificationStatus}
+                </div>
             </div>
             <div className="p-4 bg-zinc-50 dark:bg-[#0B0F17] rounded-xl border border-zinc-200 dark:border-zinc-800">
                 <div className="text-zinc-600 dark:text-zinc-400 text-xs">Last Verified</div>
@@ -62,6 +67,9 @@ export const InvestmentSchemeDetail: React.FC<InvestmentSchemeDetailProps> = ({ 
             <div className="p-4 bg-amber-50 dark:bg-amber-950/20 border-l-4 border-amber-500 rounded-r-xl mb-8">
               <h4 className="font-bold text-amber-900 dark:text-amber-100 flex items-center gap-2"><Info size={18}/> Status Note</h4>
               <p className="text-amber-900 dark:text-amber-200 mt-1">{scheme.statusNote}</p>
+              {scheme.verificationStatus === 'NEEDS_REVIEW' && (
+                <p className="text-amber-800 dark:text-amber-300 mt-2 text-sm">This scheme is currently under review for accuracy. Please refer directly to the official source for the most current information.</p>
+              )}
             </div>
           )}
 
@@ -122,11 +130,11 @@ export const InvestmentSchemeDetail: React.FC<InvestmentSchemeDetailProps> = ({ 
 
       <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-8 rounded-3xl mt-12 shadow-sm">
         <h3 className="font-bold text-xl mb-6 flex items-center gap-2"><ShieldCheck className="text-[#FF6B00]" /> Official Source</h3>
-        <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-6">Information on SarkarSaathi is provided for informational purposes. Always confirm the latest eligibility, benefits, application requirements and deadlines on the official government source before applying.</p>
+        <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-6">SarkarSaathi.org is an independent informational platform. Scheme information is compiled from official government sources. Always verify the latest terms, eligibility, availability and application instructions on the official source before taking action.</p>
         
         <div className="flex gap-4">
             <a href={scheme.officialSourceUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-white bg-[#FF6B00] px-8 py-4 rounded-xl font-bold hover:bg-[#e66000] transition">
-                {scheme.applicationUrl ? 'Apply / Visit Official Portal' : 'Visit Official Source'} <ExternalLink size={18} />
+                View Official Source <ExternalLink size={18} />
             </a>
         </div>
       </div>
