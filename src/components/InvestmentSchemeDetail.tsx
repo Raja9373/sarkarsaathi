@@ -62,6 +62,40 @@ export const InvestmentSchemeDetail: React.FC<InvestmentSchemeDetailProps> = ({ 
         </div>
       </div>
 
+      {/* SarkarSaathi Editorial Guide: Understanding This Scheme */}
+      <div className="mb-8 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 text-zinc-800 dark:text-zinc-300 shadow-sm">
+        <h3 className="font-bold text-xl text-zinc-900 dark:text-white mb-4 flex items-center gap-2">
+          <Briefcase className="text-[#FF6B00]" size={22} />
+          Understanding This Scheme (SarkarSaathi Guide)
+        </h3>
+        
+        <p className="text-sm leading-relaxed text-zinc-700 dark:text-zinc-300 mb-6">
+          <strong className="text-zinc-900 dark:text-white">{scheme.schemeName}</strong> is a public policy support program overseen by <strong className="text-zinc-900 dark:text-white">{scheme.ministry || scheme.implementingAgency}</strong> targeting <strong className="text-zinc-900 dark:text-white">{scheme.targetBeneficiary}</strong>.
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="bg-zinc-50 dark:bg-zinc-950/60 p-5 rounded-2xl border border-zinc-200 dark:border-zinc-800/80">
+            <div className="flex items-center gap-2 font-semibold text-zinc-900 dark:text-white mb-2">
+              <Info size={16} className="text-[#FF6B00]" />
+              <span>Incentive & Benefit Architecture</span>
+            </div>
+            <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
+              Unlike personal savings or deposit accounts, government schemes deliver targeted fiscal assistance such as subsidies, interest subvention, or credit guarantees. Ensure your enterprise meets qualifying thresholds before submitting applications.
+            </p>
+          </div>
+
+          <div className="bg-zinc-50 dark:bg-zinc-950/60 p-5 rounded-2xl border border-zinc-200 dark:border-zinc-800/80">
+            <div className="flex items-center gap-2 font-semibold text-zinc-900 dark:text-white mb-2">
+              <ShieldCheck size={16} className="text-emerald-500 dark:text-emerald-400" />
+              <span>Verification & Intake Windows</span>
+            </div>
+            <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
+              Scheme guidelines and tranche allocations are updated periodically. Prospective applicants must review the official guidelines on the nodal portal before preparing documentation or engaging implementing agencies.
+            </p>
+          </div>
+        </div>
+      </div>
+
       <div className="prose prose-zinc dark:prose-invert max-w-none mb-12 text-zinc-800 dark:text-zinc-300">
           {scheme.statusNote && (
             <div className="p-4 bg-amber-50 dark:bg-amber-950/20 border-l-4 border-amber-500 rounded-r-xl mb-8">

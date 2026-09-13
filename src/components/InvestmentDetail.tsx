@@ -4,6 +4,7 @@ import { Investment } from '../types/investment';
 import { SEOHead } from './SEOHead';
 import { RelatedContent } from './RelatedContent';
 import { globalSearch, SearchResult } from '../lib/globalSearch';
+import { BookOpen, ShieldCheck, Info, CheckCircle2 } from 'lucide-react';
 
 interface InvestmentDetailProps {
   slug: string;
@@ -58,6 +59,41 @@ export const InvestmentDetail: React.FC<InvestmentDetailProps> = ({ slug }) => {
           {investment.maximumInvestment && <div className="bg-zinc-900 p-4 rounded-lg border border-zinc-800"><h4 className="text-zinc-400 text-xs uppercase">Max Investment</h4><p className="text-lg font-bold">{investment.maximumInvestment}</p></div>}
         </div>
       ) : null}
+
+      {/* SarkarSaathi Editorial Guide: Understanding This Investment */}
+      <div className="mb-10 bg-zinc-900 border border-zinc-800 rounded-2xl p-6 md:p-8 text-zinc-300">
+        <div className="flex items-center gap-2 text-white font-bold text-lg mb-4">
+          <BookOpen className="text-[#FF6B00]" size={22} />
+          <span>Understanding This Investment (SarkarSaathi Guide)</span>
+        </div>
+        <div className="space-y-4 text-sm leading-relaxed text-zinc-300">
+          <p>
+            <strong className="text-white">{investment.name}</strong> is categorized under <span className="text-white font-medium">{investment.category}</span> and administered under the purview of <span className="text-white font-medium">{investment.authority}</span>. Public savings and sovereign instruments in this category are structured by statutory rules to offer capital security, structured yields, or retirement provisioning.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+            <div className="bg-zinc-950/60 p-4 rounded-xl border border-zinc-800/80">
+              <div className="flex items-center gap-2 font-semibold text-white mb-1.5">
+                <Info size={16} className="text-[#FF6B00]" />
+                <span>Yield & Tenure Considerations</span>
+              </div>
+              <p className="text-xs text-zinc-400 leading-relaxed">
+                {investment.interestRate ? `This instrument reflects a stated rate/return of ${investment.interestRate}. ` : ''}
+                {investment.tenure ? `Maturity or commitment horizon is ${investment.tenure}. ` : ''}
+                Interest yields on sovereign and small savings schemes are periodically notified through Ministry of Finance gazette updates. Applicable terms are governed by the specific subscription date.
+              </p>
+            </div>
+            <div className="bg-zinc-950/60 p-4 rounded-xl border border-zinc-800/80">
+              <div className="flex items-center gap-2 font-semibold text-white mb-1.5">
+                <ShieldCheck size={16} className="text-emerald-400" />
+                <span>Verification & Subscription Protocol</span>
+              </div>
+              <p className="text-xs text-zinc-400 leading-relaxed">
+                Before committing capital, verify KYC compliance, eligibility boundaries, and deposit ceilings at authorized banking branches, post offices, or official nodal portals. SarkarSaathi compiles these details for informational comparison; formal subscription must occur through authorized official channels.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <div className="space-y-12">
         {investment.plainLanguageSummary && (

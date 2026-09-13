@@ -74,6 +74,40 @@ export const TenderDetail: React.FC<TenderDetailProps> = ({ slug }) => {
           ))}
       </div>
 
+      {/* SarkarSaathi Editorial Guide: How to Read & Respond to This Tender */}
+      <div className="mb-8 bg-zinc-900 border border-zinc-800 rounded-3xl p-8 text-zinc-300">
+        <h3 className="font-bold text-xl text-white mb-4 flex items-center gap-2">
+          <Info className="text-[#FF6B00]" size={22} />
+          How to Read & Respond to This Tender (SarkarSaathi Guide)
+        </h3>
+        
+        <p className="text-sm leading-relaxed text-zinc-300 mb-6">
+          This procurement notice is issued by <strong className="text-white">{tender.organisation}</strong> ({tender.department}) under procurement category <strong className="text-white">{tender.procurementCategory || tender.tenderCategory}</strong>. Below is an overview of how prospective bidders should navigate this listing.
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="bg-zinc-950/60 p-5 rounded-2xl border border-zinc-800/80">
+            <div className="flex items-center gap-2 font-semibold text-white mb-2">
+              <Building size={16} className="text-[#FF6B00]" />
+              <span>Critical Parameter Assessment</span>
+            </div>
+            <p className="text-xs text-zinc-400 leading-relaxed">
+              Verify Tender ID (<strong className="text-zinc-200">{tender.tenderId}</strong>) and Official Reference (<strong className="text-zinc-200">{tender.referenceNumber}</strong>). Note financial prerequisites including Earnest Money Deposit (EMD: {tender.emdAmount || 'N/A'}) and Tender Document Fee ({tender.tenderFee || 'N/A'}).
+            </p>
+          </div>
+
+          <div className="bg-zinc-950/60 p-5 rounded-2xl border border-zinc-800/80">
+            <div className="flex items-center gap-2 font-semibold text-white mb-2">
+              <ShieldCheck size={16} className="text-emerald-400" />
+              <span>Corrigenda & Official Submission</span>
+            </div>
+            <p className="text-xs text-zinc-400 leading-relaxed">
+              Tender timelines are strict. Any corrigenda, technical clarifications, or date extensions are published directly on the primary portal (<strong className="text-zinc-200">{tender.sourcePortal}</strong>). All formal bids and digital certificates (DSC) must be submitted through the official government e-procurement portal before {tender.submissionDeadline}.
+            </p>
+          </div>
+        </div>
+      </div>
+
       <div className="bg-zinc-900 border border-zinc-800 p-8 rounded-3xl">
         <h3 className="font-bold text-xl mb-6 flex items-center gap-2"><ShieldCheck className="text-[#FF6B00]" /> Official Source & Verification</h3>
         

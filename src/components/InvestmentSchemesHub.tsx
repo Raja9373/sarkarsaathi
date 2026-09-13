@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { MockInvestmentSchemeRepository } from '../infrastructure/repositories/InvestmentSchemeRepository';
 import { GovernmentInvestmentSchemeRecord } from '../types/investmentScheme';
-import { Search, ChevronDown, ShieldCheck, Filter } from 'lucide-react';
+import { Search, ChevronDown, ShieldCheck, Filter, Layers, HelpCircle } from 'lucide-react';
 
 export const InvestmentSchemesHub: React.FC = () => {
   const [schemes, setSchemes] = useState<GovernmentInvestmentSchemeRecord[]>([]);
@@ -32,12 +32,53 @@ export const InvestmentSchemesHub: React.FC = () => {
 
   return (
     <div className="py-12 px-4 max-w-7xl mx-auto">
-      <div className="text-center mb-12">
-        <h1 className="text-4xl md:text-5xl font-black text-zinc-900 dark:text-white mb-4">Government Schemes & Incentives</h1>
-        <p className="text-lg text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto">Discover government schemes for investments, business, and development — verified with official sources.</p>
-        <div className="mt-4 flex items-center justify-center text-sm text-zinc-500 gap-2">
-           <ShieldCheck size={16} /> 
-           <span>Independent platform • Always verify on official source</span>
+      {/* Editorial Header & Introduction */}
+      <div className="mb-10">
+        <h1 className="text-3xl md:text-4xl font-black text-zinc-900 dark:text-white mb-4">
+          Government Investment Schemes & Business Incentives
+        </h1>
+        <p className="text-lg text-zinc-600 dark:text-zinc-300 max-w-3xl leading-relaxed mb-6">
+          An independent reference directory detailing industrial incentive programs, credit guarantee frameworks, capital subsidies, and enterprise support initiatives across India.
+        </p>
+
+        {/* Editorial Explanatory Box */}
+        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6 md:p-8 space-y-6 text-zinc-700 dark:text-zinc-300 shadow-sm">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <div className="flex items-center gap-2 text-zinc-900 dark:text-white font-bold text-base mb-2">
+                <Layers size={18} className="text-[#FF6B00]" />
+                <span>Scope of Government Schemes</span>
+              </div>
+              <p className="text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+                This index profiles financial and regulatory incentives created by Central Ministries (such as MSME, Commerce & Industry, MeitY) and state-level industrial promotion bodies. Records detail support categories including Production Linked Incentives (PLI), interest subvention, infrastructure development support, and credit guarantees.
+              </p>
+            </div>
+
+            <div>
+              <div className="flex items-center gap-2 text-zinc-900 dark:text-white font-bold text-base mb-2">
+                <ShieldCheck size={18} className="text-emerald-500 dark:text-emerald-400" />
+                <span>Interpreting Eligibility & Verification</span>
+              </div>
+              <p className="text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+                Schemes feature precise eligibility conditions, budget caps, and designated application windows. An active status indicates that the policy is currently in force, but individual application rounds may have specific open and close cycles. Applicants must verify official nodal guidelines and submit claims through designated official ministerial portals.
+              </p>
+            </div>
+          </div>
+
+          {/* Contextual Clarification: Schemes vs Products */}
+          <div className="pt-6 border-t border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950/40 -mx-6 md:-mx-8 -mb-6 md:-mb-8 p-6 md:p-8 rounded-b-2xl">
+            <div className="flex items-start gap-3">
+              <HelpCircle size={20} className="text-[#FF6B00] shrink-0 mt-0.5" />
+              <div>
+                <h2 className="text-sm font-bold text-zinc-900 dark:text-white uppercase tracking-wider mb-1">
+                  Understanding the Difference: Investment Schemes vs. Investment Products
+                </h2>
+                <p className="text-xs md:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                  <strong className="text-zinc-900 dark:text-zinc-200">Investment Schemes</strong> provide targeted government backing, capital subsidies, and regulatory incentives to businesses and entrepreneurs to spur commercial investment and industrial growth. By contrast, <strong className="text-zinc-900 dark:text-zinc-200">Investment Products</strong> (such as sovereign bonds, PPF, and postal savings certificates) are direct financial deposit instruments where individuals invest personal funds for interest yields and capital security.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       
