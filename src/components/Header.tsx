@@ -166,9 +166,11 @@ export const Header: React.FC<HeaderProps> = ({
               <span className="text-xl font-black tracking-tight text-white">
                 SarkarSaathi<span className="text-[#FF6B00]">.org</span>
               </span>
-              <span className="hidden sm:inline-block px-2 py-0.5 text-[10px] uppercase font-bold rounded bg-[#FF6B00]/10 text-[#FF6B00] border border-[#FF6B00]/30">
-                {currentState.name}
-              </span>
+              {currentState.id !== 'national' && (
+                <span className="hidden sm:inline-block px-2 py-0.5 text-[10px] uppercase font-bold rounded bg-[#FF6B00]/10 text-[#FF6B00] border border-[#FF6B00]/30">
+                  {currentState.name}
+                </span>
+              )}
             </div>
             <p className="text-xs text-zinc-400 font-medium">
               {t('tagline', 'सभी सरकारी काम एक जगह, बिल्कुल फ्री')}
