@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Header } from './components/Header';
 import { NewHomepageHero } from './components/NewHomepageHero';
 import { HomepagePillars } from './components/HomepagePillars';
-import { InvestmentCategories, OpportunitiesSection, TendersSection, InvestmentSchemesSection, TrustSection, HowItWorks } from './components/HomepageSections';
+import { CoreDestinations, TrustSection, HowItWorks } from './components/HomepageSections';
 import { OfficialSourcesHub } from './components/OfficialSourcesHub';
 import { BlogHub } from './components/BlogHub';
 import { ServicesFaqPage } from './components/ServicesFaqPage';
@@ -169,10 +169,7 @@ export default function App() {
             />
             <SearchResults results={searchResults} onNavigate={handleNavigateFromSearch} />
             <HomepagePillars onNavigate={(tab) => setActiveTab(tab as ActiveTab)} />
-            <InvestmentCategories />
-            <OpportunitiesSection />
-            <TendersSection />
-            <InvestmentSchemesSection onNavigate={(tab) => setActiveTab(tab as ActiveTab)} />
+            <CoreDestinations onNavigate={(tab) => setActiveTab(tab as ActiveTab)} />
             <HowItWorks />
             <TrustSection />
           </div>

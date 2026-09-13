@@ -1,46 +1,49 @@
 import React from 'react';
 
-export const InvestmentCategories: React.FC = () => (
-  <div className="max-w-7xl mx-auto p-6">
-    <h2 className="text-3xl font-black mb-6">Explore Government Investments</h2>
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-      {['Government Savings', 'Government Securities', 'Pension & Retirement', 'Gold', 'EPFO', 'Social Security'].map(cat => (
-        <div key={cat} className="p-4 bg-zinc-900 rounded-xl border border-zinc-800 text-center font-bold text-sm hover:border-[#FF6B00] cursor-pointer">
-          {cat}
-        </div>
-      ))}
+export const CoreDestinations: React.FC<{ onNavigate: (tab: string) => void }> = ({ onNavigate }) => {
+  const destinations = [
+    {
+      title: 'Explore Government Investments',
+      description: 'Discover government-backed investment products, small savings schemes, and financial securities.',
+      cta: 'Explore Investments',
+      tab: 'investments'
+    },
+    {
+      title: 'Investment Schemes & Incentives',
+      description: 'Discover government schemes supporting investment, business, industry, and development.',
+      cta: 'Explore Schemes',
+      tab: 'investment-schemes'
+    },
+    {
+      title: 'Find Investment Opportunities',
+      description: 'Discover government-led infrastructure development opportunities, PPP projects, and business prospects.',
+      cta: 'Explore Opportunities',
+      tab: 'opportunities'
+    },
+    {
+      title: 'Find Government Tenders',
+      description: 'Discover procurement, contract, and business opportunities directly from official government sources.',
+      cta: 'Explore Tenders',
+      tab: 'tenders'
+    }
+  ];
+
+  return (
+    <div className="max-w-7xl mx-auto px-6 py-12">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {destinations.map((d, i) => (
+          <div key={i} className="bg-zinc-900 border border-zinc-800 p-6 rounded-2xl flex flex-col hover:border-[#FF6B00] transition">
+            <h3 className="text-xl font-bold text-white mb-3">{d.title}</h3>
+            <p className="text-zinc-400 text-sm mb-6 flex-grow">{d.description}</p>
+            <button onClick={() => onNavigate(d.tab)} className="w-full bg-[#FF6B00] text-white px-6 py-3 rounded-xl font-bold hover:bg-[#e66000] transition">
+              {d.cta}
+            </button>
+          </div>
+        ))}
+      </div>
     </div>
-  </div>
-);
-
-export const OpportunitiesSection: React.FC = () => (
-  <div className="max-w-7xl mx-auto p-6 bg-zinc-900 rounded-2xl border border-zinc-800">
-    <h2 className="text-3xl font-black mb-4">Discover Government Investment Opportunities</h2>
-    <p className="text-zinc-400 mb-6 max-w-2xl">Investment products and investment opportunities are different categories. SarkarSaathi keeps them separately organized so users can understand exactly what they are exploring.</p>
-    <ul className="list-disc list-inside text-zinc-300 space-y-2">
-      <li>Government & Development Projects</li>
-      <li>Infrastructure Projects</li>
-      <li>PPP Opportunities</li>
-      <li>State & Central Opportunities</li>
-    </ul>
-  </div>
-);
-
-export const TendersSection: React.FC = () => (
-  <div className="max-w-7xl mx-auto p-6">
-    <h2 className="text-3xl font-black mb-4">Government Tenders</h2>
-    <p className="text-zinc-400 mb-6">Find government procurement and business opportunities from Central and State departments, PSUs and public authorities.</p>
-    <button className="bg-[#FF6B00] text-white px-6 py-2 rounded-lg font-bold">Explore Tenders</button>
-  </div>
-);
-
-export const InvestmentSchemesSection: React.FC<{ onNavigate: (tab: string) => void }> = ({ onNavigate }) => (
-  <div className="max-w-7xl mx-auto p-6">
-    <h2 className="text-3xl font-black mb-4">Investment Schemes & Incentives</h2>
-    <p className="text-zinc-400 mb-6">Explore government investment-related schemes and incentives from official sources.</p>
-    <button onClick={() => onNavigate('investment-schemes')} className="bg-[#FF6B00] text-white px-6 py-2 rounded-lg font-bold">Explore Schemes</button>
-  </div>
-);
+  );
+};
 
 export const TrustSection: React.FC = () => (
     <div className="max-w-7xl mx-auto p-6 border-t border-zinc-800 mt-12">

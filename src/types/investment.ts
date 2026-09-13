@@ -6,7 +6,7 @@ export interface Investment {
   slug: string;
   name: string;
   shortName?: string;
-  category: 'Government Savings' | 'Government Securities' | 'Gold' | 'Pension' | 'Social Security' | 'EPFO' | 'Infrastructure';
+  category: 'Government Savings' | 'Government Securities' | 'Gold' | 'Pension' | 'Social Security' | 'EPFO' | 'Infrastructure' | 'Mutual Funds';
   subcategory?: string;
   description?: string;
   plainLanguageSummary?: string;
@@ -26,7 +26,8 @@ export interface Investment {
   officialInformationUrl: string;
 
   sourceLastChecked?: string;
-  sourceVerificationStatus?: string;
+  verificationStatus?: 'VERIFIED' | 'NEEDS_REVIEW';
+  verificationNote?: string;
 
   verificationMetadata?: VerificationMetadata;
   freshness?: FreshnessStatus;

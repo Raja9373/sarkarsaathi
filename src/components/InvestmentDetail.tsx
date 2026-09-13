@@ -122,6 +122,13 @@ export const InvestmentDetail: React.FC<InvestmentDetailProps> = ({ slug }) => {
       <div className="mt-12 p-6 bg-zinc-900 border border-zinc-700 rounded-lg">
         <h3 className="font-bold mb-4">Official Sources & Verification</h3>
         <p className="text-sm text-zinc-400 mb-2">Authority: {investment.authority}</p>
+        <p className="text-sm text-zinc-400 mb-2">
+            Verification Status: 
+            <span className={`ml-2 px-2 py-0.5 rounded text-xs ${investment.verificationStatus === 'VERIFIED' ? 'bg-green-900 text-green-200' : 'bg-yellow-900 text-yellow-200'}`}>
+                {investment.verificationStatus || 'NEEDS_REVIEW'}
+            </span>
+        </p>
+        {investment.verificationNote && <p className="text-sm text-zinc-400 mb-2">Note: {investment.verificationNote}</p>}
         <p className="text-sm text-zinc-400 mb-4">Last Verified: {investment.lastVerified}</p>
         <a href={investment.officialInformationUrl} target="_blank" rel="noopener noreferrer" className="text-[#FF6B00] hover:underline">
             Visit Official Website &rarr;
