@@ -473,48 +473,6 @@ const MOCK_INVESTMENTS: Investment[] = [
     secondaryKeywords: ['APY pension amount', 'APY age limit']
   },
   {
-    id: 'pm-sym',
-    slug: 'pm-sym',
-    name: 'PM-SYM (Shram Yogi Maandhan)',
-    category: 'Social Security',
-    authority: 'Ministry of Labour',
-    status: 'LEGACY',
-    interestRate: 'Guaranteed pension',
-    tenure: 'Until 60',
-    eligibility: 'Unorganized workers',
-    officialSource: 'Ministry of Labour',
-    officialInformationUrl: 'https://labour.gov.in',
-    lastVerified: '2026-09-11'
-  },
-  {
-    id: 'nps-vatsalya',
-    slug: 'nps-vatsalya',
-    name: 'NPS Vatsalya',
-    category: 'Pension',
-    authority: 'PFRDA',
-    status: 'LEGACY',
-    interestRate: 'Market Linked',
-    eligibility: 'Minors',
-    officialSource: 'PFRDA',
-    officialInformationUrl: 'https://www.npscra.nsdl.co.in',
-    lastVerified: '2026-09-11'
-  },
-  {
-    id: 'sgb',
-    slug: 'sovereign-gold-bonds',
-    name: 'Sovereign Gold Bonds (SGB)',
-    category: 'Gold',
-    authority: 'RBI',
-    status: 'DISCONTINUED',
-    interestRate: '2.5% p.a.',
-    tenure: '8 Years',
-    lockIn: '5 Years',
-    taxation: 'Taxable',
-    officialSource: 'RBI',
-    officialInformationUrl: 'https://www.rbi.org.in',
-    lastVerified: '2026-09-11'
-  },
-  {
     id: 'frsb',
     slug: 'floating-rate-savings-bonds',
     name: 'Floating Rate Savings Bonds (FRSB)',
@@ -665,34 +623,6 @@ const MOCK_INVESTMENTS: Investment[] = [
     seoDescription: 'Details on PM-Kisan Maandhan eligibility, contribution, and pension benefits for small farmers.',
     primaryKeywords: ['PM-Kisan Maandhan', 'PM-KMY', 'farmers pension'],
     secondaryKeywords: ['PM-KMY pension', 'farmers social security']
-  },
-  {
-    id: 'rbi-retail',
-    slug: 'rbi-retail-direct',
-    name: 'RBI Retail Direct',
-    category: 'Government Securities',
-    authority: 'RBI',
-    status: 'LEGACY',
-    interestRate: 'Market Linked',
-    eligibility: 'Resident Indians',
-    officialSource: 'RBI',
-    officialInformationUrl: 'https://rbiretaildirect.org.in',
-    lastVerified: '2026-09-11'
-  },
-  {
-    id: 'mahila-samman',
-    slug: 'mahila-samman-savings-certificate',
-    name: 'Mahila Samman Savings Certificate',
-    category: 'Government Savings',
-    authority: 'Ministry of Finance',
-    status: 'DISCONTINUED',
-    interestRate: '7.5%',
-    tenure: '2 Years',
-    eligibility: 'Women/Girls',
-    taxation: 'Taxable',
-    officialSource: 'India Post',
-    officialInformationUrl: 'https://nsiindia.gov.in/',
-    lastVerified: '2026-09-12'
   },
   {
     id: 'sdl',

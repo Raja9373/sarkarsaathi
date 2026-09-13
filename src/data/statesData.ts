@@ -4,7 +4,7 @@ export const STATES_LIST: StateInfo[] = [
   // --- CENTRAL / ALL INDIA ---
   {
     id: 'national',
-    name: 'All India (Central Services)',
+    name: 'India’s Government Investment & Opportunity Platform',
     hindiName: 'केंद्र सरकार सेवाएं (संपूर्ण भारत)',
     isAvailable: true,
     code: 'IN',
