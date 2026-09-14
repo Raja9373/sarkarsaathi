@@ -4,7 +4,7 @@ import { IInvestmentRepository } from './InvestmentRepository';
 const MOCK_INVESTMENTS: Investment[] = [
   {
     id: 'ppf',
-    slug: 'public-provident-fund',
+    slug: 'public-provident-fund-scheme',
     name: 'Public Provident Fund (PPF)',
     category: 'Government Savings',
     authority: 'Ministry of Finance',
@@ -49,7 +49,7 @@ const MOCK_INVESTMENTS: Investment[] = [
   },
   {
     id: 'nps',
-    slug: 'national-pension-system',
+    slug: 'national-pension-system-scheme',
     name: 'National Pension System (NPS)',
     category: 'Pension',
     authority: 'PFRDA',
@@ -193,7 +193,7 @@ const MOCK_INVESTMENTS: Investment[] = [
   },
   {
     id: 'kvp',
-    slug: 'kisan-vikas-patra',
+    slug: 'kisan-vikas-patra-certificate',
     name: 'Kisan Vikas Patra (KVP)',
     category: 'Government Savings',
     authority: 'Ministry of Finance',
@@ -478,7 +478,7 @@ const MOCK_INVESTMENTS: Investment[] = [
   },
   {
     id: 'apy',
-    slug: 'atal-pension-yojana',
+    slug: 'atal-pension-yojana-scheme',
     name: 'Atal Pension Yojana (APY)',
     category: 'Pension',
     authority: 'PFRDA',
@@ -676,7 +676,7 @@ const MOCK_INVESTMENTS: Investment[] = [
   },
   {
     id: 'sdl',
-    slug: 'state-development-loans',
+    slug: 'state-development-loans-market',
     name: 'State Development Loans (SDL)',
     category: 'Government Securities',
     authority: 'RBI / State Governments',
@@ -760,8 +760,8 @@ const MOCK_INVESTMENTS: Investment[] = [
     secondaryKeywords: ['54EC lock-in', 'REC bonds']
   },
   {
-    id: 'sovereign-green-bonds',
-    slug: 'sovereign-green-bonds',
+    id: 'sovereign-green-bonds-gov',
+    slug: 'sovereign-green-bonds-gov',
     name: 'Sovereign Green Bonds',
     category: 'Government Securities',
     authority: 'RBI / Ministry of Finance',
@@ -1088,8 +1088,8 @@ const MOCK_INVESTMENTS: Investment[] = [
       lastVerified: '2026-09-13', verificationStatus: 'NEEDS_REVIEW', verificationNote: ''
     },
     {
-      id: 'floating-rate-bond',
-      slug: 'floating-rate-bond',
+      id: 'floating-rate-bond-central',
+      slug: 'floating-rate-bond-central',
       name: 'Floating Rate Bond (Central)',
       category: 'Government Securities',
       authority: 'RBI',
@@ -1237,8 +1237,8 @@ const MOCK_INVESTMENTS: Investment[] = [
   { id: 'mf-money-market', slug: 'money-market-fund', name: 'Money Market Fund', category: 'Mutual Funds', authority: 'SEBI', status: 'ACTIVE', lastVerified: '2026-09-13', verificationStatus: 'VERIFIED', verificationNote: 'Verified via SEBI categorization circular (2017).', officialSource: 'SEBI', officialInformationUrl: 'https://www.sebi.gov.in/legal/circulars/oct-2017/categorization-and-rationalization-of-mutual-fund-schemes_36169.html' },
   { id: 'etf-corporate-bond', slug: 'corporate-bond-etf', name: 'Corporate Bond ETF', category: 'Mutual Funds', authority: 'SEBI', status: 'ACTIVE', lastVerified: '2026-09-13', verificationStatus: 'NEEDS_REVIEW', verificationNote: 'Requires ETF-specific official regulatory source.', officialSource: 'SEBI', officialInformationUrl: 'https://www.sebi.gov.in' },
   { id: 'etf-gsec', slug: 'gsec-etf', name: 'G-Sec ETF', category: 'Mutual Funds', authority: 'SEBI', status: 'ACTIVE', lastVerified: '2026-09-13', verificationStatus: 'NEEDS_REVIEW', verificationNote: 'Requires ETF-specific official regulatory source.', officialSource: 'SEBI', officialInformationUrl: 'https://www.sebi.gov.in' },
-  { id: 'etf-gold', slug: 'gold-etf', name: 'Gold ETF', category: 'Mutual Funds', authority: 'SEBI', status: 'ACTIVE', lastVerified: '2026-09-13', verificationStatus: 'NEEDS_REVIEW', verificationNote: 'Requires AMFI official source.', officialSource: 'SEBI', officialInformationUrl: 'https://www.sebi.gov.in' },
-  { id: 'etf-silver', slug: 'silver-etf', name: 'Silver ETF', category: 'Mutual Funds', authority: 'SEBI', status: 'ACTIVE', lastVerified: '2026-09-13', verificationStatus: 'NEEDS_REVIEW', verificationNote: 'Requires AMFI official source.', officialSource: 'SEBI', officialInformationUrl: 'https://www.sebi.gov.in' },
+  { id: 'etf-gold', slug: 'gold-etf-fund', name: 'Gold ETF', category: 'Mutual Funds', authority: 'SEBI', status: 'ACTIVE', lastVerified: '2026-09-13', verificationStatus: 'NEEDS_REVIEW', verificationNote: 'Requires AMFI official source.', officialSource: 'SEBI', officialInformationUrl: 'https://www.sebi.gov.in' },
+  { id: 'etf-silver', slug: 'silver-etf-fund', name: 'Silver ETF', category: 'Mutual Funds', authority: 'SEBI', status: 'ACTIVE', lastVerified: '2026-09-13', verificationStatus: 'NEEDS_REVIEW', verificationNote: 'Requires AMFI official source.', officialSource: 'SEBI', officialInformationUrl: 'https://www.sebi.gov.in' },
   { id: 'mf-liquid-fund', slug: 'liquid-fund', name: 'Liquid Fund', category: 'Mutual Funds', authority: 'SEBI', status: 'ACTIVE', lastVerified: '2026-09-13', verificationStatus: 'NEEDS_REVIEW', verificationNote: 'Requires AMFI official source.', officialSource: 'SEBI', officialInformationUrl: 'https://www.sebi.gov.in' },
   { id: 'mf-gilt-fund', slug: 'gilt-fund', name: 'Gilt Fund', category: 'Mutual Funds', authority: 'SEBI', status: 'ACTIVE', lastVerified: '2026-09-13', verificationStatus: 'NEEDS_REVIEW', verificationNote: 'Requires AMFI official source.', officialSource: 'SEBI', officialInformationUrl: 'https://www.sebi.gov.in' },
   { id: 'mf-floating-rate', slug: 'floating-rate-fund', name: 'Floating Rate Fund', category: 'Mutual Funds', authority: 'SEBI', status: 'ACTIVE', lastVerified: '2026-09-13', verificationStatus: 'NEEDS_REVIEW', verificationNote: 'Requires AMFI official source.', officialSource: 'SEBI', officialInformationUrl: 'https://www.sebi.gov.in' },

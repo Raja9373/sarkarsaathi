@@ -4045,7 +4045,7 @@ const MOCK_OPPORTUNITIES: OpportunityRecord[] = [
   },
   {
     id: 'itdc-hotel-asset-monetisation-131',
-    slug: 'itdc-hotel-resort-asset-monetisation-ppp',
+    slug: 'itdc-ashok-hotel-resort-asset-monetisation-ppp',
     title: 'ITDC Ashok Group Hotel & Resort Asset Monetisation PPP',
     shortSummary: 'Hotel and resort asset monetisation and management PPP concessions by ITDC.',
     description: 'Public-Private Partnership (PPP) and leasehold management concessions offered by India Tourism Development Corporation (ITDC) for operating, upgrading, and monetizing Ashok Group hotels, resorts, and tourism properties.',

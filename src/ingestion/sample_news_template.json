@@ -1,0 +1,14 @@
+[
+  {
+    "id": "SAMPLE-NEWS-2026-001",
+    "title": "[SAMPLE] Demo Policy Gazette Announcement 2026",
+    "shortSummary": "SAMPLE news record for reviewing staged editorial updates.",
+    "content": "This is sample content for testing editorial ingestion and verification status pipelines.",
+    "category": "Policy",
+    "slug": "sample-policy-gazette-announcement-2026",
+    "sourceUrl": "https://example.gov.in/sample-news",
+    "sourceAuthority": "Sample Press Information Bureau",
+    "verificationStatus": "NEEDS_REVIEW",
+    "publishedAt": "2026-09-14"
+  }
+]
