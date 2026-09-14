@@ -8,6 +8,8 @@ export const InvestmentSchemesHub: React.FC = () => {
   const [search, setSearch] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('All');
   const [statusFilter, setStatusFilter] = useState('All');
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 12;
 
   useEffect(() => {
     const fetchSchemes = async () => {
@@ -17,6 +19,10 @@ export const InvestmentSchemesHub: React.FC = () => {
     };
     fetchSchemes();
   }, []);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search, categoryFilter, statusFilter]);
 
   const categories = useMemo(() => Array.from(new Set(schemes.map(s => s.category))), [schemes]);
 
@@ -29,6 +35,12 @@ export const InvestmentSchemesHub: React.FC = () => {
       return matchesSearch && matchesCategory && matchesStatus;
     });
   }, [schemes, search, categoryFilter, statusFilter]);
+
+  const totalPages = Math.ceil(filtered.length / itemsPerPage);
+  const paginatedItems = useMemo(() => {
+    const start = (currentPage - 1) * itemsPerPage;
+    return filtered.slice(start, start + itemsPerPage);
+  }, [filtered, currentPage]);
 
   return (
     <div className="py-12 px-4 max-w-7xl mx-auto">
@@ -108,30 +120,56 @@ export const InvestmentSchemesHub: React.FC = () => {
         </div>
       </div>
 
-      <div className="text-zinc-600 dark:text-zinc-400 mb-4 font-medium">Showing {filtered.length} verified scheme{filtered.length !== 1 ? 's' : ''}</div>
+      <div className="text-zinc-600 dark:text-zinc-400 mb-4 font-medium">
+        Showing {filtered.length === 0 ? 0 : (currentPage - 1) * itemsPerPage + 1} - {Math.min(currentPage * itemsPerPage, filtered.length)} of {filtered.length} verified schemes
+      </div>
 
       {filtered.length === 0 ? (
         <div className="text-center py-16 bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 text-zinc-500">
             <p>No verified schemes match your search or filters.</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filtered.map(s => (
-            <div key={s.id} className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-6 rounded-2xl hover:border-[#FF6B00] transition group flex flex-col shadow-sm">
-              <div className="flex justify-between items-start mb-2">
-                <span className="text-xs font-semibold text-[#FF6B00] uppercase tracking-wider">{s.category}</span>
-                <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${s.status === 'ACTIVE' ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200' : 'bg-zinc-100 text-zinc-800 dark:bg-zinc-800 dark:text-zinc-200'}`}>{s.status}</span>
+        <>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            {paginatedItems.map(s => (
+              <div key={s.id} className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-6 rounded-2xl hover:border-[#FF6B00] transition group flex flex-col shadow-sm">
+                <div className="flex justify-between items-start mb-2">
+                  <span className="text-xs font-semibold text-[#FF6B00] uppercase tracking-wider">{s.category}</span>
+                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${s.status === 'ACTIVE' ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200' : 'bg-zinc-100 text-zinc-800 dark:bg-zinc-800 dark:text-zinc-200'}`}>{s.status}</span>
+                </div>
+                <h3 className="text-lg font-bold text-zinc-900 dark:text-white mb-2 group-hover:text-[#FF6B00] transition">{s.schemeName}</h3>
+                <p className="text-zinc-600 dark:text-zinc-400 text-sm mb-4 flex-grow">{s.shortDescription}</p>
+                
+                <div className="mt-4 pt-4 border-t border-zinc-100 dark:border-zinc-800 flex justify-between items-center text-xs text-zinc-500">
+                  <span>{s.level}</span>
+                  <a href={`/investment-schemes/${s.slug}`} className="text-[#FF6B00] font-bold hover:underline">View Full Details</a>
+                </div>
               </div>
-              <h3 className="text-lg font-bold text-zinc-900 dark:text-white mb-2 group-hover:text-[#FF6B00] transition">{s.schemeName}</h3>
-              <p className="text-zinc-600 dark:text-zinc-400 text-sm mb-4 flex-grow">{s.shortDescription}</p>
-              
-              <div className="mt-4 pt-4 border-t border-zinc-100 dark:border-zinc-800 flex justify-between items-center text-xs text-zinc-500">
-                <span>{s.level}</span>
-                <a href={`/investment-schemes/${s.slug}`} className="text-[#FF6B00] font-bold hover:underline">View Full Details</a>
-              </div>
+            ))}
+          </div>
+
+          {totalPages > 1 && (
+            <div className="flex justify-between items-center bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-4 rounded-xl shadow-sm">
+              <button 
+                onClick={() => setCurrentPage(p => Math.max(p - 1, 1))}
+                disabled={currentPage === 1}
+                className="px-4 py-2 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 disabled:opacity-50 text-zinc-800 dark:text-white rounded-lg text-sm font-medium transition"
+              >
+                Previous
+              </button>
+              <span className="text-zinc-600 dark:text-zinc-400 text-sm">
+                Page {currentPage} of {totalPages}
+              </span>
+              <button 
+                onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))}
+                disabled={currentPage === totalPages}
+                className="px-4 py-2 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 disabled:opacity-50 text-zinc-800 dark:text-white rounded-lg text-sm font-medium transition"
+              >
+                Next
+              </button>
             </div>
-          ))}
-        </div>
+          )}
+        </>
       )}
     </div>
   );

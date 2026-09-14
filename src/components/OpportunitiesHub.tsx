@@ -7,6 +7,9 @@ export const OpportunitiesHub: React.FC = () => {
   const [opportunities, setOpportunities] = useState<OpportunityRecord[]>([]);
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState<string>('All');
+  const [sortBy, setSortBy] = useState<string>('default');
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 12;
 
   useEffect(() => {
     const fetchOpportunities = async () => {
@@ -17,19 +20,45 @@ export const OpportunitiesHub: React.FC = () => {
     fetchOpportunities();
   }, []);
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search, filter, sortBy]);
+
   const categories = useMemo(() => 
     ['All', ...Array.from(new Set(opportunities.map(i => i.sector)))],
     [opportunities]
   );
 
   const filtered = useMemo(() => {
-    return opportunities.filter(o => {
+    const list = opportunities.filter(o => {
       const matchesSearch = o.title.toLowerCase().includes(search.toLowerCase()) || 
                             o.authority.toLowerCase().includes(search.toLowerCase());
       const matchesFilter = filter === 'All' || o.sector === filter;
       return matchesSearch && matchesFilter;
     });
-  }, [opportunities, search, filter]);
+
+    return list.sort((a, b) => {
+      if (sortBy === 'title-asc') {
+        return a.title.localeCompare(b.title);
+      }
+      if (sortBy === 'title-desc') {
+        return b.title.localeCompare(a.title);
+      }
+      if (sortBy === 'status') {
+        return (a.status || '').localeCompare(b.status || '');
+      }
+      if (sortBy === 'date-desc') {
+        return (b.verificationStatus || '').localeCompare(a.verificationStatus || '');
+      }
+      return 0; // default order
+    });
+  }, [opportunities, search, filter, sortBy]);
+
+  const totalPages = Math.ceil(filtered.length / itemsPerPage);
+  const paginatedItems = useMemo(() => {
+    const start = (currentPage - 1) * itemsPerPage;
+    return filtered.slice(start, start + itemsPerPage);
+  }, [filtered, currentPage]);
 
   return (
     <div className="py-12 px-4 max-w-7xl mx-auto">
@@ -102,23 +131,60 @@ export const OpportunitiesHub: React.FC = () => {
         >
           {categories.map(cat => <option key={cat} value={cat}>{cat}</option>)}
         </select>
+        <select 
+          value={sortBy}
+          onChange={(e) => setSortBy(e.target.value)}
+          className="bg-zinc-900 border border-zinc-700 rounded-lg text-white px-4 py-2"
+        >
+          <option value="default">Default Order</option>
+          <option value="title-asc">Title: A to Z</option>
+          <option value="title-desc">Title: Z to A</option>
+          <option value="status">Status</option>
+          <option value="date-desc">Verification Status</option>
+        </select>
       </div>
 
-      <div className="text-zinc-400 mb-4">Showing {filtered.length} opportunities</div>
+      <div className="text-zinc-400 mb-4">
+        Showing {filtered.length === 0 ? 0 : (currentPage - 1) * itemsPerPage + 1} - {Math.min(currentPage * itemsPerPage, filtered.length)} of {filtered.length} opportunities
+      </div>
 
       {filtered.length === 0 ? (
         <div className="text-center py-12 text-zinc-500">No opportunities found matching your criteria.</div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filtered.map(o => (
-            <div key={o.id} className="bg-zinc-900 border border-zinc-800 p-6 rounded-xl hover:border-[#FF6B00] transition">
-              <h3 className="text-lg font-bold text-white mb-1">{o.title}</h3>
-              <p className="text-[#FF6B00] text-xs font-semibold uppercase mb-2">{o.sector} • {o.opportunityType}</p>
-              <p className="text-zinc-400 text-sm mb-4">Authority: {o.authority}</p>
-              <a href={`/opportunities/${o.slug}`} className="text-white bg-[#FF6B00] px-4 py-2 rounded-lg text-sm font-semibold inline-block">View Details</a>
+        <>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            {paginatedItems.map(o => (
+              <div key={o.id} className="bg-zinc-900 border border-zinc-800 p-6 rounded-xl hover:border-[#FF6B00] transition">
+                <h3 className="text-lg font-bold text-white mb-1">{o.title}</h3>
+                <p className="text-[#FF6B00] text-xs font-semibold uppercase mb-2">{o.sector} • {o.opportunityType}</p>
+                <p className="text-zinc-400 text-sm mb-4">Authority: {o.authority}</p>
+                <a href={`/opportunities/${o.slug}`} className="text-white bg-[#FF6B00] px-4 py-2 rounded-lg text-sm font-semibold inline-block">View Details</a>
+              </div>
+            ))}
+          </div>
+
+          {totalPages > 1 && (
+            <div className="flex justify-between items-center bg-zinc-900 border border-zinc-800 p-4 rounded-xl">
+              <button 
+                onClick={() => setCurrentPage(p => Math.max(p - 1, 1))}
+                disabled={currentPage === 1}
+                className="px-4 py-2 bg-zinc-800 hover:bg-zinc-700 disabled:opacity-50 text-white rounded-lg text-sm font-medium transition"
+              >
+                Previous
+              </button>
+              <span className="text-zinc-400 text-sm">
+                Page {currentPage} of {totalPages}
+              </span>
+              <button 
+                onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))}
+                disabled={currentPage === totalPages}
+                className="px-4 py-2 bg-zinc-800 hover:bg-zinc-700 disabled:opacity-50 text-white rounded-lg text-sm font-medium transition"
+              >
+                Next
+              </button>
             </div>
-          ))}
-        </div>
+          )}
+        </>
       )}
     </div>
   );

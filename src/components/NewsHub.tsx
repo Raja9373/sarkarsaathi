@@ -7,6 +7,8 @@ export const NewsHub: React.FC = () => {
   const [news, setNews] = useState<NewsRecord[]>([]);
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState<string>('All');
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 12;
 
   useEffect(() => {
     const fetchNews = async () => {
@@ -16,6 +18,10 @@ export const NewsHub: React.FC = () => {
     };
     fetchNews();
   }, []);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search, filter]);
 
   const categories = useMemo(() => 
     ['All', ...Array.from(new Set(news.map(i => i.category)))],
@@ -30,6 +36,12 @@ export const NewsHub: React.FC = () => {
       return matchesSearch && matchesFilter;
     });
   }, [news, search, filter]);
+
+  const totalPages = Math.ceil(filtered.length / itemsPerPage);
+  const paginatedItems = useMemo(() => {
+    const start = (currentPage - 1) * itemsPerPage;
+    return filtered.slice(start, start + itemsPerPage);
+  }, [filtered, currentPage]);
 
   return (
     <div className="py-12 px-4 max-w-7xl mx-auto">
@@ -104,16 +116,48 @@ export const NewsHub: React.FC = () => {
         </select>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filtered.map(n => (
-          <div key={n.id} className="bg-zinc-900 border border-zinc-800 p-6 rounded-xl hover:border-[#FF6B00] transition">
-            <h3 className="text-lg font-bold text-white mb-1">{n.title}</h3>
-            <p className="text-[#FF6B00] text-xs font-semibold uppercase mb-2">{n.category} • {n.publishedAt}</p>
-            <p className="text-zinc-300 text-sm mb-4">{n.shortSummary}</p>
-            <a href={`/news/${n.slug}`} className="text-white bg-[#FF6B00] px-4 py-2 rounded-lg text-sm font-semibold inline-block">Read More</a>
-          </div>
-        ))}
+      <div className="text-zinc-400 mb-4">
+        Showing {filtered.length === 0 ? 0 : (currentPage - 1) * itemsPerPage + 1} - {Math.min(currentPage * itemsPerPage, filtered.length)} of {filtered.length} articles
       </div>
+
+      {filtered.length === 0 ? (
+        <div className="text-center py-12 text-zinc-500">No news articles found matching your criteria.</div>
+      ) : (
+        <>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            {paginatedItems.map(n => (
+              <div key={n.id} className="bg-zinc-900 border border-zinc-800 p-6 rounded-xl hover:border-[#FF6B00] transition">
+                <h3 className="text-lg font-bold text-white mb-1">{n.title}</h3>
+                <p className="text-[#FF6B00] text-xs font-semibold uppercase mb-2">{n.category} • {n.publishedAt}</p>
+                <p className="text-zinc-300 text-sm mb-4">{n.shortSummary}</p>
+                <a href={`/news/${n.slug}`} className="text-white bg-[#FF6B00] px-4 py-2 rounded-lg text-sm font-semibold inline-block">Read More</a>
+              </div>
+            ))}
+          </div>
+
+          {totalPages > 1 && (
+            <div className="flex justify-between items-center bg-zinc-900 border border-zinc-800 p-4 rounded-xl">
+              <button 
+                onClick={() => setCurrentPage(p => Math.max(p - 1, 1))}
+                disabled={currentPage === 1}
+                className="px-4 py-2 bg-zinc-800 hover:bg-zinc-700 disabled:opacity-50 text-white rounded-lg text-sm font-medium transition"
+              >
+                Previous
+              </button>
+              <span className="text-zinc-400 text-sm">
+                Page {currentPage} of {totalPages}
+              </span>
+              <button 
+                onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))}
+                disabled={currentPage === totalPages}
+                className="px-4 py-2 bg-zinc-800 hover:bg-zinc-700 disabled:opacity-50 text-white rounded-lg text-sm font-medium transition"
+              >
+                Next
+              </button>
+            </div>
+          )}
+        </>
+      )}
     </div>
   );
 };

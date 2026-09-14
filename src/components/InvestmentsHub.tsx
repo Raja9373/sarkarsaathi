@@ -7,6 +7,9 @@ export const InvestmentsHub: React.FC = () => {
   const [investments, setInvestments] = useState<Investment[]>([]);
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState<string>('All');
+  const [sortBy, setSortBy] = useState<string>('default');
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 12;
 
   useEffect(() => {
     const fetchInvestments = async () => {
@@ -17,20 +20,49 @@ export const InvestmentsHub: React.FC = () => {
     fetchInvestments();
   }, []);
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search, filter, sortBy]);
+
   const categories = useMemo(() => 
     ['All', ...Array.from(new Set(investments.map(i => i.category)))],
     [investments]
   );
 
   const filtered = useMemo(() => {
-    return investments.filter(inv => {
+    const list = investments.filter(inv => {
       const matchesSearch = inv.name.toLowerCase().includes(search.toLowerCase()) || 
                             inv.category.toLowerCase().includes(search.toLowerCase()) ||
                             inv.authority.toLowerCase().includes(search.toLowerCase());
       const matchesFilter = filter === 'All' || inv.category === filter;
       return matchesSearch && matchesFilter;
     });
-  }, [investments, search, filter]);
+
+    return list.sort((a, b) => {
+      if (sortBy === 'name-asc') {
+        return a.name.localeCompare(b.name);
+      }
+      if (sortBy === 'name-desc') {
+        return b.name.localeCompare(a.name);
+      }
+      if (sortBy === 'status') {
+        return a.status.localeCompare(b.status);
+      }
+      if (sortBy === 'date-desc') {
+        return (b.lastVerified || '').localeCompare(a.lastVerified || '');
+      }
+      if (sortBy === 'date-asc') {
+        return (a.lastVerified || '').localeCompare(b.lastVerified || '');
+      }
+      return 0; // default order
+    });
+  }, [investments, search, filter, sortBy]);
+
+  const totalPages = Math.ceil(filtered.length / itemsPerPage);
+  const paginatedItems = useMemo(() => {
+    const start = (currentPage - 1) * itemsPerPage;
+    return filtered.slice(start, start + itemsPerPage);
+  }, [filtered, currentPage]);
 
   return (
     <div className="py-12 px-4 max-w-7xl mx-auto">
@@ -103,23 +135,61 @@ export const InvestmentsHub: React.FC = () => {
         >
           {categories.map(cat => <option key={cat} value={cat}>{cat}</option>)}
         </select>
+        <select 
+          value={sortBy}
+          onChange={(e) => setSortBy(e.target.value)}
+          className="bg-zinc-900 border border-zinc-700 rounded-lg text-white px-4 py-2"
+        >
+          <option value="default">Default Order</option>
+          <option value="name-asc">Name: A to Z</option>
+          <option value="name-desc">Name: Z to A</option>
+          <option value="status">Status</option>
+          <option value="date-desc">Last Verified: Newest</option>
+          <option value="date-asc">Last Verified: Oldest</option>
+        </select>
       </div>
 
-      <div className="text-zinc-400 mb-4">Showing {filtered.length} investments</div>
+      <div className="text-zinc-400 mb-4">
+        Showing {filtered.length === 0 ? 0 : (currentPage - 1) * itemsPerPage + 1} - {Math.min(currentPage * itemsPerPage, filtered.length)} of {filtered.length} investments
+      </div>
 
       {filtered.length === 0 ? (
         <div className="text-center py-12 text-zinc-500">No investments found matching your criteria.</div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filtered.map(inv => (
-            <div key={inv.id} className="bg-zinc-900 border border-zinc-800 p-6 rounded-xl hover:border-[#FF6B00] transition">
-              <h3 className="text-lg font-bold text-white mb-1">{inv.name}</h3>
-              <p className="text-[#FF6B00] text-xs font-semibold uppercase mb-4">{inv.category}</p>
-              <div className="text-zinc-300 text-sm mb-4">Authority: {inv.authority}</div>
-              <a href={`/investments/${inv.slug}`} className="text-white bg-[#FF6B00] px-4 py-2 rounded-lg text-sm font-semibold inline-block">View Details</a>
+        <>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            {paginatedItems.map(inv => (
+              <div key={inv.id} className="bg-zinc-900 border border-zinc-800 p-6 rounded-xl hover:border-[#FF6B00] transition">
+                <h3 className="text-lg font-bold text-white mb-1">{inv.name}</h3>
+                <p className="text-[#FF6B00] text-xs font-semibold uppercase mb-4">{inv.category}</p>
+                <div className="text-zinc-300 text-sm mb-4">Authority: {inv.authority}</div>
+                <a href={`/investments/${inv.slug}`} className="text-white bg-[#FF6B00] px-4 py-2 rounded-lg text-sm font-semibold inline-block">View Details</a>
+              </div>
+            ))}
+          </div>
+
+          {totalPages > 1 && (
+            <div className="flex justify-between items-center bg-zinc-900 border border-zinc-800 p-4 rounded-xl">
+              <button 
+                onClick={() => setCurrentPage(p => Math.max(p - 1, 1))}
+                disabled={currentPage === 1}
+                className="px-4 py-2 bg-zinc-800 hover:bg-zinc-700 disabled:opacity-50 text-white rounded-lg text-sm font-medium transition"
+              >
+                Previous
+              </button>
+              <span className="text-zinc-400 text-sm">
+                Page {currentPage} of {totalPages}
+              </span>
+              <button 
+                onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))}
+                disabled={currentPage === totalPages}
+                className="px-4 py-2 bg-zinc-800 hover:bg-zinc-700 disabled:opacity-50 text-white rounded-lg text-sm font-medium transition"
+              >
+                Next
+              </button>
             </div>
-          ))}
-        </div>
+          )}
+        </>
       )}
     </div>
   );
