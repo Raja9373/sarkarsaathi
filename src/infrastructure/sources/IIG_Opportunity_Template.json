@@ -1,0 +1,14 @@
+[
+  {
+    "title": "REQUIRED: Project Title",
+    "description": "REQUIRED: Detailed project description",
+    "authority": "REQUIRED: Issuing Authority",
+    "category": "REQUIRED: Investment Opportunity",
+    "status": "REQUIRED: e.g., ACTIVE",
+    "sourceUrl": "REQUIRED: EXACT_INDIVIDUAL_IIG_PROJECT_URL",
+    "sourceAuthority": "India Investment Grid (IIG) / Invest India",
+    "verificationStatus": "PENDING",
+    "deadline": "REQUIRED: YYYY-MM-DD",
+    "fundingAmount": "OPTIONAL: Amount if available"
+  }
+]

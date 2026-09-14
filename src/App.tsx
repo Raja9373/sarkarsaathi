@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Navbar, Footer } from './components/Navigation';
 import { HomeView, GenericHubView, DetailView, ComparisonsView, ToolsView, OfficialSourcesView } from './components/Hubs';
 import { SavedView, RecentlyViewedView } from './components/SavedAndRecent';
+import { AdminImport } from './components/AdminImport';
 import { investmentRepository, investmentSchemeRepository, opportunityRepository, tenderRepository, newsRepository } from './infrastructure/repositories/InvestmentRepository';
 
 export default function App() {
@@ -84,6 +85,8 @@ export default function App() {
         return <ToolsView />;
       case '/official-sources':
         return <OfficialSourcesView />;
+      case '/admin/import':
+        return <AdminImport />;
       default:
         return <HomeView onNavigate={navigate} />;
     }
