@@ -1,6 +1,8 @@
 {
-  "name": "SarkarSaathi.org",
-  "description": "India's Government Investment, Tender & Opportunity Information Platform",
+  "name": "SarkarSaathi",
+  "description": "SarkarSaathi.org - Official Government Schemes, Tenders, Opportunities, and Public Services Platform",
   "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
 }

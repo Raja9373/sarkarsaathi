@@ -1,274 +1,49 @@
-export type StateId =
-  | 'delhi'
-  | 'national'
-  | 'andhra-pradesh'
-  | 'arunachal-pradesh'
-  | 'assam'
-  | 'bihar'
-  | 'chhattisgarh'
-  | 'goa'
-  | 'gujarat'
-  | 'haryana'
-  | 'himachal-pradesh'
-  | 'jharkhand'
-  | 'karnataka'
-  | 'kerala'
-  | 'madhya-pradesh'
-  | 'mp'
-  | 'maharashtra'
-  | 'manipur'
-  | 'meghalaya'
-  | 'mizoram'
-  | 'nagaland'
-  | 'odisha'
-  | 'punjab'
-  | 'rajasthan'
-  | 'sikkim'
-  | 'tamil-nadu'
-  | 'telangana'
-  | 'tripura'
-  | 'uttar-pradesh'
-  | 'up'
-  | 'uttarakhand'
-  | 'west-bengal'
-  | 'andaman-nicobar'
-  | 'chandigarh'
-  | 'dadra-nagar-haveli-daman-diu'
-  | 'jammu-kashmir'
-  | 'ladakh'
-  | 'lakshadweep'
-  | 'puducherry'
-  | string;
-
-export interface StateInfo {
-  id: StateId;
-  name: string;
-  hindiName: string;
-  isAvailable: boolean;
-  code: string;
-  capital: string;
-  popularCities?: string[];
-  type?: 'state' | 'ut' | 'central';
-  hasLocalSchemes?: boolean;
-}
-
-export interface ServiceItem {
+export interface BaseEntity {
   id: string;
   title: string;
-  hindiTitle: string;
-  category: string;
-  state: StateId | 'all';
-  department: string;
-  shortDesc: string;
-  overview: string;
-  eligibility: string[];
-  requiredDocs: string[];
-  onlineProcess: string[];
-  offlineProcess: string[];
-  fees: string;
-  processingTime: string;
-  officialWebsiteName: string;
-  officialGovUrl: string;
-  officialNotificationUrl?: string;
-  downloadForms?: { name: string; url: string; isOfficialPdf: boolean }[];
-  faqs: { question: string; answer: string }[];
-  commonMistakes: string[];
-  importantNotes: string[];
-  lastUpdated: string;
-  createdDate?: string;
-  relatedServiceIds: string[];
-  tags: string[];
-  secondaryCategories?: string[];
-  isPopular?: boolean;
-  isNew?: boolean;
-  incomeCriteria?: string;
-  ageCriteria?: string;
-  helpline?: string;
-  importantDates?: string;
-  schemeType?: string;
-  keywords?: {
-    primary: string[];
-    secondary: string[];
-    longTail: string[];
-    questions: string[];
-  };
-  isDraft?: boolean;
-  contentVerified?: boolean;
-}
-
-export interface LifeEvent {
-  id: string;
-  title: string;
-  hindiTitle: string;
-  description: string;
-  iconName: string;
-  requiredServices: string[];
-  requiredDocuments: string[];
-  estimatedFees: string;
-  officialLinks: { label: string; url: string }[];
-  timeline: string;
-  checklist: string[];
-  relatedEvents: string[];
-}
-
-export interface BankProduct {
-  id: string;
-  category: 'saving' | 'current' | 'salary' | 'zero-balance' | 'nre-nro' | 'fd-rd' | 'ppf-nps' | 'sukanya' | 'jan-dhan' | 'locker' | 'cards-upi';
-  title: string;
-  hindiTitle: string;
-  eligibility: string[];
-  documentsRequired: string[];
-  minBalance: string;
-  charges: string;
-  processingTime: string;
-  benefits: string[];
-  features: string[];
-  officialWebsite: string;
-  officialApplyLink: string;
-  faqs: { question: string; answer: string }[];
-}
-
-export interface BankInfo {
-  id: string;
-  name: string;
-  shortName: string;
-  type: 'Public' | 'Private' | 'Small Finance';
-  logoText: string;
-  officialWebsite: string;
-  customerCare: string;
-  netBankingUrl: string;
-}
-
-export interface IfscBranch {
-  ifsc: string;
-  bankId: string;
-  bankName: string;
-  branchName: string;
-  branchCode: string;
-  micrCode: string;
-  address: string;
-  city: string;
-  district: string;
-  state: string;
-  pincode: string;
-  phone: string;
-  neft: boolean;
-  rtgs: boolean;
-  imps: boolean;
-  upi: boolean;
-  swiftCode?: string;
-}
-
-export interface FinderCategory {
-  id: string;
-  title: string;
-  hindiTitle: string;
-  description: string;
-  iconName: string;
-}
-
-export interface DownloadItem {
-  id: string;
-  title: string;
-  hindiTitle: string;
-  category: 'Govt Forms' | 'PDF Forms' | 'Application Forms' | 'Self Declaration' | 'Affidavits' | 'Undertakings' | 'NOC Formats';
-  department: string;
-  description: string;
-  formatText?: string;
-  officialPdfUrl: string;
-  isCustomFormatAvailable: boolean;
-}
-
-export interface GovtOffice {
-  id: string;
-  officeName: string;
-  hindiName: string;
-  department: string;
-  category: 'Secretariat & HQs' | 'District Magistrates & Revenue' | 'Municipal & Utilities' | 'Police & Judicial' | 'Transport & Licences' | 'Central Govt Ministries';
-  district: string;
-  address: string;
-  pincode: string;
-  phone: string;
-  helpline?: string;
-  email: string;
-  timing: string;
-  website: string;
-  officerInCharge?: string;
-  keyServices: string[];
-}
-
-export interface CalculatorDef {
-  id: string;
-  title: string;
-  hindiTitle: string;
-  description: string;
-  category: string;
-}
-
-export interface DelhiDepartment {
-  id: string;
-  name: string;
-  hindiName: string;
-  shortCode: string;
-  description: string;
-  ministerName?: string;
-  headOffice: string;
-  helpline: string;
-  email: string;
-  officialWebsite: string;
-  portalUrl: string;
-  keyServices: string[];
-}
-
-export interface BlogPost {
-  id: string;
-  title: string;
-  hindiTitle: string;
   slug: string;
-  category: 'Document Guides' | 'Banking Guides' | 'Government Updates' | 'Citizen Rights' | 'Government Schemes';
-  summary: string;
-  contentMarkdown: string;
-  publishedDate: string;
-  author: string;
-  readTime: string;
-  relatedServiceIds?: string[];
+  description: string;
+  authority: string;
+  category: string;
+  status: string;
+  sourceUrl: string;
+  sourceAuthority: string;
+  verificationStatus: string;
+  createdAt?: string;
 }
 
-export type ActiveTab = 
-  | 'home' 
-  | 'categories' 
-  | 'services' 
-  | 'schemes'
-  | 'life-events' 
-  | 'banking' 
-  | 'finders' 
-  | 'status-check' 
-  | 'online-apply' 
-  | 'payments' 
-  | 'downloads' 
-  | 'calculators' 
-  | 'auto-update'
-  | 'complaints'
-  | 'blog' 
-  | 'faqs'
-  | 'legal' 
-  | 'comparisons'
-  | 'investments'
-  | 'investment-detail'
-  | 'investment-schemes'
-  | 'investment-scheme-detail'
-  | 'official-sources'
-  | 'news'
-  | 'news-detail'
-  | 'tenders'
-  | 'tenders-detail'
-  | 'opportunities'
-  | 'opportunities-detail'
-  | 'saved'
-  | 'recently-viewed'
-  | 'service-detail';
+export interface Investment extends BaseEntity {
+  minInvestment: number;
+  expectedReturn: string;
+  lockInPeriod: string;
+  riskLevel: 'Low' | 'Medium' | 'High';
+}
 
-export interface InvestmentFAQ {
-  question: string;
-  answer: string;
+export interface InvestmentScheme extends BaseEntity {
+  eligibility: string;
+  benefits: string;
+  applicationProcess: string;
+}
+
+export interface Opportunity extends BaseEntity {
+  deadline: string;
+  fundingAmount?: string;
+}
+
+export interface Tender extends BaseEntity {
+  tenderValue: string;
+  submissionDeadline: string;
+  location: string;
+}
+
+export interface NewsItem extends BaseEntity {
+  publishedDate: string;
+  content: string;
+}
+
+export interface PaginationParams {
+  page?: number;
+  limit?: number;
+  search?: string;
+  category?: string;
 }

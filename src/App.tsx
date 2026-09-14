@@ -1,228 +1,101 @@
-import React, { useState } from 'react';
-import { Header } from './components/Header';
-import { NewHomepageHero } from './components/NewHomepageHero';
-import { HomepagePillars } from './components/HomepagePillars';
-import { CoreDestinations, TrustSection, HowItWorks } from './components/HomepageSections';
-import { OfficialSourcesHub } from './components/OfficialSourcesHub';
-import { BlogHub } from './components/BlogHub';
-import { ServicesFaqPage } from './components/ServicesFaqPage';
-import { LegalPages } from './components/LegalPages';
-import { ServiceDetailModal } from './components/ServiceDetailModal';
-import { EmergencyModal } from './components/EmergencyModal';
-import { Footer } from './components/Footer';
-import { ComparisonsHub } from './components/ComparisonsHub';
-import { SavedItemsHub } from './components/SavedItemsHub';
-import { RecentlyViewedHub } from './components/RecentlyViewedHub';
-import { InvestmentsHub } from './components/InvestmentsHub';
-import { InvestmentDetail } from './components/InvestmentDetail';
-import { NewsHub } from './components/NewsHub';
-import { NewsDetail } from './components/NewsDetail';
-import { TendersHub } from './components/TendersHub';
-import { TenderDetail } from './components/TenderDetail';
-import { OpportunitiesHub } from './components/OpportunitiesHub';
-import { OpportunityDetail } from './components/OpportunityDetail';
-import { InvestmentSchemesHub } from './components/InvestmentSchemesHub';
-import { InvestmentSchemeDetail } from './components/InvestmentSchemeDetail';
-import { SearchResults } from './components/SearchResults';
-import { globalSearch, SearchResult } from './lib/globalSearch';
-// ... existing imports
-import { SEOHead } from './components/SEOHead';
-import { VoiceSearchModal } from './components/VoiceSearchModal';
-import { SitemapModal } from './components/SitemapModal';
-import { BharatSaathiChatbot } from './components/BharatSaathiChatbot';
-
-import { ActiveTab, ServiceItem, StateId } from './types';
-import { SERVICES_LIST } from './data/servicesData';
-import { BLOG_POSTS } from './data/blogData';
-import { Mic } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Navbar, Footer } from './components/Navigation';
+import { HomeView, GenericHubView, DetailView, ComparisonsView, ToolsView, OfficialSourcesView } from './components/Hubs';
+import { SavedView, RecentlyViewedView } from './components/SavedAndRecent';
+import { investmentRepository, investmentSchemeRepository, opportunityRepository, tenderRepository, newsRepository } from './infrastructure/repositories/InvestmentRepository';
 
 export default function App() {
-  const [servicesData, setServicesData] = useState<ServiceItem[]>(SERVICES_LIST);
-  const [activeTab, setActiveTab] = useState<ActiveTab>('home');
-  const [currentStateId, setCurrentStateId] = useState<StateId>('all');
-  const [selectedService, setSelectedService] = useState<ServiceItem | null>(null);
-  const [emergencyOpen, setEmergencyOpen] = useState(false);
-  const [voiceSearchOpen, setVoiceSearchOpen] = useState(false);
-  const [sitemapOpen, setSitemapOpen] = useState(false);
-  
-  const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
+  const [currentRoute, setCurrentRoute] = useState('/');
+  const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
 
-  const handleSearch = async (query: string) => {
-    const results = await globalSearch(query);
-    setSearchResults(results);
-    setActiveTab('home'); // Stay on home to show results
-  };
-
-  const handleNavigateFromSearch = (type: string, slug: string) => {
-    setSearchResults([]);
-    if (type === 'Investment') { setSelectedInvestmentSlug(slug); setActiveTab('investment-detail'); }
-    else if (type === 'News') { setSelectedNewsSlug(slug); setActiveTab('news-detail'); }
-    else if (type === 'Tender') { setSelectedTenderSlug(slug); setActiveTab('tenders-detail'); }
-    else if (type === 'Opportunity') { setSelectedOpportunitySlug(slug); setActiveTab('opportunities-detail'); }
-    else if (type === 'Scheme') { setSelectedInvestmentSchemeSlug(slug); setActiveTab('investment-scheme-detail'); }
-  };
-
-  const [selectedInvestmentSlug, setSelectedInvestmentSlug] = useState<string | null>(null);
-  const [selectedNewsSlug, setSelectedNewsSlug] = useState<string | null>(null);
-  const [selectedTenderSlug, setSelectedTenderSlug] = useState<string | null>(null);
-  const [selectedOpportunitySlug, setSelectedOpportunitySlug] = useState<string | null>(null);
-  const [selectedInvestmentSchemeSlug, setSelectedInvestmentSchemeSlug] = useState<string | null>(null);
-  const [fontSizeLevel, setFontSizeLevel] = useState<number>(0);
-  const [highContrast, setHighContrast] = useState<boolean>(false);
-
-  // Synchronize URL path with activeTab and selected modal/service
-  React.useEffect(() => {
-    const handleRoute = () => {
+  useEffect(() => {
+    const handlePopState = () => {
       const path = window.location.pathname;
-
-      if (!path || path === '/') {
-        setActiveTab('home');
-        return;
-      }
-      
-      if (path === '/investments') {
-        setActiveTab('investments');
-      } else if (path.startsWith('/investments/')) {
-        const slug = path.split('/')[2];
-        if (slug) {
-          setSelectedInvestmentSlug(slug);
-          setActiveTab('investment-detail');
-        } else {
-          setActiveTab('investments');
-        }
-      } else if (path === '/news') {
-        setActiveTab('news');
-      } else if (path.startsWith('/news/')) {
-        const slug = path.split('/')[2];
-        if (slug) {
-          setSelectedNewsSlug(slug);
-          setActiveTab('news-detail');
-        } else {
-          setActiveTab('news');
-        }
-      } else if (path === '/tenders') {
-        setActiveTab('tenders');
-      } else if (path.startsWith('/tenders/')) {
-        const slug = path.split('/')[2];
-        if (slug) {
-          setSelectedTenderSlug(slug);
-          setActiveTab('tenders-detail');
-        } else {
-          setActiveTab('tenders');
-        }
-      } else if (path === '/opportunities') {
-        setActiveTab('opportunities');
-      } else if (path.startsWith('/opportunities/')) {
-        const slug = path.split('/')[2];
-        if (slug) {
-          setSelectedOpportunitySlug(slug);
-          setActiveTab('opportunities-detail');
-        } else {
-          setActiveTab('opportunities');
-        }
-      } else if (path === '/comparisons') {
-        setActiveTab('comparisons');
-      } else if (path === '/saved') {
-        setActiveTab('saved');
-      } else if (path === '/recently-viewed') {
-        setActiveTab('recently-viewed');
-      } else if (path === '/official-sources') {
-        setActiveTab('official-sources');
-      } else if (path === '/investment-schemes') {
-        setActiveTab('investment-schemes');
-      } else if (path.startsWith('/investment-schemes/')) {
-        const slug = path.split('/')[2];
-        if (slug) {
-          setSelectedInvestmentSchemeSlug(slug);
-          setActiveTab('investment-scheme-detail');
-        } else {
-          setActiveTab('investment-schemes');
-        }
-      } else if (['/about', '/contact', '/privacy', '/terms', '/disclaimer'].includes(path)) {
-        setActiveTab('legal');
+      const parts = path.split('/').filter(Boolean);
+      if (parts.length === 0) {
+        setCurrentRoute('/');
+        setSelectedSlug(null);
+      } else if (parts.length === 1) {
+        setCurrentRoute(`/${parts[0]}`);
+        setSelectedSlug(null);
+      } else if (parts.length === 2) {
+        setCurrentRoute(`/${parts[0]}`);
+        setSelectedSlug(parts[1]);
       }
     };
 
-    handleRoute();
-    window.addEventListener('popstate', handleRoute);
-    return () => window.removeEventListener('popstate', handleRoute);
+    window.addEventListener('popstate', handlePopState);
+    handlePopState();
+    return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
-  const fontClass = fontSizeLevel === 1 ? 'text-[105%]' : fontSizeLevel === 2 ? 'text-[112%]' : fontSizeLevel === -1 ? 'text-[92%]' : '';
+  const navigate = (route: string, slug?: string) => {
+    const fullPath = slug ? `${route}/${slug}` : route;
+    window.history.pushState({}, '', fullPath);
+    setCurrentRoute(route);
+    setSelectedSlug(slug || null);
+    window.scrollTo(0, 0);
+  };
+
+  const renderContent = () => {
+    if (selectedSlug) {
+      if (currentRoute === '/investments') {
+        const item = investmentRepository.getBySlug(selectedSlug);
+        return <DetailView item={item} type="Investments" onBack={() => navigate('/investments')} />;
+      }
+      if (currentRoute === '/investment-schemes') {
+        const item = investmentSchemeRepository.getBySlug(selectedSlug);
+        return <DetailView item={item} type="Investment Schemes" onBack={() => navigate('/investment-schemes')} />;
+      }
+      if (currentRoute === '/opportunities') {
+        const item = opportunityRepository.getBySlug(selectedSlug);
+        return <DetailView item={item} type="Opportunities" onBack={() => navigate('/opportunities')} />;
+      }
+      if (currentRoute === '/tenders') {
+        const item = tenderRepository.getBySlug(selectedSlug);
+        return <DetailView item={item} type="Tenders" onBack={() => navigate('/tenders')} />;
+      }
+      if (currentRoute === '/news') {
+        const item = newsRepository.getBySlug(selectedSlug);
+        return <DetailView item={item} type="News" onBack={() => navigate('/news')} />;
+      }
+    }
+
+    switch (currentRoute) {
+      case '/':
+        return <HomeView onNavigate={navigate} />;
+      case '/investments':
+        return <GenericHubView title="Sovereign & Government Investments" type="investments" items={investmentRepository.getAll()} onNavigate={navigate} />;
+      case '/investment-schemes':
+        return <GenericHubView title="Government Investment Schemes" type="investment-schemes" items={investmentSchemeRepository.getAll()} onNavigate={navigate} />;
+      case '/opportunities':
+        return <GenericHubView title="Government Opportunities & Grants" type="opportunities" items={opportunityRepository.getAll()} onNavigate={navigate} />;
+      case '/tenders':
+        return <GenericHubView title="Government Tenders & Procurements" type="tenders" items={tenderRepository.getAll()} onNavigate={navigate} />;
+      case '/news':
+        return <GenericHubView title="Official Policy News & Releases" type="news" items={newsRepository.getAll()} onNavigate={navigate} />;
+      case '/saved':
+        return <SavedView onNavigate={navigate} />;
+      case '/recently-viewed':
+        return <RecentlyViewedView onNavigate={navigate} />;
+      case '/comparisons':
+        return <ComparisonsView />;
+      case '/tools':
+        return <ToolsView />;
+      case '/official-sources':
+        return <OfficialSourcesView />;
+      default:
+        return <HomeView onNavigate={navigate} />;
+    }
+  };
 
   return (
-    <div className={`min-h-screen bg-[#0B0F17] text-zinc-100 font-sans selection:bg-[#FF6B00] selection:text-white ${fontClass} ${highContrast ? 'contrast-125' : ''}`}>
-      <SEOHead activeService={null} />
-
-      <Header
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-        currentStateId={currentStateId}
-        setCurrentStateId={setCurrentStateId}
-        onOpenEmergency={() => setEmergencyOpen(true)}
-        fontSizeLevel={fontSizeLevel}
-        setFontSizeLevel={setFontSizeLevel}
-        highContrast={highContrast}
-        setHighContrast={setHighContrast}
-      />
-
-      <main className="min-h-[70vh]">
-        {activeTab === 'home' && (
-          <div className="space-y-12 pb-12">
-            <NewHomepageHero 
-                onSearch={handleSearch}
-                onNavigate={(tab) => setActiveTab(tab as ActiveTab)}
-            />
-            <SearchResults results={searchResults} onNavigate={handleNavigateFromSearch} />
-            <HomepagePillars onNavigate={(tab) => setActiveTab(tab as ActiveTab)} />
-            <CoreDestinations onNavigate={(tab) => setActiveTab(tab as ActiveTab)} />
-            <HowItWorks />
-            <TrustSection />
-          </div>
-        )}
-        
-        {activeTab === 'investments' && <InvestmentsHub />}
-        {activeTab === 'investment-detail' && selectedInvestmentSlug && <InvestmentDetail slug={selectedInvestmentSlug} />}
-        {activeTab === 'news' && <NewsHub />}
-        {activeTab === 'news-detail' && selectedNewsSlug && <NewsDetail slug={selectedNewsSlug} />}
-        {activeTab === 'tenders' && <TendersHub />}
-        {activeTab === 'tenders-detail' && selectedTenderSlug && <TenderDetail slug={selectedTenderSlug} />}
-        {activeTab === 'opportunities' && <OpportunitiesHub />}
-        {activeTab === 'opportunities-detail' && selectedOpportunitySlug && <OpportunityDetail slug={selectedOpportunitySlug} />}
-        {activeTab === 'investment-schemes' && <InvestmentSchemesHub />}
-        {activeTab === 'official-sources' && <OfficialSourcesHub onNavigate={(tab) => { setActiveTab(tab as ActiveTab); window.history.pushState({}, '', `/${tab}`); window.scrollTo(0, 0); }} />}
-        {activeTab === 'investment-scheme-detail' && selectedInvestmentSchemeSlug && <InvestmentSchemeDetail slug={selectedInvestmentSchemeSlug} />}
-        {activeTab === 'comparisons' && <ComparisonsHub />}
-        {activeTab === 'saved' && <SavedItemsHub onNavigate={(tab, slug) => {
-          if (tab === 'investment-detail' && slug) setSelectedInvestmentSlug(slug);
-          else if (tab === 'opportunities-detail' && slug) setSelectedOpportunitySlug(slug);
-          else if (tab === 'tenders-detail' && slug) setSelectedTenderSlug(slug);
-          setActiveTab(tab as ActiveTab);
-          const path = slug ? `/${tab === 'investment-detail' ? 'investments' : tab === 'opportunities-detail' ? 'opportunities' : 'tenders'}/${slug}` : `/${tab}`;
-          window.history.pushState({}, '', path);
-          window.scrollTo(0, 0);
-        }} />}
-        {activeTab === 'recently-viewed' && <RecentlyViewedHub onNavigate={(tab, slug) => {
-          if (tab === 'investment-detail' && slug) setSelectedInvestmentSlug(slug);
-          else if (tab === 'opportunities-detail' && slug) setSelectedOpportunitySlug(slug);
-          else if (tab === 'tenders-detail' && slug) setSelectedTenderSlug(slug);
-          setActiveTab(tab as ActiveTab);
-          const path = slug ? `/${tab === 'investment-detail' ? 'investments' : tab === 'opportunities-detail' ? 'opportunities' : 'tenders'}/${slug}` : `/${tab}`;
-          window.history.pushState({}, '', path);
-          window.scrollTo(0, 0);
-        }} />}
-        {activeTab === 'legal' && <LegalPages />}
+    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans">
+      <Navbar currentRoute={currentRoute} onNavigate={navigate} />
+      <main className="flex-grow">
+        {renderContent()}
       </main>
-
-      <Footer
-        setActiveTab={setActiveTab}
-        onOpenEmergency={() => setEmergencyOpen(true)}
-        onSelectServiceById={() => {}}
-        onSelectDeptById={() => {}}
-        onOpenSitemap={() => setSitemapOpen(true)}
-        currentStateId={currentStateId}
-      />
+      <Footer onNavigate={navigate} />
     </div>
   );
 }
-
