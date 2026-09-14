@@ -373,6 +373,18 @@ export const Header: React.FC<HeaderProps> = ({
             >
               Official Sources
             </button>
+            <button
+              onClick={() => handleNavClick('saved')}
+              className={`px-3 py-2 rounded-lg transition inline-flex items-center gap-1 ${activeTab === 'saved' ? 'bg-[#FF6B00] text-white font-bold' : 'hover:bg-zinc-800 hover:text-white'}`}
+            >
+              ⭐ Saved
+            </button>
+            <button
+              onClick={() => handleNavClick('recently-viewed')}
+              className={`px-3 py-2 rounded-lg transition inline-flex items-center gap-1 ${activeTab === 'recently-viewed' ? 'bg-[#FF6B00] text-white font-bold' : 'hover:bg-zinc-800 hover:text-white'}`}
+            >
+              🕒 History
+            </button>
           </nav>
 
         {/* Mobile Menu Toggle Button */}
@@ -456,6 +468,18 @@ export const Header: React.FC<HeaderProps> = ({
               className={`p-2.5 rounded-lg text-left font-medium ${activeTab === 'comparisons' ? 'bg-[#FF6B00] text-white font-bold' : 'bg-zinc-900 text-zinc-200'}`}
             >
               ⚖️ Comparisons
+            </button>
+            <button
+              onClick={() => handleNavClick('saved')}
+              className={`p-2.5 rounded-lg text-left font-medium ${activeTab === 'saved' ? 'bg-[#FF6B00] text-white font-bold' : 'bg-zinc-900 text-zinc-200'}`}
+            >
+              ⭐ Saved Items
+            </button>
+            <button
+              onClick={() => handleNavClick('recently-viewed')}
+              className={`p-2.5 rounded-lg text-left font-medium ${activeTab === 'recently-viewed' ? 'bg-[#FF6B00] text-white font-bold' : 'bg-zinc-900 text-zinc-200'}`}
+            >
+              🕒 Recently Viewed
             </button>
           </div>
         </div>

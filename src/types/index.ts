@@ -264,6 +264,8 @@ export type ActiveTab =
   | 'tenders-detail'
   | 'opportunities'
   | 'opportunities-detail'
+  | 'saved'
+  | 'recently-viewed'
   | 'service-detail';
 
 export interface InvestmentFAQ {

@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { MockTenderRepository } from '../infrastructure/repositories/TenderRepository';
 import { TenderRecord } from '../types/tender';
 import { SEOHead } from './SEOHead';
+import { SaveButton } from './SaveButton';
+import { ShareButton } from './ShareButton';
+import { addRecentlyViewed } from '../lib/recentlyViewed';
 import { ExternalLink, ShieldCheck, Calendar, Info, Building } from 'lucide-react';
 
 interface TenderDetailProps {
@@ -18,6 +21,15 @@ export const TenderDetail: React.FC<TenderDetailProps> = ({ slug }) => {
       const repo = new MockTenderRepository();
       const t = await repo.getBySlug(slug);
       setTender(t);
+      if (t) {
+        addRecentlyViewed({
+          id: t.id,
+          type: 'tender',
+          title: t.title,
+          category: t.tenderCategory,
+          slug: t.slug
+        });
+      }
       setLoading(false);
     };
     fetchTender();
@@ -29,7 +41,13 @@ export const TenderDetail: React.FC<TenderDetailProps> = ({ slug }) => {
   return (
     <div className="py-12 px-4 max-w-5xl mx-auto text-zinc-100">
       <SEOHead activeTender={tender} canonicalUrl={`https://www.sarkarsaathi.org/tenders/${tender.slug}`} />
-      <a href="/tenders" className="text-[#FF6B00] mb-6 inline-block hover:underline font-bold">&larr; Back to Tenders</a>
+      <div className="flex justify-between items-center mb-6">
+        <a href="/tenders" className="text-[#FF6B00] hover:underline font-bold">&larr; Back to Tenders</a>
+        <div className="flex items-center gap-2">
+          <ShareButton title={tender.title} />
+          <SaveButton item={{ id: tender.id, type: 'tender', title: tender.title, category: tender.tenderCategory, slug: tender.slug, savedAt: '' }} />
+        </div>
+      </div>
       
       <div className="bg-zinc-900 border border-zinc-800 p-8 rounded-3xl mb-8">
         <h1 className="text-3xl md:text-4xl font-black mb-4 leading-tight">{tender.title}</h1>

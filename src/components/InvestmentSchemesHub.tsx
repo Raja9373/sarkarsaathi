@@ -18,7 +18,42 @@ export const InvestmentSchemesHub: React.FC = () => {
       setSchemes(all);
     };
     fetchSchemes();
+
+    const params = new URLSearchParams(window.location.search);
+    const q = params.get('search');
+    const catF = params.get('category');
+    const statusF = params.get('status');
+    const p = params.get('page');
+
+    if (q) setSearch(q);
+    if (catF) setCategoryFilter(catF);
+    if (statusF) setStatusFilter(statusF);
+    if (p && !isNaN(Number(p))) setCurrentPage(Math.max(1, Number(p)));
+
+    const handlePopState = () => {
+      const pParams = new URLSearchParams(window.location.search);
+      setSearch(pParams.get('search') || '');
+      setCategoryFilter(pParams.get('category') || 'All');
+      setStatusFilter(pParams.get('status') || 'All');
+      const pageNum = Number(pParams.get('page'));
+      setCurrentPage(!isNaN(pageNum) && pageNum > 0 ? pageNum : 1);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
   }, []);
+
+  useEffect(() => {
+    const params = new URLSearchParams();
+    if (search) params.set('search', search);
+    if (categoryFilter && categoryFilter !== 'All') params.set('category', categoryFilter);
+    if (statusFilter && statusFilter !== 'All') params.set('status', statusFilter);
+    if (currentPage > 1) params.set('page', String(currentPage));
+
+    const newQuery = params.toString() ? `?${params.toString()}` : '';
+    const newUrl = `${window.location.pathname}${newQuery}`;
+    window.history.replaceState({}, '', newUrl);
+  }, [search, categoryFilter, statusFilter, currentPage]);
 
   useEffect(() => {
     setCurrentPage(1);

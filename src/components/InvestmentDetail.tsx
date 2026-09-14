@@ -4,6 +4,9 @@ import { Investment } from '../types/investment';
 import { SEOHead } from './SEOHead';
 import { RelatedContent } from './RelatedContent';
 import { globalSearch, SearchResult } from '../lib/globalSearch';
+import { SaveButton } from './SaveButton';
+import { ShareButton } from './ShareButton';
+import { addRecentlyViewed } from '../lib/recentlyViewed';
 import { BookOpen, ShieldCheck, Info, CheckCircle2 } from 'lucide-react';
 
 interface InvestmentDetailProps {
@@ -21,12 +24,18 @@ export const InvestmentDetail: React.FC<InvestmentDetailProps> = ({ slug }) => {
       const repo = new MockInvestmentRepository();
       const inv = await repo.getBySlug(slug);
       setInvestment(inv);
+      if (inv) {
+        addRecentlyViewed({
+          id: inv.id,
+          type: 'investment',
+          title: inv.name,
+          category: inv.category,
+          slug: inv.slug
+        });
+      }
       
-      const all = await globalSearch(''); // This needs to be improved to get all
-      // Actually, globalSearch('') returns empty.
-      // I need a way to get ALL results.
-      // Let's modify globalSearch to allow empty query to return all.
-      setAllData(await globalSearch(' '));
+      const all = await globalSearch(' ');
+      setAllData(all);
       setLoading(false);
     };
     fetchData();
@@ -38,7 +47,13 @@ export const InvestmentDetail: React.FC<InvestmentDetailProps> = ({ slug }) => {
   return (
     <div className="py-12 px-4 max-w-4xl mx-auto text-zinc-100">
       <SEOHead activeInvestment={investment} canonicalUrl={`https://www.sarkarsaathi.org/investments/${investment.slug}`} />
-      <a href="/investments" className="text-[#FF6B00] mb-4 inline-block hover:underline">&larr; Back to Investments</a>
+      <div className="flex justify-between items-center mb-4">
+        <a href="/investments" className="text-[#FF6B00] hover:underline">&larr; Back to Investments</a>
+        <div className="flex items-center gap-2">
+          <ShareButton title={investment.name} />
+          <SaveButton item={{ id: investment.id, type: 'investment', title: investment.name, category: investment.category, slug: investment.slug, savedAt: '' }} />
+        </div>
+      </div>
       
       <h1 className="text-4xl font-black mb-2">{investment.name}</h1>
       <div className="flex gap-4 mb-6">

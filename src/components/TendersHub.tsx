@@ -19,7 +19,46 @@ export const TendersHub: React.FC = () => {
       setTenders(all);
     };
     fetchTenders();
+
+    const params = new URLSearchParams(window.location.search);
+    const q = params.get('search');
+    const statusF = params.get('status');
+    const stateF = params.get('state');
+    const s = params.get('sort');
+    const p = params.get('page');
+
+    if (q) setSearch(q);
+    if (statusF) setStatusFilter(statusF);
+    if (stateF) setStateFilter(stateF);
+    if (s) setSortBy(s);
+    if (p && !isNaN(Number(p))) setCurrentPage(Math.max(1, Number(p)));
+
+    const handlePopState = () => {
+      const pParams = new URLSearchParams(window.location.search);
+      setSearch(pParams.get('search') || '');
+      setStatusFilter(pParams.get('status') || 'All');
+      setStateFilter(pParams.get('state') || 'All');
+      setSortBy(pParams.get('sort') || 'default');
+      const pageNum = Number(pParams.get('page'));
+      setCurrentPage(!isNaN(pageNum) && pageNum > 0 ? pageNum : 1);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
   }, []);
+
+  useEffect(() => {
+    const params = new URLSearchParams();
+    if (search) params.set('search', search);
+    if (statusFilter && statusFilter !== 'All') params.set('status', statusFilter);
+    if (stateFilter && stateFilter !== 'All') params.set('state', stateFilter);
+    if (sortBy && sortBy !== 'default') params.set('sort', sortBy);
+    if (currentPage > 1) params.set('page', String(currentPage));
+
+    const newQuery = params.toString() ? `?${params.toString()}` : '';
+    const newUrl = `${window.location.pathname}${newQuery}`;
+    window.history.replaceState({}, '', newUrl);
+  }, [search, statusFilter, stateFilter, sortBy, currentPage]);
 
   useEffect(() => {
     setCurrentPage(1);

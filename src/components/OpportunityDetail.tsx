@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { MockOpportunityRepository } from '../infrastructure/repositories/OpportunityRepository';
 import { OpportunityRecord } from '../types/opportunity';
 import { SEOHead } from './SEOHead';
+import { SaveButton } from './SaveButton';
+import { ShareButton } from './ShareButton';
+import { addRecentlyViewed } from '../lib/recentlyViewed';
 import { Briefcase, ShieldCheck, Info, CheckCircle2, Building, Layers, ExternalLink } from 'lucide-react';
 
 interface OpportunityDetailProps {
@@ -18,6 +21,15 @@ export const OpportunityDetail: React.FC<OpportunityDetailProps> = ({ slug }) =>
       const repo = new MockOpportunityRepository();
       const o = await repo.getBySlug(slug);
       setOpportunity(o);
+      if (o) {
+        addRecentlyViewed({
+          id: o.id,
+          type: 'opportunity',
+          title: o.title,
+          category: o.sector,
+          slug: o.slug
+        });
+      }
       setLoading(false);
     };
     fetchOpportunity();
@@ -29,7 +41,13 @@ export const OpportunityDetail: React.FC<OpportunityDetailProps> = ({ slug }) =>
   return (
     <div className="py-12 px-4 max-w-4xl mx-auto text-zinc-100">
       <SEOHead activeOpportunity={opportunity} />
-      <a href="/opportunities" className="text-[#FF6B00] mb-4 inline-block hover:underline">&larr; Back to Opportunities</a>
+      <div className="flex justify-between items-center mb-4">
+        <a href="/opportunities" className="text-[#FF6B00] hover:underline">&larr; Back to Opportunities</a>
+        <div className="flex items-center gap-2">
+          <ShareButton title={opportunity.title} />
+          <SaveButton item={{ id: opportunity.id, type: 'opportunity', title: opportunity.title, category: opportunity.sector, slug: opportunity.slug, savedAt: '' }} />
+        </div>
+      </div>
       
       <h1 className="text-3xl md:text-4xl font-black mb-2">{opportunity.title}</h1>
       <div className="flex flex-wrap gap-2 text-sm text-zinc-400 mb-6">

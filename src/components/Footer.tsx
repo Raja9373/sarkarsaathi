@@ -355,7 +355,9 @@ export const Footer: React.FC<FooterProps> = ({
             { title: 'Opportunities', action: 'opportunities' },
             { title: 'Tenders', action: 'tenders' },
             { title: 'News & Updates', action: 'news' },
-            { title: 'Comparisons', action: 'comparisons' }
+            { title: 'Comparisons', action: 'comparisons' },
+            { title: 'Saved Items', action: 'saved' },
+            { title: 'Recently Viewed', action: 'recently-viewed' }
           ].map(item => (
               <button key={item.title} onClick={() => handleNav(item.action as ActiveTab)} className="hover:text-[#FF6B00] transition text-left">
                 {item.title}

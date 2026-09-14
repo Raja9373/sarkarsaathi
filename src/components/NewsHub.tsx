@@ -17,7 +17,38 @@ export const NewsHub: React.FC = () => {
       setNews(all);
     };
     fetchNews();
+
+    const params = new URLSearchParams(window.location.search);
+    const q = params.get('search');
+    const f = params.get('filter');
+    const p = params.get('page');
+
+    if (q) setSearch(q);
+    if (f) setFilter(f);
+    if (p && !isNaN(Number(p))) setCurrentPage(Math.max(1, Number(p)));
+
+    const handlePopState = () => {
+      const pParams = new URLSearchParams(window.location.search);
+      setSearch(pParams.get('search') || '');
+      setFilter(pParams.get('filter') || 'All');
+      const pageNum = Number(pParams.get('page'));
+      setCurrentPage(!isNaN(pageNum) && pageNum > 0 ? pageNum : 1);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
   }, []);
+
+  useEffect(() => {
+    const params = new URLSearchParams();
+    if (search) params.set('search', search);
+    if (filter && filter !== 'All') params.set('filter', filter);
+    if (currentPage > 1) params.set('page', String(currentPage));
+
+    const newQuery = params.toString() ? `?${params.toString()}` : '';
+    const newUrl = `${window.location.pathname}${newQuery}`;
+    window.history.replaceState({}, '', newUrl);
+  }, [search, filter, currentPage]);
 
   useEffect(() => {
     setCurrentPage(1);

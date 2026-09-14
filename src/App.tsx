@@ -11,6 +11,8 @@ import { ServiceDetailModal } from './components/ServiceDetailModal';
 import { EmergencyModal } from './components/EmergencyModal';
 import { Footer } from './components/Footer';
 import { ComparisonsHub } from './components/ComparisonsHub';
+import { SavedItemsHub } from './components/SavedItemsHub';
+import { RecentlyViewedHub } from './components/RecentlyViewedHub';
 import { InvestmentsHub } from './components/InvestmentsHub';
 import { InvestmentDetail } from './components/InvestmentDetail';
 import { NewsHub } from './components/NewsHub';
@@ -120,6 +122,10 @@ export default function App() {
         }
       } else if (path === '/comparisons') {
         setActiveTab('comparisons');
+      } else if (path === '/saved') {
+        setActiveTab('saved');
+      } else if (path === '/recently-viewed') {
+        setActiveTab('recently-viewed');
       } else if (path === '/official-sources') {
         setActiveTab('official-sources');
       } else if (path === '/investment-schemes') {
@@ -184,9 +190,27 @@ export default function App() {
         {activeTab === 'opportunities' && <OpportunitiesHub />}
         {activeTab === 'opportunities-detail' && selectedOpportunitySlug && <OpportunityDetail slug={selectedOpportunitySlug} />}
         {activeTab === 'investment-schemes' && <InvestmentSchemesHub />}
-        {activeTab === 'official-sources' && <OfficialSourcesHub />}
+        {activeTab === 'official-sources' && <OfficialSourcesHub onNavigate={(tab) => { setActiveTab(tab as ActiveTab); window.history.pushState({}, '', `/${tab}`); window.scrollTo(0, 0); }} />}
         {activeTab === 'investment-scheme-detail' && selectedInvestmentSchemeSlug && <InvestmentSchemeDetail slug={selectedInvestmentSchemeSlug} />}
         {activeTab === 'comparisons' && <ComparisonsHub />}
+        {activeTab === 'saved' && <SavedItemsHub onNavigate={(tab, slug) => {
+          if (tab === 'investment-detail' && slug) setSelectedInvestmentSlug(slug);
+          else if (tab === 'opportunities-detail' && slug) setSelectedOpportunitySlug(slug);
+          else if (tab === 'tenders-detail' && slug) setSelectedTenderSlug(slug);
+          setActiveTab(tab as ActiveTab);
+          const path = slug ? `/${tab === 'investment-detail' ? 'investments' : tab === 'opportunities-detail' ? 'opportunities' : 'tenders'}/${slug}` : `/${tab}`;
+          window.history.pushState({}, '', path);
+          window.scrollTo(0, 0);
+        }} />}
+        {activeTab === 'recently-viewed' && <RecentlyViewedHub onNavigate={(tab, slug) => {
+          if (tab === 'investment-detail' && slug) setSelectedInvestmentSlug(slug);
+          else if (tab === 'opportunities-detail' && slug) setSelectedOpportunitySlug(slug);
+          else if (tab === 'tenders-detail' && slug) setSelectedTenderSlug(slug);
+          setActiveTab(tab as ActiveTab);
+          const path = slug ? `/${tab === 'investment-detail' ? 'investments' : tab === 'opportunities-detail' ? 'opportunities' : 'tenders'}/${slug}` : `/${tab}`;
+          window.history.pushState({}, '', path);
+          window.scrollTo(0, 0);
+        }} />}
         {activeTab === 'legal' && <LegalPages />}
       </main>
 
