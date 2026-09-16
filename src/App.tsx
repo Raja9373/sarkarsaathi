@@ -6,8 +6,22 @@ import { AdminImport } from './components/AdminImport';
 import { investmentRepository, investmentSchemeRepository, opportunityRepository, tenderRepository, newsRepository } from './infrastructure/repositories/InvestmentRepository';
 
 export default function App() {
-  const [currentRoute, setCurrentRoute] = useState('/');
-  const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
+  const getInitialRouteState = () => {
+    if (typeof window === 'undefined') return { route: '/', slug: null };
+    const path = window.location.pathname;
+    const parts = path.split('/').filter(Boolean);
+    if (parts.length === 0) return { route: '/', slug: null };
+    if (parts.length === 1) return { route: `/${parts[0]}`, slug: null };
+    const root = `/${parts[0]}`;
+    if (['/investments', '/investment-schemes', '/opportunities', '/tenders', '/news'].includes(root)) {
+      return { route: root, slug: parts.slice(1).join('/') };
+    }
+    return { route: path, slug: null };
+  };
+
+  const initial = getInitialRouteState();
+  const [currentRoute, setCurrentRoute] = useState(initial.route);
+  const [selectedSlug, setSelectedSlug] = useState<string | null>(initial.slug);
 
   useEffect(() => {
     const handlePopState = () => {
