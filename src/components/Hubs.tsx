@@ -21,7 +21,7 @@ export function HomeView({ onNavigate }: HubProps) {
             Discover Verified Government <span className="text-indigo-400">Opportunities & Schemes</span>
           </h1>
           <p className="text-slate-300 text-base sm:text-lg mb-8 max-w-2xl mx-auto">
-            Explore verified government investment, tender and opportunity information from official sources across India.
+            India's Private Aggregator for Government Schemes & Tenders
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <button onClick={() => onNavigate('/opportunities')} className="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl shadow-lg transition">

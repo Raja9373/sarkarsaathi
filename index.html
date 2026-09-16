@@ -6,6 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SarkarSaathi - Government Schemes, Opportunities & Public Services</title>
     <meta name="description" content="Independent information platform for verified government schemes, startup grants, research fellowships, and public opportunities." />
+    <script>
+      (function() {
+        try {
+          var originalFetch = window.fetch;
+          Object.defineProperty(window, 'fetch', {
+            configurable: true,
+            enumerable: true,
+            get: function() { return originalFetch; },
+            set: function(fn) { originalFetch = fn; }
+          });
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body class="bg-gray-50 text-gray-900 font-sans antialiased">
     <div id="root"></div>

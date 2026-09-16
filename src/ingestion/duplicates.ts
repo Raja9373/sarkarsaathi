@@ -1,6 +1,7 @@
 import { Opportunity, Tender } from '../types';
 
 export class DuplicateDetector {
+  private opportunityProjectIds = new Set<string>();
   private opportunityIds = new Set<string>();
   private opportunitySlugs = new Set<string>();
   private opportunityFingerprints = new Set<string>();
@@ -11,6 +12,7 @@ export class DuplicateDetector {
 
   constructor(existingOpportunities: Opportunity[], existingTenders: Tender[]) {
     for (const opp of existingOpportunities) {
+      if (opp.projectId) this.opportunityProjectIds.add(opp.projectId.trim());
       if (opp.id) this.opportunityIds.add(opp.id);
       if (opp.slug) this.opportunitySlugs.add(opp.slug);
       if (opp.title && opp.sourceUrl) {
@@ -28,6 +30,9 @@ export class DuplicateDetector {
   }
 
   isOpportunityDuplicate(record: Partial<Opportunity>): { isDuplicate: boolean; reason?: string } {
+    if (record.projectId && this.opportunityProjectIds.has(record.projectId.trim())) {
+      return { isDuplicate: true, reason: `Duplicate Opportunity Project ID: ${record.projectId}` };
+    }
     if (record.id && this.opportunityIds.has(record.id)) {
       return { isDuplicate: true, reason: `Duplicate Opportunity ID: ${record.id}` };
     }
@@ -60,6 +65,7 @@ export class DuplicateDetector {
   }
 
   registerOpportunity(record: Opportunity) {
+    if (record.projectId) this.opportunityProjectIds.add(record.projectId.trim());
     if (record.id) this.opportunityIds.add(record.id);
     if (record.slug) this.opportunitySlugs.add(record.slug);
     if (record.title && record.sourceUrl) {

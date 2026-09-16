@@ -26,14 +26,16 @@ export function Navbar({ currentRoute, onNavigate }: NavbarProps) {
   return (
     <header className="bg-white border-b border-slate-200 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        <div className="flex items-center space-x-3 cursor-pointer" onClick={() => onNavigate('/')}>
-          <div className="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-bold text-xl shadow-md">
+        <div className="flex items-center space-x-3 cursor-pointer select-none" onClick={() => onNavigate('/')}>
+          <div className="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white text-xl shadow-xs shrink-0">
             🏛️
           </div>
-          <div>
-            <span className="text-xl font-bold tracking-tight text-indigo-900">SarkarSaathi</span>
-            <span className="hidden sm:inline-block ml-2 px-2 py-0.5 text-xs font-semibold bg-emerald-100 text-emerald-800 rounded-full">
-              Independent Information Platform
+          <div className="flex flex-col justify-center">
+            <span className="text-lg sm:text-xl font-bold tracking-tight text-indigo-950 leading-tight">
+              SarkarSaathi
+            </span>
+            <span className="text-[11px] sm:text-xs text-slate-500 font-medium whitespace-nowrap leading-tight">
+              Independent information platform
             </span>
           </div>
         </div>
@@ -53,9 +55,9 @@ export function Navbar({ currentRoute, onNavigate }: NavbarProps) {
         </nav>
 
         <div className="flex items-center space-x-3">
-          <div className="hidden sm:flex items-center space-x-1 text-xs bg-indigo-50 text-indigo-700 px-3 py-1.5 rounded-lg border border-indigo-100 font-medium">
-            <ShieldCheck className="w-4 h-4 text-indigo-600" />
-            <span>Verified Sources</span>
+          <div className="hidden sm:flex items-center space-x-1.5 text-xs bg-indigo-50 text-indigo-700 px-3 py-1.5 rounded-lg border border-indigo-100 font-medium whitespace-nowrap">
+            <ShieldCheck className="w-4 h-4 text-indigo-600 flex-shrink-0" />
+            <span>Curated from Verified .gov.in Sources</span>
           </div>
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -91,20 +93,29 @@ export function Navbar({ currentRoute, onNavigate }: NavbarProps) {
 export function Footer({ onNavigate }: { onNavigate: (route: string) => void }) {
   return (
     <footer className="bg-slate-900 text-slate-400 py-12 border-t border-slate-800 mt-auto">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
-        <div>
-          <div className="flex items-center justify-center sm:justify-start space-x-3 mb-2">
-            <span className="text-lg font-bold text-white">SarkarSaathi.org</span>
-            <span className="text-xs bg-indigo-900 text-indigo-300 px-2 py-0.5 rounded font-mono">v3.0</span>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
+          <div>
+            <div className="flex items-center justify-center sm:justify-start space-x-3 mb-2">
+              <span className="text-lg font-bold text-white">SarkarSaathi.org</span>
+              <span className="text-xs bg-indigo-900 text-indigo-300 px-2 py-0.5 rounded font-mono">v3.0</span>
+            </div>
+            <p className="text-xs text-slate-400 max-w-md">
+              India's Private Aggregator for Government Schemes & Tenders. Information curated from verified .gov.in sources.
+            </p>
           </div>
-          <p className="text-xs text-slate-400 max-w-md">
-            Explore verified government investment, tender and opportunity information from official sources across India.
-          </p>
+          <div className="flex space-x-6 text-xs">
+            <button onClick={() => onNavigate('/')} className="hover:text-white transition">Privacy Policy</button>
+            <button onClick={() => onNavigate('/')} className="hover:text-white transition">Terms of Service</button>
+            <button onClick={() => onNavigate('/official-sources')} className="hover:text-white transition">Government Sources Directory</button>
+          </div>
         </div>
-        <div className="flex space-x-6 text-xs">
-          <button onClick={() => onNavigate('/')} className="hover:text-white transition">Privacy Policy</button>
-          <button onClick={() => onNavigate('/')} className="hover:text-white transition">Terms of Service</button>
-          <button onClick={() => onNavigate('/')} className="hover:text-white transition">Official Sources</button>
+
+        {/* Legal Compliance Disclaimer */}
+        <div className="pt-6 border-t border-slate-800/80">
+          <p className="text-xs leading-relaxed text-slate-400 text-center sm:text-left">
+            <span className="font-semibold text-slate-300">Disclaimer:</span> SarkarSaathi.org is a private, independent information portal. We are NOT affiliated with any government body. All data is sourced from official .gov.in portals. Please always verify information on the respective official government website before taking any action.
+          </p>
         </div>
       </div>
     </footer>

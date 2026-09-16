@@ -26,6 +26,7 @@ export interface InvestmentScheme extends BaseEntity {
 }
 
 export interface Opportunity extends BaseEntity {
+  projectId?: string;
   deadline: string;
   fundingAmount?: string;
 }

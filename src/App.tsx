@@ -19,9 +19,15 @@ export default function App() {
       } else if (parts.length === 1) {
         setCurrentRoute(`/${parts[0]}`);
         setSelectedSlug(null);
-      } else if (parts.length === 2) {
-        setCurrentRoute(`/${parts[0]}`);
-        setSelectedSlug(parts[1]);
+      } else if (parts.length >= 2) {
+        const root = `/${parts[0]}`;
+        if (['/investments', '/investment-schemes', '/opportunities', '/tenders', '/news'].includes(root)) {
+          setCurrentRoute(root);
+          setSelectedSlug(parts.slice(1).join('/'));
+        } else {
+          setCurrentRoute(path);
+          setSelectedSlug(null);
+        }
       }
     };
 
@@ -31,10 +37,24 @@ export default function App() {
   }, []);
 
   const navigate = (route: string, slug?: string) => {
-    const fullPath = slug ? `${route}/${slug}` : route;
+    let baseRoute = route;
+    let itemSlug = slug || null;
+
+    if (!itemSlug && baseRoute.startsWith('/') && baseRoute !== '/') {
+      const parts = baseRoute.split('/').filter(Boolean);
+      if (parts.length >= 2) {
+        const root = `/${parts[0]}`;
+        if (['/investments', '/investment-schemes', '/opportunities', '/tenders', '/news'].includes(root)) {
+          baseRoute = root;
+          itemSlug = parts.slice(1).join('/');
+        }
+      }
+    }
+
+    const fullPath = itemSlug ? `${baseRoute}/${itemSlug}` : baseRoute;
     window.history.pushState({}, '', fullPath);
-    setCurrentRoute(route);
-    setSelectedSlug(slug || null);
+    setCurrentRoute(baseRoute);
+    setSelectedSlug(itemSlug);
     window.scrollTo(0, 0);
   };
 
