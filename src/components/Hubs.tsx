@@ -1,8 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { Search, ExternalLink, ShieldCheck, ArrowRight, Building2, TrendingUp, Award, FileText, Newspaper, Bookmark, Share2, Lightbulb, Users, Leaf, Megaphone } from 'lucide-react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { Search, ExternalLink, ShieldCheck, ArrowRight, Building2, TrendingUp, Award, FileText, Newspaper, Bookmark, Share2, Lightbulb, Users, Leaf, Megaphone, ChevronLeft, ChevronRight, Filter, X, ArrowUpDown, RotateCcw } from 'lucide-react';
 import { investmentRepository, investmentSchemeRepository, opportunityRepository, tenderRepository, newsRepository } from '../infrastructure/repositories/InvestmentRepository';
 import { useSavedItems, useRecentlyViewed, ShareButton } from './SavedAndRecent';
 import { HeroIndiaGateVisual } from './HeroIndiaGateVisual';
+import { CatalogQueryOptions, PaginatedResult } from '../ingestion/types';
+import { CatalogQueryManager } from '../ingestion/catalogManager';
+import { MasterDetailView } from './detail/MasterDetailView';
+
+export { MasterDetailView };
+export const DetailView = MasterDetailView;
 
 interface HubProps {
   onNavigate: (route: string, slug?: string) => void;
@@ -266,163 +272,466 @@ export function HomeView({ onNavigate }: HubProps) {
   );
 }
 
-export function GenericHubView({ title, type, items, onNavigate }: { title: string; type: string; items: any[]; onNavigate: (route: string, slug?: string) => void }) {
+export function GenericHubView({
+  title,
+  type,
+  items,
+  repository,
+  onNavigate
+}: {
+  title: string;
+  type: string;
+  items: any[];
+  repository?: any;
+  onNavigate: (route: string, slug?: string) => void;
+}) {
   const [search, setSearch] = useState('');
+  const [stateFilter, setStateFilter] = useState('ALL');
+  const [sectorFilter, setSectorFilter] = useState('ALL');
+  const [typeFilter, setTypeFilter] = useState('ALL');
+  const [statusFilter, setStatusFilter] = useState('ALL');
+  const [sourceFilter, setSourceFilter] = useState('ALL');
+  const [sortBy, setSortBy] = useState<'default' | 'date' | 'title' | 'value'>('default');
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(20);
+  const [showFilters, setShowFilters] = useState(false);
 
-  const filtered = items.filter(i => i.title.toLowerCase().includes(search.toLowerCase()) || i.description.toLowerCase().includes(search.toLowerCase()));
+  // Facet options extraction (from repository if available, or extracted from items)
+  const facets = useMemo(() => {
+    if (repository && typeof repository.getFacets === 'function') {
+      return repository.getFacets();
+    }
+    const states = new Set<string>();
+    const sectors = new Set<string>();
+    const types = new Set<string>();
+    const statuses = new Set<string>();
+    const sources = new Set<string>();
+    const categories = new Set<string>();
+
+    for (const item of items) {
+      if (item.state) states.add(item.state);
+      else if (item.location && !item.location.includes('/')) states.add(item.location);
+      if (item.sector) sectors.add(item.sector);
+      if (item.category) categories.add(item.category);
+      if (item.opportunityType) types.add(item.opportunityType);
+      if (item.tenderType) types.add(item.tenderType);
+      if (item.status) statuses.add(item.status);
+      if (item.sourceAuthority) sources.add(item.sourceAuthority);
+      else if (item.authority) sources.add(item.authority);
+    }
+    return {
+      states: Array.from(states).sort(),
+      sectors: Array.from(sectors).sort(),
+      types: Array.from(types).sort(),
+      statuses: Array.from(statuses).sort(),
+      sources: Array.from(sources).sort(),
+      categories: Array.from(categories).sort()
+    };
+  }, [items, repository]);
+
+  const queryOptions: CatalogQueryOptions = useMemo(() => ({
+    page: currentPage,
+    limit: pageSize,
+    search: search.trim() || undefined,
+    state: stateFilter !== 'ALL' ? stateFilter : undefined,
+    sector: sectorFilter !== 'ALL' ? sectorFilter : undefined,
+    type: typeFilter !== 'ALL' ? typeFilter : undefined,
+    status: statusFilter !== 'ALL' ? statusFilter : undefined,
+    source: sourceFilter !== 'ALL' ? sourceFilter : undefined,
+    sortBy: sortBy !== 'default' ? sortBy : undefined,
+    sortOrder
+  }), [currentPage, pageSize, search, stateFilter, sectorFilter, typeFilter, statusFilter, sourceFilter, sortBy, sortOrder]);
+
+  const paginatedResult: PaginatedResult<any> = useMemo(() => {
+    if (repository && typeof repository.getPaginated === 'function') {
+      return repository.getPaginated(queryOptions);
+    }
+    if (type === 'opportunities') {
+      return CatalogQueryManager.paginateOpportunities(items, queryOptions);
+    }
+    if (type === 'tenders') {
+      return CatalogQueryManager.paginateTenders(items, queryOptions);
+    }
+    return CatalogQueryManager.paginateOpportunities(items, queryOptions);
+  }, [repository, type, items, queryOptions]);
+
+  const handleSearchChange = (val: string) => {
+    setSearch(val);
+    setCurrentPage(1);
+  };
+
+  const handleStateChange = (val: string) => {
+    setStateFilter(val);
+    setCurrentPage(1);
+  };
+
+  const handleSectorChange = (val: string) => {
+    setSectorFilter(val);
+    setCurrentPage(1);
+  };
+
+  const handleTypeChange = (val: string) => {
+    setTypeFilter(val);
+    setCurrentPage(1);
+  };
+
+  const handleStatusChange = (val: string) => {
+    setStatusFilter(val);
+    setCurrentPage(1);
+  };
+
+  const handleSourceChange = (val: string) => {
+    setSourceFilter(val);
+    setCurrentPage(1);
+  };
+
+  const handleSortChange = (newSort: 'default' | 'date' | 'title' | 'value') => {
+    setSortBy(newSort);
+    if (newSort === 'title') {
+      setSortOrder('asc');
+    } else {
+      setSortOrder('desc');
+    }
+    setCurrentPage(1);
+  };
+
+  const resetAllFilters = () => {
+    setSearch('');
+    setStateFilter('ALL');
+    setSectorFilter('ALL');
+    setTypeFilter('ALL');
+    setStatusFilter('ALL');
+    setSourceFilter('ALL');
+    setSortBy('default');
+    setSortOrder('desc');
+    setCurrentPage(1);
+  };
+
+  const activeFilterCount = (stateFilter !== 'ALL' ? 1 : 0) +
+    (sectorFilter !== 'ALL' ? 1 : 0) +
+    (typeFilter !== 'ALL' ? 1 : 0) +
+    (statusFilter !== 'ALL' ? 1 : 0) +
+    (sourceFilter !== 'ALL' ? 1 : 0) +
+    (sortBy !== 'default' ? 1 : 0);
+
+  const startRecord = paginatedResult.total > 0 ? (currentPage - 1) * pageSize + 1 : 0;
+  const endRecord = Math.min(currentPage * pageSize, paginatedResult.total);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <div className="mb-8">
-        <h1 className="text-3xl font-extrabold text-slate-900 mb-2">{title}</h1>
-        <p className="text-slate-600 text-sm">Verified government records from official .gov.in sources.</p>
+      <div className="mb-6 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+        <div>
+          <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight mb-2">{title}</h1>
+          <p className="text-slate-600 text-sm">
+            High-performance paginated catalogue with official verified records from .gov.in sources.
+          </p>
+        </div>
+        <div className="text-xs font-semibold px-3.5 py-1.5 bg-slate-100 border border-slate-200 text-slate-700 rounded-full w-fit">
+          Total Catalogue: {paginatedResult.total.toLocaleString('en-IN')} records
+        </div>
       </div>
 
-      <div className="mb-6">
-        <input
-          type="text"
-          placeholder={`Search ${title.toLowerCase()}...`}
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="w-full sm:max-w-md px-4 py-3 bg-white border border-slate-300 rounded-xl shadow-xs text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
-        />
-      </div>
+      {/* Search & Filter Bar */}
+      <div className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 shadow-xs mb-8">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mb-4">
+          <div className="relative flex-1">
+            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
+            <input
+              type="text"
+              placeholder={`Search ${title.toLowerCase()} by title, sector, authority, location...`}
+              value={search}
+              onChange={(e) => handleSearchChange(e.target.value)}
+              className="w-full pl-10 pr-10 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition"
+            />
+            {search && (
+              <button
+                onClick={() => handleSearchChange('')}
+                className="absolute right-3 top-3 text-slate-400 hover:text-slate-600"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            )}
+          </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {filtered.map((item) => (
-          <div key={item.id} className="bg-white rounded-2xl border border-slate-200 p-6 flex flex-col justify-between shadow-xs hover:shadow-md transition">
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setShowFilters(!showFilters)}
+              className={`px-4 py-2.5 rounded-xl border text-xs font-semibold flex items-center gap-2 transition ${
+                showFilters || activeFilterCount > 0
+                  ? 'bg-indigo-50 border-indigo-200 text-indigo-700'
+                  : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
+              }`}
+            >
+              <Filter className="w-3.5 h-3.5" />
+              <span>Filters</span>
+              {activeFilterCount > 0 && (
+                <span className="w-4 h-4 rounded-full bg-indigo-600 text-white text-[10px] flex items-center justify-center font-bold">
+                  {activeFilterCount}
+                </span>
+              )}
+            </button>
+
+            {activeFilterCount > 0 && (
+              <button
+                onClick={resetAllFilters}
+                className="px-3 py-2.5 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 text-xs font-semibold flex items-center gap-1.5 transition"
+                title="Reset filters"
+              >
+                <RotateCcw className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">Reset</span>
+              </button>
+            )}
+          </div>
+        </div>
+
+        {/* Expandable Filter & Sort Controls */}
+        {showFilters && (
+          <div className="pt-4 border-t border-slate-100 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
+            {/* State Filter */}
             <div>
-              <div className="flex items-center justify-between mb-3">
-                <span className="px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700">{item.category}</span>
-                <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full">{item.status}</span>
-              </div>
-              <h3 className="text-lg font-bold text-slate-900 mb-2">{item.title}</h3>
-              <p className="text-slate-600 text-sm mb-4 line-clamp-3">{item.description}</p>
+              <label className="block text-slate-500 font-semibold mb-1">State / Region</label>
+              <select
+                value={stateFilter}
+                onChange={(e) => handleStateChange(e.target.value)}
+                className="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-indigo-500 font-medium text-slate-800"
+              >
+                <option value="ALL">All States / Central</option>
+                {facets.states.map((st: string) => (
+                  <option key={st} value={st}>{st}</option>
+                ))}
+              </select>
             </div>
+
+            {/* Sector Filter */}
             <div>
-              <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 mb-4">
-                <span className="font-medium text-slate-700">{item.authority}</span>
-                <span className="bg-slate-100 px-2 py-0.5 rounded">{item.sourceAuthority}</span>
-              </div>
-              <div className="flex items-center justify-between gap-3">
-                <button
-                  onClick={() => onNavigate(`/${type}/${item.slug}`)}
-                  className="flex-1 py-2 px-4 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-xl text-xs font-semibold transition"
-                >
-                  View Details
-                </button>
-                <a
-                  href={item.sourceUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-semibold transition flex items-center space-x-1"
-                >
-                  <span>Official Source</span>
-                  <ExternalLink className="w-3.5 h-3.5" />
-                </a>
-              </div>
+              <label className="block text-slate-500 font-semibold mb-1">Sector / Category</label>
+              <select
+                value={sectorFilter}
+                onChange={(e) => handleSectorChange(e.target.value)}
+                className="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-indigo-500 font-medium text-slate-800"
+              >
+                <option value="ALL">All Sectors</option>
+                {facets.sectors.map((sec: string) => (
+                  <option key={sec} value={sec}>{sec}</option>
+                ))}
+              </select>
+            </div>
+
+            {/* Status Filter */}
+            <div>
+              <label className="block text-slate-500 font-semibold mb-1">Status</label>
+              <select
+                value={statusFilter}
+                onChange={(e) => handleStatusChange(e.target.value)}
+                className="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-indigo-500 font-medium text-slate-800"
+              >
+                <option value="ALL">All Statuses</option>
+                {facets.statuses.map((st: string) => (
+                  <option key={st} value={st}>{st}</option>
+                ))}
+              </select>
+            </div>
+
+            {/* Sort Control */}
+            <div>
+              <label className="block text-slate-500 font-semibold mb-1">Sort By</label>
+              <select
+                value={sortBy}
+                onChange={(e) => handleSortChange(e.target.value as any)}
+                className="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-indigo-500 font-medium text-slate-800"
+              >
+                <option value="default">Default Catalogue Order</option>
+                <option value="date">Date / Deadline (Soonest first)</option>
+                <option value="value">Financial Value (Highest first)</option>
+                <option value="title">Title (Alphabetical A–Z)</option>
+              </select>
             </div>
           </div>
-        ))}
-      </div>
-    </div>
-  );
-}
+        )}
 
-export function DetailView({ item, type, onBack }: { item: any; type: string; onBack: () => void }) {
-  const { savedIds, toggleSave } = useSavedItems();
-  const { addRecent } = useRecentlyViewed();
-
-  useEffect(() => {
-    if (item?.id) {
-      addRecent(item.id);
-    }
-  }, [item?.id]);
-
-  if (!item) {
-    return (
-      <div className="max-w-4xl mx-auto px-4 py-20 text-center">
-        <h2 className="text-2xl font-bold text-slate-900 mb-4">Item Not Found</h2>
-        <button onClick={onBack} className="px-5 py-2.5 bg-indigo-600 text-white rounded-xl text-sm font-semibold">Back to List</button>
-      </div>
-    );
-  }
-
-  const isSaved = savedIds.includes(item.id);
-
-  return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <div className="flex items-center justify-between mb-6">
-        <button onClick={onBack} className="text-sm font-semibold text-indigo-600 hover:text-indigo-800 flex items-center space-x-1">
-          <span>← Back to {type}</span>
-        </button>
-        <div className="flex items-center space-x-3">
-          <button
-            onClick={() => toggleSave(item.id)}
-            className={`px-3 py-2 rounded-xl text-xs font-semibold transition flex items-center space-x-1.5 ${
-              isSaved ? 'bg-indigo-600 text-white' : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
-            }`}
-          >
-            <Bookmark className={`w-3.5 h-3.5 ${isSaved ? 'fill-current' : ''}`} />
-            <span>{isSaved ? 'Saved' : 'Save Item'}</span>
-          </button>
-          <ShareButton title={item.title} />
-        </div>
-      </div>
-
-      <div className="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm">
-        <div className="flex items-center space-x-2 mb-4">
-          <span className="px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700">{item.category}</span>
-          <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full">{item.status}</span>
-        </div>
-
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-4">{item.title}</h1>
-
-        <div className="text-sm font-medium text-indigo-900 bg-indigo-50/70 p-3 rounded-xl mb-6 border border-indigo-100 flex items-center space-x-2">
-          <Building2 className="w-4 h-4 text-indigo-600 shrink-0" />
-          <span>Authority: {item.authority}</span>
-        </div>
-
-        <div className="space-y-6 mb-8 text-slate-700 text-sm leading-relaxed">
+        {/* Active Results Summary and Page Sizing */}
+        <div className="pt-3 mt-3 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-2">
           <div>
-            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Description</h3>
-            <p>{item.description}</p>
+            Showing <span className="font-bold text-slate-800">{startRecord}</span> to{' '}
+            <span className="font-bold text-slate-800">{endRecord}</span> of{' '}
+            <span className="font-bold text-slate-800">{paginatedResult.total.toLocaleString('en-IN')}</span> verified records
           </div>
-
-          {item.minInvestment && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-slate-50 p-4 rounded-xl border border-slate-100">
-              <div>
-                <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-1">Minimum Investment</span>
-                <span className="text-slate-900 font-semibold">₹{item.minInvestment}</span>
-              </div>
-              <div>
-                <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-1">Expected Return</span>
-                <span className="text-slate-900 font-semibold">{item.expectedReturn}</span>
-              </div>
-            </div>
-          )}
-
-          {item.deadline && (
-            <div className="bg-amber-50 p-4 rounded-xl border border-amber-100 text-amber-900">
-              <span className="text-xs font-bold uppercase tracking-wider block mb-1">Application Deadline</span>
-              <span className="font-bold text-base">{item.deadline}</span>
-            </div>
-          )}
-        </div>
-
-        <div className="flex items-center justify-between pt-6 border-t border-slate-100">
-          <span className="text-xs text-slate-500">Source: <strong className="text-slate-700">{item.sourceAuthority}</strong></span>
-          <a
-            href={item.sourceUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-semibold transition flex items-center space-x-2 shadow-sm"
-          >
-            <span>Visit Official Source</span>
-            <ExternalLink className="w-4 h-4" />
-          </a>
+          <div className="flex items-center gap-2">
+            <span>Per page:</span>
+            {[10, 20, 50].map((size) => (
+              <button
+                key={size}
+                onClick={() => { setPageSize(size); setCurrentPage(1); }}
+                className={`px-2 py-1 rounded text-xs font-semibold ${
+                  pageSize === size
+                    ? 'bg-indigo-600 text-white'
+                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                }`}
+              >
+                {size}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
+
+      {/* Catalogue Cards Grid - Renders ONLY paginated items */}
+      {paginatedResult.items.length === 0 ? (
+        <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center">
+          <p className="text-slate-500 text-base font-medium mb-3">No matching records found.</p>
+          <button
+            onClick={resetAllFilters}
+            className="px-4 py-2 bg-indigo-50 text-indigo-700 font-semibold text-xs rounded-xl hover:bg-indigo-100 transition"
+          >
+            Clear all filters
+          </button>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          {paginatedResult.items.map((item) => (
+            <div
+              key={item.id}
+              className="bg-white rounded-2xl border border-slate-200 p-6 flex flex-col justify-between shadow-xs hover:shadow-md transition"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-3 gap-2">
+                  <span className="px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 truncate max-w-[200px]">
+                    {item.category || item.sector || 'Government'}
+                  </span>
+                  <div className="flex items-center gap-2">
+                    {item.state && (
+                      <span className="px-2 py-0.5 rounded text-[11px] font-medium bg-slate-100 text-slate-700">
+                        {item.state}
+                      </span>
+                    )}
+                    <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full">
+                      {item.status || 'VERIFIED'}
+                    </span>
+                  </div>
+                </div>
+
+                <h3 className="text-lg font-bold text-slate-900 mb-2">{item.title}</h3>
+                <p className="text-slate-600 text-sm mb-4 line-clamp-3">{item.description}</p>
+
+                {/* Additional Key Metrics if available */}
+                {(item.fundingAmount || item.tenderValue || item.totalProjectCost || item.deadline || item.submissionDeadline) && (
+                  <div className="mb-4 p-3 bg-slate-50 rounded-xl border border-slate-100 grid grid-cols-2 gap-2 text-xs">
+                    {(item.fundingAmount || item.tenderValue || item.totalProjectCost) && (
+                      <div>
+                        <span className="text-slate-400 block text-[10px] uppercase font-bold">Value / Budget</span>
+                        <span className="font-bold text-slate-800">
+                          {item.fundingAmount || item.tenderValue || item.totalProjectCost}
+                        </span>
+                      </div>
+                    )}
+                    {(item.deadline || item.submissionDeadline) && (
+                      <div>
+                        <span className="text-slate-400 block text-[10px] uppercase font-bold">Deadline</span>
+                        <span className="font-semibold text-slate-700">
+                          {item.deadline || item.submissionDeadline}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              <div>
+                <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 mb-4">
+                  <span className="font-medium text-slate-700 truncate max-w-[220px]">{item.authority}</span>
+                  <span className="bg-slate-100 px-2 py-0.5 rounded text-[11px]">{item.sourceAuthority}</span>
+                </div>
+                <div className="flex items-center justify-between gap-3">
+                  <button
+                    onClick={() => onNavigate(`/${type}/${item.slug}`)}
+                    className="flex-1 py-2 px-4 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-xl text-xs font-semibold transition"
+                  >
+                    View Details
+                  </button>
+                  <a
+                    href={item.sourceUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-semibold transition flex items-center space-x-1"
+                  >
+                    <span>Official Source</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Pagination Controls */}
+      {paginatedResult.totalPages > 1 && (
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 py-4 px-6 bg-white border border-slate-200 rounded-2xl shadow-xs">
+          <div className="text-xs text-slate-600">
+            Page <span className="font-bold text-slate-900">{currentPage}</span> of{' '}
+            <span className="font-bold text-slate-900">{paginatedResult.totalPages}</span>
+          </div>
+
+          <div className="flex items-center space-x-1.5">
+            <button
+              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+              disabled={currentPage <= 1}
+              className={`p-2 rounded-lg border text-xs font-semibold flex items-center transition ${
+                currentPage <= 1
+                  ? 'border-slate-200 text-slate-300 cursor-not-allowed'
+                  : 'border-slate-200 text-slate-700 hover:bg-slate-50'
+              }`}
+              title="Previous Page"
+            >
+              <ChevronLeft className="w-4 h-4 mr-1" />
+              <span>Prev</span>
+            </button>
+
+            {/* Quick Page Jump Buttons */}
+            {Array.from({ length: paginatedResult.totalPages }, (_, i) => i + 1)
+              .filter(
+                (p) =>
+                  p === 1 ||
+                  p === paginatedResult.totalPages ||
+                  Math.abs(p - currentPage) <= 1
+              )
+              .map((p, idx, arr) => {
+                const prev = arr[idx - 1];
+                const showEllipsis = prev && p - prev > 1;
+                return (
+                  <React.Fragment key={p}>
+                    {showEllipsis && <span className="px-1 text-slate-400 text-xs">...</span>}
+                    <button
+                      onClick={() => setCurrentPage(p)}
+                      className={`min-w-[32px] h-8 rounded-lg text-xs font-bold transition ${
+                        currentPage === p
+                          ? 'bg-indigo-600 text-white shadow-xs'
+                          : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50'
+                      }`}
+                    >
+                      {p}
+                    </button>
+                  </React.Fragment>
+                );
+              })}
+
+            <button
+              onClick={() => setCurrentPage((p) => Math.min(paginatedResult.totalPages, p + 1))}
+              disabled={currentPage >= paginatedResult.totalPages}
+              className={`p-2 rounded-lg border text-xs font-semibold flex items-center transition ${
+                currentPage >= paginatedResult.totalPages
+                  ? 'border-slate-200 text-slate-300 cursor-not-allowed'
+                  : 'border-slate-200 text-slate-700 hover:bg-slate-50'
+              }`}
+              title="Next Page"
+            >
+              <span>Next</span>
+              <ChevronRight className="w-4 h-4 ml-1" />
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

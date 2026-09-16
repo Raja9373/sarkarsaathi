@@ -1,10 +1,16 @@
 import { Investment, InvestmentScheme, Opportunity, Tender, NewsItem } from '../../types';
+import { IndexedCatalogStore, CatalogFacets } from './IndexedCatalogStore';
+import { CatalogQueryOptions, PaginatedResult } from '../../ingestion/types';
 
 export interface Repository<T> {
   getAll(): T[];
   getById(id: string): T | undefined;
   getBySlug(slug: string): T | undefined;
   search(query: string, category?: string): T[];
+  add?(item: T): boolean;
+  getPaginated?(options: CatalogQueryOptions): PaginatedResult<T>;
+  getFacets?(): CatalogFacets;
+  getTotalCount?(): number;
 }
 
 export class InvestmentRepository implements Repository<Investment> {
@@ -21,9 +27,74 @@ export class InvestmentRepository implements Repository<Investment> {
       sourceAuthority: 'Ministry of Finance',
       verificationStatus: 'VERIFIED',
       minInvestment: 500,
-      expectedReturn: 'Government Notified Rate (Compound Annual)',
-      lockInPeriod: '15 Years',
-      riskLevel: 'Low'
+      maxInvestment: 150000,
+      expectedReturn: '7.1% p.a. (Compounded Annually, Notified by MoF)',
+      notifiedRate: '7.1% per annum',
+      rateEffectivePeriod: 'Current Notified Quarter',
+      tenure: '15 Years',
+      lockInPeriod: '15 Years (Partial withdrawals from 7th financial year)',
+      riskLevel: 'Low',
+      returnMechanism: 'Interest calculated monthly on the lowest balance between the close of the 5th day and the end of the month, compounded and credited annually on 31st March.',
+      depositRules: 'Minimum ₹500, Maximum ₹1,50,000 per financial year. Deposits can be made in lump sum or in installments throughout the financial year.',
+      maturityRules: 'Account matures on completion of 15 full financial years from the end of the financial year in which the account was opened.',
+      extensionRules: 'Can be extended in continuous blocks of 5 years indefinitely with or without further contributions.',
+      withdrawalRules: 'One partial withdrawal permitted per financial year from the 7th financial year onward (up to 50% of the balance at the end of the 4th preceding year or end of preceding year, whichever is lower).',
+      prematureClosureRules: 'Permitted after 5 full financial years for specific grounds: treatment of life-threatening disease of account holder or dependents, higher education of account holder/dependents, or change of residency status (subject to 1% interest rate penalty deduction).',
+      loanFacilityRules: 'Available from 3rd financial year up to 6th financial year (up to 25% of balance at credit at the end of the 2nd preceding financial year). Repayable in 36 months at 1% interest above PPF rate.',
+      taxTreatment: 'Exempt-Exempt-Exempt (EEE) Category: Deduction up to ₹1,50,000 under Section 80C, annual accrued interest is completely tax-free, and full maturity proceeds are tax-exempt under the Income Tax Act, 1961.',
+      nominationRules: 'Nomination facility available at time of account opening or subsequently. Multiple nominees with defined percentage shares can be designated.',
+      accountOpeningProcess: [
+        'Select an authorized Post Office or designated Public/Private Sector Bank branch (e.g. SBI, PNB, BoB, HDFC, ICICI).',
+        'Submit Form-1 (Application for opening Public Provident Fund Account).',
+        'Provide KYC verification documents (Aadhaar Card, PAN Card, passport photographs, address proof).',
+        'Deposit opening subscription (minimum ₹500 by cash, cheque, or net banking transfer).',
+        'Receive PPF Passbook and online banking linking for direct digital contributions.'
+      ],
+      whereToInvest: 'Authorized Post Offices, State Bank of India, and all designated nationalized and participating commercial banks (via physical branches or internet/mobile banking portals).',
+      requiredDocuments: [
+        'Form-1 (PPF Account Opening Application Form)',
+        'Identity Proof (Aadhaar Card / Passport / Voter ID / Driving License)',
+        'Address Proof (Aadhaar / Utility Bill / Bank Statement)',
+        'Permanent Account Number (PAN) Card or Form 60',
+        'Two recent passport-sized photographs'
+      ],
+      importantRules: [
+        'Only one PPF account can be opened in an individual\'s name across all Indian post offices and banks (excluding minor accounts opened as guardian).',
+        'Joint accounts are not permissible under Government Savings Promotion Rules.',
+        'Non-Resident Indians (NRIs) cannot open new PPF accounts. Existing accounts opened before attaining NRI status remain valid till maturity but cannot be extended.',
+        'PPF balances cannot be attached by any court of law in respect of any debt or liability under the Government Savings Banks Act.'
+      ],
+      risksAndLimitations: [
+        '15-year statutory lock-in period with restricted conditional liquidity.',
+        'Maximum annual contribution capped strictly at ₹1.5 Lakh per financial year across all accounts in the individual\'s name.',
+        'Interest rate is variable and reviewed quarterly by the Ministry of Finance rather than locked permanently for the entire 15-year horizon.'
+      ],
+      faqs: [
+        {
+          question: 'What is the minimum and maximum amount I can deposit each year in PPF?',
+          answer: 'The minimum annual deposit required to keep the account active is ₹500, while the maximum allowable deposit is ₹1,50,000 per financial year.'
+        },
+        {
+          question: 'Why is PPF classified under the EEE tax status?',
+          answer: 'EEE stands for Exempt-Exempt-Exempt: your initial deposit is tax-deductible under Section 80C, the interest accrued each year is tax-free, and the entire final maturity amount is completely exempt from income tax.'
+        },
+        {
+          question: 'When is interest calculated in a PPF account each month?',
+          answer: 'Interest is calculated on the lowest balance maintained between the close of the 5th day and the end of the calendar month. Depositing on or before the 5th of each month maximizes your interest earnings.'
+        },
+        {
+          question: 'Can I extend my PPF account after the 15-year tenure completes?',
+          answer: 'Yes, after 15 years, you can extend the account in blocks of 5 years indefinitely. You can choose to extend with fresh contributions or continue without further deposits while earning interest.'
+        },
+        {
+          question: 'Is my PPF balance protected from court attachments and creditors?',
+          answer: 'Yes, PPF accounts enjoy statutory protection under the Government Savings Banks Act and cannot be attached by any court decree for unpaid debts or liabilities.'
+        }
+      ],
+      comparisonSlugs: ['national-savings-certificate', 'sukanya-samriddhi-account'],
+      calculatorType: 'ppf',
+      completenessLevel: 'COMPLETE',
+      lastVerifiedDate: '2026-03-16'
     },
     {
       id: 'inv-nsc',
@@ -2361,12 +2432,34 @@ export class OpportunityRepository implements Repository<Opportunity> {
     }
   ];
 
+  private store: IndexedCatalogStore<Opportunity>;
+
+  constructor() {
+    this.store = new IndexedCatalogStore<Opportunity>(this.items);
+  }
+
   getAll(): Opportunity[] { return this.items; }
-  getById(id: string): Opportunity | undefined { return this.items.find(i => i.id === id); }
-  getBySlug(slug: string): Opportunity | undefined { return this.items.find(i => i.slug === slug); }
+  getById(id: string): Opportunity | undefined { return this.store.getById(id) || this.items.find(i => i.id === id); }
+  getBySlug(slug: string): Opportunity | undefined { return this.store.getBySlug(slug) || this.items.find(i => i.slug === slug); }
   search(query: string, category?: string): Opportunity[] {
-    const q = query.toLowerCase();
-    return this.items.filter(i => (i.title.toLowerCase().includes(q) || i.description.toLowerCase().includes(q)) && (!category || category === 'ALL' || i.category === category));
+    return this.store.search(query, category);
+  }
+  getPaginated(options: CatalogQueryOptions): PaginatedResult<Opportunity> {
+    return this.store.getPaginated(options);
+  }
+  getFacets(): CatalogFacets {
+    return this.store.getFacets();
+  }
+  getTotalCount(): number {
+    return this.store.getTotalCount();
+  }
+  add(item: Opportunity): boolean {
+    if (!this.items.some(i => i.id === item.id || (item.projectId && i.projectId === item.projectId))) {
+      this.items.push(item);
+      this.store.add(item);
+      return true;
+    }
+    return false;
   }
 }
 
@@ -2824,12 +2917,34 @@ export class TenderRepository implements Repository<Tender> {
     }
   ];
 
+  private store: IndexedCatalogStore<Tender>;
+
+  constructor() {
+    this.store = new IndexedCatalogStore<Tender>(this.items);
+  }
+
   getAll(): Tender[] { return this.items; }
-  getById(id: string): Tender | undefined { return this.items.find(i => i.id === id); }
-  getBySlug(slug: string): Tender | undefined { return this.items.find(i => i.slug === slug); }
+  getById(id: string): Tender | undefined { return this.store.getById(id) || this.items.find(i => i.id === id); }
+  getBySlug(slug: string): Tender | undefined { return this.store.getBySlug(slug) || this.items.find(i => i.slug === slug); }
   search(query: string, category?: string): Tender[] {
-    const q = query.toLowerCase();
-    return this.items.filter(i => (i.title.toLowerCase().includes(q) || i.description.toLowerCase().includes(q)) && (!category || category === 'ALL' || i.category === category));
+    return this.store.search(query, category);
+  }
+  getPaginated(options: CatalogQueryOptions): PaginatedResult<Tender> {
+    return this.store.getPaginated(options);
+  }
+  getFacets(): CatalogFacets {
+    return this.store.getFacets();
+  }
+  getTotalCount(): number {
+    return this.store.getTotalCount();
+  }
+  add(item: Tender): boolean {
+    if (!this.items.some(i => i.id === item.id)) {
+      this.items.push(item);
+      this.store.add(item);
+      return true;
+    }
+    return false;
   }
 }
 

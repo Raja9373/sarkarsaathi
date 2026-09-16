@@ -4,6 +4,22 @@ export type OpportunityLifecycleStatus = 'ACTIVE' | 'UPCOMING' | 'CLOSED' | 'EXP
 export type TenderLifecycleStatus = 'ACTIVE' | 'UPCOMING' | 'CLOSED' | 'CANCELLED' | 'EXTENDED' | 'NEEDS_REVIEW';
 export type VerificationState = 'VERIFIED' | 'PENDING' | 'REJECTED' | 'NEEDS_REVIEW';
 
+export type SourceAccessType = 'API' | 'DOWNLOAD' | 'MANUAL_EXPORT' | 'ADMIN_UPLOAD' | 'UNKNOWN';
+export type SourceVerificationStatus = 'VERIFIED' | 'UNVERIFIED' | 'NOT_AVAILABLE';
+export type SourceCatalogueType = 'OPPORTUNITIES' | 'TENDERS' | 'BOTH';
+
+export interface VerifiedSource {
+  sourceId: string;
+  sourceName: string;
+  authority: string;
+  catalogueType: SourceCatalogueType;
+  officialUrl: string;
+  accessType: SourceAccessType;
+  verificationStatus: SourceVerificationStatus;
+  notes: string;
+  lastVerified: string;
+}
+
 export interface IngestionProvenance {
   sourceSystem: string;
   importedAt: string;
@@ -11,23 +27,77 @@ export interface IngestionProvenance {
   rawRecordHash: string;
   verifiedBy?: string;
   confidenceScore: number; // 0 to 1
+  sourceId?: string;
+  sourceName?: string;
+  authority?: string;
+  officialUrl?: string;
+  accessType?: SourceAccessType;
+  verificationStatus?: SourceVerificationStatus;
 }
+
+export type ReviewStatus = 'PENDING_REVIEW' | 'APPROVED' | 'REJECTED';
 
 export interface StagedOpportunity extends Opportunity {
   lifecycleStatus: OpportunityLifecycleStatus;
   provenance: IngestionProvenance;
   validationErrors?: string[];
+  reviewStatus?: ReviewStatus;
+  rejectionReason?: string;
+  reviewedAt?: string;
+  isDuplicate?: boolean;
+  duplicateReason?: string;
 }
 
 export interface StagedTender extends Tender {
   lifecycleStatus: TenderLifecycleStatus;
   provenance: IngestionProvenance;
   validationErrors?: string[];
+  reviewStatus?: ReviewStatus;
+  rejectionReason?: string;
+  reviewedAt?: string;
+  isDuplicate?: boolean;
+  duplicateReason?: string;
+}
+
+export interface ImportErrorDetail {
+  index: number;
+  field?: string;
+  reason?: string;
+  message: string;
+  title?: string;
+  referenceId?: string;
+}
+
+export interface PreImportSummary {
+  totalInput: number;
+  validRecords: number;
+  invalidRecords: number;
+  duplicateRecords: number;
+  newRecords: number;
+  requiringReview: number;
+  errors: ImportErrorDetail[];
+}
+
+export interface ImportJobHistory {
+  id: string;
+  timestamp: string;
+  targetCatalogue: 'Opportunities' | 'Tenders';
+  sourceId?: string;
+  sourceName: string;
+  sourceUrl?: string;
+  accessType?: SourceAccessType;
+  inputCount: number;
+  validCount: number;
+  duplicateCount: number;
+  stagedCount: number;
+  publishedCount: number;
+  status: 'STAGED' | 'PUBLISHED' | 'PARTIAL' | 'FAILED';
 }
 
 export interface BatchImportRequest<T> {
   batchId: string;
   sourceSystem: string;
+  sourceId?: string;
   records: T[];
   autoApproveVerified?: boolean;
 }
@@ -39,7 +109,7 @@ export interface BatchImportResult {
   autoApproved: number;
   duplicatesDetected: number;
   validationFailed: number;
-  errors: Array<{ index: number; message: string; title?: string }>;
+  errors: ImportErrorDetail[];
 }
 
 export interface CatalogQueryOptions {
@@ -50,7 +120,12 @@ export interface CatalogQueryOptions {
   lifecycleStatus?: string;
   verificationStatus?: string;
   authority?: string;
-  sortBy?: 'title' | 'date' | 'value';
+  state?: string;
+  sector?: string;
+  type?: string;
+  status?: string;
+  source?: string;
+  sortBy?: 'title' | 'date' | 'value' | 'cost' | 'id';
   sortOrder?: 'asc' | 'desc';
 }
 
@@ -61,3 +136,43 @@ export interface PaginatedResult<T> {
   limit: number;
   totalPages: number;
 }
+
+export type QueueJobStatus = 'QUEUED' | 'PROCESSING' | 'COMPLETED' | 'FAILED' | 'CANCELLED';
+
+export interface QueueJobItem {
+  id: string; // Unique job ID (e.g. JOB-...)
+  file: File;
+  fileName: string;
+  fileSize: number;
+  targetCatalogue: 'Opportunities' | 'Tenders';
+  sourceId: string;
+  sourceName: string;
+  sourceAuthority: string;
+  sourceUrl: string;
+  accessType?: SourceAccessType;
+  verificationStatus?: SourceVerificationStatus;
+  status: QueueJobStatus;
+  recordCount?: number;
+  processedCount: number;
+  newStagedCount: number;
+  duplicateCount: number;
+  invalidCount: number;
+  failureReason?: string;
+  createdAt: string;
+  startedAt?: string;
+  completedAt?: string;
+  errors?: ImportErrorDetail[];
+}
+
+export interface QueueDashboardStats {
+  queued: number;
+  processing: number;
+  completed: number;
+  failed: number;
+  cancelled: number;
+  totalRecordsProcessed: number;
+  totalNewStaged: number;
+  totalDuplicate: number;
+  totalInvalid: number;
+}
+

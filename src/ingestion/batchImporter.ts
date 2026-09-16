@@ -3,6 +3,7 @@ import { BatchImportRequest, BatchImportResult, StagedOpportunity, StagedTender 
 import { validateOpportunityRecord, validateTenderRecord } from './validation';
 import { DuplicateDetector } from './duplicates';
 import { globalStagingQueue } from './staging';
+import { globalSourceRegistry } from './sourceRegistry';
 
 export interface ProgressCallback {
   (processed: number, total: number, chunkIndex: number): void;
@@ -23,6 +24,35 @@ export class BatchImporter {
     request: BatchImportRequest<Partial<Opportunity>>,
     options: ChunkedImportOptions = {}
   ): Promise<BatchImportResult> {
+    // 0. Check Source Registry and verify source availability
+    let registeredSource = request.sourceId ? globalSourceRegistry.getSourceById(request.sourceId) : undefined;
+    if (!registeredSource && request.sourceSystem) {
+      registeredSource = globalSourceRegistry.getAllSources().find(
+        s => s.sourceName.toLowerCase() === request.sourceSystem.toLowerCase() || s.sourceId.toLowerCase() === request.sourceSystem.toLowerCase()
+      );
+    }
+
+    if (registeredSource) {
+      const availability = globalSourceRegistry.isSourceAvailableForImport(registeredSource.sourceId);
+      if (!availability.available) {
+        return {
+          batchId: request.batchId,
+          totalReceived: request.records.length,
+          successfullyStaged: 0,
+          autoApproved: 0,
+          duplicatesDetected: 0,
+          validationFailed: request.records.length,
+          errors: [{
+            index: 0,
+            field: 'sourceId',
+            reason: availability.reason || 'Source unavailable for import',
+            message: availability.reason || 'Source unavailable for import',
+            title: `Source: ${registeredSource.sourceName}`
+          }]
+        };
+      }
+    }
+
     const stagedOpps = globalStagingQueue.getStagedOpportunities();
     const detector = new DuplicateDetector(this.existingOpportunities, []);
     for (const staged of stagedOpps) {
@@ -57,8 +87,11 @@ export class BatchImporter {
           result.duplicatesDetected++;
           result.errors.push({
             index: idx,
+            field: 'projectId',
+            reason: dupCheck.reason || 'Duplicate record detected',
             message: dupCheck.reason || 'Duplicate record detected',
-            title: rec.title || `Project ID: ${rec.projectId}`
+            title: rec.title || `Project ID: ${rec.projectId}`,
+            referenceId: rec.projectId || rec.id
           });
           continue;
         }
@@ -67,10 +100,15 @@ export class BatchImporter {
         const val = validateOpportunityRecord(rec);
         if (!val.isValid) {
           result.validationFailed++;
+          const primaryField = val.fieldErrors[0]?.field || 'record';
+          const reasonStr = val.errors.join('; ');
           result.errors.push({
             index: idx,
-            message: `Validation failed: ${val.errors.join('; ')}`,
-            title: rec.title || `Project ID: ${rec.projectId || 'Unknown'}`
+            field: primaryField,
+            reason: reasonStr,
+            message: `Validation failed: ${reasonStr}`,
+            title: rec.title || `Project ID: ${rec.projectId || 'Unknown'}`,
+            referenceId: rec.projectId || rec.id
           });
           continue;
         }
@@ -91,13 +129,19 @@ export class BatchImporter {
           category: rec.category!,
           status: rec.status || 'PENDING',
           sourceUrl: rec.sourceUrl!,
-          sourceAuthority: (rec.sourceAuthority || (rec as any).sourceName || request.sourceSystem)!,
+          sourceAuthority: (rec.sourceAuthority || (rec as any).sourceName || registeredSource?.authority || request.sourceSystem)!,
           verificationStatus: 'PENDING', // Auto-publish disabled; must go to REVIEW -> PUBLISH
           deadline: rec.deadline!,
           fundingAmount: rec.fundingAmount,
           lifecycleStatus: val.lifecycleStatus,
           provenance: {
-            sourceSystem: request.sourceSystem,
+            sourceSystem: registeredSource?.sourceName || request.sourceSystem,
+            sourceId: registeredSource?.sourceId,
+            sourceName: registeredSource?.sourceName || request.sourceSystem,
+            authority: registeredSource?.authority || rec.authority,
+            officialUrl: registeredSource?.officialUrl || rec.sourceUrl,
+            accessType: registeredSource?.accessType,
+            verificationStatus: registeredSource?.verificationStatus,
             importedAt: new Date().toISOString(),
             batchId: request.batchId,
             rawRecordHash: rawHash,
@@ -129,6 +173,35 @@ export class BatchImporter {
     request: BatchImportRequest<Partial<Tender>>,
     options: ChunkedImportOptions = {}
   ): Promise<BatchImportResult> {
+    // 0. Check Source Registry and verify source availability
+    let registeredSource = request.sourceId ? globalSourceRegistry.getSourceById(request.sourceId) : undefined;
+    if (!registeredSource && request.sourceSystem) {
+      registeredSource = globalSourceRegistry.getAllSources().find(
+        s => s.sourceName.toLowerCase() === request.sourceSystem.toLowerCase() || s.sourceId.toLowerCase() === request.sourceSystem.toLowerCase()
+      );
+    }
+
+    if (registeredSource) {
+      const availability = globalSourceRegistry.isSourceAvailableForImport(registeredSource.sourceId);
+      if (!availability.available) {
+        return {
+          batchId: request.batchId,
+          totalReceived: request.records.length,
+          successfullyStaged: 0,
+          autoApproved: 0,
+          duplicatesDetected: 0,
+          validationFailed: request.records.length,
+          errors: [{
+            index: 0,
+            field: 'sourceId',
+            reason: availability.reason || 'Source unavailable for import',
+            message: availability.reason || 'Source unavailable for import',
+            title: `Source: ${registeredSource.sourceName}`
+          }]
+        };
+      }
+    }
+
     const stagedTenders = globalStagingQueue.getStagedTenders();
     const detector = new DuplicateDetector([], this.existingTenders);
     for (const staged of stagedTenders) {
@@ -161,10 +234,14 @@ export class BatchImporter {
         const dupCheck = detector.isTenderDuplicate(rec);
         if (dupCheck.isDuplicate) {
           result.duplicatesDetected++;
+          const refId = (rec.id || (rec as any).tenderId || (rec as any).referenceId || (rec as any).tenderRefNumber)?.toString().trim();
           result.errors.push({
             index: idx,
+            field: 'id',
+            reason: dupCheck.reason || 'Duplicate record detected',
             message: dupCheck.reason || 'Duplicate record detected',
-            title: rec.title || `Tender ID: ${rec.id || (rec as any).tenderId}`
+            title: rec.title || `Tender ID: ${refId || 'Unknown'}`,
+            referenceId: refId
           });
           continue;
         }
@@ -173,10 +250,16 @@ export class BatchImporter {
         const val = validateTenderRecord(rec);
         if (!val.isValid) {
           result.validationFailed++;
+          const primaryField = val.fieldErrors[0]?.field || 'record';
+          const reasonStr = val.errors.join('; ');
+          const refId = (rec.id || (rec as any).tenderId || (rec as any).referenceId || (rec as any).tenderRefNumber)?.toString().trim();
           result.errors.push({
             index: idx,
-            message: `Validation failed: ${val.errors.join('; ')}`,
-            title: rec.title || `Tender ID: ${rec.id || (rec as any).tenderId || 'Unknown'}`
+            field: primaryField,
+            reason: reasonStr,
+            message: `Validation failed: ${reasonStr}`,
+            title: rec.title || `Tender ID: ${refId || 'Unknown'}`,
+            referenceId: refId
           });
           continue;
         }
@@ -196,14 +279,20 @@ export class BatchImporter {
           category: rec.category!,
           status: rec.status || 'PENDING',
           sourceUrl: rec.sourceUrl!,
-          sourceAuthority: (rec.sourceAuthority || (rec as any).sourceName || request.sourceSystem)!,
+          sourceAuthority: (rec.sourceAuthority || (rec as any).sourceName || registeredSource?.authority || request.sourceSystem)!,
           verificationStatus: 'PENDING', // Auto-publish disabled; must go to REVIEW -> PUBLISH
           tenderValue: rec.tenderValue!,
           submissionDeadline: rec.submissionDeadline!,
           location: rec.location!,
           lifecycleStatus: val.lifecycleStatus,
           provenance: {
-            sourceSystem: request.sourceSystem,
+            sourceSystem: registeredSource?.sourceName || request.sourceSystem,
+            sourceId: registeredSource?.sourceId,
+            sourceName: registeredSource?.sourceName || request.sourceSystem,
+            authority: registeredSource?.authority || rec.authority,
+            officialUrl: registeredSource?.officialUrl || rec.sourceUrl,
+            accessType: registeredSource?.accessType,
+            verificationStatus: registeredSource?.verificationStatus,
             importedAt: new Date().toISOString(),
             batchId: request.batchId,
             rawRecordHash: rawHash,

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Bookmark, Clock, Share2, Scale, Trash2, Check, ExternalLink, ArrowRight, Building2 } from 'lucide-react';
 import { investmentRepository, opportunityRepository, tenderRepository, investmentSchemeRepository, newsRepository } from '../infrastructure/repositories/InvestmentRepository';
 
@@ -18,11 +18,11 @@ export function useSavedItems() {
     } catch {}
   }, [savedIds]);
 
-  const toggleSave = (id: string) => {
+  const toggleSave = useCallback((id: string) => {
     setSavedIds(prev => prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]);
-  };
+  }, []);
 
-  const clearSaved = () => setSavedIds([]);
+  const clearSaved = useCallback(() => setSavedIds([]), []);
 
   return { savedIds, toggleSave, clearSaved };
 }
@@ -37,8 +37,12 @@ export function useRecentlyViewed() {
     }
   });
 
-  const addRecent = (id: string) => {
+  const addRecent = useCallback((id: string) => {
+    if (!id) return;
     setRecentIds(prev => {
+      if (prev.length > 0 && prev[0] === id) {
+        return prev;
+      }
       const filtered = prev.filter(i => i !== id);
       const updated = [id, ...filtered].slice(0, 10);
       try {
@@ -46,14 +50,14 @@ export function useRecentlyViewed() {
       } catch {}
       return updated;
     });
-  };
+  }, []);
 
-  const clearRecent = () => {
+  const clearRecent = useCallback(() => {
     setRecentIds([]);
     try {
       localStorage.removeItem('sarkarsaathi_recent');
     } catch {}
-  };
+  }, []);
 
   return { recentIds, addRecent, clearRecent };
 }

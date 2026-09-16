@@ -46,7 +46,6 @@ export default function App() {
     };
 
     window.addEventListener('popstate', handlePopState);
-    handlePopState();
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
@@ -76,7 +75,7 @@ export default function App() {
     if (selectedSlug) {
       if (currentRoute === '/investments') {
         const item = investmentRepository.getBySlug(selectedSlug);
-        return <DetailView item={item} type="Investments" onBack={() => navigate('/investments')} />;
+        return <DetailView item={item} type="Investments" onBack={() => navigate('/investments')} onNavigateComparison={(slug) => navigate('/investments', slug)} />;
       }
       if (currentRoute === '/investment-schemes') {
         const item = investmentSchemeRepository.getBySlug(selectedSlug);
@@ -100,15 +99,15 @@ export default function App() {
       case '/':
         return <HomeView onNavigate={navigate} />;
       case '/investments':
-        return <GenericHubView title="Sovereign & Government Investments" type="investments" items={investmentRepository.getAll()} onNavigate={navigate} />;
+        return <GenericHubView title="Sovereign & Government Investments" type="investments" items={investmentRepository.getAll()} repository={investmentRepository} onNavigate={navigate} />;
       case '/investment-schemes':
-        return <GenericHubView title="Government Investment Schemes" type="investment-schemes" items={investmentSchemeRepository.getAll()} onNavigate={navigate} />;
+        return <GenericHubView title="Government Investment Schemes" type="investment-schemes" items={investmentSchemeRepository.getAll()} repository={investmentSchemeRepository} onNavigate={navigate} />;
       case '/opportunities':
-        return <GenericHubView title="Government Opportunities & Grants" type="opportunities" items={opportunityRepository.getAll()} onNavigate={navigate} />;
+        return <GenericHubView title="Government Opportunities & Grants" type="opportunities" items={opportunityRepository.getAll()} repository={opportunityRepository} onNavigate={navigate} />;
       case '/tenders':
-        return <GenericHubView title="Government Tenders & Procurements" type="tenders" items={tenderRepository.getAll()} onNavigate={navigate} />;
+        return <GenericHubView title="Government Tenders & Procurements" type="tenders" items={tenderRepository.getAll()} repository={tenderRepository} onNavigate={navigate} />;
       case '/news':
-        return <GenericHubView title="Official Policy News & Releases" type="news" items={newsRepository.getAll()} onNavigate={navigate} />;
+        return <GenericHubView title="Official Policy News & Releases" type="news" items={newsRepository.getAll()} repository={newsRepository} onNavigate={navigate} />;
       case '/saved':
         return <SavedView onNavigate={navigate} />;
       case '/recently-viewed':
