@@ -33,7 +33,7 @@ export function Navbar({ currentRoute, onNavigate }: NavbarProps) {
           <div>
             <span className="text-xl font-bold tracking-tight text-indigo-900">SarkarSaathi</span>
             <span className="hidden sm:inline-block ml-2 px-2 py-0.5 text-xs font-semibold bg-emerald-100 text-emerald-800 rounded-full">
-              Official .gov Platform
+              Independent Information Platform
             </span>
           </div>
         </div>
@@ -98,7 +98,7 @@ export function Footer({ onNavigate }: { onNavigate: (route: string) => void }) 
             <span className="text-xs bg-indigo-900 text-indigo-300 px-2 py-0.5 rounded font-mono">v3.0</span>
           </div>
           <p className="text-xs text-slate-400 max-w-md">
-            Official portal for verified government schemes, investments, tenders, and public opportunities in India.
+            Explore verified government investment, tender and opportunity information from official sources across India.
           </p>
         </div>
         <div className="flex space-x-6 text-xs">

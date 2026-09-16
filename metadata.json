@@ -1,6 +1,6 @@
 {
   "name": "SarkarSaathi",
-  "description": "SarkarSaathi.org - Official Government Schemes, Tenders, Opportunities, and Public Services Platform",
+  "description": "SarkarSaathi.org - Independent platform for verified government schemes, tenders, opportunities, and public services in India",
   "requestFramePermissions": [],
   "majorCapabilities": [
     "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"

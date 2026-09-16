@@ -15,13 +15,13 @@ export function HomeView({ onNavigate }: HubProps) {
         <div className="max-w-4xl mx-auto relative z-10">
           <div className="inline-flex items-center space-x-2 bg-indigo-800/60 border border-indigo-700/50 px-3 py-1 rounded-full text-xs font-medium text-indigo-200 mb-6">
             <ShieldCheck className="w-3.5 h-3.5 text-indigo-300" />
-            <span>Official Government Portal & Public Services Hub</span>
+            <span>Independent Information Platform</span>
           </div>
           <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4">
             Discover Verified Government <span className="text-indigo-400">Opportunities & Schemes</span>
           </h1>
           <p className="text-slate-300 text-base sm:text-lg mb-8 max-w-2xl mx-auto">
-            Access secure, verified calls for proposals, sovereign investments, government tenders, and public news backed by official .gov.in sources.
+            Explore verified government investment, tender and opportunity information from official sources across India.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <button onClick={() => onNavigate('/opportunities')} className="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl shadow-lg transition">
