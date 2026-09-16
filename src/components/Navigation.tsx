@@ -1,5 +1,6 @@
 import React from 'react';
-import { ShieldCheck, Menu, X, ArrowLeft } from 'lucide-react';
+import { ShieldCheck, Menu, X } from 'lucide-react';
+import { SarkarSaathiLogo } from './SarkarSaathiLogo';
 
 interface NavbarProps {
   currentRoute: string;
@@ -27,9 +28,7 @@ export function Navbar({ currentRoute, onNavigate }: NavbarProps) {
     <header className="bg-white border-b border-slate-200 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <div className="flex items-center space-x-3 cursor-pointer select-none" onClick={() => onNavigate('/')}>
-          <div className="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white text-xl shadow-xs shrink-0">
-            🏛️
-          </div>
+          <SarkarSaathiLogo className="w-10 h-10" />
           <div className="flex flex-col justify-center">
             <span className="text-lg sm:text-xl font-bold tracking-tight text-indigo-950 leading-tight">
               SarkarSaathi
@@ -96,7 +95,8 @@ export function Footer({ onNavigate }: { onNavigate: (route: string) => void }) 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
           <div>
-            <div className="flex items-center justify-center sm:justify-start space-x-3 mb-2">
+            <div className="flex items-center justify-center sm:justify-start space-x-2.5 mb-2">
+              <SarkarSaathiLogo className="w-7 h-7" />
               <span className="text-lg font-bold text-white">SarkarSaathi.org</span>
               <span className="text-xs bg-indigo-900 text-indigo-300 px-2 py-0.5 rounded font-mono">v3.0</span>
             </div>

@@ -18,17 +18,35 @@ export function HomeView({ onNavigate }: HubProps) {
             <span>Independent Information Platform</span>
           </div>
           <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4">
-            Discover Verified Government <span className="text-indigo-400">Opportunities & Schemes</span>
+            India's Government Investment & Opportunity Platform
           </h1>
-          <p className="text-slate-300 text-base sm:text-lg mb-8 max-w-2xl mx-auto">
-            India's Private Aggregator for Government Schemes & Tenders
+          <p className="text-slate-300 text-base sm:text-lg mb-8 max-w-3xl mx-auto leading-relaxed">
+            Explore government investment products, development opportunities, projects, tenders and important updates from official sources across India.
           </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <button onClick={() => onNavigate('/opportunities')} className="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl shadow-lg transition">
+          <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
+            <button
+              onClick={() => onNavigate('/investments')}
+              className="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl shadow-lg transition"
+            >
+              Explore Investments
+            </button>
+            <button
+              onClick={() => onNavigate('/opportunities')}
+              className="px-6 py-3 bg-slate-800 hover:bg-slate-700 text-white font-semibold rounded-xl border border-slate-700 transition"
+            >
               Explore Opportunities
             </button>
-            <button onClick={() => onNavigate('/investments')} className="px-6 py-3 bg-slate-800 hover:bg-slate-700 text-white font-semibold rounded-xl border border-slate-700 transition">
-              View Investments
+            <button
+              onClick={() => onNavigate('/tenders')}
+              className="px-5 py-3 bg-slate-800/80 hover:bg-slate-700 text-slate-200 hover:text-white font-semibold rounded-xl border border-slate-700 transition"
+            >
+              Find Tenders
+            </button>
+            <button
+              onClick={() => onNavigate('/news')}
+              className="px-5 py-3 bg-slate-800/80 hover:bg-slate-700 text-slate-200 hover:text-white font-semibold rounded-xl border border-slate-700 transition"
+            >
+              View Updates
             </button>
           </div>
         </div>
