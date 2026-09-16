@@ -15,7 +15,11 @@ import {
   Layers,
   MapPin,
   Sparkles,
-  ShieldCheck
+  ShieldCheck,
+  Target,
+  XCircle,
+  AlertTriangle,
+  Globe
 } from 'lucide-react';
 
 interface SchemeDetailViewProps {
@@ -70,18 +74,29 @@ export const SchemeDetailView: React.FC<SchemeDetailViewProps> = ({ item }) => {
             </span>
           </div>
 
-          <div className="bg-slate-50 border border-slate-100 p-4 rounded-2xl">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
-              Target Beneficiaries
-            </span>
-            <span className="text-xs sm:text-sm font-bold text-slate-900 line-clamp-2">
-              {item.targetBeneficiaries || 'Enterprises, Investors & Industrial Units'}
-            </span>
-          </div>
+          {item.implementingAuthority ? (
+            <div className="bg-slate-50 border border-slate-100 p-4 rounded-2xl">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
+                Implementing Agency
+              </span>
+              <span className="text-xs sm:text-sm font-bold text-slate-900 line-clamp-2" title={item.implementingAuthority}>
+                {item.implementingAuthority}
+              </span>
+            </div>
+          ) : (
+            <div className="bg-slate-50 border border-slate-100 p-4 rounded-2xl">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
+                Target Beneficiaries
+              </span>
+              <span className="text-xs sm:text-sm font-bold text-slate-900 line-clamp-2">
+                {item.targetBeneficiaries || 'Enterprises, Investors & Industrial Units'}
+              </span>
+            </div>
+          )}
 
           <div className="bg-slate-50 border border-slate-100 p-4 rounded-2xl">
             <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
-              Incentive / Financial Benefit
+              Incentive / Benefit Support
             </span>
             <span className="text-xs sm:text-sm font-bold text-emerald-700 line-clamp-2">
               {item.financialParameters || 'Direct Financial Subsidy / Capital Assistance'}
@@ -90,10 +105,10 @@ export const SchemeDetailView: React.FC<SchemeDetailViewProps> = ({ item }) => {
 
           <div className="bg-slate-50 border border-slate-100 p-4 rounded-2xl">
             <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
-              Application Route
+              {item.coverage ? 'Geographic Scope' : 'Application Route'}
             </span>
-            <span className="text-xs sm:text-sm font-bold text-indigo-700">
-              Official Ministry Portal
+            <span className="text-xs sm:text-sm font-bold text-indigo-700 line-clamp-2">
+              {item.coverage || item.applicationProcess || 'Official Ministry Portal'}
             </span>
           </div>
         </div>
@@ -116,7 +131,33 @@ export const SchemeDetailView: React.FC<SchemeDetailViewProps> = ({ item }) => {
           </div>
         </section>
 
-        {/* SECTION 2: Benefits & Incentives */}
+        {/* SECTION 2: Objectives & Strategic Purpose */}
+        {item.objective && (
+          <section className="space-y-3 pt-6 border-t border-slate-100">
+            <h2 className="text-lg font-bold text-slate-900 flex items-center space-x-2">
+              <Target className="w-5 h-5 text-indigo-600" />
+              <span>Scheme Objectives &amp; Strategic Role</span>
+            </h2>
+            <div className="p-4 bg-indigo-50/50 border border-indigo-100 rounded-2xl text-xs text-slate-800 leading-relaxed">
+              <p>{item.objective}</p>
+            </div>
+          </section>
+        )}
+
+        {/* SECTION 3: Target Beneficiaries (if implementing agency is in parameter grid) */}
+        {item.targetBeneficiaries && item.implementingAuthority && (
+          <section className="space-y-3 pt-6 border-t border-slate-100">
+            <h2 className="text-lg font-bold text-slate-900 flex items-center space-x-2">
+              <Building2 className="w-5 h-5 text-indigo-600" />
+              <span>Target Beneficiaries &amp; Covered Entities</span>
+            </h2>
+            <div className="p-4 bg-slate-50 border border-slate-200 rounded-2xl text-xs text-slate-800 leading-relaxed">
+              <p>{item.targetBeneficiaries}</p>
+            </div>
+          </section>
+        )}
+
+        {/* SECTION 4: Benefits & Incentives */}
         <section className="space-y-3 pt-6 border-t border-slate-100">
           <h2 className="text-lg font-bold text-slate-900 flex items-center space-x-2">
             <Award className="w-5 h-5 text-indigo-600" />
@@ -127,10 +168,15 @@ export const SchemeDetailView: React.FC<SchemeDetailViewProps> = ({ item }) => {
             {item.incentives && (
               <p className="text-emerald-800">{item.incentives}</p>
             )}
+            {item.financialParameters && (
+              <div className="pt-2 border-t border-emerald-200/60 text-emerald-900 font-medium">
+                <strong>Financial Scale &amp; Parameters: </strong>{item.financialParameters}
+              </div>
+            )}
           </div>
         </section>
 
-        {/* SECTION 3: Eligibility Criteria */}
+        {/* SECTION 5: Eligibility Criteria */}
         <section className="space-y-3 pt-6 border-t border-slate-100">
           <h2 className="text-lg font-bold text-slate-900 flex items-center space-x-2">
             <ShieldCheck className="w-5 h-5 text-indigo-600" />
@@ -149,7 +195,7 @@ export const SchemeDetailView: React.FC<SchemeDetailViewProps> = ({ item }) => {
               </div>
               <div className="flex items-center space-x-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                <span>Audit-compliant accounting and tax filings</span>
+                <span>Audit-compliant accounting and statutory filings</span>
               </div>
               <div className="flex items-center space-x-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
@@ -159,12 +205,17 @@ export const SchemeDetailView: React.FC<SchemeDetailViewProps> = ({ item }) => {
           </div>
         </section>
 
-        {/* SECTION 4: Application & Registration Process */}
+        {/* SECTION 6: Application & Registration Process */}
         <section className="space-y-4 pt-6 border-t border-slate-100">
           <h2 className="text-lg font-bold text-slate-900 flex items-center space-x-2">
             <FileText className="w-5 h-5 text-indigo-600" />
             <span>Step-by-Step Application &amp; Registration Process</span>
           </h2>
+          {item.applicationProcess && (
+            <p className="text-xs text-slate-600 bg-slate-50 p-3 rounded-xl border border-slate-100 font-medium">
+              <strong>Application Mode: </strong>{item.applicationProcess}
+            </p>
+          )}
           <div className="space-y-2">
             {(item.registrationProcess || [
               'Visit the designated Ministry / Nodal Agency online application portal.',
@@ -183,7 +234,7 @@ export const SchemeDetailView: React.FC<SchemeDetailViewProps> = ({ item }) => {
           </div>
         </section>
 
-        {/* SECTION 5: Required Documentation */}
+        {/* SECTION 7: Required Documentation */}
         <section className="space-y-3 pt-6 border-t border-slate-100">
           <h2 className="text-lg font-bold text-slate-900 flex items-center space-x-2">
             <Layers className="w-5 h-5 text-indigo-600" />
@@ -206,7 +257,43 @@ export const SchemeDetailView: React.FC<SchemeDetailViewProps> = ({ item }) => {
           </div>
         </section>
 
-        {/* FAQs if present */}
+        {/* SECTION 8: Important Conditions & Compliance */}
+        {item.importantConditions && item.importantConditions.length > 0 && (
+          <section className="space-y-3 pt-6 border-t border-slate-100">
+            <h2 className="text-lg font-bold text-slate-900 flex items-center space-x-2">
+              <AlertTriangle className="w-5 h-5 text-amber-600" />
+              <span>Important Conditions &amp; Operational Compliance</span>
+            </h2>
+            <div className="space-y-2">
+              {item.importantConditions.map((cond, idx) => (
+                <div key={idx} className="flex items-start space-x-2.5 p-3 bg-amber-50/50 rounded-xl border border-amber-200/60 text-xs text-amber-950">
+                  <span className="font-bold text-amber-700 mt-0.5">•</span>
+                  <span>{cond}</span>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* SECTION 9: Exclusions & Ineligibility */}
+        {item.exclusions && item.exclusions.length > 0 && (
+          <section className="space-y-3 pt-6 border-t border-slate-100">
+            <h2 className="text-lg font-bold text-slate-900 flex items-center space-x-2">
+              <XCircle className="w-5 h-5 text-rose-600" />
+              <span>Exclusions &amp; Ineligible Profiles</span>
+            </h2>
+            <div className="space-y-2">
+              {item.exclusions.map((ex, idx) => (
+                <div key={idx} className="flex items-start space-x-2.5 p-3 bg-rose-50/50 rounded-xl border border-rose-200/60 text-xs text-rose-950">
+                  <span className="font-bold text-rose-700 mt-0.5">✕</span>
+                  <span>{ex}</span>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* SECTION 10: FAQs */}
         {item.faqs && item.faqs.length > 0 && (
           <section className="space-y-4 pt-6 border-t border-slate-100">
             <h2 className="text-lg font-bold text-slate-900 flex items-center space-x-2">
@@ -247,3 +334,4 @@ export const SchemeDetailView: React.FC<SchemeDetailViewProps> = ({ item }) => {
     </div>
   );
 };
+
