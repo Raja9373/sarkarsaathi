@@ -4,6 +4,7 @@ import { CatalogQueryOptions, PaginatedResult } from '../../ingestion/types';
 export interface CatalogIndexEntry {
   id: string;
   slug: string;
+  projectIdLower?: string;
   titleLower: string;
   categoryLower: string;
   authorityLower: string;
@@ -11,7 +12,9 @@ export interface CatalogIndexEntry {
   statusLower: string;
   verificationStatusLower: string;
   stateLower?: string;
+  districtLower?: string;
   sectorLower?: string;
+  subSectorLower?: string;
   typeLower?: string;
   dateStr?: string;
   numericValue?: number;
@@ -71,7 +74,9 @@ export class IndexedCatalogStore<T extends BaseEntity> {
 
     const anyItem = item as any;
     const state = anyItem.state || (anyItem.location && !anyItem.location.includes('/') ? anyItem.location : undefined);
+    const district = anyItem.district;
     const sector = anyItem.sector || anyItem.category;
+    const subSector = anyItem.subSector;
     const type = anyItem.opportunityType || anyItem.tenderType || anyItem.category;
     const date = anyItem.deadline || anyItem.submissionDeadline || anyItem.createdAt || anyItem.publishedDate || '';
     const val = anyItem.totalProjectCost || anyItem.fundingAmount || anyItem.tenderValue || (anyItem.minInvestment ? `₹${anyItem.minInvestment}` : '');
@@ -88,14 +93,17 @@ export class IndexedCatalogStore<T extends BaseEntity> {
     const entry: CatalogIndexEntry = {
       id: item.id,
       slug: item.slug || '',
+      projectIdLower: anyItem.projectId ? anyItem.projectId.toLowerCase() : undefined,
       titleLower: (item.title || '').toLowerCase(),
       categoryLower: (item.category || '').toLowerCase(),
       authorityLower: (item.authority || '').toLowerCase(),
       sourceAuthorityLower: (item.sourceAuthority || '').toLowerCase(),
-      statusLower: (item.status || '').toLowerCase(),
+      statusLower: (item.status || anyItem.projectStatus || '').toLowerCase(),
       verificationStatusLower: (item.verificationStatus || '').toLowerCase(),
       stateLower: state ? state.toLowerCase() : undefined,
+      districtLower: district ? district.toLowerCase() : undefined,
       sectorLower: sector ? sector.toLowerCase() : undefined,
+      subSectorLower: subSector ? subSector.toLowerCase() : undefined,
       typeLower: type ? type.toLowerCase() : undefined,
       dateStr: date,
       numericValue: numVal,
@@ -149,8 +157,13 @@ export class IndexedCatalogStore<T extends BaseEntity> {
         if (!q) return true;
         return (
           entry.titleLower.includes(q) ||
+          (entry.projectIdLower && entry.projectIdLower.includes(q)) ||
           entry.authorityLower.includes(q) ||
           entry.sourceAuthorityLower.includes(q) ||
+          (entry.districtLower && entry.districtLower.includes(q)) ||
+          (entry.stateLower && entry.stateLower.includes(q)) ||
+          (entry.sectorLower && entry.sectorLower.includes(q)) ||
+          (entry.subSectorLower && entry.subSectorLower.includes(q)) ||
           (entry.itemRef.description && entry.itemRef.description.toLowerCase().includes(q))
         );
       })
@@ -160,14 +173,21 @@ export class IndexedCatalogStore<T extends BaseEntity> {
   public getPaginated(options: CatalogQueryOptions): PaginatedResult<T> {
     let matches = this.indexEntries;
 
-    // 1. Search (Title, Description, Authority, Location)
+    // 1. Search (Title, Project ID, Description, Authority, Location, District, Sector, Sub-sector)
     if (options.search && options.search.trim()) {
       const q = options.search.toLowerCase().trim();
       matches = matches.filter(e => 
         e.titleLower.includes(q) ||
+        (e.projectIdLower && e.projectIdLower.includes(q)) ||
         e.authorityLower.includes(q) ||
         e.sourceAuthorityLower.includes(q) ||
+        (e.districtLower && e.districtLower.includes(q)) ||
+        (e.stateLower && e.stateLower.includes(q)) ||
+        (e.sectorLower && e.sectorLower.includes(q)) ||
+        (e.subSectorLower && e.subSectorLower.includes(q)) ||
         (e.itemRef.description && e.itemRef.description.toLowerCase().includes(q)) ||
+        (e.itemRef.projectDescription && e.itemRef.projectDescription.toLowerCase().includes(q)) ||
+        (e.itemRef.opportunityDescription && e.itemRef.opportunityDescription.toLowerCase().includes(q)) ||
         (e.itemRef.location && e.itemRef.location.toLowerCase().includes(q))
       );
     }
@@ -187,7 +207,16 @@ export class IndexedCatalogStore<T extends BaseEntity> {
       );
     }
 
-    // 4. Sector Filter
+    // 4. District Filter
+    if ((options as any).district && (options as any).district !== 'ALL') {
+      const dist = (options as any).district.toLowerCase().trim();
+      matches = matches.filter(e => 
+        (e.districtLower && e.districtLower.includes(dist)) ||
+        (e.itemRef.location && e.itemRef.location.toLowerCase().includes(dist))
+      );
+    }
+
+    // 5. Sector Filter
     if (options.sector && options.sector !== 'ALL') {
       const sec = options.sector.toLowerCase().trim();
       matches = matches.filter(e => 
@@ -196,7 +225,7 @@ export class IndexedCatalogStore<T extends BaseEntity> {
       );
     }
 
-    // 5. Type Filter (Opportunity or Tender type)
+    // 6. Type Filter (Opportunity or Tender type)
     if (options.type && options.type !== 'ALL') {
       const tp = options.type.toLowerCase().trim();
       matches = matches.filter(e => 
@@ -205,13 +234,13 @@ export class IndexedCatalogStore<T extends BaseEntity> {
       );
     }
 
-    // 6. Status Filter
+    // 7. Status Filter
     if (options.status && options.status !== 'ALL') {
       const st = options.status.toLowerCase().trim();
-      matches = matches.filter(e => e.statusLower === st);
+      matches = matches.filter(e => e.statusLower === st || (e.itemRef.projectStatus && e.itemRef.projectStatus.toLowerCase() === st));
     }
 
-    // 7. Source / Authority Filter
+    // 8. Source / Authority Filter
     if (options.source && options.source !== 'ALL') {
       const src = options.source.toLowerCase().trim();
       matches = matches.filter(e => 
@@ -221,10 +250,20 @@ export class IndexedCatalogStore<T extends BaseEntity> {
       );
     }
 
-    // 8. Verification Status
+    // 9. Verification Status
     if (options.verificationStatus && options.verificationStatus !== 'ALL') {
       const vs = options.verificationStatus.toLowerCase().trim();
       matches = matches.filter(e => e.verificationStatusLower === vs);
+    }
+
+    // 10. Financial Range Filter
+    if ((options as any).minCost !== undefined && (options as any).minCost > 0) {
+      const minVal = (options as any).minCost;
+      matches = matches.filter(e => (e.numericValue || 0) >= minVal);
+    }
+    if ((options as any).maxCost !== undefined && (options as any).maxCost > 0) {
+      const maxVal = (options as any).maxCost;
+      matches = matches.filter(e => (e.numericValue || 0) <= maxVal);
     }
 
     // Sorting

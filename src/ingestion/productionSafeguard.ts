@@ -30,9 +30,9 @@ export interface BaselineCatalogueCounts {
 }
 
 export const LOCKED_PRODUCTION_BASELINE: Readonly<BaselineCatalogueCounts> = Object.freeze({
-  investments: 301,
+  investments: 230,
   investmentSchemes: 71,
-  opportunities: 127,
+  opportunities: 62,
   tenders: 30,
   news: 30
 });

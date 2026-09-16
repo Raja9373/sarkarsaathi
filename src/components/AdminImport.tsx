@@ -978,6 +978,35 @@ export const AdminImport: React.FC = () => {
               </div>
             </div>
 
+            {/* Schema Template Downloads */}
+            <div className="bg-amber-50/60 border border-amber-200 rounded-xl p-4 text-xs space-y-2">
+              <div className="flex items-center space-x-2 font-bold text-amber-900">
+                <FileText className="w-4 h-4 text-amber-700" />
+                <span>Official Opportunity Schema Templates (SAMPLE)</span>
+              </div>
+              <p className="text-slate-600 text-[11px]">
+                Download example schema templates to format official source datasets correctly. <strong>Clearly marked as SAMPLE and never inserted automatically into production.</strong>
+              </p>
+              <div className="flex items-center space-x-3 pt-1">
+                <a
+                  href="/sample_opportunity_import.json"
+                  download="sample_opportunity_import.json"
+                  className="px-3 py-1.5 bg-white hover:bg-amber-100 text-amber-900 rounded-lg border border-amber-300 font-semibold flex items-center space-x-1.5 transition-colors"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  <span>Download sample_opportunity_import.json</span>
+                </a>
+                <a
+                  href="/sample_opportunity_import.csv"
+                  download="sample_opportunity_import.csv"
+                  className="px-3 py-1.5 bg-white hover:bg-amber-100 text-amber-900 rounded-lg border border-amber-300 font-semibold flex items-center space-x-1.5 transition-colors"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  <span>Download sample_opportunity_import.csv</span>
+                </a>
+              </div>
+            </div>
+
             {/* File Upload Zone */}
             <div>
               <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">

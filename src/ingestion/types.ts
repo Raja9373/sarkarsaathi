@@ -18,6 +18,12 @@ export interface VerifiedSource {
   verificationStatus: SourceVerificationStatus;
   notes: string;
   lastVerified: string;
+  enabled?: boolean;
+  updateMethod?: string;
+  lastChecked?: string;
+  lastSuccessfulFetch?: string;
+  lastChangeDetected?: string;
+  status?: string;
 }
 
 export interface IngestionProvenance {
@@ -174,5 +180,20 @@ export interface QueueDashboardStats {
   totalNewStaged: number;
   totalDuplicate: number;
   totalInvalid: number;
+}
+
+export interface UpdateLogEntry {
+  id: string;
+  sourceId: string;
+  sourceName: string;
+  checkTime: string;
+  status: 'SUCCESS' | 'FAILED' | 'SKIPPED' | 'NO_CHANGE';
+  recordsDetected: number;
+  recordsStaged: number;
+  duplicates: number;
+  validationFailures: number;
+  errorMessage?: string;
+  sourceUrl: string;
+  checksumHash?: string;
 }
 

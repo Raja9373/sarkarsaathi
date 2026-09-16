@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Search, ExternalLink, ShieldCheck, ArrowRight, Building2, TrendingUp, Award, FileText, Newspaper, Bookmark, Share2, Lightbulb, Users, Leaf, Megaphone, ChevronLeft, ChevronRight, Filter, X, ArrowUpDown, RotateCcw } from 'lucide-react';
+import { Search, ExternalLink, ShieldCheck, ArrowRight, Building2, TrendingUp, Award, FileText, Newspaper, Bookmark, Share2, Lightbulb, Users, Leaf, Megaphone, ChevronLeft, ChevronRight, Filter, X, ArrowUpDown, RotateCcw, Calculator, CheckCircle2, AlertCircle, Info } from 'lucide-react';
 import { investmentRepository, investmentSchemeRepository, opportunityRepository, tenderRepository, newsRepository } from '../infrastructure/repositories/InvestmentRepository';
 import { useSavedItems, useRecentlyViewed, ShareButton } from './SavedAndRecent';
 import { HeroIndiaGateVisual } from './HeroIndiaGateVisual';
@@ -737,34 +737,821 @@ export function GenericHubView({
 }
 
 export function ComparisonsView() {
+  const [comparisonTab, setComparisonTab] = useState<'investments' | 'schemes' | 'opportunities'>('investments');
+  
+  const allInvestments = useMemo(() => investmentRepository.getAll(), []);
+  const allSchemes = useMemo(() => investmentSchemeRepository.getAll(), []);
+  const allOpportunities = useMemo(() => opportunityRepository.getAll(), []);
+
+  // Selected IDs for comparison
+  const [selectedInvestments, setSelectedInvestments] = useState<string[]>([
+    allInvestments[0]?.id || '',
+    allInvestments[1]?.id || '',
+    allInvestments[2]?.id || ''
+  ].filter(Boolean));
+
+  const [selectedSchemes, setSelectedSchemes] = useState<string[]>([
+    allSchemes[0]?.id || '',
+    allSchemes[1]?.id || ''
+  ].filter(Boolean));
+
+  const [selectedOpportunities, setSelectedOpportunities] = useState<string[]>([
+    allOpportunities[0]?.id || '',
+    allOpportunities[1]?.id || ''
+  ].filter(Boolean));
+
+  const missingValText = "Current value not available from the verified source.";
+
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <h1 className="text-3xl font-extrabold text-slate-900 mb-2">Scheme & Investment Comparison Engine</h1>
-      <p className="text-slate-600 text-sm mb-8">Compare multiple sovereign instruments, tax benefits, lock-in periods, and returns side-by-side.</p>
-      <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center text-slate-500">
-        Comparison matrix initialized. Select instruments to compare.
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+      <div>
+        <div className="inline-flex items-center space-x-2 bg-indigo-50 border border-indigo-200 px-3 py-1 rounded-full text-xs font-semibold text-indigo-700 mb-3">
+          <ShieldCheck className="w-3.5 h-3.5" />
+          <span>Verified Government Data Comparison Engine</span>
+        </div>
+        <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight mb-2">Side-by-Side Comparison Matrix</h1>
+        <p className="text-slate-600 text-sm max-w-2xl">
+          Compare sovereign investments, government schemes, and development opportunities side-by-side using official verified records with zero fabricated values.
+        </p>
       </div>
+
+      {/* Tabs */}
+      <div className="flex border-b border-slate-200 space-x-6 text-sm font-bold">
+        <button
+          onClick={() => setComparisonTab('investments')}
+          className={`pb-3 border-b-2 transition cursor-pointer flex items-center space-x-2 ${
+            comparisonTab === 'investments'
+              ? 'border-indigo-600 text-indigo-600'
+              : 'border-transparent text-slate-500 hover:text-slate-700'
+          }`}
+        >
+          <TrendingUp className="w-4 h-4" />
+          <span>Investments Comparison ({allInvestments.length})</span>
+        </button>
+        <button
+          onClick={() => setComparisonTab('schemes')}
+          className={`pb-3 border-b-2 transition cursor-pointer flex items-center space-x-2 ${
+            comparisonTab === 'schemes'
+              ? 'border-indigo-600 text-indigo-600'
+              : 'border-transparent text-slate-500 hover:text-slate-700'
+          }`}
+        >
+          <Building2 className="w-4 h-4" />
+          <span>Investment Schemes ({allSchemes.length})</span>
+        </button>
+        <button
+          onClick={() => setComparisonTab('opportunities')}
+          className={`pb-3 border-b-2 transition cursor-pointer flex items-center space-x-2 ${
+            comparisonTab === 'opportunities'
+              ? 'border-indigo-600 text-indigo-600'
+              : 'border-transparent text-slate-500 hover:text-slate-700'
+          }`}
+        >
+          <Lightbulb className="w-4 h-4" />
+          <span>Opportunities ({allOpportunities.length})</span>
+        </button>
+      </div>
+
+      {/* INVESTMENT COMPARISON */}
+      {comparisonTab === 'investments' && (
+        <div className="space-y-6">
+          {/* Selector Bar */}
+          <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs grid grid-cols-1 md:grid-cols-3 gap-4">
+            {[0, 1, 2].map((idx) => (
+              <div key={idx}>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                  Comparison Column {idx + 1}
+                </label>
+                <select
+                  value={selectedInvestments[idx] || ''}
+                  onChange={(e) => {
+                    const next = [...selectedInvestments];
+                    next[idx] = e.target.value;
+                    setSelectedInvestments(next);
+                  }}
+                  className="w-full text-xs p-2.5 bg-slate-50 border border-slate-200 rounded-xl font-medium text-slate-800 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                >
+                  <option value="">-- Select Investment --</option>
+                  {allInvestments.map((inv) => (
+                    <option key={inv.id} value={inv.id}>{inv.title}</option>
+                  ))}
+                </select>
+              </div>
+            ))}
+          </div>
+
+          {/* Side-by-side Table */}
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-x-auto">
+            <table className="w-full text-left border-collapse text-xs">
+              <thead>
+                <tr className="bg-slate-50 border-b border-slate-200 text-slate-700">
+                  <th className="p-4 font-bold w-48 sticky left-0 bg-slate-50 z-10">Parameter</th>
+                  {selectedInvestments.map((id, i) => {
+                    const item = allInvestments.find(x => x.id === id);
+                    return (
+                      <th key={i} className="p-4 font-extrabold text-slate-900 min-w-[240px]">
+                        {item ? item.title : `Select Instrument ${i + 1}`}
+                      </th>
+                    );
+                  })}
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100 text-slate-700">
+                {[
+                  { label: 'Investment Name', getVal: (i: any) => i?.title },
+                  { label: 'Category', getVal: (i: any) => i?.category },
+                  { label: 'Issuer / Authority', getVal: (i: any) => i?.authority || i?.sourceAuthority },
+                  { label: 'Risk Information', getVal: (i: any) => i?.riskLevel ? `Risk Level: ${i.riskLevel}` : null, getSub: (i: any) => i?.risksAndLimitations?.join(', ') },
+                  { label: 'Tenure', getVal: (i: any) => i?.tenure || i?.lockInPeriod },
+                  { label: 'Interest / Return Structure', getVal: (i: any) => i?.expectedReturn || i?.notifiedRate || i?.returnMechanism },
+                  { label: 'Tax Treatment', getVal: (i: any) => i?.taxTreatment },
+                  { label: 'Minimum Investment', getVal: (i: any) => i?.minInvestment ? `₹${Number(i.minInvestment).toLocaleString('en-IN')}` : null },
+                  { label: 'Maximum Investment', getVal: (i: any) => i?.maxInvestment ? (typeof i.maxInvestment === 'number' ? `₹${i.maxInvestment.toLocaleString('en-IN')}` : i.maxInvestment) : null },
+                  { label: 'Liquidity & Withdrawal', getVal: (i: any) => i?.withdrawalRules || i?.prematureClosureRules },
+                  { label: 'Eligibility', getVal: (i: any) => i?.accountOpeningProcess?.join('; ') || (i?.depositRules) },
+                  { label: 'Government Status', getVal: (i: any) => i?.status || i?.verificationStatus },
+                  { label: 'Suitable Use Case', getVal: (i: any) => i?.description },
+                  { label: 'Official Source', getVal: (i: any) => i?.sourceAuthority, getLink: (i: any) => i?.sourceUrl }
+                ].map((row, rIdx) => (
+                  <tr key={rIdx} className="hover:bg-slate-50/80 transition">
+                    <td className="p-4 font-bold text-slate-900 bg-slate-50/50 sticky left-0 z-10 border-r border-slate-100">
+                      {row.label}
+                    </td>
+                    {selectedInvestments.map((id, colIdx) => {
+                      const item = allInvestments.find(x => x.id === id);
+                      const val = item ? row.getVal(item) : null;
+                      const sub = item && row.getSub ? row.getSub(item) : null;
+                      const link = item && row.getLink ? row.getLink(item) : null;
+
+                      return (
+                        <td key={colIdx} className="p-4 align-top">
+                          {item ? (
+                            val ? (
+                              <div className="space-y-1">
+                                <div className="font-medium text-slate-800">{val}</div>
+                                {sub && <div className="text-[11px] text-slate-500">{sub}</div>}
+                                {link && (
+                                  <a href={link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center space-x-1 text-indigo-600 hover:text-indigo-800 font-semibold pt-1">
+                                    <span>Official Portal</span>
+                                    <ExternalLink className="w-3 h-3" />
+                                  </a>
+                                )}
+                              </div>
+                            ) : (
+                              <span className="text-amber-700/80 italic text-[11px] bg-amber-50 px-2 py-1 rounded block">
+                                {missingValText}
+                              </span>
+                            )
+                          ) : (
+                            <span className="text-slate-400 italic">No selection</span>
+                          )}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
+      {/* SCHEME COMPARISON */}
+      {comparisonTab === 'schemes' && (
+        <div className="space-y-6">
+          <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs grid grid-cols-1 md:grid-cols-2 gap-4">
+            {[0, 1].map((idx) => (
+              <div key={idx}>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                  Comparison Column {idx + 1}
+                </label>
+                <select
+                  value={selectedSchemes[idx] || ''}
+                  onChange={(e) => {
+                    const next = [...selectedSchemes];
+                    next[idx] = e.target.value;
+                    setSelectedSchemes(next);
+                  }}
+                  className="w-full text-xs p-2.5 bg-slate-50 border border-slate-200 rounded-xl font-medium text-slate-800 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                >
+                  <option value="">-- Select Investment Scheme --</option>
+                  {allSchemes.map((sch) => (
+                    <option key={sch.id} value={sch.id}>{sch.title}</option>
+                  ))}
+                </select>
+              </div>
+            ))}
+          </div>
+
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-x-auto">
+            <table className="w-full text-left border-collapse text-xs">
+              <thead>
+                <tr className="bg-slate-50 border-b border-slate-200 text-slate-700">
+                  <th className="p-4 font-bold w-48 sticky left-0 bg-slate-50 z-10">Parameter</th>
+                  {selectedSchemes.map((id, i) => {
+                    const item = allSchemes.find(x => x.id === id);
+                    return (
+                      <th key={i} className="p-4 font-extrabold text-slate-900 min-w-[280px]">
+                        {item ? item.title : `Select Scheme ${i + 1}`}
+                      </th>
+                    );
+                  })}
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100 text-slate-700">
+                {[
+                  { label: 'Scheme Name', getVal: (i: any) => i?.title },
+                  { label: 'Sector', getVal: (i: any) => i?.sector || i?.category },
+                  { label: 'Ministry / Authority', getVal: (i: any) => i?.authority || i?.implementingAuthority },
+                  { label: 'Implementing Agency', getVal: (i: any) => i?.implementingAuthority },
+                  { label: 'Target Beneficiary', getVal: (i: any) => i?.targetBeneficiaries || i?.eligibility },
+                  { label: 'Eligibility', getVal: (i: any) => i?.eligibility },
+                  { label: 'Geographic Scope', getVal: (i: any) => i?.coverage },
+                  { label: 'Financial Support / Benefits', getVal: (i: any) => i?.benefits || i?.financialParameters },
+                  { label: 'Application Process', getVal: (i: any) => i?.applicationProcess },
+                  { label: 'Current Status', getVal: (i: any) => i?.status },
+                  { label: 'Official Source', getVal: (i: any) => i?.sourceAuthority, getLink: (i: any) => i?.sourceUrl }
+                ].map((row, rIdx) => (
+                  <tr key={rIdx} className="hover:bg-slate-50/80 transition">
+                    <td className="p-4 font-bold text-slate-900 bg-slate-50/50 sticky left-0 z-10 border-r border-slate-100">
+                      {row.label}
+                    </td>
+                    {selectedSchemes.map((id, colIdx) => {
+                      const item = allSchemes.find(x => x.id === id);
+                      const val = item ? row.getVal(item) : null;
+                      const link = item && row.getLink ? row.getLink(item) : null;
+
+                      return (
+                        <td key={colIdx} className="p-4 align-top">
+                          {item ? (
+                            val ? (
+                              <div className="space-y-1">
+                                <div className="font-medium text-slate-800">{val}</div>
+                                {link && (
+                                  <a href={link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center space-x-1 text-indigo-600 hover:text-indigo-800 font-semibold pt-1">
+                                    <span>Official Portal</span>
+                                    <ExternalLink className="w-3 h-3" />
+                                  </a>
+                                )}
+                              </div>
+                            ) : (
+                              <span className="text-amber-700/80 italic text-[11px] bg-amber-50 px-2 py-1 rounded block">
+                                {missingValText}
+                              </span>
+                            )
+                          ) : (
+                            <span className="text-slate-400 italic">No selection</span>
+                          )}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
+      {/* OPPORTUNITY COMPARISON */}
+      {comparisonTab === 'opportunities' && (
+        <div className="space-y-6">
+          <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs grid grid-cols-1 md:grid-cols-2 gap-4">
+            {[0, 1].map((idx) => (
+              <div key={idx}>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                  Comparison Column {idx + 1}
+                </label>
+                <select
+                  value={selectedOpportunities[idx] || ''}
+                  onChange={(e) => {
+                    const next = [...selectedOpportunities];
+                    next[idx] = e.target.value;
+                    setSelectedOpportunities(next);
+                  }}
+                  className="w-full text-xs p-2.5 bg-slate-50 border border-slate-200 rounded-xl font-medium text-slate-800 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                >
+                  <option value="">-- Select Opportunity --</option>
+                  {allOpportunities.map((opp) => (
+                    <option key={opp.id} value={opp.id}>{opp.title}</option>
+                  ))}
+                </select>
+              </div>
+            ))}
+          </div>
+
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-x-auto">
+            <table className="w-full text-left border-collapse text-xs">
+              <thead>
+                <tr className="bg-slate-50 border-b border-slate-200 text-slate-700">
+                  <th className="p-4 font-bold w-48 sticky left-0 bg-slate-50 z-10">Parameter</th>
+                  {selectedOpportunities.map((id, i) => {
+                    const item = allOpportunities.find(x => x.id === id);
+                    return (
+                      <th key={i} className="p-4 font-extrabold text-slate-900 min-w-[280px]">
+                        {item ? item.title : `Select Opportunity ${i + 1}`}
+                      </th>
+                    );
+                  })}
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100 text-slate-700">
+                {[
+                  { label: 'Project Name', getVal: (i: any) => i?.title },
+                  { label: 'Sector', getVal: (i: any) => i?.sector },
+                  { label: 'Location / State', getVal: (i: any) => i?.location || i?.state },
+                  { label: 'Authority', getVal: (i: any) => i?.authority },
+                  { label: 'Project Cost / Funding', getVal: (i: any) => i?.totalProjectCost || i?.fundingAmount },
+                  { label: 'Project Status', getVal: (i: any) => i?.status || i?.projectStatus },
+                  { label: 'Investor / Developer Relevance', getVal: (i: any) => i?.investorProfile },
+                  { label: 'Eligibility', getVal: (i: any) => i?.eligibility },
+                  { label: 'Participation Process', getVal: (i: any) => i?.participationProcess?.join('; ') || i?.applicationProcess },
+                  { label: 'Deadline', getVal: (i: any) => i?.deadline },
+                  { label: 'Official Source', getVal: (i: any) => i?.sourceAuthority, getLink: (i: any) => i?.sourceUrl }
+                ].map((row, rIdx) => (
+                  <tr key={rIdx} className="hover:bg-slate-50/80 transition">
+                    <td className="p-4 font-bold text-slate-900 bg-slate-50/50 sticky left-0 z-10 border-r border-slate-100">
+                      {row.label}
+                    </td>
+                    {selectedOpportunities.map((id, colIdx) => {
+                      const item = allOpportunities.find(x => x.id === id);
+                      const val = item ? row.getVal(item) : null;
+                      const link = item && row.getLink ? row.getLink(item) : null;
+
+                      return (
+                        <td key={colIdx} className="p-4 align-top">
+                          {item ? (
+                            val ? (
+                              <div className="space-y-1">
+                                <div className="font-medium text-slate-800">{val}</div>
+                                {link && (
+                                  <a href={link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center space-x-1 text-indigo-600 hover:text-indigo-800 font-semibold pt-1">
+                                    <span>Official Portal</span>
+                                    <ExternalLink className="w-3 h-3" />
+                                  </a>
+                                )}
+                              </div>
+                            ) : (
+                              <span className="text-amber-700/80 italic text-[11px] bg-amber-50 px-2 py-1 rounded block">
+                                {missingValText}
+                              </span>
+                            )
+                          ) : (
+                            <span className="text-slate-400 italic">No selection</span>
+                          )}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
 
 export function ToolsView() {
+  const [activeTool, setActiveTool] = useState<'ppf' | 'tax80c' | 'compound' | 'capitalGains' | 'screener'>('ppf');
+
+  // Tool 1: PPF Calculator State
+  const [ppfDeposit, setPpfDeposit] = useState<number>(100000);
+  const [ppfTenure, setPpfTenure] = useState<number>(15);
+  const ppfRate = 7.1; // Notified Ministry of Finance rate
+
+  const ppfCalc = useMemo(() => {
+    const r = ppfRate / 100;
+    let balance = 0;
+    let invested = 0;
+    const schedule = [];
+    for (let y = 1; y <= ppfTenure; y++) {
+      invested += ppfDeposit;
+      const interest = (balance + ppfDeposit) * r;
+      balance = balance + ppfDeposit + interest;
+      schedule.push({ year: y, invested: Math.round(invested), interest: Math.round(interest), balance: Math.round(balance) });
+    }
+    return {
+      totalInvested: Math.round(invested),
+      totalInterest: Math.round(balance - invested),
+      maturityValue: Math.round(balance),
+      schedule
+    };
+  }, [ppfDeposit, ppfTenure]);
+
+  // Tool 2: Tax 80C Comparison Calculator
+  const [annualIncome, setAnnualIncome] = useState<number>(1200000);
+  const [taxSlab, setTaxSlab] = useState<number>(20); // 10%, 20%, 30%
+  const [section80CAmount, setSection80CAmount] = useState<number>(150000);
+
+  const taxSavings = useMemo(() => {
+    const valid80C = Math.min(section80CAmount, 150000);
+    const taxSaved = valid80C * (taxSlab / 100);
+    return {
+      valid80C,
+      taxSaved: Math.round(taxSaved)
+    };
+  }, [section80CAmount, taxSlab]);
+
+  // Tool 3: Compound Interest Calculator
+  const [principal, setPrincipal] = useState<number>(50000);
+  const [compoundRate, setCompoundRate] = useState<number>(7.5);
+  const [compoundYears, setCompoundYears] = useState<number>(10);
+  const [frequency, setFrequency] = useState<number>(1); // Annual
+
+  const compoundCalc = useMemo(() => {
+    const p = principal;
+    const r = compoundRate / 100;
+    const n = frequency;
+    const t = compoundYears;
+    const amount = p * Math.pow(1 + r / n, n * t);
+    const interest = amount - p;
+    return {
+      amount: Math.round(amount),
+      interest: Math.round(interest),
+      invested: p
+    };
+  }, [principal, compoundRate, compoundYears, frequency]);
+
+  // Tool 4: Capital Gains 54EC Calculator
+  const [capitalGainsAmount, setCapitalGainsAmount] = useState<number>(2500000);
+  const bondLimit = 5000000; // ₹50 Lakh limit under Section 54EC
+
+  const section54ECCalc = useMemo(() => {
+    const eligibleBondInvest = Math.min(capitalGainsAmount, bondLimit);
+    // Assumed LTCG tax rate without exemption: 20% with indexation or 12.5% without depending on asset class
+    const savedTaxAt20 = eligibleBondInvest * 0.20;
+    return {
+      eligibleBondInvest,
+      savedTaxAt20: Math.round(savedTaxAt20)
+    };
+  }, [capitalGainsAmount]);
+
+  // Tool 5: Scheme & Investment Eligibility Screener
+  const [screenerCategory, setScreenerCategory] = useState<string>('ALL');
+  const [screenerState, setScreenerState] = useState<string>('ALL');
+  
+  const allSchemes = useMemo(() => investmentSchemeRepository.getAll(), []);
+  const filteredSchemes = useMemo(() => {
+    return allSchemes.filter(s => {
+      const matchCat = screenerCategory === 'ALL' || (s as any).sector === screenerCategory || s.category === screenerCategory;
+      const matchState = screenerState === 'ALL' || s.coverage?.toLowerCase().includes(screenerState.toLowerCase()) || s.description.toLowerCase().includes(screenerState.toLowerCase());
+      return matchCat && matchState;
+    }).slice(0, 5);
+  }, [allSchemes, screenerCategory, screenerState]);
+
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <h1 className="text-3xl font-extrabold text-slate-900 mb-2">Citizen Financial Tools & Calculators</h1>
-      <p className="text-slate-600 text-sm mb-8">PPF, SIP, Tax Calculator, and Scheme Eligibility Checkers.</p>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-white rounded-2xl border border-slate-200 p-6">
-          <h3 className="font-bold text-lg mb-2">PPF Compound Calculator</h3>
-          <p className="text-slate-600 text-sm mb-4">Calculate long-term sovereign compounding returns.</p>
-          <div className="p-4 bg-slate-50 rounded-xl text-xs font-mono text-slate-700">Tool interface ready.</div>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+      <div>
+        <div className="inline-flex items-center space-x-2 bg-indigo-50 border border-indigo-200 px-3 py-1 rounded-full text-xs font-semibold text-indigo-700 mb-3">
+          <Calculator className="w-3.5 h-3.5" />
+          <span>Verified Financial Calculators & Decision Tools</span>
         </div>
-        <div className="bg-white rounded-2xl border border-slate-200 p-6">
-          <h3 className="font-bold text-lg mb-2">Scheme Eligibility Screener</h3>
-          <p className="text-slate-600 text-sm mb-4">Find central and state schemes matching your profile.</p>
-          <div className="p-4 bg-slate-50 rounded-xl text-xs font-mono text-slate-700">Screener interface ready.</div>
-        </div>
+        <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight mb-2">Citizen Financial & Investment Tools</h1>
+        <p className="text-slate-600 text-sm max-w-2xl">
+          Practical calculators and evaluators using verified government rates and statutory limits. For informational purposes only.
+        </p>
       </div>
+
+      {/* Tool Navigation Cards */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+        {[
+          { id: 'ppf', title: 'PPF Growth Calculator', icon: TrendingUp },
+          { id: 'tax80c', title: 'Section 80C Tax Tool', icon: Award },
+          { id: 'compound', title: 'Compound Interest', icon: Calculator },
+          { id: 'capitalGains', title: 'Capital Gains 54EC', icon: ShieldCheck },
+          { id: 'screener', title: 'Scheme Screener', icon: Users }
+        ].map((tool) => {
+          const Icon = tool.icon;
+          const isActive = activeTool === tool.id;
+          return (
+            <button
+              key={tool.id}
+              onClick={() => setActiveTool(tool.id as any)}
+              className={`p-4 rounded-2xl border text-left transition cursor-pointer flex flex-col justify-between ${
+                isActive
+                  ? 'bg-indigo-600 text-white border-indigo-600 shadow-md'
+                  : 'bg-white text-slate-800 border-slate-200 hover:bg-slate-50'
+              }`}
+            >
+              <div className={`w-8 h-8 rounded-xl flex items-center justify-center mb-3 ${isActive ? 'bg-white/20 text-white' : 'bg-indigo-50 text-indigo-600'}`}>
+                <Icon className="w-4 h-4" />
+              </div>
+              <span className="font-bold text-xs leading-snug">{tool.title}</span>
+            </button>
+          );
+        })}
+      </div>
+
+      {/* TOOL 1: PPF CALCULATOR */}
+      {activeTool === 'ppf' && (
+        <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 space-y-6 shadow-xs">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-100 gap-2">
+            <div>
+              <h2 className="text-lg font-bold text-slate-900">Public Provident Fund (PPF) Sovereign Growth Calculator</h2>
+              <p className="text-xs text-slate-500">Calculates compounding corpus based on Ministry of Finance notified benchmark rate.</p>
+            </div>
+            <div className="bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-xl text-xs font-semibold text-emerald-800">
+              Notified Rate: 7.1% p.a. (Compounded Annually)
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div>
+              <div className="flex justify-between items-center mb-1.5">
+                <label className="text-xs font-bold text-slate-700">Annual Deposit (₹)</label>
+                <span className="text-xs font-mono font-bold text-indigo-600">₹{ppfDeposit.toLocaleString('en-IN')}</span>
+              </div>
+              <input
+                type="range"
+                min={500}
+                max={150000}
+                step={500}
+                value={ppfDeposit}
+                onChange={(e) => setPpfDeposit(Number(e.target.value))}
+                className="w-full accent-indigo-600"
+              />
+              <span className="text-[10px] text-slate-400">Statutory limit: Min ₹500, Max ₹1,50,000 per financial year.</span>
+            </div>
+
+            <div>
+              <div className="flex justify-between items-center mb-1.5">
+                <label className="text-xs font-bold text-slate-700">Tenure (Years)</label>
+                <span className="text-xs font-mono font-bold text-indigo-600">{ppfTenure} Years</span>
+              </div>
+              <select
+                value={ppfTenure}
+                onChange={(e) => setPpfTenure(Number(e.target.value))}
+                className="w-full p-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl font-medium text-slate-800 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+              >
+                <option value={15}>15 Years (Standard Statutory Maturity)</option>
+                <option value={20}>20 Years (1 Block Extension)</option>
+                <option value={25}>25 Years (2 Block Extensions)</option>
+                <option value={30}>30 Years (3 Block Extensions)</option>
+              </select>
+              <span className="text-[10px] text-slate-400">Lock-in period is 15 years with 5-year block extensions.</span>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 bg-slate-50 p-5 rounded-2xl border border-slate-200">
+            <div>
+              <span className="text-xs font-semibold text-slate-500 block uppercase">Total Principal Invested</span>
+              <span className="text-xl font-bold text-slate-900">₹{ppfCalc.totalInvested.toLocaleString('en-IN')}</span>
+            </div>
+            <div>
+              <span className="text-xs font-semibold text-emerald-700 block uppercase">Total Interest Earned</span>
+              <span className="text-xl font-bold text-emerald-700">+₹{ppfCalc.totalInterest.toLocaleString('en-IN')}</span>
+            </div>
+            <div>
+              <span className="text-xs font-semibold text-indigo-700 block uppercase">Maturity Corpus (Tax-Free EEE)</span>
+              <span className="text-2xl font-black text-indigo-900">₹{ppfCalc.maturityValue.toLocaleString('en-IN')}</span>
+            </div>
+          </div>
+
+          <div className="p-4 bg-blue-50/60 border border-blue-100 rounded-xl text-xs text-slate-600 space-y-1">
+            <div className="font-bold text-blue-900 flex items-center space-x-1">
+              <Info className="w-3.5 h-3.5 text-indigo-600" />
+              <span>Assumptions & Disclosures:</span>
+            </div>
+            <p className="text-[11px] leading-relaxed">
+              • Formula: Compounded annually on balance at financial year end.<br />
+              • Tax Treatment: Exempt-Exempt-Exempt (EEE) under Income Tax Act Section 80C &amp; Section 10(11).<br />
+              • <strong>For informational purposes only.</strong> Notified interest rates are subject to quarterly government revisions.
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* TOOL 2: SECTION 80C TAX TOOL */}
+      {activeTool === 'tax80c' && (
+        <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 space-y-6 shadow-xs">
+          <div className="pb-4 border-b border-slate-100">
+            <h2 className="text-lg font-bold text-slate-900">Section 80C Tax Savings & Instrument Comparison</h2>
+            <p className="text-xs text-slate-500">Calculate tax savings under Section 80C across verified sovereign tax-saving instruments (PPF, SSY, NSC, Tax Saver FD).</p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <div>
+              <label className="block text-xs font-bold text-slate-700 mb-1.5">Annual Taxable Income (₹)</label>
+              <input
+                type="number"
+                value={annualIncome}
+                onChange={(e) => setAnnualIncome(Number(e.target.value))}
+                className="w-full p-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl font-medium text-slate-800"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-bold text-slate-700 mb-1.5">Applicable Tax Slab</label>
+              <select
+                value={taxSlab}
+                onChange={(e) => setTaxSlab(Number(e.target.value))}
+                className="w-full p-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl font-medium text-slate-800"
+              >
+                <option value={10}>10% Tax Slab</option>
+                <option value={20}>20% Tax Slab</option>
+                <option value={30}>30% Tax Slab</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-xs font-bold text-slate-700 mb-1.5">Section 80C Investment (₹)</label>
+              <input
+                type="number"
+                max={150000}
+                value={section80CAmount}
+                onChange={(e) => setSection80CAmount(Number(e.target.value))}
+                className="w-full p-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl font-medium text-slate-800"
+              />
+              <span className="text-[10px] text-slate-400 mt-1 block">Maximum statutory deduction limit is ₹1,50,000.</span>
+            </div>
+          </div>
+
+          <div className="bg-slate-50 p-5 rounded-2xl border border-slate-200 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <span className="text-xs font-semibold text-slate-500 block uppercase">Eligible Deduction Considered</span>
+              <span className="text-xl font-bold text-slate-900">₹{taxSavings.valid80C.toLocaleString('en-IN')}</span>
+            </div>
+            <div>
+              <span className="text-xs font-semibold text-emerald-700 block uppercase">Estimated Direct Tax Saved</span>
+              <span className="text-2xl font-black text-emerald-700">₹{taxSavings.taxSaved.toLocaleString('en-IN')}</span>
+            </div>
+          </div>
+
+          <div className="p-4 bg-blue-50/60 border border-blue-100 rounded-xl text-xs text-slate-600 space-y-1">
+            <div className="font-bold text-blue-900 flex items-center space-x-1">
+              <Info className="w-3.5 h-3.5 text-indigo-600" />
+              <span>Statutory Note:</span>
+            </div>
+            <p className="text-[11px] leading-relaxed">
+              Applicable under old tax regime limits. Surcharge and cess extra as per Income Tax Act provisions. <strong>For informational purposes only.</strong>
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* TOOL 3: COMPOUND INTEREST CALCULATOR */}
+      {activeTool === 'compound' && (
+        <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 space-y-6 shadow-xs">
+          <div className="pb-4 border-b border-slate-100">
+            <h2 className="text-lg font-bold text-slate-900">Compound Growth & Return Calculator</h2>
+            <p className="text-xs text-slate-500">Calculate investment appreciation using standard compound interest formula.</p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <div>
+              <label className="block text-xs font-bold text-slate-700 mb-1.5">Principal Amount (₹)</label>
+              <input
+                type="number"
+                value={principal}
+                onChange={(e) => setPrincipal(Number(e.target.value))}
+                className="w-full p-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl font-medium text-slate-800"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-bold text-slate-700 mb-1.5">Annual Interest Rate (%)</label>
+              <input
+                type="number"
+                step="0.1"
+                value={compoundRate}
+                onChange={(e) => setCompoundRate(Number(e.target.value))}
+                className="w-full p-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl font-medium text-slate-800"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-bold text-slate-700 mb-1.5">Tenure (Years)</label>
+              <input
+                type="number"
+                value={compoundYears}
+                onChange={(e) => setCompoundYears(Number(e.target.value))}
+                className="w-full p-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl font-medium text-slate-800"
+              />
+            </div>
+          </div>
+
+          <div className="bg-slate-50 p-5 rounded-2xl border border-slate-200 grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div>
+              <span className="text-xs font-semibold text-slate-500 block uppercase">Principal Invested</span>
+              <span className="text-xl font-bold text-slate-900">₹{compoundCalc.invested.toLocaleString('en-IN')}</span>
+            </div>
+            <div>
+              <span className="text-xs font-semibold text-emerald-700 block uppercase">Interest Earned</span>
+              <span className="text-xl font-bold text-emerald-700">+₹{compoundCalc.interest.toLocaleString('en-IN')}</span>
+            </div>
+            <div>
+              <span className="text-xs font-semibold text-indigo-700 block uppercase">Total Maturity Value</span>
+              <span className="text-2xl font-black text-indigo-900">₹{compoundCalc.amount.toLocaleString('en-IN')}</span>
+            </div>
+          </div>
+
+          <div className="p-4 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-600">
+            <span className="font-bold text-slate-800 block mb-1">Formula Used:</span>
+            <code className="bg-white p-2 rounded border border-slate-200 block font-mono text-[11px] text-indigo-700">
+              A = P × (1 + r/n)^(nt)
+            </code>
+          </div>
+        </div>
+      )}
+
+      {/* TOOL 4: CAPITAL GAINS 54EC */}
+      {activeTool === 'capitalGains' && (
+        <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 space-y-6 shadow-xs">
+          <div className="pb-4 border-b border-slate-100">
+            <h2 className="text-lg font-bold text-slate-900">Section 54EC Capital Gains Tax Exemption Calculator</h2>
+            <p className="text-xs text-slate-500">Calculate long-term capital gains (LTCG) tax exemption by investing in notified NHAI / REC capital gains bonds.</p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div>
+              <label className="block text-xs font-bold text-slate-700 mb-1.5">Long-Term Capital Gains (₹)</label>
+              <input
+                type="number"
+                value={capitalGainsAmount}
+                onChange={(e) => setCapitalGainsAmount(Number(e.target.value))}
+                className="w-full p-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl font-medium text-slate-800"
+              />
+              <span className="text-[10px] text-slate-400 mt-1 block">Maximum statutory investment limit per financial year under Section 54EC is ₹50,00,000.</span>
+            </div>
+            <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col justify-center">
+              <span className="text-xs text-slate-500 font-semibold uppercase">Eligible Bond Investment</span>
+              <span className="text-lg font-bold text-slate-900">₹{section54ECCalc.eligibleBondInvest.toLocaleString('en-IN')}</span>
+              <span className="text-xs text-emerald-700 font-semibold mt-1">Estimated Tax Saved (at 20% LTCG): ₹{section54ECCalc.savedTaxAt20.toLocaleString('en-IN')}</span>
+            </div>
+          </div>
+
+          <div className="p-4 bg-blue-50/60 border border-blue-100 rounded-xl text-xs text-slate-600">
+            <span className="font-bold text-blue-900 block mb-1">Statutory Condition:</span>
+            Bonds must be invested within 6 months of capital asset transfer with a mandatory 5-year lock-in period. <strong>For informational purposes only.</strong>
+          </div>
+        </div>
+      )}
+
+      {/* TOOL 5: SCHEME SCREENER */}
+      {activeTool === 'screener' && (
+        <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 space-y-6 shadow-xs">
+          <div className="pb-4 border-b border-slate-100">
+            <h2 className="text-lg font-bold text-slate-900">Government Scheme & Investment Eligibility Screener</h2>
+            <p className="text-xs text-slate-500">Filter verified government schemes matching your sector and region.</p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-xs font-bold text-slate-700 mb-1.5">Sector / Category</label>
+              <select
+                value={screenerCategory}
+                onChange={(e) => setScreenerCategory(e.target.value)}
+                className="w-full p-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl font-medium text-slate-800"
+              >
+                <option value="ALL">All Sectors</option>
+                <option value="Agriculture">Agriculture</option>
+                <option value="MSME">MSME & Industry</option>
+                <option value="Social Welfare">Social Welfare</option>
+                <option value="Infrastructure">Infrastructure</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-xs font-bold text-slate-700 mb-1.5">State / Region</label>
+              <select
+                value={screenerState}
+                onChange={(e) => setScreenerState(e.target.value)}
+                className="w-full p-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl font-medium text-slate-800"
+              >
+                <option value="ALL">Pan-India / Central</option>
+                <option value="Delhi">Delhi</option>
+                <option value="Maharashtra">Maharashtra</option>
+                <option value="Karnataka">Karnataka</option>
+                <option value="Uttar Pradesh">Uttar Pradesh</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="space-y-3 pt-4 border-t border-slate-100">
+            <h3 className="text-xs font-bold text-slate-700 uppercase tracking-wider">Matching Verified Schemes ({filteredSchemes.length})</h3>
+            {filteredSchemes.length === 0 ? (
+              <p className="text-xs text-slate-500 italic">No exact schemes match the selected filters. Try broadening your criteria.</p>
+            ) : (
+              <div className="space-y-3">
+                {filteredSchemes.map((sch) => (
+                  <div key={sch.id} className="p-4 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-between gap-4">
+                    <div>
+                      <h4 className="font-bold text-sm text-slate-900">{sch.title}</h4>
+                      <p className="text-xs text-slate-600 line-clamp-1">{sch.description}</p>
+                    </div>
+                    <a
+                      href={sch.sourceUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-lg shrink-0 flex items-center space-x-1"
+                    >
+                      <span>Official Source</span>
+                      <ExternalLink className="w-3 h-3" />
+                    </a>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -793,3 +1580,4 @@ export function OfficialSourcesView() {
     </div>
   );
 }
+

@@ -1,0 +1,15 @@
+[
+  {
+    "projectId": "SAMPLE-OPP-001",
+    "title": "[SAMPLE] National Green Hydrogen Infrastructure Project",
+    "description": "SAMPLE SCHEMA EXAMPLE ONLY. Do not import into production. Represents planned green hydrogen corridor infrastructure.",
+    "authority": "Ministry of New and Renewable Energy (MNRE)",
+    "state": "Gujarat",
+    "totalProjectCost": "₹500 Crore",
+    "sector": "Renewable Energy",
+    "sourceUrl": "https://indiainvestmentgrid.gov.in/sample-opportunity",
+    "sourceAuthority": "India Investment Grid (IIG)",
+    "verificationDate": "2026-09-16",
+    "status": "Planned"
+  }
+]

@@ -82,48 +82,118 @@ export interface Opportunity extends BaseEntity {
   department?: string;
   investorProfile?: string;
   participationProcess?: string[];
+  applicationProcess?: string;
   contactInformation?: string;
   howToEvaluate?: string;
   faqs?: Array<{ question: string; answer: string }>;
   employmentPotential?: string;
   implementingAgency?: string;
+  promoter?: string;
+  eligibility?: string;
+  requiredDocuments?: string[];
+  importantConditions?: string[];
+  timeline?: string;
+  projectDescription?: string;
+  opportunityDescription?: string;
+}
+
+export interface TenderDateEvent {
+  event: string;
+  date: string;
+}
+
+export interface TenderFAQ {
+  question: string;
+  answer: string;
 }
 
 export interface Tender extends BaseEntity {
-  tenderValue: string;
-  submissionDeadline: string;
-  location: string;
-  state?: string;
-  sector?: string;
-  tenderType?: string;
-  sourceName?: string;
   tenderId?: string;
+  referenceNumber?: string;
+  tenderType?: string;
+  procuringAuthority?: string;
   procuringEntity?: string;
   department?: string;
+  ministry?: string;
+  psu?: string;
   organisation?: string;
+  state?: string;
+  location: string;
   district?: string;
   tenderCategory?: string;
-  publishedDate?: string;
-  bidOpeningDate?: string;
-  emdAmount?: string;
-  tenderFee?: string;
-  contractPeriod?: string;
-  eligibility?: string;
-  qualificationRequirements?: string[];
+  workCategory?: string;
+  sector?: string;
+  detailedDescription?: string;
   scopeOfWork?: string;
+  tenderValue: string;
+  estimatedValue?: string;
+  emdAmount?: string;
+  bidSecurity?: string;
+  tenderFee?: string;
+  eligibility?: string;
+  eligibilityCriteria?: string;
+  technicalQualification?: string[];
+  financialQualification?: string[];
+  experienceRequirements?: string[];
+  qualificationRequirements?: string[];
+  requiredDocuments?: string[];
   documentsRequired?: string[];
-  contactInformation?: string;
+  importantDates?: TenderDateEvent[];
+  publishedDate?: string;
+  submissionDeadline: string;
+  bidOpeningDate?: string;
+  preBidMeeting?: string;
+  bidSubmissionProcess?: string;
   submissionMethod?: string;
+  evaluationProcess?: string;
+  selectionProcess?: string;
+  contractPeriod?: string;
+  workPeriod?: string;
+  paymentTerms?: string;
+  commercialTerms?: string;
+  importantConditions?: string[];
+  nitDocumentUrl?: string;
+  officialDocumentUrl?: string;
+  officialPortalUrl?: string;
+  officialSource?: string;
+  sourceName?: string;
+  sourceVerificationDate?: string;
+  contactInformation?: string;
+  faqs?: TenderFAQ[];
   howToRead?: string;
+  howToRespond?: string;
 }
 
 export interface NewsItem extends BaseEntity {
   publishedDate: string;
   content: string;
+  sourceName?: string;
   authorityIssued?: string;
+  ministry?: string;
+  department?: string;
+  whatHappened?: string;
   whatChanged?: string;
+  whyItMatters?: string;
   whoIsAffected?: string;
+  relevance?: string;
+  keyAnnouncement?: string;
   effectiveDate?: string;
+  effectiveStatus?: 'CURRENT' | 'EFFECTIVE' | 'HISTORICAL' | 'SUPERSEDED' | 'WITHDRAWN' | 'CANCELLED' | 'FUTURE_EFFECTIVE' | 'STATUS_UNKNOWN';
+  importantNumbers?: string[];
+  previousRule?: string;
+  newRule?: string;
+  practicalImpact?: string;
+  actionRequired?: string;
+  importantConditions?: string[];
+  officialNotification?: string;
+  circularNumber?: string;
+  sourceVerificationDate?: string;
+  relatedInvestment?: string;
+  relatedScheme?: string;
+  relatedOpportunity?: string;
+  relatedTender?: string;
+  faqs?: Array<{ question: string; answer: string }>;
+  whatThisUpdateMeans?: string;
   relevantInstrument?: string;
   practicalSignificance?: string;
   previousVsCurrent?: string;
