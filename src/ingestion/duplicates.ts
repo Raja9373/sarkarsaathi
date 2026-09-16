@@ -12,20 +12,11 @@ export class DuplicateDetector {
 
   constructor(existingOpportunities: Opportunity[], existingTenders: Tender[]) {
     for (const opp of existingOpportunities) {
-      if (opp.projectId) this.opportunityProjectIds.add(opp.projectId.trim());
-      if (opp.id) this.opportunityIds.add(opp.id);
-      if (opp.slug) this.opportunitySlugs.add(opp.slug);
-      if (opp.title && opp.sourceUrl) {
-        this.opportunityFingerprints.add(`${opp.title.toLowerCase().trim()}|${opp.sourceUrl.toLowerCase().trim()}`);
-      }
+      this.registerOpportunity(opp);
     }
 
     for (const tender of existingTenders) {
-      if (tender.id) this.tenderIds.add(tender.id);
-      if (tender.slug) this.tenderSlugs.add(tender.slug);
-      if (tender.title && tender.sourceUrl) {
-        this.tenderFingerprints.add(`${tender.title.toLowerCase().trim()}|${tender.sourceUrl.toLowerCase().trim()}`);
-      }
+      this.registerTender(tender);
     }
   }
 
@@ -33,10 +24,10 @@ export class DuplicateDetector {
     if (record.projectId && this.opportunityProjectIds.has(record.projectId.trim())) {
       return { isDuplicate: true, reason: `Duplicate Opportunity Project ID: ${record.projectId}` };
     }
-    if (record.id && this.opportunityIds.has(record.id)) {
+    if (record.id && this.opportunityIds.has(record.id.trim())) {
       return { isDuplicate: true, reason: `Duplicate Opportunity ID: ${record.id}` };
     }
-    if (record.slug && this.opportunitySlugs.has(record.slug)) {
+    if (record.slug && this.opportunitySlugs.has(record.slug.trim())) {
       return { isDuplicate: true, reason: `Duplicate Opportunity Slug: ${record.slug}` };
     }
     if (record.title && record.sourceUrl) {
@@ -49,10 +40,11 @@ export class DuplicateDetector {
   }
 
   isTenderDuplicate(record: Partial<Tender>): { isDuplicate: boolean; reason?: string } {
-    if (record.id && this.tenderIds.has(record.id)) {
-      return { isDuplicate: true, reason: `Duplicate Tender ID: ${record.id}` };
+    const refId = (record.id || (record as any).tenderId || (record as any).referenceId || (record as any).tenderRefNumber)?.toString().trim();
+    if (refId && this.tenderIds.has(refId)) {
+      return { isDuplicate: true, reason: `Duplicate Tender ID / Reference ID: ${refId}` };
     }
-    if (record.slug && this.tenderSlugs.has(record.slug)) {
+    if (record.slug && this.tenderSlugs.has(record.slug.trim())) {
       return { isDuplicate: true, reason: `Duplicate Tender Slug: ${record.slug}` };
     }
     if (record.title && record.sourceUrl) {
@@ -64,18 +56,19 @@ export class DuplicateDetector {
     return { isDuplicate: false };
   }
 
-  registerOpportunity(record: Opportunity) {
+  registerOpportunity(record: Partial<Opportunity>) {
     if (record.projectId) this.opportunityProjectIds.add(record.projectId.trim());
-    if (record.id) this.opportunityIds.add(record.id);
-    if (record.slug) this.opportunitySlugs.add(record.slug);
+    if (record.id) this.opportunityIds.add(record.id.trim());
+    if (record.slug) this.opportunitySlugs.add(record.slug.trim());
     if (record.title && record.sourceUrl) {
       this.opportunityFingerprints.add(`${record.title.toLowerCase().trim()}|${record.sourceUrl.toLowerCase().trim()}`);
     }
   }
 
-  registerTender(record: Tender) {
-    if (record.id) this.tenderIds.add(record.id);
-    if (record.slug) this.tenderSlugs.add(record.slug);
+  registerTender(record: Partial<Tender>) {
+    const refId = (record.id || (record as any).tenderId || (record as any).referenceId || (record as any).tenderRefNumber)?.toString().trim();
+    if (refId) this.tenderIds.add(refId);
+    if (record.slug) this.tenderSlugs.add(record.slug.trim());
     if (record.title && record.sourceUrl) {
       this.tenderFingerprints.add(`${record.title.toLowerCase().trim()}|${record.sourceUrl.toLowerCase().trim()}`);
     }

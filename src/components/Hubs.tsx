@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Search, ExternalLink, ShieldCheck, ArrowRight, Building2, TrendingUp, Award, FileText, Newspaper, Bookmark, Share2 } from 'lucide-react';
+import { Search, ExternalLink, ShieldCheck, ArrowRight, Building2, TrendingUp, Award, FileText, Newspaper, Bookmark, Share2, Lightbulb, Users, Leaf, Megaphone } from 'lucide-react';
 import { investmentRepository, investmentSchemeRepository, opportunityRepository, tenderRepository, newsRepository } from '../infrastructure/repositories/InvestmentRepository';
 import { useSavedItems, useRecentlyViewed, ShareButton } from './SavedAndRecent';
+import { HeroIndiaGateVisual } from './HeroIndiaGateVisual';
 
 interface HubProps {
   onNavigate: (route: string, slug?: string) => void;
@@ -9,106 +10,256 @@ interface HubProps {
 
 export function HomeView({ onNavigate }: HubProps) {
   return (
-    <div className="space-y-12 pb-16">
-      {/* Hero */}
-      <section className="bg-gradient-to-br from-indigo-900 via-slate-900 to-indigo-950 text-white py-20 px-4 sm:px-6 lg:px-8 text-center relative overflow-hidden">
-        <div className="max-w-4xl mx-auto relative z-10">
-          <div className="inline-flex items-center space-x-2 bg-indigo-800/60 border border-indigo-700/50 px-3 py-1 rounded-full text-xs font-medium text-indigo-200 mb-6">
-            <ShieldCheck className="w-3.5 h-3.5 text-indigo-300" />
-            <span>Independent Information Platform</span>
-          </div>
-          <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4">
-            India's Government Investment & Opportunity Platform
-          </h1>
-          <p className="text-slate-300 text-base sm:text-lg mb-8 max-w-3xl mx-auto leading-relaxed">
-            Explore government investment products, development opportunities, projects, tenders and important updates from official sources across India.
-          </p>
-          <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
-            <button
-              onClick={() => onNavigate('/investments')}
-              className="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl shadow-lg transition"
-            >
-              Explore Investments
-            </button>
-            <button
-              onClick={() => onNavigate('/opportunities')}
-              className="px-6 py-3 bg-slate-800 hover:bg-slate-700 text-white font-semibold rounded-xl border border-slate-700 transition"
-            >
-              Explore Opportunities
-            </button>
-            <button
-              onClick={() => onNavigate('/tenders')}
-              className="px-5 py-3 bg-slate-800/80 hover:bg-slate-700 text-slate-200 hover:text-white font-semibold rounded-xl border border-slate-700 transition"
-            >
-              Find Tenders
-            </button>
-            <button
-              onClick={() => onNavigate('/news')}
-              className="px-5 py-3 bg-slate-800/80 hover:bg-slate-700 text-slate-200 hover:text-white font-semibold rounded-xl border border-slate-700 transition"
-            >
-              View Updates
-            </button>
+    <div className="space-y-8 pb-16">
+      {/* Hero Section */}
+      <section className="bg-gradient-to-r from-[#0a3f74] via-[#093563] to-[#0a2347] text-white py-12 sm:py-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden border-b border-blue-950/60 shadow-inner">
+        {/* Subtle atmospheric ambient glow */}
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-blue-400/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-10 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
+
+        {/* 
+          India Gate Landmark Photo Background
+          Feather-blended seamlessly with zero hard borders or cut lines
+        */}
+        <div
+          className="absolute right-0 top-0 bottom-0 w-full sm:w-[68%] lg:w-[48%] pointer-events-none z-0 select-none overflow-hidden"
+          style={{
+            WebkitMaskImage:
+              'radial-gradient(ellipse 90% 90% at 75% 50%, black 20%, rgba(0,0,0,0.65) 55%, transparent 88%), linear-gradient(to right, transparent 0%, rgba(0,0,0,0.15) 15%, black 65%)',
+            maskImage:
+              'radial-gradient(ellipse 90% 90% at 75% 50%, black 20%, rgba(0,0,0,0.65) 55%, transparent 88%), linear-gradient(to right, transparent 0%, rgba(0,0,0,0.15) 15%, black 65%)',
+          }}
+        >
+          <img
+            src="/india-gate.jpg"
+            alt="India Gate sunset landscape"
+            className="w-full h-full object-cover object-right sm:object-[82%_center]"
+            referrerPolicy="no-referrer"
+          />
+          {/* Deep ambient tint overlay to melt naturally into the deep ocean blue sky */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#093563] via-[#093563]/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0a2347] via-transparent to-[#0a3f74]/30" />
+        </div>
+
+        {/* Ambient warm twilight lights */}
+        <div className="absolute right-8 top-1/4 w-72 h-72 bg-amber-500/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute right-40 top-8 w-80 h-80 bg-sky-400/12 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6 items-center">
+            {/* Left Content */}
+            <div className="lg:col-span-7 text-left">
+              {/* Badge */}
+              <div className="inline-flex items-center space-x-2 bg-blue-800/40 border border-blue-400/30 px-3.5 py-1.5 rounded-full text-xs font-medium text-blue-100 mb-5 backdrop-blur-xs">
+                <ShieldCheck className="w-3.5 h-3.5 text-blue-300" />
+                <span>Independent Information Platform</span>
+              </div>
+
+              {/* Headline */}
+              <h1 className="text-3xl sm:text-4xl lg:text-[44px] font-extrabold tracking-tight mb-4 text-white leading-[1.18]">
+                India’s Government<br />
+                <span className="text-[#f59e0b]">Investment</span> <span className="text-[#818cf8]">&amp; Opportunity</span> Platform
+              </h1>
+
+              {/* Subheadline */}
+              <p className="text-blue-100/90 text-sm sm:text-base mb-8 max-w-xl font-normal leading-relaxed">
+                Explore government investment products, development opportunities, projects, tenders and important updates from official sources across India.
+              </p>
+
+              {/* 4 CTA Buttons Row */}
+              <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 mb-8">
+                {/* Primary Button */}
+                <button
+                  onClick={() => onNavigate('/investments')}
+                  className="px-4.5 py-2.5 sm:px-5 sm:py-3 bg-[#2563eb] hover:bg-blue-600 text-white font-semibold rounded-xl flex items-center space-x-2 shadow-lg shadow-blue-950/40 transition cursor-pointer text-sm"
+                >
+                  <TrendingUp className="w-4 h-4" />
+                  <span>Explore Investments</span>
+                  <ArrowRight className="w-4 h-4 ml-0.5" />
+                </button>
+
+                {/* Secondary Button 1 */}
+                <button
+                  onClick={() => onNavigate('/opportunities')}
+                  className="px-4.5 py-2.5 sm:px-5 sm:py-3 bg-[#0b2447]/60 hover:bg-[#0b2447]/90 text-white font-medium rounded-xl border border-blue-400/30 flex items-center space-x-2 transition cursor-pointer text-sm"
+                >
+                  <Lightbulb className="w-4 h-4 text-blue-200" />
+                  <span>Explore Opportunities</span>
+                  <ArrowRight className="w-4 h-4 ml-0.5 text-blue-300" />
+                </button>
+
+                {/* Secondary Button 2 */}
+                <button
+                  onClick={() => onNavigate('/tenders')}
+                  className="px-4.5 py-2.5 sm:px-5 sm:py-3 bg-[#0b2447]/60 hover:bg-[#0b2447]/90 text-white font-medium rounded-xl border border-blue-400/30 flex items-center space-x-2 transition cursor-pointer text-sm"
+                >
+                  <FileText className="w-4 h-4 text-blue-200" />
+                  <span>Find Tenders</span>
+                  <ArrowRight className="w-4 h-4 ml-0.5 text-blue-300" />
+                </button>
+
+                {/* Secondary Button 3 */}
+                <button
+                  onClick={() => onNavigate('/news')}
+                  className="px-4.5 py-2.5 sm:px-5 sm:py-3 bg-[#0b2447]/60 hover:bg-[#0b2447]/90 text-white font-medium rounded-xl border border-blue-400/30 flex items-center space-x-2 transition cursor-pointer text-sm"
+                >
+                  <Newspaper className="w-4 h-4 text-blue-200" />
+                  <span>View Updates</span>
+                  <ArrowRight className="w-4 h-4 ml-0.5 text-blue-300" />
+                </button>
+              </div>
+
+              {/* Trust Bar Row */}
+              <div className="flex flex-wrap items-center gap-x-6 gap-y-2.5 text-xs sm:text-sm text-slate-200 font-medium">
+                <div className="flex items-center space-x-1.5">
+                  <span className="w-4.5 h-4.5 rounded-full bg-emerald-500 flex items-center justify-center text-white shrink-0 shadow-xs">
+                    <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  </span>
+                  <span>Verified .gov.in Sources</span>
+                </div>
+                <div className="flex items-center space-x-1.5">
+                  <Users className="w-4 h-4 text-sky-400 shrink-0" />
+                  <span>Pan-India Coverage</span>
+                </div>
+                <div className="flex items-center space-x-1.5">
+                  <span className="w-4.5 h-4.5 rounded-full bg-blue-500/80 flex items-center justify-center text-white shrink-0 shadow-xs">
+                    <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  </span>
+                  <span>100% Free Access</span>
+                </div>
+                <div className="flex items-center space-x-1.5">
+                  <Leaf className="w-4 h-4 text-emerald-400 shrink-0" />
+                  <span>No Registration Required</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Side: India Map + Viksit Bharat Together */}
+            <div className="lg:col-span-5 flex justify-center lg:justify-end mt-4 lg:mt-0">
+              <HeroIndiaGateVisual />
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Pillars Grid */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-2xl font-bold text-slate-900 mb-6">Explore Core Pillars</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div onClick={() => onNavigate('/investments')} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs hover:shadow-md transition cursor-pointer">
-            <div className="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center mb-4">
-              <TrendingUp className="w-6 h-6" />
+      {/* Explore Core Pillars Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2">
+        <div className="flex items-center justify-between mb-5">
+          <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">Explore Core Pillars</h2>
+          <button
+            onClick={() => onNavigate('/investments')}
+            className="text-blue-600 hover:text-blue-700 font-semibold text-xs sm:text-sm flex items-center space-x-1 cursor-pointer transition"
+          >
+            <span>View All</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </button>
+        </div>
+
+        {/* 4 Pillars Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 mb-5">
+          {/* Card 1: Investments */}
+          <div
+            onClick={() => onNavigate('/investments')}
+            className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs hover:shadow-md transition cursor-pointer group flex flex-col justify-between"
+          >
+            <div>
+              <div className="flex items-center justify-between mb-3.5">
+                <div className="w-11 h-11 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center">
+                  <TrendingUp className="w-5 h-5" />
+                </div>
+                <div className="w-7 h-7 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition">
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </div>
+              </div>
+              <h3 className="text-base font-bold text-slate-900 mb-1">Investments</h3>
+              <p className="text-xs text-slate-500 leading-relaxed">
+                Government investment products and public savings instruments.
+              </p>
             </div>
-            <h3 className="text-lg font-bold text-slate-900 mb-2">Investments</h3>
-            <p className="text-slate-600 text-sm mb-4">Sovereign gold bonds, government securities, and high-yield public savings instruments.</p>
-            <span className="text-indigo-600 text-xs font-semibold flex items-center space-x-1"><span>Browse Investments</span> <ArrowRight className="w-3.5 h-3.5" /></span>
           </div>
 
-          <div onClick={() => onNavigate('/investment-schemes')} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs hover:shadow-md transition cursor-pointer">
-            <div className="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center mb-4">
-              <Building2 className="w-6 h-6" />
+          {/* Card 2: Investment Schemes */}
+          <div
+            onClick={() => onNavigate('/investment-schemes')}
+            className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs hover:shadow-md transition cursor-pointer group flex flex-col justify-between"
+          >
+            <div>
+              <div className="flex items-center justify-between mb-3.5">
+                <div className="w-11 h-11 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center">
+                  <Building2 className="w-5 h-5" />
+                </div>
+                <div className="w-7 h-7 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition">
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </div>
+              </div>
+              <h3 className="text-base font-bold text-slate-900 mb-1">Investment Schemes</h3>
+              <p className="text-xs text-slate-500 leading-relaxed">
+                Government schemes and incentives relevant to investment and development.
+              </p>
             </div>
-            <h3 className="text-lg font-bold text-slate-900 mb-2">Investment Schemes</h3>
-            <p className="text-slate-600 text-sm mb-4">PPF, National Savings Certificates, and central welfare deposit schemes.</p>
-            <span className="text-emerald-600 text-xs font-semibold flex items-center space-x-1"><span>Browse Schemes</span> <ArrowRight className="w-3.5 h-3.5" /></span>
           </div>
 
-          <div onClick={() => onNavigate('/opportunities')} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs hover:shadow-md transition cursor-pointer">
-            <div className="w-12 h-12 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center mb-4">
-              <Award className="w-6 h-6" />
+          {/* Card 3: Opportunities */}
+          <div
+            onClick={() => onNavigate('/opportunities')}
+            className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs hover:shadow-md transition cursor-pointer group flex flex-col justify-between"
+          >
+            <div>
+              <div className="flex items-center justify-between mb-3.5">
+                <div className="w-11 h-11 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center">
+                  <Lightbulb className="w-5 h-5" />
+                </div>
+                <div className="w-7 h-7 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition">
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </div>
+              </div>
+              <h3 className="text-base font-bold text-slate-900 mb-1">Opportunities</h3>
+              <p className="text-xs text-slate-500 leading-relaxed">
+                Development projects and investment opportunities from official sources.
+              </p>
             </div>
-            <h3 className="text-lg font-bold text-slate-900 mb-2">Opportunities</h3>
-            <p className="text-slate-600 text-sm mb-4">Grants, research fellowships, startup seed funding, and innovation challenges.</p>
-            <span className="text-amber-600 text-xs font-semibold flex items-center space-x-1"><span>Browse Opportunities</span> <ArrowRight className="w-3.5 h-3.5" /></span>
           </div>
 
-          <div onClick={() => onNavigate('/tenders')} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs hover:shadow-md transition cursor-pointer">
-            <div className="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center mb-4">
-              <FileText className="w-6 h-6" />
+          {/* Card 4: Tenders */}
+          <div
+            onClick={() => onNavigate('/tenders')}
+            className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs hover:shadow-md transition cursor-pointer group flex flex-col justify-between"
+          >
+            <div>
+              <div className="flex items-center justify-between mb-3.5">
+                <div className="w-11 h-11 bg-rose-50 text-rose-600 rounded-xl flex items-center justify-center">
+                  <FileText className="w-5 h-5" />
+                </div>
+                <div className="w-7 h-7 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition">
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </div>
+              </div>
+              <h3 className="text-base font-bold text-slate-900 mb-1">Tenders</h3>
+              <p className="text-xs text-slate-500 leading-relaxed">
+                Government and PSU tenders from official procurement sources.
+              </p>
             </div>
-            <h3 className="text-lg font-bold text-slate-900 mb-2">Tenders</h3>
-            <p className="text-slate-600 text-sm mb-4">Central and state procurement notices, e-procurement links, and RFPs.</p>
-            <span className="text-blue-600 text-xs font-semibold flex items-center space-x-1"><span>Browse Tenders</span> <ArrowRight className="w-3.5 h-3.5" /></span>
           </div>
+        </div>
 
-          <div onClick={() => onNavigate('/news')} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs hover:shadow-md transition cursor-pointer">
-            <div className="w-12 h-12 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center mb-4">
-              <Newspaper className="w-6 h-6" />
+        {/* Update Banner */}
+        <div className="bg-blue-50/70 border border-blue-100/90 rounded-2xl p-4 sm:px-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-2xs">
+          <div className="flex items-center space-x-3.5">
+            <div className="w-9 h-9 rounded-xl bg-blue-100/80 text-blue-600 flex items-center justify-center shrink-0">
+              <Megaphone className="w-5 h-5 text-blue-600" />
             </div>
-            <h3 className="text-lg font-bold text-slate-900 mb-2">News & Updates</h3>
-            <p className="text-slate-600 text-sm mb-4">PIB releases, policy circulars, and official notifications.</p>
-            <span className="text-purple-600 text-xs font-semibold flex items-center space-x-1"><span>Browse News</span> <ArrowRight className="w-3.5 h-3.5" /></span>
-          </div>
-
-          <div onClick={() => onNavigate('/tools')} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs hover:shadow-md transition cursor-pointer">
-            <div className="w-12 h-12 bg-rose-50 text-rose-600 rounded-xl flex items-center justify-center mb-4">
-              <Search className="w-6 h-6" />
+            <div className="text-xs sm:text-sm text-slate-600 leading-normal">
+              <span className="font-bold text-blue-900 mr-1.5">Stay Updated:</span>
+              Latest government opportunities, tenders and investment-related news from trusted official sources.
             </div>
-            <h3 className="text-lg font-bold text-slate-900 mb-2">Calculators & Tools</h3>
-            <p className="text-slate-600 text-sm mb-4">Financial calculators, scheme eligibility checkers, and comparison engines.</p>
-            <span className="text-rose-600 text-xs font-semibold flex items-center space-x-1"><span>Open Tools</span> <ArrowRight className="w-3.5 h-3.5" /></span>
           </div>
+          <button
+            onClick={() => onNavigate('/news')}
+            className="text-xs sm:text-sm font-semibold text-blue-600 hover:text-blue-700 flex items-center space-x-1.5 shrink-0 whitespace-nowrap cursor-pointer transition self-end sm:self-auto"
+          >
+            <span>View Latest Updates</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </button>
         </div>
       </section>
     </div>

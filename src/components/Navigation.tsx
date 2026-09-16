@@ -39,23 +39,35 @@ export function Navbar({ currentRoute, onNavigate }: NavbarProps) {
           </div>
         </div>
 
-        <nav className="hidden lg:flex items-center space-x-6">
-          {navItems.map((item) => (
-            <button
-              key={item.path}
-              onClick={() => onNavigate(item.path)}
-              className={`text-sm font-medium transition ${
-                currentRoute === item.path ? 'text-indigo-600 font-semibold' : 'text-slate-600 hover:text-indigo-600'
-              }`}
-            >
-              {item.label}
-            </button>
-          ))}
+        <nav className="hidden lg:flex items-center space-x-5 xl:space-x-6 h-full">
+          {navItems.map((item) => {
+            const isActive = currentRoute === item.path;
+            return (
+              <button
+                key={item.path}
+                onClick={() => onNavigate(item.path)}
+                className={`relative h-16 flex items-center text-sm font-medium transition cursor-pointer ${
+                  isActive ? 'text-blue-600 font-semibold' : 'text-slate-600 hover:text-blue-600'
+                }`}
+              >
+                {item.label === 'Official Sources' ? (
+                  <span className="leading-none text-left text-xs sm:text-sm">
+                    Official<br />Sources
+                  </span>
+                ) : (
+                  <span>{item.label}</span>
+                )}
+                {isActive && (
+                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600" />
+                )}
+              </button>
+            );
+          })}
         </nav>
 
         <div className="flex items-center space-x-3">
-          <div className="hidden sm:flex items-center space-x-1.5 text-xs bg-indigo-50 text-indigo-700 px-3 py-1.5 rounded-lg border border-indigo-100 font-medium whitespace-nowrap">
-            <ShieldCheck className="w-4 h-4 text-indigo-600 flex-shrink-0" />
+          <div className="hidden xl:flex items-center space-x-1.5 text-xs bg-blue-50/90 text-blue-600 px-3.5 py-1.5 rounded-xl border border-blue-200/70 font-medium whitespace-nowrap">
+            <ShieldCheck className="w-4 h-4 text-blue-600 flex-shrink-0" />
             <span>Curated from Verified .gov.in Sources</span>
           </div>
           <button
