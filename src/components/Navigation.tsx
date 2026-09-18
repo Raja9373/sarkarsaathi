@@ -14,6 +14,7 @@ export function Navbar({ currentRoute, onNavigate }: NavbarProps) {
     { label: 'Home', path: '/' },
     { label: 'Investments', path: '/investments' },
     { label: 'Schemes', path: '/investment-schemes' },
+    { label: 'Subsidies & Benefits', path: '/subsidies' },
     { label: 'Opportunities', path: '/opportunities' },
     { label: 'Tenders', path: '/tenders' },
     { label: 'News', path: '/news' },

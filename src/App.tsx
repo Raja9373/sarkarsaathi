@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Navbar, Footer } from './components/Navigation';
 import { HomeView, GenericHubView, DetailView, ComparisonsView, ToolsView, OfficialSourcesView } from './components/Hubs';
+import { SubsidyHubView, SubsidyDetailView } from './components/SubsidyViews';
 import { SavedView, RecentlyViewedView } from './components/SavedAndRecent';
 import { AdminImport } from './components/AdminImport';
 import { investmentRepository, investmentSchemeRepository, opportunityRepository, tenderRepository, newsRepository } from './infrastructure/repositories/InvestmentRepository';
+import { subsidyRepository } from './infrastructure/repositories/SubsidyRepository';
 
 export default function App() {
   const getInitialRouteState = () => {
@@ -13,7 +15,7 @@ export default function App() {
     if (parts.length === 0) return { route: '/', slug: null };
     if (parts.length === 1) return { route: `/${parts[0]}`, slug: null };
     const root = `/${parts[0]}`;
-    if (['/investments', '/investment-schemes', '/opportunities', '/tenders', '/news'].includes(root)) {
+    if (['/investments', '/investment-schemes', '/opportunities', '/tenders', '/news', '/subsidies'].includes(root)) {
       return { route: root, slug: parts.slice(1).join('/') };
     }
     return { route: path, slug: null };
@@ -35,7 +37,7 @@ export default function App() {
         setSelectedSlug(null);
       } else if (parts.length >= 2) {
         const root = `/${parts[0]}`;
-        if (['/investments', '/investment-schemes', '/opportunities', '/tenders', '/news'].includes(root)) {
+        if (['/investments', '/investment-schemes', '/opportunities', '/tenders', '/news', '/subsidies'].includes(root)) {
           setCurrentRoute(root);
           setSelectedSlug(parts.slice(1).join('/'));
         } else {
@@ -57,7 +59,7 @@ export default function App() {
       const parts = baseRoute.split('/').filter(Boolean);
       if (parts.length >= 2) {
         const root = `/${parts[0]}`;
-        if (['/investments', '/investment-schemes', '/opportunities', '/tenders', '/news'].includes(root)) {
+        if (['/investments', '/investment-schemes', '/opportunities', '/tenders', '/news', '/subsidies'].includes(root)) {
           baseRoute = root;
           itemSlug = parts.slice(1).join('/');
         }
@@ -93,6 +95,10 @@ export default function App() {
         const item = newsRepository.getBySlug(selectedSlug);
         return <DetailView item={item} type="News" onBack={() => navigate('/news')} />;
       }
+      if (currentRoute === '/subsidies') {
+        const item = subsidyRepository.getBySlug(selectedSlug);
+        return <SubsidyDetailView item={item!} onBack={() => navigate('/subsidies')} />;
+      }
     }
 
     switch (currentRoute) {
@@ -102,6 +108,8 @@ export default function App() {
         return <GenericHubView title="Sovereign & Government Investments" type="investments" items={investmentRepository.getAll()} repository={investmentRepository} onNavigate={navigate} />;
       case '/investment-schemes':
         return <GenericHubView title="Government Investment Schemes" type="investment-schemes" items={investmentSchemeRepository.getAll()} repository={investmentSchemeRepository} onNavigate={navigate} />;
+      case '/subsidies':
+        return <SubsidyHubView onNavigate={navigate} />;
       case '/opportunities':
         return <GenericHubView title="Government Opportunities & Grants" type="opportunities" items={opportunityRepository.getAll()} repository={opportunityRepository} onNavigate={navigate} />;
       case '/tenders':

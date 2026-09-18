@@ -210,3 +210,30 @@ export interface PaginationParams {
   search?: string;
   category?: string;
 }
+
+export interface Subsidy extends BaseEntity {
+  shortDescription?: string;
+  subcategory?: string;
+  benefitType?: string;
+  beneficiaryType?: string;
+  state?: string;
+  ministry?: string;
+  department?: string;
+  eligibility: string;
+  benefits: string;
+  subsidyAmount?: string;
+  subsidyPercentage?: string;
+  maximumBenefit?: string;
+  minimumInvestment?: string;
+  documentsRequired?: string[];
+  applicationProcess: string;
+  applicationMode?: string;
+  applicationUrl?: string;
+  startDate?: string;
+  endDate?: string;
+  officialSource?: string;
+  officialSourceUrl?: string;
+  lastVerified?: string;
+  sourceNotes?: string;
+  disclaimer?: string;
+}
