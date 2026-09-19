@@ -13,12 +13,21 @@ import {
   Sparkles,
   Info
 } from 'lucide-react';
+import { useSEO } from '../../utils/seo';
 
 interface NewsDetailViewProps {
   item: NewsItem;
 }
 
 export const NewsDetailView: React.FC<NewsDetailViewProps> = ({ item }) => {
+  useSEO({
+    title: `${item.title} | ${item.category || 'Government News'} | SarkarSaathi`,
+    description: item.description?.substring(0, 155) || 'Official government news and policy update verified by SarkarSaathi.',
+    canonicalPath: `/news/${item.slug || item.id}`
+  });
+
+  if (!item) return null;
+
   return (
     <div className="space-y-8">
       {/* Header Badge & Title */}

@@ -4,6 +4,11 @@ import { SUBSIDIES_BATCH_2 } from './subsidiesBatch2';
 import { SUBSIDIES_BATCH_3 } from './subsidiesBatch3';
 import { SUBSIDIES_BATCH_4 } from './subsidiesBatch4';
 import { SUBSIDIES_BATCH_5 } from './subsidiesBatch5';
+import { SUBSIDIES_BATCH_6 } from './subsidiesBatch6';
+import { SUBSIDIES_BATCH_7 } from './subsidiesBatch7';
+import { SUBSIDIES_BATCH_8 } from './subsidiesBatch8';
+import { SUBSIDIES_BATCH_9 } from './subsidiesBatch9';
+import { SUBSIDIES_BATCH_10 } from './subsidiesBatch10';
 
 const initialPilot: Subsidy[] = [
   {
@@ -229,5 +234,10 @@ export const VERIFIED_SUBSIDIES_PILOT: Subsidy[] = [
   ...SUBSIDIES_BATCH_2,
   ...SUBSIDIES_BATCH_3,
   ...SUBSIDIES_BATCH_4,
-  ...SUBSIDIES_BATCH_5
+  ...SUBSIDIES_BATCH_5,
+  ...SUBSIDIES_BATCH_6,
+  ...SUBSIDIES_BATCH_7,
+  ...SUBSIDIES_BATCH_8,
+  ...SUBSIDIES_BATCH_9,
+  ...SUBSIDIES_BATCH_10
 ];

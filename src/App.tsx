@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Navbar, Footer } from './components/Navigation';
 import { HomeView, GenericHubView, DetailView, ComparisonsView, ToolsView, OfficialSourcesView } from './components/Hubs';
+import { SearchView } from './components/SearchView';
+import { AboutPage, ContactPage, PrivacyPolicyPage, DisclaimerPage, TermsPage } from './components/LegalPages';
+import { StateLandingView, SectorLandingView } from './components/HubsLanding';
 import { SubsidyHubView, SubsidyDetailView } from './components/SubsidyViews';
 import { SavedView, RecentlyViewedView } from './components/SavedAndRecent';
 import { AdminImport } from './components/AdminImport';
@@ -84,6 +87,14 @@ export default function App() {
         return <DetailView item={item} type="Investment Schemes" onBack={() => navigate('/investment-schemes')} />;
       }
       if (currentRoute === '/opportunities') {
+        if (selectedSlug?.startsWith('state/')) {
+          const state = selectedSlug.split('/')[1];
+          return <StateLandingView state={state} onNavigate={navigate} />;
+        }
+        if (selectedSlug?.startsWith('sector/')) {
+          const sector = selectedSlug.split('/')[1];
+          return <SectorLandingView sector={sector} onNavigate={navigate} />;
+        }
         const item = opportunityRepository.getBySlug(selectedSlug);
         return <DetailView item={item} type="Opportunities" onBack={() => navigate('/opportunities')} />;
       }
@@ -126,9 +137,23 @@ export default function App() {
         return <ToolsView />;
       case '/official-sources':
         return <OfficialSourcesView />;
+      case '/about':
+        return <AboutPage />;
+      case '/contact':
+        return <ContactPage />;
+      case '/privacy-policy':
+        return <PrivacyPolicyPage />;
+      case '/disclaimer':
+        return <DisclaimerPage />;
+      case '/terms':
+        return <TermsPage />;
       case '/admin/import':
         return <AdminImport />;
       default:
+        if (currentRoute.startsWith('/search')) {
+            const query = new URLSearchParams(window.location.search).get('q') || '';
+            return <SearchView query={query} onNavigate={navigate} />;
+        }
         return <HomeView onNavigate={navigate} />;
     }
   };

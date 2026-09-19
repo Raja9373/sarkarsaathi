@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShieldCheck, Menu, X } from 'lucide-react';
+import { ShieldCheck, Menu, X, Search } from 'lucide-react';
 import { SarkarSaathiLogo } from './SarkarSaathiLogo';
 
 interface NavbarProps {
@@ -9,6 +9,15 @@ interface NavbarProps {
 
 export function Navbar({ currentRoute, onNavigate }: NavbarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+  const [searchModalOpen, setSearchModalOpen] = React.useState(false);
+
+  const searchInputRef = React.useRef<HTMLInputElement>(null);
+
+  React.useEffect(() => {
+    if (searchModalOpen && searchInputRef.current) {
+      searchInputRef.current.focus();
+    }
+  }, [searchModalOpen]);
 
   const navItems = [
     { label: 'Home', path: '/' },
@@ -67,6 +76,14 @@ export function Navbar({ currentRoute, onNavigate }: NavbarProps) {
         </nav>
 
         <div className="flex items-center space-x-3">
+          {/* Global Search Button */}
+          <button
+            onClick={() => setSearchModalOpen(true)}
+            className="p-2 rounded-lg text-slate-600 hover:bg-slate-100"
+          >
+            <Search className="w-5 h-5" />
+          </button>
+          
           <div className="hidden xl:flex items-center space-x-1.5 text-xs bg-blue-50/90 text-blue-600 px-3.5 py-1.5 rounded-xl border border-blue-200/70 font-medium whitespace-nowrap">
             <ShieldCheck className="w-4 h-4 text-blue-600 flex-shrink-0" />
             <span>Curated from Verified .gov.in Sources</span>
@@ -79,6 +96,31 @@ export function Navbar({ currentRoute, onNavigate }: NavbarProps) {
           </button>
         </div>
       </div>
+
+      {searchModalOpen && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/50">
+          <div className="bg-white rounded-xl shadow-2xl w-full max-w-lg p-6">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-lg font-bold text-slate-900">Global Search</h2>
+              <button onClick={() => setSearchModalOpen(false)} className="text-slate-500 hover:text-slate-900">
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+            <input
+              ref={searchInputRef}
+              type="text"
+              placeholder="Search..."
+              className="w-full pl-3 pr-4 py-3 text-lg border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  onNavigate(`/search?q=${(e.target as HTMLInputElement).value}`);
+                  setSearchModalOpen(false);
+                }
+              }}
+            />
+          </div>
+        </div>
+      )}
 
       {mobileMenuOpen && (
         <div className="lg:hidden bg-white border-b border-slate-200 px-4 pt-2 pb-4 space-y-2">
@@ -117,9 +159,12 @@ export function Footer({ onNavigate }: { onNavigate: (route: string) => void }) 
               India's Private Aggregator for Government Schemes & Tenders. Information curated from verified .gov.in sources.
             </p>
           </div>
-          <div className="flex space-x-6 text-xs">
-            <button onClick={() => onNavigate('/')} className="hover:text-white transition">Privacy Policy</button>
-            <button onClick={() => onNavigate('/')} className="hover:text-white transition">Terms of Service</button>
+          <div className="flex flex-wrap justify-center gap-6 text-xs">
+            <button onClick={() => onNavigate('/about')} className="hover:text-white transition">About</button>
+            <button onClick={() => onNavigate('/contact')} className="hover:text-white transition">Contact</button>
+            <button onClick={() => onNavigate('/privacy-policy')} className="hover:text-white transition">Privacy Policy</button>
+            <button onClick={() => onNavigate('/terms')} className="hover:text-white transition">Terms of Service</button>
+            <button onClick={() => onNavigate('/disclaimer')} className="hover:text-white transition">Disclaimer</button>
             <button onClick={() => onNavigate('/official-sources')} className="hover:text-white transition">Government Sources Directory</button>
           </div>
         </div>

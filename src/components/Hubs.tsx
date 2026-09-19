@@ -6,6 +6,8 @@ import { HeroIndiaGateVisual } from './HeroIndiaGateVisual';
 import { CatalogQueryOptions, PaginatedResult } from '../ingestion/types';
 import { CatalogQueryManager } from '../ingestion/catalogManager';
 import { MasterDetailView } from './detail/MasterDetailView';
+import { useSEO } from '../utils/seo';
+import { addStateOfficialSources } from '../utils/officialSources';
 
 export { MasterDetailView };
 export const DetailView = MasterDetailView;
@@ -354,17 +356,21 @@ export function GenericHubView({
   type,
   items,
   repository,
-  onNavigate
+  onNavigate,
+  initialState = 'ALL',
+  initialSector = 'ALL'
 }: {
   title: string;
   type: string;
   items: any[];
   repository?: any;
   onNavigate: (route: string, slug?: string) => void;
+  initialState?: string;
+  initialSector?: string;
 }) {
   const [search, setSearch] = useState('');
-  const [stateFilter, setStateFilter] = useState('ALL');
-  const [sectorFilter, setSectorFilter] = useState('ALL');
+  const [stateFilter, setStateFilter] = useState(initialState);
+  const [sectorFilter, setSectorFilter] = useState(initialSector);
   const [typeFilter, setTypeFilter] = useState('ALL');
   const [statusFilter, setStatusFilter] = useState('ALL');
   const [sourceFilter, setSourceFilter] = useState('ALL');
@@ -1634,25 +1640,103 @@ export function ToolsView() {
 }
 
 export function OfficialSourcesView() {
+  useSEO({
+    title: 'Official Government Sources | SarkarSaathi',
+    description: 'Find verified official Indian government websites, ministries, regulators, procurement portals, investment authorities and public information sources.',
+    canonicalPath: '/official-sources'
+  });
+
+  const [search, setSearch] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState('ALL');
+  const [typeFilter, setTypeFilter] = useState<'ALL' | 'CENTRAL' | 'STATE' | 'UT'>('ALL');
+  
+  const centralSources = [
+    { name: 'Government of India', category: 'CENTRAL GOVERNMENT', description: 'Central government portal', authority: 'Government of India', officialUrl: 'https://india.gov.in', sourceType: 'Central Government', type: 'CENTRAL' },
+    { name: 'PIB', category: 'CENTRAL GOVERNMENT', description: 'Press Information Bureau', authority: 'Ministry of Information and Broadcasting', officialUrl: 'https://www.pib.gov.in/', sourceType: 'Central Government', type: 'CENTRAL' },
+    { name: 'myScheme', category: 'SUBSIDIES & BENEFITS', description: 'Portal for government schemes', authority: 'Government of India', officialUrl: 'https://www.myscheme.gov.in/', sourceType: 'Benefits Portal', type: 'CENTRAL' },
+    { name: 'DBT Bharat', category: 'SUBSIDIES & BENEFITS', description: 'Direct Benefit Transfer portal', authority: 'Government of India', officialUrl: 'https://dbtbharat.gov.in/', sourceType: 'Benefits Portal', type: 'CENTRAL' },
+    { name: 'Data.gov.in', category: 'DATA & STATISTICS', description: 'Open Government Data Platform', authority: 'Government of India', officialUrl: 'https://www.data.gov.in/', sourceType: 'Data Portal', type: 'CENTRAL' },
+    { name: 'Invest India', category: 'BUSINESS & INDUSTRY', description: 'Investment promotion agency', authority: 'Government of India', officialUrl: 'https://www.investindia.gov.in/', sourceType: 'Investment Portal', type: 'CENTRAL' },
+    { name: 'India Investment Grid', category: 'BUSINESS & INDUSTRY', description: 'Showcasing investment opportunities', authority: 'Government of India', officialUrl: 'https://indiainvestmentgrid.gov.in/', sourceType: 'Investment Portal', type: 'CENTRAL' },
+    { name: 'GeM', category: 'PROCUREMENT & TENDERS', description: 'Government e-Marketplace', authority: 'Government of India', officialUrl: 'https://gem.gov.in/', sourceType: 'Procurement Portal', type: 'CENTRAL' },
+    { name: 'eProcure', category: 'PROCUREMENT & TENDERS', description: 'Central Public Procurement Portal', authority: 'Government of India', officialUrl: 'https://eprocure.gov.in/eprocure/app', sourceType: 'Procurement Portal', type: 'CENTRAL' },
+    { name: 'IREPS', category: 'PROCUREMENT & TENDERS', description: 'Indian Railways e-Procurement System', authority: 'Ministry of Railways', officialUrl: 'https://ireps.gov.in/', sourceType: 'Procurement Portal', type: 'CENTRAL' },
+    { name: 'RBI', category: 'FINANCE & INVESTMENT', description: 'Central bank of India', authority: 'Reserve Bank of India', officialUrl: 'https://www.rbi.org.in/', sourceType: 'Regulator', type: 'CENTRAL' },
+    { name: 'SEBI', category: 'FINANCE & INVESTMENT', description: 'Securities and Exchange Board of India', authority: 'Government of India', officialUrl: 'https://www.sebi.gov.in/', sourceType: 'Regulator', type: 'CENTRAL' },
+    { name: 'PFRDA', category: 'FINANCE & INVESTMENT', description: 'Pension Fund Regulatory and Development Authority', authority: 'Government of India', officialUrl: 'https://www.pfrda.org.in/', sourceType: 'Regulator', type: 'CENTRAL' },
+    { name: 'IRDAI', category: 'FINANCE & INVESTMENT', description: 'Insurance Regulatory and Development Authority', authority: 'Government of India', officialUrl: 'https://www.irdai.gov.in/', sourceType: 'Regulator', type: 'CENTRAL' },
+    { name: 'NSI', category: 'FINANCE & INVESTMENT', description: 'National Savings Institute', authority: 'Ministry of Finance', officialUrl: 'https://www.nsiindia.gov.in/', sourceType: 'Ministry', type: 'CENTRAL' },
+    { name: 'DPIIT', category: 'BUSINESS & INDUSTRY', description: 'Department for Promotion of Industry and Internal Trade', authority: 'Ministry of Commerce and Industry', officialUrl: 'https://dpiit.gov.in/', sourceType: 'Ministry', type: 'CENTRAL' },
+    { name: 'MoSPI', category: 'DATA & STATISTICS', description: 'Ministry of Statistics and Programme Implementation', authority: 'Government of India', officialUrl: 'https://www.mospi.gov.in/', sourceType: 'Ministry', type: 'CENTRAL' },
+    { name: 'PAIMANA', category: 'INFRASTRUCTURE', description: 'Project Appraisal and Infrastructure Monitoring', authority: 'MoSPI', officialUrl: 'https://paimana-proj.mospi.gov.in/', sourceType: 'Infrastructure Authority', type: 'CENTRAL' },
+  ];
+
+  const sources = addStateOfficialSources(centralSources);
+
+  const categories = ['ALL', ...Array.from(new Set(sources.map(s => s.category)))];
+
+  const filteredSources = sources.filter(s => 
+    (categoryFilter === 'ALL' || s.category === categoryFilter) &&
+    (typeFilter === 'ALL' || s.type === typeFilter) &&
+    (s.name.toLowerCase().includes(search.toLowerCase()) || s.description.toLowerCase().includes(search.toLowerCase()))
+  );
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       <h1 className="text-3xl font-extrabold text-slate-900 mb-2">Official Government Sources Registry</h1>
-      <p className="text-slate-600 text-sm mb-8">Direct directory of verified .gov.in and .nic.in portals.</p>
-      <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-4">
-        <div className="flex items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-100">
-          <div>
-            <h4 className="font-bold text-slate-900">Reserve Bank of India (RBI)</h4>
-            <p className="text-xs text-slate-500">Sovereign gold bonds & monetary policy</p>
-          </div>
-          <a href="https://rbi.org.in" target="_blank" rel="noopener noreferrer" className="text-indigo-600 text-xs font-semibold flex items-center space-x-1"><span>rbi.org.in</span> <ExternalLink className="w-3.5 h-3.5" /></a>
+      <p className="text-slate-600 text-sm mb-8">
+        SarkarSaathi is an independent information platform. The websites listed here are official external sources operated by their respective government departments, ministries, regulators or authorities.
+      </p>
+
+      <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs mb-8 space-y-4">
+        <div className="flex flex-col sm:flex-row gap-4">
+          <input 
+            type="text" 
+            placeholder="Search sources..." 
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="flex-1 p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm"
+          />
+          <select 
+            value={categoryFilter} 
+            onChange={(e) => setCategoryFilter(e.target.value)}
+            className="p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm"
+          >
+            {categories.map(c => <option key={c} value={c}>{c}</option>)}
+          </select>
+          <select 
+            value={typeFilter} 
+            onChange={(e) => setTypeFilter(e.target.value as any)}
+            className="p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm"
+          >
+            <option value="ALL">All Types</option>
+            <option value="CENTRAL">Central</option>
+            <option value="STATE">State</option>
+            <option value="UT">Union Territory</option>
+          </select>
         </div>
-        <div className="flex items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-100">
-          <div>
-            <h4 className="font-bold text-slate-900">National Portal of India</h4>
-            <p className="text-xs text-slate-500">Centralized gateway to all Indian government services</p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {filteredSources.map(s => (
+          <div key={s.officialUrl} className="bg-white border border-slate-200 rounded-2xl p-6 flex flex-col justify-between shadow-xs">
+            <div>
+              <span className="text-[10px] font-bold text-indigo-600 uppercase tracking-wider">{s.category}</span>
+              <h4 className="font-bold text-slate-900 mt-1 mb-2">{s.name}</h4>
+              <p className="text-xs text-slate-500 mb-4">{s.description}</p>
+              <div className="text-[11px] text-slate-400">Authority: {s.authority}</div>
+            </div>
+            <a 
+              href={s.officialUrl} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="mt-4 w-full py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-xl flex items-center justify-center space-x-2"
+            >
+              <span>Visit Official Website</span>
+              <ExternalLink className="w-3.5 h-3.5" />
+            </a>
           </div>
-          <a href="https://india.gov.in" target="_blank" rel="noopener noreferrer" className="text-indigo-600 text-xs font-semibold flex items-center space-x-1"><span>india.gov.in</span> <ExternalLink className="w-3.5 h-3.5" /></a>
-        </div>
+        ))}
       </div>
     </div>
   );

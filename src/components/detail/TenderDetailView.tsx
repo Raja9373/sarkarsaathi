@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Tender } from '../../types';
+import { useSEO } from '../../utils/seo';
 import { CompletenessBadge } from './CompletenessBadge';
 import { SourceTransparencyCard } from './SourceTransparencyCard';
 import {
@@ -29,6 +30,70 @@ interface TenderDetailViewProps {
 }
 
 export const TenderDetailView: React.FC<TenderDetailViewProps> = ({ item }) => {
+  const title = `${item.title} | Tender ${item.tenderId || item.referenceNumber || ''} | SarkarSaathi`;
+  const description = item.description?.substring(0, 155) || 'Verified public procurement tender notice on SarkarSaathi.';
+  
+  useSEO({
+    title,
+    description,
+    canonicalPath: `/tenders/${item.slug || item.tenderId || item.referenceNumber}`,
+    openGraph: {
+      title,
+      description,
+      url: `/tenders/${item.slug || item.tenderId || item.referenceNumber}`,
+      type: 'website'
+    }
+  });
+
+  useEffect(() => {
+    if (!item) return;
+
+    // 5. JSON-LD Schema (GovernmentService)
+    const scriptId = 'tender-json-ld';
+    let script = document.getElementById(scriptId) as HTMLScriptElement;
+    if (!script) {
+      script = document.createElement('script');
+      script.id = scriptId;
+      script.type = 'application/ld+json';
+      document.head.appendChild(script);
+    }
+    
+    const jsonLd = {
+      "@context": "https://schema.org",
+      "@type": "GovernmentService",
+      "name": item.title,
+      "description": item.description?.substring(0, 155),
+      "provider": {
+        "@type": "GovernmentOrganization",
+        "name": item.procuringAuthority || item.authority || "Government of India"
+      },
+      "url": window.location.href,
+      "identifier": item.tenderId || item.referenceNumber
+    };
+    script.textContent = JSON.stringify(jsonLd);
+
+    // 6. JSON-LD BreadcrumbList
+    const breadcrumbScriptId = 'tender-breadcrumb-json-ld';
+    let breadcrumbScript = document.getElementById(breadcrumbScriptId) as HTMLScriptElement;
+    if (!breadcrumbScript) {
+      breadcrumbScript = document.createElement('script');
+      breadcrumbScript.id = breadcrumbScriptId;
+      breadcrumbScript.type = 'application/ld+json';
+      document.head.appendChild(breadcrumbScript);
+    }
+    
+    const breadcrumbJsonLd = {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Home", "item": window.location.origin},
+        {"@type": "ListItem", "position": 2, "name": "Tenders", "item": `${window.location.origin}/tenders`},
+        {"@type": "ListItem", "position": 3, "name": item.title, "item": window.location.href}
+      ]
+    };
+    breadcrumbScript.textContent = JSON.stringify(breadcrumbJsonLd);
+  }, [item]);
+
   return (
     <div className="space-y-8">
       {/* Header Card */}

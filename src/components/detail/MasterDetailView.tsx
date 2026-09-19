@@ -5,7 +5,7 @@ import { SchemeDetailView } from './SchemeDetailView';
 import { OpportunityDetailView } from './OpportunityDetailView';
 import { TenderDetailView } from './TenderDetailView';
 import { NewsDetailView } from './NewsDetailView';
-import { Bookmark, Share2, ArrowLeft } from 'lucide-react';
+import { Bookmark, Share2, ArrowLeft, ChevronRight } from 'lucide-react';
 
 interface MasterDetailViewProps {
   item: any;
@@ -82,6 +82,15 @@ export const MasterDetailView: React.FC<MasterDetailViewProps> = ({
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 space-y-6">
+      {/* Breadcrumb Navigation */}
+      <nav className="flex items-center space-x-2 text-xs text-slate-500 font-medium">
+        <button onClick={() => window.location.href = '/'} className="hover:text-indigo-600 transition">Home</button>
+        <ChevronRight className="w-3.5 h-3.5" />
+        <button onClick={onBack} className="hover:text-indigo-600 transition">{type}</button>
+        <ChevronRight className="w-3.5 h-3.5" />
+        <span className="text-slate-900 font-semibold truncate">{item.title}</span>
+      </nav>
+
       {/* Top Action Bar */}
       <div className="flex items-center justify-between">
         <button
