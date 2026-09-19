@@ -7,21 +7,76 @@ import { StateLandingView, SectorLandingView } from './components/HubsLanding';
 import { SubsidyHubView, SubsidyDetailView } from './components/SubsidyViews';
 import { SavedView, RecentlyViewedView } from './components/SavedAndRecent';
 import { AdminImport } from './components/AdminImport';
+import { NotFoundView } from './components/NotFoundView';
 import { investmentRepository, investmentSchemeRepository, opportunityRepository, tenderRepository, newsRepository } from './infrastructure/repositories/InvestmentRepository';
 import { subsidyRepository } from './infrastructure/repositories/SubsidyRepository';
+
+const VALID_ROUTES = [
+  '/',
+  '/investments',
+  '/investment-schemes',
+  '/subsidies',
+  '/opportunities',
+  '/tenders',
+  '/news',
+  '/saved',
+  '/recently-viewed',
+  '/comparisons',
+  '/tools',
+  '/official-sources',
+  '/about',
+  '/contact',
+  '/privacy-policy',
+  '/disclaimer',
+  '/terms',
+  '/admin/import',
+  '/search'
+];
+
+const VALID_HUBS = ['/investments', '/investment-schemes', '/opportunities', '/tenders', '/news', '/subsidies'];
 
 export default function App() {
   const getInitialRouteState = () => {
     if (typeof window === 'undefined') return { route: '/', slug: null };
     const path = window.location.pathname;
+    if (path === '/') return { route: '/', slug: null };
+
     const parts = path.split('/').filter(Boolean);
     if (parts.length === 0) return { route: '/', slug: null };
-    if (parts.length === 1) return { route: `/${parts[0]}`, slug: null };
+
     const root = `/${parts[0]}`;
-    if (['/investments', '/investment-schemes', '/opportunities', '/tenders', '/news', '/subsidies'].includes(root)) {
-      return { route: root, slug: parts.slice(1).join('/') };
+
+    if (parts.length === 1) {
+      if (VALID_ROUTES.includes(root) || root === '/search') {
+        return { route: root, slug: null };
+      }
+      return { route: '/404', slug: null };
     }
-    return { route: path, slug: null };
+
+    if (VALID_HUBS.includes(root)) {
+      const slug = parts.slice(1).join('/');
+      let exists = true;
+      if (root === '/investments') exists = !!investmentRepository.getBySlug(slug);
+      else if (root === '/investment-schemes') exists = !!investmentSchemeRepository.getBySlug(slug);
+      else if (root === '/opportunities') {
+        if (slug.startsWith('state/') || slug.startsWith('sector/')) exists = true;
+        else exists = !!opportunityRepository.getBySlug(slug);
+      }
+      else if (root === '/tenders') exists = !!tenderRepository.getBySlug(slug);
+      else if (root === '/news') exists = !!newsRepository.getBySlug(slug);
+      else if (root === '/subsidies') exists = !!subsidyRepository.getBySlug(slug);
+
+      if (!exists) {
+        return { route: '/404', slug: null };
+      }
+      return { route: root, slug };
+    }
+
+    if (root === '/search') {
+      return { route: '/search', slug: null };
+    }
+
+    return { route: '/404', slug: null };
   };
 
   const initial = getInitialRouteState();
@@ -30,24 +85,9 @@ export default function App() {
 
   useEffect(() => {
     const handlePopState = () => {
-      const path = window.location.pathname;
-      const parts = path.split('/').filter(Boolean);
-      if (parts.length === 0) {
-        setCurrentRoute('/');
-        setSelectedSlug(null);
-      } else if (parts.length === 1) {
-        setCurrentRoute(`/${parts[0]}`);
-        setSelectedSlug(null);
-      } else if (parts.length >= 2) {
-        const root = `/${parts[0]}`;
-        if (['/investments', '/investment-schemes', '/opportunities', '/tenders', '/news', '/subsidies'].includes(root)) {
-          setCurrentRoute(root);
-          setSelectedSlug(parts.slice(1).join('/'));
-        } else {
-          setCurrentRoute(path);
-          setSelectedSlug(null);
-        }
-      }
+      const initial = getInitialRouteState();
+      setCurrentRoute(initial.route);
+      setSelectedSlug(initial.slug);
     };
 
     window.addEventListener('popstate', handlePopState);
@@ -62,7 +102,7 @@ export default function App() {
       const parts = baseRoute.split('/').filter(Boolean);
       if (parts.length >= 2) {
         const root = `/${parts[0]}`;
-        if (['/investments', '/investment-schemes', '/opportunities', '/tenders', '/news', '/subsidies'].includes(root)) {
+        if (VALID_HUBS.includes(root)) {
           baseRoute = root;
           itemSlug = parts.slice(1).join('/');
         }
@@ -71,8 +111,30 @@ export default function App() {
 
     const fullPath = itemSlug ? `${baseRoute}/${itemSlug}` : baseRoute;
     window.history.pushState({}, '', fullPath);
-    setCurrentRoute(baseRoute);
-    setSelectedSlug(itemSlug);
+    
+    // re-validate via getInitialRouteState logic or direct assignment
+    const parts = fullPath.split('/').filter(Boolean);
+    if (parts.length === 0) {
+      setCurrentRoute('/');
+      setSelectedSlug(null);
+    } else {
+      const root = `/${parts[0]}`;
+      if (parts.length === 1) {
+        if (VALID_ROUTES.includes(root) || root === '/search') {
+          setCurrentRoute(root);
+          setSelectedSlug(null);
+        } else {
+          setCurrentRoute('/404');
+          setSelectedSlug(null);
+        }
+      } else if (VALID_HUBS.includes(root)) {
+        setCurrentRoute(root);
+        setSelectedSlug(itemSlug);
+      } else {
+        setCurrentRoute('/404');
+        setSelectedSlug(null);
+      }
+    }
     window.scrollTo(0, 0);
   };
 
@@ -80,10 +142,12 @@ export default function App() {
     if (selectedSlug) {
       if (currentRoute === '/investments') {
         const item = investmentRepository.getBySlug(selectedSlug);
+        if (!item) return <NotFoundView onNavigate={navigate} />;
         return <DetailView item={item} type="Investments" onBack={() => navigate('/investments')} onNavigateComparison={(slug) => navigate('/investments', slug)} />;
       }
       if (currentRoute === '/investment-schemes') {
         const item = investmentSchemeRepository.getBySlug(selectedSlug);
+        if (!item) return <NotFoundView onNavigate={navigate} />;
         return <DetailView item={item} type="Investment Schemes" onBack={() => navigate('/investment-schemes')} />;
       }
       if (currentRoute === '/opportunities') {
@@ -96,19 +160,23 @@ export default function App() {
           return <SectorLandingView sector={sector} onNavigate={navigate} />;
         }
         const item = opportunityRepository.getBySlug(selectedSlug);
+        if (!item) return <NotFoundView onNavigate={navigate} />;
         return <DetailView item={item} type="Opportunities" onBack={() => navigate('/opportunities')} />;
       }
       if (currentRoute === '/tenders') {
         const item = tenderRepository.getBySlug(selectedSlug);
+        if (!item) return <NotFoundView onNavigate={navigate} />;
         return <DetailView item={item} type="Tenders" onBack={() => navigate('/tenders')} />;
       }
       if (currentRoute === '/news') {
         const item = newsRepository.getBySlug(selectedSlug);
+        if (!item) return <NotFoundView onNavigate={navigate} />;
         return <DetailView item={item} type="News" onBack={() => navigate('/news')} />;
       }
       if (currentRoute === '/subsidies') {
         const item = subsidyRepository.getBySlug(selectedSlug);
-        return <SubsidyDetailView item={item!} onBack={() => navigate('/subsidies')} />;
+        if (!item) return <NotFoundView onNavigate={navigate} />;
+        return <SubsidyDetailView item={item} onBack={() => navigate('/subsidies')} />;
       }
     }
 
@@ -149,12 +217,14 @@ export default function App() {
         return <TermsPage />;
       case '/admin/import':
         return <AdminImport />;
+      case '/404':
+        return <NotFoundView onNavigate={navigate} />;
       default:
         if (currentRoute.startsWith('/search')) {
             const query = new URLSearchParams(window.location.search).get('q') || '';
             return <SearchView query={query} onNavigate={navigate} />;
         }
-        return <HomeView onNavigate={navigate} />;
+        return <NotFoundView onNavigate={navigate} />;
     }
   };
 
