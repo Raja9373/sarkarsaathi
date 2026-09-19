@@ -72,7 +72,7 @@ export function HomeView({ onNavigate }: HubProps) {
                 Explore government investment products, development opportunities, projects, tenders and important updates from official sources across India.
               </p>
 
-              {/* 4 CTA Buttons Row */}
+              {/* CTA Buttons Row */}
               <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 mb-8">
                 {/* Primary Button */}
                 <button
@@ -81,6 +81,16 @@ export function HomeView({ onNavigate }: HubProps) {
                 >
                   <TrendingUp className="w-4 h-4" />
                   <span>Explore Investments</span>
+                  <ArrowRight className="w-4 h-4 ml-0.5" />
+                </button>
+
+                {/* Subsidies Hero Button */}
+                <button
+                  onClick={() => onNavigate('/subsidies')}
+                  className="px-4.5 py-2.5 sm:px-5 sm:py-3 bg-amber-500 hover:bg-amber-600 text-slate-950 font-semibold rounded-xl flex items-center space-x-2 shadow-lg shadow-amber-950/20 transition cursor-pointer text-sm"
+                >
+                  <Award className="w-4 h-4 text-slate-950" />
+                  <span>Subsidies &amp; Benefits</span>
                   <ArrowRight className="w-4 h-4 ml-0.5" />
                 </button>
 
@@ -166,7 +176,7 @@ export function HomeView({ onNavigate }: HubProps) {
           {/* Card 1: Investments */}
           <div
             onClick={() => onNavigate('/investments')}
-            className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs hover:shadow-md transition cursor-pointer group flex flex-col justify-between"
+            className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs hover:shadow-md transition cursor-pointer group flex flex-col justify-between h-full"
           >
             <div>
               <div className="flex items-center justify-between mb-3.5">
@@ -178,16 +188,20 @@ export function HomeView({ onNavigate }: HubProps) {
                 </div>
               </div>
               <h3 className="text-base font-bold text-slate-900 mb-1">Investments</h3>
-              <p className="text-xs text-slate-500 leading-relaxed">
+              <p className="text-xs text-slate-500 leading-relaxed mb-3">
                 Government investment products and public savings instruments.
               </p>
+            </div>
+            <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-blue-600 group-hover:text-blue-700">
+              <span>Explore Investments</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition" />
             </div>
           </div>
 
           {/* Card 2: Investment Schemes */}
           <div
             onClick={() => onNavigate('/investment-schemes')}
-            className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs hover:shadow-md transition cursor-pointer group flex flex-col justify-between"
+            className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs hover:shadow-md transition cursor-pointer group flex flex-col justify-between h-full"
           >
             <div>
               <div className="flex items-center justify-between mb-3.5">
@@ -199,16 +213,20 @@ export function HomeView({ onNavigate }: HubProps) {
                 </div>
               </div>
               <h3 className="text-base font-bold text-slate-900 mb-1">Investment Schemes</h3>
-              <p className="text-xs text-slate-500 leading-relaxed">
+              <p className="text-xs text-slate-500 leading-relaxed mb-3">
                 Government schemes and incentives relevant to investment and development.
               </p>
+            </div>
+            <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-blue-600 group-hover:text-blue-700">
+              <span>Explore Investment Schemes</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition" />
             </div>
           </div>
 
           {/* Card 3: Subsidies & Benefits */}
           <div
             onClick={() => onNavigate('/subsidies')}
-            className="bg-white rounded-2xl border border-blue-200/80 p-5 shadow-xs hover:shadow-md transition cursor-pointer group flex flex-col justify-between relative overflow-hidden"
+            className="bg-white rounded-2xl border border-blue-200/80 p-5 shadow-xs hover:shadow-md transition cursor-pointer group flex flex-col justify-between h-full relative overflow-hidden"
           >
             <div className="absolute top-0 right-0 w-24 h-24 bg-amber-500/5 rounded-bl-full pointer-events-none" />
             <div>
@@ -234,7 +252,7 @@ export function HomeView({ onNavigate }: HubProps) {
           {/* Card 4: Opportunities */}
           <div
             onClick={() => onNavigate('/opportunities')}
-            className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs hover:shadow-md transition cursor-pointer group flex flex-col justify-between"
+            className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs hover:shadow-md transition cursor-pointer group flex flex-col justify-between h-full"
           >
             <div>
               <div className="flex items-center justify-between mb-3.5">
@@ -246,16 +264,20 @@ export function HomeView({ onNavigate }: HubProps) {
                 </div>
               </div>
               <h3 className="text-base font-bold text-slate-900 mb-1">Opportunities</h3>
-              <p className="text-xs text-slate-500 leading-relaxed">
+              <p className="text-xs text-slate-500 leading-relaxed mb-3">
                 Development projects and investment opportunities from official sources.
               </p>
+            </div>
+            <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-blue-600 group-hover:text-blue-700">
+              <span>Explore Opportunities</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition" />
             </div>
           </div>
 
           {/* Card 5: Tenders */}
           <div
             onClick={() => onNavigate('/tenders')}
-            className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs hover:shadow-md transition cursor-pointer group flex flex-col justify-between"
+            className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs hover:shadow-md transition cursor-pointer group flex flex-col justify-between h-full"
           >
             <div>
               <div className="flex items-center justify-between mb-3.5">
@@ -267,16 +289,20 @@ export function HomeView({ onNavigate }: HubProps) {
                 </div>
               </div>
               <h3 className="text-base font-bold text-slate-900 mb-1">Tenders</h3>
-              <p className="text-xs text-slate-500 leading-relaxed">
+              <p className="text-xs text-slate-500 leading-relaxed mb-3">
                 Government and PSU tenders from official procurement sources.
               </p>
+            </div>
+            <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-blue-600 group-hover:text-blue-700">
+              <span>Explore Tenders</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition" />
             </div>
           </div>
 
           {/* Card 6: News & Updates */}
           <div
             onClick={() => onNavigate('/news')}
-            className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs hover:shadow-md transition cursor-pointer group flex flex-col justify-between"
+            className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs hover:shadow-md transition cursor-pointer group flex flex-col justify-between h-full"
           >
             <div>
               <div className="flex items-center justify-between mb-3.5">
@@ -288,9 +314,13 @@ export function HomeView({ onNavigate }: HubProps) {
                 </div>
               </div>
               <h3 className="text-base font-bold text-slate-900 mb-1">News &amp; Updates</h3>
-              <p className="text-xs text-slate-500 leading-relaxed">
+              <p className="text-xs text-slate-500 leading-relaxed mb-3">
                 Latest updates, announcements and reports from official government sources.
               </p>
+            </div>
+            <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-blue-600 group-hover:text-blue-700">
+              <span>View News &amp; Updates</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition" />
             </div>
           </div>
         </div>
