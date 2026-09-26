@@ -7,7 +7,7 @@ import { CatalogQueryOptions, PaginatedResult } from '../ingestion/types';
 import { CatalogQueryManager } from '../ingestion/catalogManager';
 import { MasterDetailView } from './detail/MasterDetailView';
 import { useSEO } from '../utils/seo';
-import { addStateOfficialSources } from '../utils/officialSources';
+import { getAllOfficialSources, getOfficialSourceSlug, addStateOfficialSources } from '../utils/officialSources';
 
 export { MasterDetailView };
 export const DetailView = MasterDetailView;
@@ -1639,9 +1639,9 @@ export function ToolsView() {
   );
 }
 
-export function OfficialSourcesView() {
+export function OfficialSourcesView({ onNavigate }: { onNavigate?: (route: string, slug?: string) => void }) {
   useSEO({
-    title: 'Official Government Sources | SarkarSaathi',
+    title: 'Official Government Sources Registry | SarkarSaathi',
     description: 'Find verified official Indian government websites, ministries, regulators, procurement portals, investment authorities and public information sources.',
     canonicalPath: '/official-sources'
   });
@@ -1650,35 +1650,13 @@ export function OfficialSourcesView() {
   const [categoryFilter, setCategoryFilter] = useState('ALL');
   const [typeFilter, setTypeFilter] = useState<'ALL' | 'CENTRAL' | 'STATE' | 'UT'>('ALL');
   
-  const centralSources = [
-    { name: 'Government of India', category: 'CENTRAL GOVERNMENT', description: 'Central government portal', authority: 'Government of India', officialUrl: 'https://india.gov.in', sourceType: 'Central Government', type: 'CENTRAL' },
-    { name: 'PIB', category: 'CENTRAL GOVERNMENT', description: 'Press Information Bureau', authority: 'Ministry of Information and Broadcasting', officialUrl: 'https://www.pib.gov.in/', sourceType: 'Central Government', type: 'CENTRAL' },
-    { name: 'myScheme', category: 'SUBSIDIES & BENEFITS', description: 'Portal for government schemes', authority: 'Government of India', officialUrl: 'https://www.myscheme.gov.in/', sourceType: 'Benefits Portal', type: 'CENTRAL' },
-    { name: 'DBT Bharat', category: 'SUBSIDIES & BENEFITS', description: 'Direct Benefit Transfer portal', authority: 'Government of India', officialUrl: 'https://dbtbharat.gov.in/', sourceType: 'Benefits Portal', type: 'CENTRAL' },
-    { name: 'Data.gov.in', category: 'DATA & STATISTICS', description: 'Open Government Data Platform', authority: 'Government of India', officialUrl: 'https://www.data.gov.in/', sourceType: 'Data Portal', type: 'CENTRAL' },
-    { name: 'Invest India', category: 'BUSINESS & INDUSTRY', description: 'Investment promotion agency', authority: 'Government of India', officialUrl: 'https://www.investindia.gov.in/', sourceType: 'Investment Portal', type: 'CENTRAL' },
-    { name: 'India Investment Grid', category: 'BUSINESS & INDUSTRY', description: 'Showcasing investment opportunities', authority: 'Government of India', officialUrl: 'https://indiainvestmentgrid.gov.in/', sourceType: 'Investment Portal', type: 'CENTRAL' },
-    { name: 'GeM', category: 'PROCUREMENT & TENDERS', description: 'Government e-Marketplace', authority: 'Government of India', officialUrl: 'https://gem.gov.in/', sourceType: 'Procurement Portal', type: 'CENTRAL' },
-    { name: 'eProcure', category: 'PROCUREMENT & TENDERS', description: 'Central Public Procurement Portal', authority: 'Government of India', officialUrl: 'https://eprocure.gov.in/eprocure/app', sourceType: 'Procurement Portal', type: 'CENTRAL' },
-    { name: 'IREPS', category: 'PROCUREMENT & TENDERS', description: 'Indian Railways e-Procurement System', authority: 'Ministry of Railways', officialUrl: 'https://ireps.gov.in/', sourceType: 'Procurement Portal', type: 'CENTRAL' },
-    { name: 'RBI', category: 'FINANCE & INVESTMENT', description: 'Central bank of India', authority: 'Reserve Bank of India', officialUrl: 'https://www.rbi.org.in/', sourceType: 'Regulator', type: 'CENTRAL' },
-    { name: 'SEBI', category: 'FINANCE & INVESTMENT', description: 'Securities and Exchange Board of India', authority: 'Government of India', officialUrl: 'https://www.sebi.gov.in/', sourceType: 'Regulator', type: 'CENTRAL' },
-    { name: 'PFRDA', category: 'FINANCE & INVESTMENT', description: 'Pension Fund Regulatory and Development Authority', authority: 'Government of India', officialUrl: 'https://www.pfrda.org.in/', sourceType: 'Regulator', type: 'CENTRAL' },
-    { name: 'IRDAI', category: 'FINANCE & INVESTMENT', description: 'Insurance Regulatory and Development Authority', authority: 'Government of India', officialUrl: 'https://www.irdai.gov.in/', sourceType: 'Regulator', type: 'CENTRAL' },
-    { name: 'NSI', category: 'FINANCE & INVESTMENT', description: 'National Savings Institute', authority: 'Ministry of Finance', officialUrl: 'https://www.nsiindia.gov.in/', sourceType: 'Ministry', type: 'CENTRAL' },
-    { name: 'DPIIT', category: 'BUSINESS & INDUSTRY', description: 'Department for Promotion of Industry and Internal Trade', authority: 'Ministry of Commerce and Industry', officialUrl: 'https://dpiit.gov.in/', sourceType: 'Ministry', type: 'CENTRAL' },
-    { name: 'MoSPI', category: 'DATA & STATISTICS', description: 'Ministry of Statistics and Programme Implementation', authority: 'Government of India', officialUrl: 'https://www.mospi.gov.in/', sourceType: 'Ministry', type: 'CENTRAL' },
-    { name: 'PAIMANA', category: 'INFRASTRUCTURE', description: 'Project Appraisal and Infrastructure Monitoring', authority: 'MoSPI', officialUrl: 'https://paimana-proj.mospi.gov.in/', sourceType: 'Infrastructure Authority', type: 'CENTRAL' },
-  ];
-
-  const sources = addStateOfficialSources(centralSources);
-
+  const sources = getAllOfficialSources();
   const categories = ['ALL', ...Array.from(new Set(sources.map(s => s.category)))];
 
   const filteredSources = sources.filter(s => 
     (categoryFilter === 'ALL' || s.category === categoryFilter) &&
     (typeFilter === 'ALL' || s.type === typeFilter) &&
-    (s.name.toLowerCase().includes(search.toLowerCase()) || s.description.toLowerCase().includes(search.toLowerCase()))
+    (s.name.toLowerCase().includes(search.toLowerCase()) || s.description.toLowerCase().includes(search.toLowerCase()) || (s.state && s.state.toLowerCase().includes(search.toLowerCase())))
   );
 
   return (
@@ -1692,7 +1670,7 @@ export function OfficialSourcesView() {
         <div className="flex flex-col sm:flex-row gap-4">
           <input 
             type="text" 
-            placeholder="Search sources..." 
+            placeholder="Search sources by name, department, or state..." 
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="flex-1 p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm"
@@ -1718,25 +1696,50 @@ export function OfficialSourcesView() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredSources.map(s => (
-          <div key={s.officialUrl} className="bg-white border border-slate-200 rounded-2xl p-6 flex flex-col justify-between shadow-xs">
-            <div>
-              <span className="text-[10px] font-bold text-indigo-600 uppercase tracking-wider">{s.category}</span>
-              <h4 className="font-bold text-slate-900 mt-1 mb-2">{s.name}</h4>
-              <p className="text-xs text-slate-500 mb-4">{s.description}</p>
-              <div className="text-[11px] text-slate-400">Authority: {s.authority}</div>
+        {filteredSources.map(s => {
+          const slug = getOfficialSourceSlug(s);
+          return (
+            <div key={s.officialUrl} className="bg-white border border-slate-200 rounded-2xl p-6 flex flex-col justify-between shadow-xs hover:border-slate-300 transition">
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-[10px] font-bold text-indigo-600 uppercase tracking-wider">{s.category}</span>
+                  <span className="text-[10px] px-2 py-0.5 bg-slate-100 text-slate-600 rounded-full font-medium">
+                    {s.type === 'CENTRAL' ? 'Central' : s.type === 'STATE' ? 'State' : 'UT'}
+                  </span>
+                </div>
+                <h4 
+                  onClick={() => onNavigate && onNavigate('/official-sources', slug)}
+                  className="font-bold text-slate-900 mt-1 mb-2 hover:text-indigo-600 cursor-pointer"
+                >
+                  {s.name}
+                </h4>
+                <p className="text-xs text-slate-500 mb-4 line-clamp-3">{s.description}</p>
+                <div className="text-[11px] text-slate-400">Authority: {s.authority}</div>
+              </div>
+              
+              <div className="mt-5 pt-4 border-t border-slate-100 flex items-center gap-2">
+                {onNavigate && (
+                  <button
+                    onClick={() => onNavigate('/official-sources', slug)}
+                    className="flex-1 py-2 px-3 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl text-center transition"
+                  >
+                    View Details
+                  </button>
+                )}
+                <a 
+                  href={s.officialUrl} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="py-2 px-3 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-xl flex items-center justify-center space-x-1.5 transition"
+                  title="Visit official website"
+                >
+                  <span>Portal</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              </div>
             </div>
-            <a 
-              href={s.officialUrl} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="mt-4 w-full py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-xl flex items-center justify-center space-x-2"
-            >
-              <span>Visit Official Website</span>
-              <ExternalLink className="w-3.5 h-3.5" />
-            </a>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

@@ -1,42 +1,277 @@
-export const stateOfficialSources = [
-  { name: 'Andhra Pradesh Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal', authority: 'Government of Andhra Pradesh', officialUrl: 'https://www.ap.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Andhra Pradesh' },
-  { name: 'Arunachal Pradesh Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal', authority: 'Government of Arunachal Pradesh', officialUrl: 'https://www.arunachal.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Arunachal Pradesh' },
-  { name: 'Assam Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal', authority: 'Government of Assam', officialUrl: 'https://assam.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Assam' },
-  { name: 'Bihar Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal', authority: 'Government of Bihar', officialUrl: 'https://state.bihar.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Bihar' },
-  { name: 'Chhattisgarh Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal', authority: 'Government of Chhattisgarh', officialUrl: 'https://cgstate.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Chhattisgarh' },
-  { name: 'Goa Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal', authority: 'Government of Goa', officialUrl: 'https://goa.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Goa' },
-  { name: 'Gujarat Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal', authority: 'Government of Gujarat', officialUrl: 'https://gujarat.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Gujarat' },
-  { name: 'Haryana Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal', authority: 'Government of Haryana', officialUrl: 'https://haryana.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Haryana' },
-  { name: 'Himachal Pradesh Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal', authority: 'Government of Himachal Pradesh', officialUrl: 'https://himachal.nic.in/', sourceType: 'State Government', type: 'STATE', state: 'Himachal Pradesh' },
-  { name: 'Jharkhand Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal', authority: 'Government of Jharkhand', officialUrl: 'https://www.jharkhand.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Jharkhand' },
-  { name: 'Karnataka Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal', authority: 'Government of Karnataka', officialUrl: 'https://www.karnataka.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Karnataka' },
-  { name: 'Kerala Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal', authority: 'Government of Kerala', officialUrl: 'https://kerala.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Kerala' },
-  { name: 'Madhya Pradesh Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal', authority: 'Government of Madhya Pradesh', officialUrl: 'https://mp.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Madhya Pradesh' },
-  { name: 'Maharashtra Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal', authority: 'Government of Maharashtra', officialUrl: 'https://www.maharashtra.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Maharashtra' },
-  { name: 'Manipur Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal', authority: 'Government of Manipur', officialUrl: 'https://manipur.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Manipur' },
-  { name: 'Meghalaya Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal', authority: 'Government of Meghalaya', officialUrl: 'https://meghalaya.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Meghalaya' },
-  { name: 'Mizoram Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal', authority: 'Government of Mizoram', officialUrl: 'https://mizoram.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Mizoram' },
-  { name: 'Nagaland Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal', authority: 'Government of Nagaland', officialUrl: 'https://nagaland.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Nagaland' },
-  { name: 'Odisha Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal', authority: 'Government of Odisha', officialUrl: 'https://odisha.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Odisha' },
-  { name: 'Punjab Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal', authority: 'Government of Punjab', officialUrl: 'https://punjab.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Punjab' },
-  { name: 'Rajasthan Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal', authority: 'Government of Rajasthan', officialUrl: 'https://rajasthan.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Rajasthan' },
-  { name: 'Sikkim Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal', authority: 'Government of Sikkim', officialUrl: 'https://sikkim.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Sikkim' },
-  { name: 'Tamil Nadu Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal', authority: 'Government of Tamil Nadu', officialUrl: 'https://www.tn.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Tamil Nadu' },
-  { name: 'Telangana Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal', authority: 'Government of Telangana', officialUrl: 'https://www.telangana.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Telangana' },
-  { name: 'Tripura Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal', authority: 'Government of Tripura', officialUrl: 'https://tripura.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Tripura' },
-  { name: 'Uttar Pradesh Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal', authority: 'Government of Uttar Pradesh', officialUrl: 'https://up.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Uttar Pradesh' },
-  { name: 'Uttarakhand Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal', authority: 'Government of Uttarakhand', officialUrl: 'https://uk.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Uttarakhand' },
-  { name: 'West Bengal Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal', authority: 'Government of West Bengal', officialUrl: 'https://wb.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'West Bengal' },
-  { name: 'Andaman & Nicobar Islands Portal', category: 'STATE GOVERNMENTS', description: 'Official UT Government portal', authority: 'Government of Andaman & Nicobar Islands', officialUrl: 'https://www.andaman.gov.in/', sourceType: 'State Government', type: 'UT', state: 'Andaman & Nicobar Islands' },
-  { name: 'Chandigarh Portal', category: 'STATE GOVERNMENTS', description: 'Official UT Government portal', authority: 'Government of Chandigarh', officialUrl: 'https://chd.gov.in/', sourceType: 'State Government', type: 'UT', state: 'Chandigarh' },
-  { name: 'Dadra & Nagar Haveli and Daman & Diu Portal', category: 'STATE GOVERNMENTS', description: 'Official UT Government portal', authority: 'Government of Dadra & Nagar Haveli and Daman & Diu', officialUrl: 'https://www.daman.nic.in/', sourceType: 'State Government', type: 'UT', state: 'Dadra & Nagar Haveli and Daman & Diu' },
-  { name: 'Delhi Portal', category: 'STATE GOVERNMENTS', description: 'Official UT Government portal', authority: 'Government of Delhi', officialUrl: 'https://delhi.gov.in/', sourceType: 'State Government', type: 'UT', state: 'Delhi' },
-  { name: 'Jammu & Kashmir Portal', category: 'STATE GOVERNMENTS', description: 'Official UT Government portal', authority: 'Government of Jammu & Kashmir', officialUrl: 'https://jk.gov.in/', sourceType: 'State Government', type: 'UT', state: 'Jammu & Kashmir' },
-  { name: 'Ladakh Portal', category: 'STATE GOVERNMENTS', description: 'Official UT Government portal', authority: 'Government of Ladakh', officialUrl: 'https://ladakh.nic.in/', sourceType: 'State Government', type: 'UT', state: 'Ladakh' },
-  { name: 'Lakshadweep Portal', category: 'STATE GOVERNMENTS', description: 'Official UT Government portal', authority: 'Government of Lakshadweep', officialUrl: 'https://lakshadweep.gov.in/', sourceType: 'State Government', type: 'UT', state: 'Lakshadweep' },
-  { name: 'Puducherry Portal', category: 'STATE GOVERNMENTS', description: 'Official UT Government portal', authority: 'Government of Puducherry', officialUrl: 'https://py.gov.in/', sourceType: 'State Government', type: 'UT', state: 'Puducherry' },
+export interface OfficialSource {
+  name: string;
+  category: string;
+  description: string;
+  authority: string;
+  officialUrl: string;
+  sourceType: string;
+  type: 'CENTRAL' | 'STATE' | 'UT';
+  state?: string;
+  services?: string[];
+  keyContacts?: string;
+  lastVerified?: string;
+}
+
+export const centralOfficialSources: OfficialSource[] = [
+  {
+    name: 'Government of India Portal',
+    category: 'CENTRAL GOVERNMENT',
+    description: 'National Portal of India provides a single-window access to information and services being provided by the Indian Government for citizens and businesses.',
+    authority: 'Government of India / NIC',
+    officialUrl: 'https://india.gov.in',
+    sourceType: 'Central Government',
+    type: 'CENTRAL',
+    services: ['Single window citizen services', 'Government directory', 'Acts and rules database', 'Forms and applications download'],
+    lastVerified: '2026-03-01'
+  },
+  {
+    name: 'Press Information Bureau (PIB)',
+    category: 'CENTRAL GOVERNMENT',
+    description: 'Nodal agency of the Government of India to disseminate information to the print and electronic media on government policies, programmes, initiatives and achievements.',
+    authority: 'Ministry of Information and Broadcasting',
+    officialUrl: 'https://www.pib.gov.in/',
+    sourceType: 'Central Government',
+    type: 'CENTRAL',
+    services: ['Official press releases', 'Fact-checking unit', 'Policy announcements', 'Cabinet decisions bulletin'],
+    lastVerified: '2026-03-01'
+  },
+  {
+    name: 'myScheme Portal',
+    category: 'SUBSIDIES & BENEFITS',
+    description: 'National platform providing discovery of government schemes based on eligibility criteria across central and state government departments.',
+    authority: 'Ministry of Electronics and Information Technology (MeitY)',
+    officialUrl: 'https://myscheme.gov.in/',
+    sourceType: 'Benefits Portal',
+    type: 'CENTRAL',
+    services: ['Scheme discovery by demographic profile', 'Direct application link forwarding', 'Document eligibility checklist'],
+    lastVerified: '2026-03-01'
+  },
+  {
+    name: 'DBT Bharat (Direct Benefit Transfer)',
+    category: 'SUBSIDIES & BENEFITS',
+    description: 'Aadhaar-enabled Direct Benefit Transfer portal tracking welfare disbursement, subsidy transfers, and beneficiary registry.',
+    authority: 'Cabinet Secretariat, Government of India',
+    officialUrl: 'https://dbtbharat.gov.in/',
+    sourceType: 'Benefits Portal',
+    type: 'CENTRAL',
+    services: ['Direct benefit transfer tracking', 'Scheme expenditure reports', 'State-wise disbursement analytics'],
+    lastVerified: '2026-03-01'
+  },
+  {
+    name: 'Open Government Data (Data.gov.in)',
+    category: 'DATA & STATISTICS',
+    description: 'Open Government Data Platform providing open access to datasets generated by various ministries, departments, and government bodies.',
+    authority: 'National Informatics Centre (NIC) / MeitY',
+    officialUrl: 'https://data.gov.in/',
+    sourceType: 'Data Portal',
+    type: 'CENTRAL',
+    services: ['Public APIs and datasets', 'Economic and census statistics', 'Sectoral performance indicators'],
+    lastVerified: '2026-03-01'
+  },
+  {
+    name: 'Invest India',
+    category: 'BUSINESS & INDUSTRY',
+    description: 'National Investment Promotion and Facilitation Agency of India, dedicated to helping global and domestic investors explore opportunities.',
+    authority: 'Department for Promotion of Industry and Internal Trade (DPIIT)',
+    officialUrl: 'https://www.investindia.gov.in/',
+    sourceType: 'Investment Portal',
+    type: 'CENTRAL',
+    services: ['Foreign direct investment facilitation', 'Sector investment guides', 'Regulatory clearance support'],
+    lastVerified: '2026-03-01'
+  },
+  {
+    name: 'India Investment Grid (IIG)',
+    category: 'BUSINESS & INDUSTRY',
+    description: 'Interactive global platform showcasing real-time investible opportunities and infrastructure projects across Indian states and sectors.',
+    authority: 'Ministry of Commerce and Industry',
+    officialUrl: 'https://indiainvestmentgrid.gov.in/',
+    sourceType: 'Investment Portal',
+    type: 'CENTRAL',
+    services: ['Infrastructure project tracking', 'State investment portfolios', 'Private-public partnership opportunities'],
+    lastVerified: '2026-03-01'
+  },
+  {
+    name: 'Government e-Marketplace (GeM)',
+    category: 'PROCUREMENT & TENDERS',
+    description: 'End-to-end online marketplace facilitating procurement of common use goods and services required by various government departments and PSUs.',
+    authority: 'Ministry of Commerce and Industry',
+    officialUrl: 'https://gem.gov.in/',
+    sourceType: 'Procurement Portal',
+    type: 'CENTRAL',
+    services: ['Vendor registration', 'Public procurement bidding', 'MSME preferential buying program'],
+    lastVerified: '2026-03-01'
+  },
+  {
+    name: 'Central Public Procurement Portal (eProcure)',
+    category: 'PROCUREMENT & TENDERS',
+    description: 'Unified electronic procurement portal for all central government ministries, departments, and subordinate bodies.',
+    authority: 'National Informatics Centre / Ministry of Finance',
+    officialUrl: 'https://eprocure.gov.in/eprocure/app',
+    sourceType: 'Procurement Portal',
+    type: 'CENTRAL',
+    services: ['E-tendering system', 'Tender notice archive', 'Corrigendum and bid award publication'],
+    lastVerified: '2026-03-01'
+  },
+  {
+    name: 'Indian Railways e-Procurement System (IREPS)',
+    category: 'PROCUREMENT & TENDERS',
+    description: 'Official portal of Indian Railways for e-Procurement, e-Auction, and e-Sale of railway materials and construction tenders.',
+    authority: 'Ministry of Railways / CRIS',
+    officialUrl: 'https://ireps.gov.in/',
+    sourceType: 'Procurement Portal',
+    type: 'CENTRAL',
+    services: ['Railway tenders and auctions', 'Contractor registration', 'Material procurement track'],
+    lastVerified: '2026-03-01'
+  },
+  {
+    name: 'Reserve Bank of India (RBI)',
+    category: 'FINANCE & INVESTMENT',
+    description: "India's central bank and monetary authority, regulating the issuance of sovereign securities, Treasury Bills, and banking stability.",
+    authority: 'Reserve Bank of India',
+    officialUrl: 'https://www.rbi.org.in/',
+    sourceType: 'Regulator',
+    type: 'CENTRAL',
+    services: ['RBI Retail Direct for Sovereign Gold Bonds & G-Secs', 'Monetary policy notifications', 'Bank regulatory framework'],
+    lastVerified: '2026-03-01'
+  },
+  {
+    name: 'Securities and Exchange Board of India (SEBI)',
+    category: 'FINANCE & INVESTMENT',
+    description: 'Regulator of securities and commodity markets in India protecting interests of investors and promoting development of securities market.',
+    authority: 'Government of India',
+    officialUrl: 'https://www.sebi.gov.in/',
+    sourceType: 'Regulator',
+    type: 'CENTRAL',
+    services: ['Mutual fund registry', 'Municipal bond guidelines', 'SCORES investor grievance redressal'],
+    lastVerified: '2026-03-01'
+  },
+  {
+    name: 'Pension Fund Regulatory and Development Authority (PFRDA)',
+    category: 'FINANCE & INVESTMENT',
+    description: 'Statutory authority established to regulate, promote, and ensure orderly growth of the National Pension System (NPS) and pension schemes.',
+    authority: 'Ministry of Finance',
+    officialUrl: 'https://www.pfrda.org.in/',
+    sourceType: 'Regulator',
+    type: 'CENTRAL',
+    services: ['National Pension System (NPS) oversight', 'Atal Pension Yojana (APY) administration', 'Pension fund manager guidelines'],
+    lastVerified: '2026-03-01'
+  },
+  {
+    name: 'Insurance Regulatory and Development Authority of India (IRDAI)',
+    category: 'FINANCE & INVESTMENT',
+    description: 'Statutory body tasked with regulating and promoting the insurance and re-insurance industries in India.',
+    authority: 'Ministry of Finance',
+    officialUrl: 'https://www.irdai.gov.in/',
+    sourceType: 'Regulator',
+    type: 'CENTRAL',
+    services: ['Insurance policy guidelines', 'Pradhan Mantri Suraksha Bima Yojana norms', 'Insurer solvency verification'],
+    lastVerified: '2026-03-01'
+  },
+  {
+    name: 'National Savings Institute (NSI)',
+    category: 'FINANCE & INVESTMENT',
+    description: 'Department entrusted with policy advisory and promotion of Small Savings Schemes (PPF, SSY, SCSS, NSC, KVP) across India.',
+    authority: 'Ministry of Finance',
+    officialUrl: 'https://www.nsiindia.gov.in/',
+    sourceType: 'Ministry',
+    type: 'CENTRAL',
+    services: ['Quarterly small savings interest rate circulars', 'Post Office savings scheme guidelines', 'Rules for PPF and Sukanya Samriddhi'],
+    lastVerified: '2026-03-01'
+  },
+  {
+    name: 'Department for Promotion of Industry and Internal Trade (DPIIT)',
+    category: 'BUSINESS & INDUSTRY',
+    description: 'Nodal department for Startup India, Industrial Corridor development, intellectual property rights, and foreign direct investment.',
+    authority: 'Ministry of Commerce and Industry',
+    officialUrl: 'https://dpiit.gov.in/',
+    sourceType: 'Ministry',
+    type: 'CENTRAL',
+    services: ['Startup India recognition & tax exemptions', 'Industrial license issuance', 'Foreign Direct Investment policy'],
+    lastVerified: '2026-03-01'
+  },
+  {
+    name: 'Ministry of Statistics and Programme Implementation (MoSPI)',
+    category: 'DATA & STATISTICS',
+    description: 'Ministry concerned with the coverage and quality aspects of statistics released, including National Accounts and Consumer Price Indices.',
+    authority: 'Government of India',
+    officialUrl: 'https://www.mospi.gov.in/',
+    sourceType: 'Ministry',
+    type: 'CENTRAL',
+    services: ['Gross Domestic Product (GDP) reports', 'Inflation indices (CPI/IIP)', 'Twenty Point Programme review'],
+    lastVerified: '2026-03-01'
+  },
+  {
+    name: 'PAIMANA (Project Appraisal & Infrastructure Monitoring)',
+    category: 'INFRASTRUCTURE',
+    description: 'Online monitoring and evaluation system for major central sector infrastructure projects costing Rs 150 Crore and above.',
+    authority: 'MoSPI / Government of India',
+    officialUrl: 'https://paimana-proj.mospi.gov.in/',
+    sourceType: 'Infrastructure Authority',
+    type: 'CENTRAL',
+    services: ['Mega project cost overrun monitoring', 'Flash reports on infrastructure', 'Milestone completion tracker'],
+    lastVerified: '2026-03-01'
+  }
 ];
 
-export const addStateOfficialSources = (centralSources: any[]) => {
+export const stateOfficialSources: OfficialSource[] = [
+  { name: 'Andhra Pradesh Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal for Andhra Pradesh public services, schemes, and administration.', authority: 'Government of Andhra Pradesh', officialUrl: 'https://www.ap.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Andhra Pradesh', services: ['Meebhoomi land records', 'YSR welfare scheme registry', 'e-Pragati digital citizen services', 'AP eProcurement'], lastVerified: '2026-03-01' },
+  { name: 'Arunachal Pradesh Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal for Arunachal Pradesh departments, notifications, and citizen welfare.', authority: 'Government of Arunachal Pradesh', officialUrl: 'https://www.arunachal.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Arunachal Pradesh', services: ['e-Service single window', 'Inner Line Permit (ILP) services', 'Departmental tenders', 'State development grants'], lastVerified: '2026-03-01' },
+  { name: 'Assam Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal for Assam administration, public schemes, and investment initiatives.', authority: 'Government of Assam', officialUrl: 'https://assam.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Assam', services: ['Sewa Setu citizen portal', 'Dharitree revenue services', 'Orunodoi scheme benefits', 'Advantage Assam investment desk'], lastVerified: '2026-03-01' },
+  { name: 'Bihar Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal for Bihar citizen utilities, agricultural subsidies, and public governance.', authority: 'Government of Bihar', officialUrl: 'https://state.bihar.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Bihar', services: ['RTPS Bihar service portal', 'Bhumi Jankari land registry', 'Udyami Yojana startup grants', 'Kisan DBT agriculture portal'], lastVerified: '2026-03-01' },
+  { name: 'Chhattisgarh Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal for Chhattisgarh social welfare, mineral development, and citizen services.', authority: 'Government of Chhattisgarh', officialUrl: 'https://cgstate.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Chhattisgarh', services: ['e-District CG', 'Bhuiyan land records', 'Rajiv Gandhi Kisan Nyay Yojana', 'CG e-Procurement'], lastVerified: '2026-03-01' },
+  { name: 'Goa Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal for Goa citizen welfare, tourism enterprise approvals, and e-governance.', authority: 'Government of Goa', officialUrl: 'https://goa.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Goa', services: ['Goa Online services', 'Single Window clearance for industry', 'Deen Dayal Swasthya Seva Yojana', 'Revenue portal'], lastVerified: '2026-03-01' },
+  { name: 'Gujarat Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal for Gujarat industrial corridors, public welfare, and digital services.', authority: 'Government of Gujarat', officialUrl: 'https://gujarat.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Gujarat', services: ['Digital Gujarat citizen portal', 'AnyRoR land records', 'i-Khedut agriculture portal', 'Investor Facilitation Portal (IFP)'], lastVerified: '2026-03-01' },
+  { name: 'Haryana Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal for Haryana Parivar Pehchan Patra, agriculture subsidies, and citizen delivery.', authority: 'Government of Haryana', officialUrl: 'https://haryana.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Haryana', services: ['Saral Haryana public services', 'Parivar Pehchan Patra (PPP)', 'Jamabandi land records', 'Meri Fasal Mera Byora'], lastVerified: '2026-03-01' },
+  { name: 'Himachal Pradesh Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal for Himachal Pradesh administration, horticulture incentives, and e-governance.', authority: 'Government of Himachal Pradesh', officialUrl: 'https://himachal.nic.in/', sourceType: 'State Government', type: 'STATE', state: 'Himachal Pradesh', services: ['e-District HP', 'Himbhoomi land registry', 'Mukhya Mantri Swavalamban Yojana', 'HP Tenders portal'], lastVerified: '2026-03-01' },
+  { name: 'Jharkhand Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal for Jharkhand tribal welfare, mining concessions, and citizen services.', authority: 'Government of Jharkhand', officialUrl: 'https://www.jharkhand.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Jharkhand', services: ['Jharsewa portal', 'Jharbhoomi land records', 'Mukhyamantri Protsahan Yojana', 'Jharkhand Single Window Clearance'], lastVerified: '2026-03-01' },
+  { name: 'Karnataka Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal for Karnataka technology ecosystem, industrial schemes, and citizen services.', authority: 'Government of Karnataka', officialUrl: 'https://www.karnataka.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Karnataka', services: ['Seva Sindhu citizen delivery', 'Bhoomi RTC land records', 'Karnataka Udyog Mitra', 'KTPP e-Procurement'], lastVerified: '2026-03-01' },
+  { name: 'Kerala Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal for Kerala social security, startup ecosystem, and e-District services.', authority: 'Government of Kerala', officialUrl: 'https://kerala.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Kerala', services: ['e-District Kerala', 'ReLIS revenue records', 'KSIDC single window investment', 'Kerala Startup Mission (KSUM)'], lastVerified: '2026-03-01' },
+  { name: 'Madhya Pradesh Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal for Madhya Pradesh agriculture subsidies, industrial policy, and public welfare.', authority: 'Government of Madhya Pradesh', officialUrl: 'https://mp.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Madhya Pradesh', services: ['MP e-District', 'MP Bhulekh land registry', 'Ladli Behna Yojana', 'MP Tenders portal'], lastVerified: '2026-03-01' },
+  { name: 'Maharashtra Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal for Maharashtra industrial investments, urban infrastructure, and citizen rights.', authority: 'Government of Maharashtra', officialUrl: 'https://maharashtra.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Maharashtra', services: ['Aaple Sarkar citizen portal', 'Mahabhulekh 7/12 land records', 'MAITRI single window investment desk', 'MahaDBT scholarship portal'], lastVerified: '2026-03-01' },
+  { name: 'Manipur Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal for Manipur administration, welfare schemes, and public notifications.', authority: 'Government of Manipur', officialUrl: 'https://manipur.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Manipur', services: ['e-District Manipur', 'Louchapathap land records', 'StartUp Manipur incentive fund', 'Departmental procurement'], lastVerified: '2026-03-01' },
+  { name: 'Meghalaya Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal for Meghalaya governance, tourism incentives, tribal welfare, and public services.', authority: 'Government of Meghalaya', officialUrl: 'https://meghalaya.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Meghalaya', services: ['Meghalaya e-District', 'PRIME Meghalaya Entrepreneurship', 'MIDC industrial clearance', 'State procurement portal'], lastVerified: '2026-03-01' },
+  { name: 'Mizoram Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal for Mizoram citizen welfare, agriculture programs, and public services.', authority: 'Government of Mizoram', officialUrl: 'https://mizoram.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Mizoram', services: ['e-District Mizoram', 'Land revenue portal', 'Socio-Economic Development Policy (SEDP)', 'Mizoram State Portal'], lastVerified: '2026-03-01' },
+  { name: 'Nagaland Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal for Nagaland state policies, village development boards, and citizen services.', authority: 'Government of Nagaland', officialUrl: 'https://nagaland.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Nagaland', services: ['Nagaland Single Window Portal', 'e-District Nagaland', 'Department of Information & Public Relations', 'State procurement'], lastVerified: '2026-03-01' },
+  { name: 'Odisha Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal for Odisha industrial facilitation, disaster management, and public welfare.', authority: 'Government of Odisha', officialUrl: 'https://odisha.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Odisha', services: ['Odisha One unified citizen portal', 'Bhulekh Odisha land records', 'GO-SWIFT single window investor portal', 'KALIA farmer benefits'], lastVerified: '2026-03-01' },
+  { name: 'Punjab Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal for Punjab citizen services, farm subsidies, and industrial promotion.', authority: 'Government of Punjab', officialUrl: 'https://punjab.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Punjab', services: ['Sewa Kendra public services', 'PLRS Jamabandi land records', 'Invest Punjab single window desk', 'Punjab e-Procurement'], lastVerified: '2026-03-01' },
+  { name: 'Rajasthan Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal for Rajasthan Jan Soochna, renewable energy incentives, and citizen services.', authority: 'Government of Rajasthan', officialUrl: 'https://rajasthan.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Rajasthan', services: ['Jan Soochna public disclosure portal', 'Apna Khata land records', 'RajNivesh single window', 'Jan Aadhaar welfare portal'], lastVerified: '2026-03-01' },
+  { name: 'Sikkim Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal for Sikkim organic farming incentives, tourism licensing, and citizen services.', authority: 'Government of Sikkim', officialUrl: 'https://sikkim.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Sikkim', services: ['e-District Sikkim', 'Land Revenue & Disaster Management portal', 'Skilled Youth Startup Scheme', 'Sikkim Tenders'], lastVerified: '2026-03-01' },
+  { name: 'Tamil Nadu Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal for Tamil Nadu manufacturing corridors, welfare schemes, and digital governance.', authority: 'Government of Tamil Nadu', officialUrl: 'https://www.tn.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Tamil Nadu', services: ['e-Sevai citizen portal', 'Patta Chitta land records', 'Guidance Tamil Nadu single window desk', 'TNeGA digital services'], lastVerified: '2026-03-01' },
+  { name: 'Telangana Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal for Telangana innovation ecosystem, agriculture welfare, and digital infrastructure.', authority: 'Government of Telangana', officialUrl: 'https://www.telangana.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Telangana', services: ['MeeSeva citizen delivery', 'Dharani integrated land records', 'TS-iPASS industrial approvals', 'Rythu Bandhu portal'], lastVerified: '2026-03-01' },
+  { name: 'Tripura Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal for Tripura rubber & bamboo industry incentives, agriculture, and public welfare.', authority: 'Government of Tripura', officialUrl: 'https://tripura.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Tripura', services: ['e-District Tripura', 'Jami land records portal', 'Tripura e-Procurement', 'Mukhyamantri Yuba Yogayog Yojana'], lastVerified: '2026-03-01' },
+  { name: 'Uttar Pradesh Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal for Uttar Pradesh MSME clusters, expressways, citizen services, and agriculture.', authority: 'Government of Uttar Pradesh', officialUrl: 'https://up.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Uttar Pradesh', services: ['e-District UP', 'Bhulekh UP land records', 'Nivesh Mitra single window investor desk', 'Jansunwai public grievance system'], lastVerified: '2026-03-01' },
+  { name: 'Uttarakhand Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal for Uttarakhand tourism development, industrial incentives, and citizen services.', authority: 'Government of Uttarakhand', officialUrl: 'https://uk.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'Uttarakhand', services: ['Apuni Sarkar citizen portal', 'Bhulekh Uttarakhand land registry', 'Single Window Investor Portal', 'Uttarakhand Tenders'], lastVerified: '2026-03-01' },
+  { name: 'West Bengal Portal', category: 'STATE GOVERNMENTS', description: 'Official State Government portal for West Bengal social welfare schemes, MSME incentives, and digital services.', authority: 'Government of West Bengal', officialUrl: 'https://wb.gov.in/', sourceType: 'State Government', type: 'STATE', state: 'West Bengal', services: ['Duare Sarkar citizen outreach', 'Banglarbhumi land records', 'Shilpa Sathi single window clearance', 'Lakshmir Bhandar welfare scheme'], lastVerified: '2026-03-01' },
+  { name: 'Andaman & Nicobar Islands Portal', category: 'STATE GOVERNMENTS', description: 'Official UT Government portal for Andaman & Nicobar Islands administration, tourism, and citizen delivery.', authority: 'Government of Andaman & Nicobar Islands', officialUrl: 'https://www.andaman.gov.in/', sourceType: 'State Government', type: 'UT', state: 'Andaman & Nicobar Islands', services: ['e-District Andaman', 'Revenue land services', 'Island tourism permissions', 'UT public procurement'], lastVerified: '2026-03-01' },
+  { name: 'Chandigarh Portal', category: 'STATE GOVERNMENTS', description: 'Official UT Government portal for Chandigarh urban development, smart city initiatives, and citizen utilities.', authority: 'Government of Chandigarh', officialUrl: 'https://chd.gov.in/', sourceType: 'State Government', type: 'UT', state: 'Chandigarh', services: ['e-JanSampark citizen centers', 'Estate Office land records', 'Chandigarh Smart City services', 'Online billing and licensing'], lastVerified: '2026-03-01' },
+  { name: 'Dadra & Nagar Haveli and Daman & Diu Portal', category: 'STATE GOVERNMENTS', description: 'Official UT Government portal for Dadra & Nagar Haveli and Daman & Diu industrial promotion and governance.', authority: 'Government of Dadra & Nagar Haveli and Daman & Diu', officialUrl: 'https://www.daman.nic.in/', sourceType: 'State Government', type: 'UT', state: 'Dadra & Nagar Haveli and Daman & Diu', services: ['Single Window clearance portal', 'e-District DNH & DD', 'Revenue land registry', 'Tourism and trade licensing'], lastVerified: '2026-03-01' },
+  { name: 'Delhi Portal', category: 'STATE GOVERNMENTS', description: 'Official Government of NCT of Delhi portal for public utilities, transport, revenue, and citizen welfare schemes.', authority: 'Government of Delhi (GNCTD)', officialUrl: 'https://delhi.gov.in/', sourceType: 'State Government', type: 'UT', state: 'Delhi', services: ['e-District Delhi (Certificates & Revenue)', 'Delhi Doorstep Delivery of Public Services', 'DTC and transport licensing', 'Delhi Jal Board utilities'], lastVerified: '2026-03-01' },
+  { name: 'Jammu & Kashmir Portal', category: 'STATE GOVERNMENTS', description: 'Official UT Government portal for Jammu & Kashmir administrative services, industrial policy, and social welfare.', authority: 'Government of Jammu & Kashmir', officialUrl: 'https://jk.gov.in/', sourceType: 'State Government', type: 'UT', state: 'Jammu & Kashmir', services: ['e-Unnat single unified citizen portal', 'Aapki Zameen Aapki Nigrani land records', 'Single Window Industrial Portal', 'JK Tenders'], lastVerified: '2026-03-01' },
+  { name: 'Ladakh Portal', category: 'STATE GOVERNMENTS', description: 'Official UT Government portal for Ladakh solar energy incentives, winter tourism, and citizen welfare programs.', authority: 'Government of Ladakh', officialUrl: 'https://ladakh.nic.in/', sourceType: 'State Government', type: 'UT', state: 'Ladakh', services: ['e-District Ladakh', 'LAHDCS administrative portal', 'Renewable energy incentive desk', 'State procurement'], lastVerified: '2026-03-01' },
+  { name: 'Lakshadweep Portal', category: 'STATE GOVERNMENTS', description: 'Official UT Government portal for Lakshadweep eco-tourism, fisheries incentives, and citizen services.', authority: 'Government of Lakshadweep', officialUrl: 'https://lakshadweep.gov.in/', sourceType: 'State Government', type: 'UT', state: 'Lakshadweep', services: ['e-Permit application system', 'Fisheries welfare scheme portal', 'e-District Lakshadweep', 'Public utilities desk'], lastVerified: '2026-03-01' },
+  { name: 'Puducherry Portal', category: 'STATE GOVERNMENTS', description: 'Official UT Government portal for Puducherry administration, healthcare schemes, and citizen services.', authority: 'Government of Puducherry', officialUrl: 'https://py.gov.in/', sourceType: 'State Government', type: 'UT', state: 'Puducherry', services: ['e-District Puducherry', 'Nilamagal land registry', 'Puducherry Single Window Clearance', 'Welfare scholarship portal'], lastVerified: '2026-03-01' },
+];
+
+export const getAllOfficialSources = (): OfficialSource[] => {
+  return [...centralOfficialSources, ...stateOfficialSources];
+};
+
+export const addStateOfficialSources = (centralSources: OfficialSource[] = []): OfficialSource[] => {
+  if (!centralSources || centralSources.length === 0) {
+    return getAllOfficialSources();
+  }
   return [...centralSources, ...stateOfficialSources];
+};
+
+export const getOfficialSourceSlug = (source: { name: string }): string => {
+  return source.name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
+};
+
+export const getOfficialSourceBySlug = (slug: string): OfficialSource | undefined => {
+  const all = getAllOfficialSources();
+  const normalizedSlug = slug.toLowerCase().trim();
+  return all.find(s => getOfficialSourceSlug(s) === normalizedSlug);
 };

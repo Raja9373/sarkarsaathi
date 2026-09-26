@@ -1,18 +1,18 @@
 import React, { useMemo } from 'react';
 import { investmentRepository, investmentSchemeRepository, opportunityRepository, tenderRepository, newsRepository } from '../infrastructure/repositories/InvestmentRepository';
 import { subsidyRepository } from '../infrastructure/repositories/SubsidyRepository';
-import { addStateOfficialSources } from '../utils/officialSources';
+import { getAllOfficialSources, getOfficialSourceSlug } from '../utils/officialSources';
 
 export function SearchView({ query, onNavigate }: { query: string; onNavigate: (route: string, slug?: string) => void }) {
   const allItems = useMemo(() => {
     return [
-      ...investmentRepository.getAll().map(i => ({ ...i, type: 'Investments', id: i.id || '' })),
-      ...investmentSchemeRepository.getAll().map(i => ({ ...i, type: 'Investment Schemes', id: i.id || '' })),
-      ...opportunityRepository.getAll().map(i => ({ ...i, type: 'Opportunities', id: i.id || '' })),
-      ...tenderRepository.getAll().map(i => ({ ...i, type: 'Tenders', id: i.id || '' })),
-      ...newsRepository.getAll().map(i => ({ ...i, type: 'News & Updates', id: i.id || '' })),
-      ...subsidyRepository.getAll().map(i => ({ ...i, type: 'Subsidies & Benefits', id: i.id || '' })),
-      ...addStateOfficialSources([]).map(s => ({ ...s, type: 'Official Sources', id: s.name })),
+      ...investmentRepository.getAll().map(i => ({ ...i, itemType: 'Investments', searchTitle: i.title, searchSlug: i.slug || i.id, routeBase: '/investments' })),
+      ...investmentSchemeRepository.getAll().map(i => ({ ...i, itemType: 'Investment Schemes', searchTitle: i.title, searchSlug: i.slug || i.id, routeBase: '/investment-schemes' })),
+      ...opportunityRepository.getAll().map(i => ({ ...i, itemType: 'Opportunities', searchTitle: i.title, searchSlug: i.slug || i.id, routeBase: '/opportunities' })),
+      ...tenderRepository.getAll().map(i => ({ ...i, itemType: 'Tenders', searchTitle: i.title, searchSlug: i.slug || i.id, routeBase: '/tenders' })),
+      ...newsRepository.getAll().map(i => ({ ...i, itemType: 'News & Updates', searchTitle: i.title, searchSlug: i.slug || i.id, routeBase: '/news' })),
+      ...subsidyRepository.getAll().map(i => ({ ...i, itemType: 'Subsidies & Benefits', searchTitle: i.title, searchSlug: i.slug || i.id, routeBase: '/subsidies' })),
+      ...getAllOfficialSources().map(s => ({ ...s, itemType: 'Official Sources', searchTitle: s.name, searchSlug: getOfficialSourceSlug(s), routeBase: '/official-sources' })),
     ];
   }, []);
 
@@ -21,13 +21,13 @@ export function SearchView({ query, onNavigate }: { query: string; onNavigate: (
     if (!q) return [];
     
     const filtered = allItems.filter(item => 
-      (item.title || item.name || '').toLowerCase().includes(q) || 
+      (item.searchTitle || '').toLowerCase().includes(q) || 
       (item.description || '').toLowerCase().includes(q)
     );
     
     const groups = filtered.reduce((acc, item) => {
-      if (!acc[item.type]) acc[item.type] = [];
-      acc[item.type].push(item);
+      if (!acc[item.itemType]) acc[item.itemType] = [];
+      acc[item.itemType].push(item);
       return acc;
     }, {} as Record<string, any[]>);
     
@@ -45,18 +45,15 @@ export function SearchView({ query, onNavigate }: { query: string; onNavigate: (
             <div key={group.type}>
               <h2 className="text-xl font-bold text-slate-900 mb-4">{group.type} ({group.items.length})</h2>
               <div className="grid gap-4">
-                {group.items.slice(0, 5).map((item: any, index) => (
-                  <div key={index} className="p-4 bg-white border border-slate-200 rounded-xl shadow-sm">
-                    <h3 className="font-bold text-slate-900">{item.title || item.name}</h3>
-                    <p className="text-sm text-slate-600 mt-1">{item.description}</p>
+                {group.items.slice(0, 5).map((item: any, index: number) => (
+                  <div key={index} className="p-4 bg-white border border-slate-200 rounded-xl shadow-sm hover:border-slate-300 transition">
+                    <h3 className="font-bold text-slate-900">{item.searchTitle}</h3>
+                    <p className="text-sm text-slate-600 mt-1 line-clamp-2">{item.description}</p>
                     <button 
-                        onClick={() => {
-                            if (group.type === 'Official Sources') window.open(item.officialUrl, '_blank');
-                            else onNavigate(`/${group.type.toLowerCase().replace(' ', '-')}`, item.slug);
-                        }}
-                        className="mt-3 text-sm text-blue-600 font-medium hover:underline"
+                      onClick={() => onNavigate(item.routeBase, item.searchSlug)}
+                      className="mt-3 text-sm text-indigo-600 font-medium hover:underline inline-flex items-center space-x-1"
                     >
-                      View Details →
+                      <span>View Details →</span>
                     </button>
                   </div>
                 ))}

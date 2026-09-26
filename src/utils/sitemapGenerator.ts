@@ -3,7 +3,7 @@ import path from 'path';
 import { InvestmentRepository, InvestmentSchemeRepository, OpportunityRepository, TenderRepository } from '../infrastructure/repositories/InvestmentRepository';
 import { NewsRepository } from '../infrastructure/repositories/NewsRepository';
 import { SubsidyRepository } from '../infrastructure/repositories/SubsidyRepository';
-import { addStateOfficialSources } from './officialSources';
+import { getAllOfficialSources, getOfficialSourceSlug, stateOfficialSources } from './officialSources';
 
 const baseUrl = 'https://sarkarsaathi.org';
 
@@ -47,19 +47,48 @@ const repoMap = [
   { repo: new SubsidyRepository(), path: '/subsidies' }
 ];
 
+const sectors = [
+  'agriculture',
+  'infrastructure',
+  'healthcare',
+  'education',
+  'technology',
+  'renewable-energy',
+  'manufacturing',
+  'tourism',
+  'msme',
+  'defense'
+];
+
 export const generateSitemap = () => {
   const rawUrls: Set<string> = new Set();
 
   // Hubs
   hubs.forEach(h => {
     if (!h.includes('?') && !h.includes('search') && !h.includes('filter')) {
-      rawUrls.add(`${baseUrl}${h}`);
+      const cleanPath = h === '/' ? '' : h;
+      rawUrls.add(`${baseUrl}${cleanPath}`);
     }
   });
 
   let duplicateCount = 0;
   let invalidCount = 0;
   let searchFilterCount = 0;
+
+  // State opportunity landing pages
+  stateOfficialSources.forEach(s => {
+    if (s.state) {
+      const stateSlug = s.state.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+      if (stateSlug) {
+        rawUrls.add(`${baseUrl}/opportunities/state/${stateSlug}`);
+      }
+    }
+  });
+
+  // Sector opportunity landing pages
+  sectors.forEach(sec => {
+    rawUrls.add(`${baseUrl}/opportunities/sector/${sec}`);
+  });
 
   // Repo items
   repoMap.forEach(({ repo, path: routePath }) => {
@@ -86,9 +115,9 @@ export const generateSitemap = () => {
   });
 
   // Official sources
-  const officialSources = addStateOfficialSources([]);
+  const officialSources = getAllOfficialSources();
   officialSources.forEach(s => {
-    const slug = s.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    const slug = getOfficialSourceSlug(s);
     if (slug) {
       const url = `${baseUrl}/official-sources/${slug}`;
       if (url.includes('?') || url.includes('search') || url.includes('filter')) {
@@ -143,4 +172,3 @@ ${urlElements}
     xmlValid
   };
 };
-
