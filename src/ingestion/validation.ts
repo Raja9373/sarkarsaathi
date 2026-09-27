@@ -35,14 +35,14 @@ export function validateOpportunityRecord(record: Partial<Opportunity>): {
     fieldErrors.push({ field: 'authority', reason: 'Authority is required.' });
   }
 
-  // 5. Category
-  if (!record.category || typeof record.category !== 'string' || record.category.trim().length === 0) {
-    errors.push('Category is required.');
-    fieldErrors.push({ field: 'category', reason: 'Category is required.' });
+  // 5. Category (Optional / Defaultable)
+  if (record.category && (typeof record.category !== 'string' || record.category.trim().length === 0)) {
+    errors.push('Category must be a non-empty string if provided.');
+    fieldErrors.push({ field: 'category', reason: 'Category must be a non-empty string if provided.' });
   }
 
   // 6. Require sourceName / sourceAuthority
-  const sourceName = record.sourceAuthority || (record as any).sourceName;
+  const sourceName = record.sourceAuthority || (record as any).sourceName || record.authority;
   if (!sourceName || typeof sourceName !== 'string' || sourceName.trim().length === 0) {
     errors.push('sourceName (source authority) is required.');
     fieldErrors.push({ field: 'sourceAuthority', reason: 'sourceAuthority is required.' });
@@ -54,10 +54,10 @@ export function validateOpportunityRecord(record: Partial<Opportunity>): {
     fieldErrors.push({ field: 'sourceUrl', reason: 'Valid sourceUrl starting with http:// or https:// is required.' });
   }
 
-  // 8. Deadline
-  if (!record.deadline || typeof record.deadline !== 'string' || record.deadline.trim().length === 0) {
-    errors.push('Deadline is required for opportunities.');
-    fieldErrors.push({ field: 'deadline', reason: 'Deadline is required for opportunities.' });
+  // 8. Deadline (Optional for ongoing infrastructure / investment opportunities)
+  if (record.deadline && (typeof record.deadline !== 'string' || record.deadline.trim().length === 0)) {
+    errors.push('Deadline must be a non-empty string if provided.');
+    fieldErrors.push({ field: 'deadline', reason: 'Deadline must be a non-empty string if provided.' });
   }
 
   const isValid = errors.length === 0;
@@ -145,3 +145,6 @@ export function validateTenderRecord(record: Partial<Tender>): {
 
   return { isValid, errors, fieldErrors, lifecycleStatus, verificationStatus };
 }
+
+export const validateOpportunityData = validateOpportunityRecord;
+export const validateTenderData = validateTenderRecord;

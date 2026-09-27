@@ -365,3 +365,4 @@ export class StagingQueue {
 }
 
 export const globalStagingQueue = new StagingQueue();
+export { StagingQueue as StagingManager };

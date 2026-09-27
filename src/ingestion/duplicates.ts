@@ -142,3 +142,19 @@ export class DuplicateDetector {
     }
   }
 }
+
+export function isDuplicateOpportunity(
+  record: Partial<Opportunity>,
+  existingOpportunities: Opportunity[] = []
+): boolean {
+  const detector = new DuplicateDetector(existingOpportunities, []);
+  return detector.isOpportunityDuplicate(record).isDuplicate;
+}
+
+export function isDuplicateTender(
+  record: Partial<Tender>,
+  existingTenders: Tender[] = []
+): boolean {
+  const detector = new DuplicateDetector([], existingTenders);
+  return detector.isTenderDuplicate(record).isDuplicate;
+}
