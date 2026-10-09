@@ -1,0 +1,178 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sarkarsaathi.org/schemas/answer_schema.v1.json",
+  "title": "SarkarSaathiVerifiedAnswer",
+  "description": "Schema for verified, evidence-backed answers in SarkarSaathi Question Intelligence engine (Phase 4)",
+  "type": "object",
+  "required": [
+    "question_id",
+    "canonical_question",
+    "short_answer",
+    "detailed_answer",
+    "answer_language",
+    "supporting_claims",
+    "official_source_urls",
+    "source_title",
+    "source_publisher",
+    "evidence_type",
+    "verified_at",
+    "answer_status",
+    "verification_status",
+    "review_required"
+  ],
+  "properties": {
+    "question_id": {
+      "type": "string",
+      "pattern": "^Q-[A-Z]{2,4}-[0-9]{3}$",
+      "description": "Deterministic, stable unique identifier linking directly to canonical question in question_bank.json."
+    },
+    "canonical_question": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 300,
+      "description": "Canonical user question wording."
+    },
+    "short_answer": {
+      "type": "string",
+      "minLength": 20,
+      "maxLength": 500,
+      "description": "Direct, actionable summary answering the core inquiry immediately."
+    },
+    "detailed_answer": {
+      "type": "string",
+      "minLength": 100,
+      "maxLength": 4000,
+      "description": "In-depth, context-rich factual breakdown including statutory limitations, procedures, eligibility rules, and exceptions."
+    },
+    "answer_language": {
+      "type": "string",
+      "enum": ["en", "hi", "hinglish"],
+      "default": "en",
+      "description": "Primary language of the authoritative answer."
+    },
+    "translations": {
+      "type": "object",
+      "properties": {
+        "hi": {
+          "type": "object",
+          "properties": {
+            "short_answer": { "type": "string" },
+            "detailed_answer": { "type": "string" },
+            "status": { "type": "string", "enum": ["COMPLETED", "PENDING", "NEEDS_REVIEW"] }
+          },
+          "required": ["short_answer", "detailed_answer", "status"],
+          "additionalProperties": false
+        },
+        "hinglish": {
+          "type": "object",
+          "properties": {
+            "short_answer": { "type": "string" },
+            "detailed_answer": { "type": "string" },
+            "status": { "type": "string", "enum": ["COMPLETED", "PENDING", "NEEDS_REVIEW"] }
+          },
+          "required": ["short_answer", "detailed_answer", "status"],
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "supporting_claims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "claim": { "type": "string" },
+          "citation_source": { "type": "string" },
+          "source_url": { "type": "string", "format": "uri" }
+        },
+        "required": ["claim", "citation_source", "source_url"],
+        "additionalProperties": false
+      },
+      "minItems": 1,
+      "description": "Granular verifiable claims extracted from the answer paired with specific authoritative citations."
+    },
+    "official_source_urls": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "uri"
+      },
+      "minItems": 1,
+      "description": "Authoritative URLs verifying the answer facts."
+    },
+    "source_title": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 300,
+      "description": "Official title of the gazette, scheme guideline, manual, or portal."
+    },
+    "source_publisher": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 200,
+      "description": "Publishing entity (e.g., Reserve Bank of India, Ministry of Finance, KVIC, GeM SPV, MoSPI)."
+    },
+    "evidence_type": {
+      "type": "string",
+      "enum": [
+        "PRIMARY_STATUTORY_RULE",
+        "OFFICIAL_GOV_NOTIFICATION",
+        "OFFICIAL_DEPARTMENT_PORTAL",
+        "OFFICIAL_FAQ_DOCUMENT",
+        "RESEARCH_SYNTHESIS",
+        "SECONDARY_VERIFIED"
+      ],
+      "description": "Hierarchy classification of the backing evidence."
+    },
+    "effective_date": {
+      "type": ["string", "null"],
+      "description": "Date or statutory period from which the rule, rate, or policy applies."
+    },
+    "verified_at": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+      "description": "ISO date when evidence was verified."
+    },
+    "answer_status": {
+      "type": "string",
+      "enum": [
+        "DRAFTED",
+        "VERIFIED",
+        "PARTIALLY_VERIFIED",
+        "NEEDS_REVIEW",
+        "UNVERIFIED",
+        "OUTDATED"
+      ],
+      "description": "Lifecycle state of the answer."
+    },
+    "verification_status": {
+      "type": "string",
+      "enum": [
+        "VERIFIED",
+        "PARTIALLY_VERIFIED",
+        "NEEDS_REVIEW",
+        "UNVERIFIED",
+        "OUTDATED",
+        "CONFLICTING_EVIDENCE"
+      ],
+      "description": "Editorial verification audit status."
+    },
+    "review_required": {
+      "type": "boolean",
+      "description": "Flag indicating whether editorial re-review or fact-check is pending."
+    },
+    "reviewer_notes": {
+      "type": ["string", "null"],
+      "description": "Editorial or auditor notes highlighting nuances or data gaps."
+    },
+    "conflicting_evidence": {
+      "type": ["string", "null"],
+      "description": "Details of any conflicting public claims, court stays, or divergent state interpretations."
+    },
+    "next_review_due": {
+      "type": ["string", "null"],
+      "description": "Next scheduled review date, particularly for quarterly interest rate revisions."
+    }
+  },
+  "additionalProperties": false
+}
