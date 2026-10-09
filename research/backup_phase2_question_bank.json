@@ -1,0 +1,2368 @@
+[
+  {
+    "question_id": "Q-GI-001",
+    "canonical_question": "What is the maximum investment limit in Public Provident Fund (PPF) in a financial year?",
+    "normalized_question": "What is the maximum annual deposit limit in a PPF account?",
+    "alternate_phrasings": [
+      "PPF me ek saal me kitna paisa jama kar sakte hain?",
+      "Can I deposit more than 1.5 lakh in PPF?",
+      "PPF maximum deposit limit per year"
+    ],
+    "category": "Government Investments",
+    "subcategory": "Public Provident Fund (PPF)",
+    "search_intent": "informational",
+    "audience": "citizens",
+    "geography": "India (All)",
+    "language": "en",
+    "evidence_status": "DIRECTLY_OBSERVED",
+    "observed_on_google": true,
+    "source_type": "google_search_observed",
+    "source_urls": [
+      "https://www.hdfcbank.com/personal/resources/learning-centre/save/ppf-rules-and-regulations"
+    ],
+    "answer_status": "UNANSWERED",
+    "verification_status": "GOV_VERIFIED",
+    "last_verified_at": "2026-10-09",
+    "suggested_existing_page": "/investments/public-provident-fund",
+    "related_question_ids": [
+      "Q-GI-002",
+      "Q-GI-004",
+      "Q-CMP-001",
+      "Q-CALC-001"
+    ],
+    "relationships": {
+      "broader_question": null,
+      "narrower_questions": [
+        "Q-GI-002",
+        "Q-GI-004"
+      ],
+      "comparison_questions": [
+        "Q-CMP-001"
+      ],
+      "eligibility_question": "Q-GI-003",
+      "application_question": null,
+      "document_requirement_question": null,
+      "status_tracking_question": null,
+      "deadline_question": null,
+      "related_calculator": "/tools",
+      "related_official_source": "https://www.indiapost.gov.in"
+    },
+    "duplicate_of": null,
+    "review_required": false,
+    "priority": "CRITICAL",
+    "record_created_at": "2026-10-09T05:40:00.000Z",
+    "record_updated_at": "2026-10-09T05:45:00.000Z"
+  },
+  {
+    "question_id": "Q-GI-002",
+    "canonical_question": "Why should PPF deposits be made on or before the 5th of every month?",
+    "normalized_question": "How is monthly interest calculated on PPF account balance?",
+    "alternate_phrasings": [
+      "PPF interest calculation 5th of month rule",
+      "PPF me interest kab calculate hota hai?",
+      "Best date to deposit money in PPF"
+    ],
+    "category": "Government Investments",
+    "subcategory": "Public Provident Fund (PPF)",
+    "search_intent": "calculation",
+    "audience": "investors",
+    "geography": "India (All)",
+    "language": "en",
+    "evidence_status": "OFFICIAL_SOURCE_VERIFIED",
+    "observed_on_google": false,
+    "source_type": "official_gov_faq",
+    "source_urls": [
+      "https://www.sbi.co.in/web/personal-banking/investments-deposits/govt-schemes/ppf"
+    ],
+    "answer_status": "UNANSWERED",
+    "verification_status": "GOV_VERIFIED",
+    "last_verified_at": "2026-10-09",
+    "suggested_existing_page": "/investments/public-provident-fund",
+    "related_question_ids": [
+      "Q-GI-001",
+      "Q-CALC-001"
+    ],
+    "relationships": {
+      "broader_question": "Q-GI-001",
+      "narrower_questions": [],
+      "comparison_questions": [],
+      "eligibility_question": null,
+      "application_question": null,
+      "document_requirement_question": null,
+      "status_tracking_question": null,
+      "deadline_question": null,
+      "related_calculator": "/tools",
+      "related_official_source": "https://www.sbi.co.in"
+    },
+    "duplicate_of": null,
+    "review_required": false,
+    "priority": "CRITICAL",
+    "record_created_at": "2026-10-09T05:40:00.000Z",
+    "record_updated_at": "2026-10-09T05:45:00.000Z"
+  },
+  {
+    "question_id": "Q-GI-003",
+    "canonical_question": "Can an NRI continue an existing PPF account after moving abroad?",
+    "normalized_question": "Can Non-Resident Indians (NRIs) hold or extend a PPF account?",
+    "alternate_phrasings": [
+      "NRI PPF account rules",
+      "Can NRI extend PPF after 15 years?",
+      "NRI banne ke baad PPF account ka kya hota hai?"
+    ],
+    "category": "Government Investments",
+    "subcategory": "Public Provident Fund (PPF)",
+    "search_intent": "eligibility_check",
+    "audience": "citizens",
+    "geography": "India (All)",
+    "language": "en",
+    "evidence_status": "DIRECTLY_OBSERVED",
+    "observed_on_google": true,
+    "source_type": "google_search_observed",
+    "source_urls": [
+      "https://www.etmoney.com/learn/ppf/ppf-rules/"
+    ],
+    "answer_status": "UNANSWERED",
+    "verification_status": "GOV_VERIFIED",
+    "last_verified_at": "2026-10-09",
+    "suggested_existing_page": "/investments/public-provident-fund",
+    "related_question_ids": [
+      "Q-GI-001",
+      "Q-GI-004"
+    ],
+    "relationships": {
+      "broader_question": "Q-GI-001",
+      "narrower_questions": [],
+      "comparison_questions": [],
+      "eligibility_question": null,
+      "application_question": null,
+      "document_requirement_question": null,
+      "status_tracking_question": null,
+      "deadline_question": null,
+      "related_calculator": null,
+      "related_official_source": "https://www.rbi.org.in"
+    },
+    "duplicate_of": null,
+    "review_required": false,
+    "priority": "HIGH",
+    "record_created_at": "2026-10-09T05:40:00.000Z",
+    "record_updated_at": "2026-10-09T05:45:00.000Z"
+  },
+  {
+    "question_id": "Q-GI-004",
+    "canonical_question": "What is the premature withdrawal penalty and rule for PPF accounts after 5 years?",
+    "normalized_question": "Under what conditions can a PPF account be prematurely closed or withdrawn?",
+    "alternate_phrasings": [
+      "PPF se 5 saal baad kitna paisa nikal sakte hain?",
+      "PPF premature closure grounds and penalty",
+      "Partial withdrawal limit in PPF"
+    ],
+    "category": "Government Investments",
+    "subcategory": "Public Provident Fund (PPF)",
+    "search_intent": "transactional",
+    "audience": "citizens",
+    "geography": "India (All)",
+    "language": "en",
+    "evidence_status": "DIRECTLY_OBSERVED",
+    "observed_on_google": true,
+    "source_type": "google_search_observed",
+    "source_urls": [
+      "https://www.valueresearchonline.com/stories/52431/ppf-premature-closure-rules/"
+    ],
+    "answer_status": "UNANSWERED",
+    "verification_status": "GOV_VERIFIED",
+    "last_verified_at": "2026-10-09",
+    "suggested_existing_page": "/investments/public-provident-fund",
+    "related_question_ids": [
+      "Q-GI-001",
+      "Q-GI-002"
+    ],
+    "relationships": {
+      "broader_question": "Q-GI-001",
+      "narrower_questions": [],
+      "comparison_questions": [],
+      "eligibility_question": null,
+      "application_question": null,
+      "document_requirement_question": null,
+      "status_tracking_question": null,
+      "deadline_question": null,
+      "related_calculator": "/tools",
+      "related_official_source": "https://nsiindia.gov.in"
+    },
+    "duplicate_of": null,
+    "review_required": false,
+    "priority": "HIGH",
+    "record_created_at": "2026-10-09T05:40:00.000Z",
+    "record_updated_at": "2026-10-09T05:45:00.000Z"
+  },
+  {
+    "question_id": "Q-GI-005",
+    "canonical_question": "What is the maximum age limit of a girl child to open a Sukanya Samriddhi Yojana (SSY) account?",
+    "normalized_question": "What is the age criteria for opening a Sukanya Samriddhi Account?",
+    "alternate_phrasings": [
+      "Sukanya Samriddhi me ladki ki age kitni honi chahiye?",
+      "Can I open SSY account for 11 year old daughter?",
+      "SSY entry age limit"
+    ],
+    "category": "Government Investments",
+    "subcategory": "Sukanya Samriddhi Yojana (SSY)",
+    "search_intent": "eligibility_check",
+    "audience": "citizens",
+    "geography": "India (All)",
+    "language": "en",
+    "evidence_status": "OFFICIAL_SOURCE_VERIFIED",
+    "observed_on_google": false,
+    "source_type": "official_gov_faq",
+    "source_urls": [
+      "https://www.myscheme.gov.in/schemes/ssy"
+    ],
+    "answer_status": "UNANSWERED",
+    "verification_status": "GOV_VERIFIED",
+    "last_verified_at": "2026-10-09",
+    "suggested_existing_page": "/investments/sukanya-samriddhi-yojana",
+    "related_question_ids": [
+      "Q-GI-006",
+      "Q-GI-007",
+      "Q-CMP-001",
+      "Q-CALC-002"
+    ],
+    "relationships": {
+      "broader_question": null,
+      "narrower_questions": [
+        "Q-GI-006",
+        "Q-GI-007"
+      ],
+      "comparison_questions": [
+        "Q-CMP-001"
+      ],
+      "eligibility_question": null,
+      "application_question": null,
+      "document_requirement_question": null,
+      "status_tracking_question": null,
+      "deadline_question": null,
+      "related_calculator": "/tools",
+      "related_official_source": "https://www.myscheme.gov.in"
+    },
+    "duplicate_of": null,
+    "review_required": false,
+    "priority": "CRITICAL",
+    "record_created_at": "2026-10-09T05:40:00.000Z",
+    "record_updated_at": "2026-10-09T05:45:00.000Z"
+  },
+  {
+    "question_id": "Q-GI-006",
+    "canonical_question": "How many Sukanya Samriddhi accounts can be opened in one family?",
+    "normalized_question": "What is the account limit for Sukanya Samriddhi Yojana per household?",
+    "alternate_phrasings": [
+      "Can twins have 3 SSY accounts?",
+      "Kya 3 betiyon ke liye Sukanya account khul sakta hai?",
+      "SSY rules for twins and triplets"
+    ],
+    "category": "Government Investments",
+    "subcategory": "Sukanya Samriddhi Yojana (SSY)",
+    "search_intent": "eligibility_check",
+    "audience": "citizens",
+    "geography": "India (All)",
+    "language": "en",
+    "evidence_status": "OFFICIAL_SOURCE_VERIFIED",
+    "observed_on_google": false,
+    "source_type": "official_gov_faq",
+    "source_urls": [
+      "https://nsiindia.gov.in"
+    ],
+    "answer_status": "UNANSWERED",
+    "verification_status": "GOV_VERIFIED",
+    "last_verified_at": "2026-10-09",
+    "suggested_existing_page": "/investments/sukanya-samriddhi-yojana",
+    "related_question_ids": [
+      "Q-GI-005",
+      "Q-GI-007"
+    ],
+    "relationships": {
+      "broader_question": "Q-GI-005",
+      "narrower_questions": [],
+      "comparison_questions": [],
+      "eligibility_question": "Q-GI-005",
+      "application_question": null,
+      "document_requirement_question": null,
+      "status_tracking_question": null,
+      "deadline_question": null,
+      "related_calculator": null,
+      "related_official_source": "https://nsiindia.gov.in"
+    },
+    "duplicate_of": null,
+    "review_required": false,
+    "priority": "HIGH",
+    "record_created_at": "2026-10-09T05:40:00.000Z",
+    "record_updated_at": "2026-10-09T05:45:00.000Z"
+  },
+  {
+    "question_id": "Q-GI-007",
+    "canonical_question": "What is the lock-in period and maturity tenure of Sukanya Samriddhi Yojana?",
+    "normalized_question": "When does a Sukanya Samriddhi Yojana account mature?",
+    "alternate_phrasings": [
+      "Is SSY tenure 15 years or 21 years?",
+      "Sukanya Samriddhi ka paisa kitne saal me milta hai?",
+      "SSY 15 year deposit vs 21 year maturity rule"
+    ],
+    "category": "Government Investments",
+    "subcategory": "Sukanya Samriddhi Yojana (SSY)",
+    "search_intent": "informational",
+    "audience": "citizens",
+    "geography": "India (All)",
+    "language": "en",
+    "evidence_status": "DIRECTLY_OBSERVED",
+    "observed_on_google": true,
+    "source_type": "google_search_observed",
+    "source_urls": [
+      "https://www.groww.in/calculators/sukanya-samriddhi-yojana-calculator"
+    ],
+    "answer_status": "UNANSWERED",
+    "verification_status": "GOV_VERIFIED",
+    "last_verified_at": "2026-10-09",
+    "suggested_existing_page": "/investments/sukanya-samriddhi-yojana",
+    "related_question_ids": [
+      "Q-GI-005",
+      "Q-CALC-002"
+    ],
+    "relationships": {
+      "broader_question": "Q-GI-005",
+      "narrower_questions": [],
+      "comparison_questions": [
+        "Q-CMP-001"
+      ],
+      "eligibility_question": null,
+      "application_question": null,
+      "document_requirement_question": null,
+      "status_tracking_question": null,
+      "deadline_question": null,
+      "related_calculator": "/tools",
+      "related_official_source": "https://www.indiapost.gov.in"
+    },
+    "duplicate_of": null,
+    "review_required": false,
+    "priority": "CRITICAL",
+    "record_created_at": "2026-10-09T05:40:00.000Z",
+    "record_updated_at": "2026-10-09T05:45:00.000Z"
+  },
+  {
+    "question_id": "Q-GI-008",
+    "canonical_question": "What is the maximum investment limit in Senior Citizen Savings Scheme (SCSS)?",
+    "normalized_question": "What is the maximum deposit permitted in an SCSS account?",
+    "alternate_phrasings": [
+      "SCSS limit 15 lakh or 30 lakh?",
+      "Senior Citizen Savings Scheme me maximum kitna invest kar sakte hain?",
+      "SCSS joint account maximum limit for spouses"
+    ],
+    "category": "Government Investments",
+    "subcategory": "Senior Citizen Savings Scheme (SCSS)",
+    "search_intent": "informational",
+    "audience": "senior_citizens",
+    "geography": "India (All)",
+    "language": "en",
+    "evidence_status": "OFFICIAL_SOURCE_VERIFIED",
+    "observed_on_google": false,
+    "source_type": "official_gov_faq",
+    "source_urls": [
+      "https://www.indiapost.gov.in"
+    ],
+    "answer_status": "UNANSWERED",
+    "verification_status": "GOV_VERIFIED",
+    "last_verified_at": "2026-10-09",
+    "suggested_existing_page": "/investments/senior-citizen-savings-scheme",
+    "related_question_ids": [
+      "Q-GI-009",
+      "Q-CMP-002"
+    ],
+    "relationships": {
+      "broader_question": null,
+      "narrower_questions": [
+        "Q-GI-009"
+      ],
+      "comparison_questions": [
+        "Q-CMP-002"
+      ],
+      "eligibility_question": "Q-GI-009",
+      "application_question": null,
+      "document_requirement_question": null,
+      "status_tracking_question": null,
+      "deadline_question": null,
+      "related_calculator": null,
+      "related_official_source": "https://www.indiapost.gov.in"
+    },
+    "duplicate_of": null,
+    "review_required": false,
+    "priority": "CRITICAL",
+    "record_created_at": "2026-10-09T05:40:00.000Z",
+    "record_updated_at": "2026-10-09T05:45:00.000Z"
+  },
+  {
+    "question_id": "Q-GI-009",
+    "canonical_question": "Can retired individuals aged 55 to 60 invest in SCSS?",
+    "normalized_question": "What are the SCSS eligibility rules for voluntary retirees under 60?",
+    "alternate_phrasings": [
+      "Can VRS employees open SCSS at age 55?",
+      "SCSS age relaxation for defense personnel and VRS retirees",
+      "55 saal me SCSS account khul sakta hai kya?"
+    ],
+    "category": "Government Investments",
+    "subcategory": "Senior Citizen Savings Scheme (SCSS)",
+    "search_intent": "eligibility_check",
+    "audience": "senior_citizens",
+    "geography": "India (All)",
+    "language": "en",
+    "evidence_status": "DIRECTLY_OBSERVED",
+    "observed_on_google": true,
+    "source_type": "google_search_observed",
+    "source_urls": [
+      "https://www.hdfcbank.com/personal/resources/learning-centre/save/scss-rules"
+    ],
+    "answer_status": "UNANSWERED",
+    "verification_status": "GOV_VERIFIED",
+    "last_verified_at": "2026-10-09",
+    "suggested_existing_page": "/investments/senior-citizen-savings-scheme",
+    "related_question_ids": [
+      "Q-GI-008",
+      "Q-CMP-002"
+    ],
+    "relationships": {
+      "broader_question": "Q-GI-008",
+      "narrower_questions": [],
+      "comparison_questions": [
+        "Q-CMP-002"
+      ],
+      "eligibility_question": null,
+      "application_question": null,
+      "document_requirement_question": null,
+      "status_tracking_question": null,
+      "deadline_question": null,
+      "related_calculator": null,
+      "related_official_source": "https://www.indiapost.gov.in"
+    },
+    "duplicate_of": null,
+    "review_required": false,
+    "priority": "HIGH",
+    "record_created_at": "2026-10-09T05:40:00.000Z",
+    "record_updated_at": "2026-10-09T05:45:00.000Z"
+  },
+  {
+    "question_id": "Q-GI-010",
+    "canonical_question": "Is interest earned on Sovereign Gold Bonds (SGB) taxable?",
+    "normalized_question": "What is the tax treatment of Sovereign Gold Bond (SGB) interest and capital gains?",
+    "alternate_phrasings": [
+      "Is SGB 2.5% interest tax free?",
+      "SGB maturity capital gains exemption under Income Tax",
+      "Sovereign Gold Bond par tax lagta hai kya?"
+    ],
+    "category": "Government Investments",
+    "subcategory": "Sovereign Gold Bonds (SGB)",
+    "search_intent": "informational",
+    "audience": "investors",
+    "geography": "India (All)",
+    "language": "en",
+    "evidence_status": "OFFICIAL_SOURCE_VERIFIED",
+    "observed_on_google": false,
+    "source_type": "official_gov_faq",
+    "source_urls": [
+      "https://www.rbi.org.in/Scripts/FAQView.aspx?Id=109"
+    ],
+    "answer_status": "UNANSWERED",
+    "verification_status": "GOV_VERIFIED",
+    "last_verified_at": "2026-10-09",
+    "suggested_existing_page": "/investments/sovereign-gold-bonds",
+    "related_question_ids": [
+      "Q-GI-011",
+      "Q-CMP-003"
+    ],
+    "relationships": {
+      "broader_question": null,
+      "narrower_questions": [
+        "Q-GI-011"
+      ],
+      "comparison_questions": [
+        "Q-CMP-003"
+      ],
+      "eligibility_question": null,
+      "application_question": null,
+      "document_requirement_question": null,
+      "status_tracking_question": null,
+      "deadline_question": null,
+      "related_calculator": null,
+      "related_official_source": "https://www.rbi.org.in"
+    },
+    "duplicate_of": null,
+    "review_required": false,
+    "priority": "HIGH",
+    "record_created_at": "2026-10-09T05:40:00.000Z",
+    "record_updated_at": "2026-10-09T05:45:00.000Z"
+  },
+  {
+    "question_id": "Q-GI-011",
+    "canonical_question": "When can Sovereign Gold Bonds be prematurely redeemed through the RBI window?",
+    "normalized_question": "What is the premature redemption timeline for Sovereign Gold Bonds?",
+    "alternate_phrasings": [
+      "Can I redeem SGB before 8 years?",
+      "SGB 5 year early exit window rules",
+      "SGB premature redemption kaise kare?"
+    ],
+    "category": "Government Investments",
+    "subcategory": "Sovereign Gold Bonds (SGB)",
+    "search_intent": "transactional",
+    "audience": "investors",
+    "geography": "India (All)",
+    "language": "en",
+    "evidence_status": "OFFICIAL_SOURCE_VERIFIED",
+    "observed_on_google": false,
+    "source_type": "official_gov_faq",
+    "source_urls": [
+      "https://www.rbi.org.in/Scripts/FAQView.aspx?Id=109"
+    ],
+    "answer_status": "UNANSWERED",
+    "verification_status": "GOV_VERIFIED",
+    "last_verified_at": "2026-10-09",
+    "suggested_existing_page": "/investments/sovereign-gold-bonds",
+    "related_question_ids": [
+      "Q-GI-010",
+      "Q-CMP-003"
+    ],
+    "relationships": {
+      "broader_question": "Q-GI-010",
+      "narrower_questions": [],
+      "comparison_questions": [
+        "Q-CMP-003"
+      ],
+      "eligibility_question": null,
+      "application_question": null,
+      "document_requirement_question": null,
+      "status_tracking_question": null,
+      "deadline_question": null,
+      "related_calculator": null,
+      "related_official_source": "https://www.rbi.org.in"
+    },
+    "duplicate_of": null,
+    "review_required": false,
+    "priority": "HIGH",
+    "record_created_at": "2026-10-09T05:40:00.000Z",
+    "record_updated_at": "2026-10-09T05:45:00.000Z"
+  },
+  {
+    "question_id": "Q-GI-012",
+    "canonical_question": "How is the interest rate on RBI Floating Rate Savings Bonds (FRSB) determined?",
+    "normalized_question": "What is the benchmark formula for RBI Floating Rate Savings Bonds interest?",
+    "alternate_phrasings": [
+      "How is FRSB interest linked to NSC rate?",
+      "RBI floating rate bond spread over NSC",
+      "FRSB interest reset dates January and July"
+    ],
+    "category": "Government Investments",
+    "subcategory": "RBI Floating Rate Savings Bonds (FRSB)",
+    "search_intent": "calculation",
+    "audience": "investors",
+    "geography": "India (All)",
+    "language": "en",
+    "evidence_status": "OFFICIAL_SOURCE_VERIFIED",
+    "observed_on_google": false,
+    "source_type": "official_gov_faq",
+    "source_urls": [
+      "https://www.rbi.org.in/Scripts/BS_ViewMasCirculardetails.aspx?id=12140"
+    ],
+    "answer_status": "UNANSWERED",
+    "verification_status": "GOV_VERIFIED",
+    "last_verified_at": "2026-10-09",
+    "suggested_existing_page": "/investments/rbi-floating-rate-savings-bonds",
+    "related_question_ids": [
+      "Q-GI-013",
+      "Q-GI-015"
+    ],
+    "relationships": {
+      "broader_question": null,
+      "narrower_questions": [
+        "Q-GI-013"
+      ],
+      "comparison_questions": [],
+      "eligibility_question": null,
+      "application_question": null,
+      "document_requirement_question": null,
+      "status_tracking_question": null,
+      "deadline_question": null,
+      "related_calculator": null,
+      "related_official_source": "https://www.rbi.org.in"
+    },
+    "duplicate_of": null,
+    "review_required": false,
+    "priority": "HIGH",
+    "record_created_at": "2026-10-09T05:40:00.000Z",
+    "record_updated_at": "2026-10-09T05:45:00.000Z"
+  },
+  {
+    "question_id": "Q-GI-013",
+    "canonical_question": "Can RBI Floating Rate Savings Bonds be traded in secondary markets or pledged for loans?",
+    "normalized_question": "Are RBI Floating Rate Savings Bonds tradable or eligible as collateral?",
+    "alternate_phrasings": [
+      "Can I take loan against RBI floating bonds?",
+      "Is FRSB liquid or transferable?",
+      "Can FRSB bonds be sold on stock exchange?"
+    ],
+    "category": "Government Investments",
+    "subcategory": "RBI Floating Rate Savings Bonds (FRSB)",
+    "search_intent": "informational",
+    "audience": "investors",
+    "geography": "India (All)",
+    "language": "en",
+    "evidence_status": "DIRECTLY_OBSERVED",
+    "observed_on_google": true,
+    "source_type": "google_search_observed",
+    "source_urls": [
+      "https://www.stockholding.com/floating-rate-savings-bonds/"
+    ],
+    "answer_status": "UNANSWERED",
+    "verification_status": "GOV_VERIFIED",
+    "last_verified_at": "2026-10-09",
+    "suggested_existing_page": "/investments/rbi-floating-rate-savings-bonds",
+    "related_question_ids": [
+      "Q-GI-012"
+    ],
+    "relationships": {
+      "broader_question": "Q-GI-012",
+      "narrower_questions": [],
+      "comparison_questions": [],
+      "eligibility_question": null,
+      "application_question": null,
+      "document_requirement_question": null,
+      "status_tracking_question": null,
+      "deadline_question": null,
+      "related_calculator": null,
+      "related_official_source": "https://www.rbi.org.in"
+    },
+    "duplicate_of": null,
+    "review_required": false,
+    "priority": "MEDIUM",
+    "record_created_at": "2026-10-09T05:40:00.000Z",
+    "record_updated_at": "2026-10-09T05:45:00.000Z"
+  },
+  {
+    "question_id": "Q-GI-014",
+    "canonical_question": "What is the maximum investment limit for Mahila Samman Savings Certificate (MSSC)?",
+    "normalized_question": "What are the deposit limits and tenure of Mahila Samman Savings Certificate?",
+    "alternate_phrasings": [
+      "Mahila Samman Savings Certificate me kitna paisa jama kar sakte hain?",
+      "MSSC interest rate and 2 year tenure",
+      "Can a man open Mahila Samman Certificate?"
+    ],
+    "category": "Government Investments",
+    "subcategory": "Mahila Samman Savings Certificate (MSSC)",
+    "search_intent": "informational",
+    "audience": "women",
+    "geography": "India (All)",
+    "language": "en",
+    "evidence_status": "DIRECTLY_OBSERVED",
+    "observed_on_google": true,
+    "source_type": "google_search_observed",
+    "source_urls": [
+      "https://www.indiapost.gov.in/Financial/Pages/Content/Post-Office-Saving-Schemes.aspx"
+    ],
+    "answer_status": "UNANSWERED",
+    "verification_status": "GOV_VERIFIED",
+    "last_verified_at": "2026-10-09",
+    "suggested_existing_page": "/investments/mahila-samman-savings-certificate",
+    "related_question_ids": [
+      "Q-GI-005",
+      "Q-GI-008"
+    ],
+    "relationships": {
+      "broader_question": null,
+      "narrower_questions": [],
+      "comparison_questions": [],
+      "eligibility_question": null,
+      "application_question": null,
+      "document_requirement_question": null,
+      "status_tracking_question": null,
+      "deadline_question": null,
+      "related_calculator": null,
+      "related_official_source": "https://www.indiapost.gov.in"
+    },
+    "duplicate_of": null,
+    "review_required": false,
+    "priority": "HIGH",
+    "record_created_at": "2026-10-09T05:40:00.000Z",
+    "record_updated_at": "2026-10-09T05:45:00.000Z"
+  },
+  {
+    "question_id": "Q-GI-015",
+    "canonical_question": "What is the difference between National Savings Certificate (NSC) and Kisan Vikas Patra (KVP)?",
+    "normalized_question": "How do NSC and KVP differ in tenure, interest rate, and tax treatment?",
+    "alternate_phrasings": [
+      "NSC vs KVP which is better?",
+      "Does KVP have 80C tax deduction like NSC?",
+      "KVP me kitne mahine me paisa double hota hai?"
+    ],
+    "category": "Government Investments",
+    "subcategory": "Small Savings Certificates",
+    "search_intent": "comparison",
+    "audience": "citizens",
+    "geography": "India (All)",
+    "language": "en",
+    "evidence_status": "DIRECTLY_OBSERVED",
+    "observed_on_google": true,
+    "source_type": "google_search_observed",
+    "source_urls": [
+      "https://www.etmoney.com/learn/personal-finance/nsc-vs-kvp/"
+    ],
+    "answer_status": "UNANSWERED",
+    "verification_status": "GOV_VERIFIED",
+    "last_verified_at": "2026-10-09",
+    "suggested_existing_page": "/comparisons",
+    "related_question_ids": [
+      "Q-GI-012",
+      "Q-CALC-004"
+    ],
+    "relationships": {
+      "broader_question": null,
+      "narrower_questions": [],
+      "comparison_questions": [
+        "Q-CMP-001"
+      ],
+      "eligibility_question": null,
+      "application_question": null,
+      "document_requirement_question": null,
+      "status_tracking_question": null,
+      "deadline_question": null,
+      "related_calculator": "/tools",
+      "related_official_source": "https://www.indiapost.gov.in"
+    },
+    "duplicate_of": null,
+    "review_required": false,
+    "priority": "HIGH",
+    "record_created_at": "2026-10-09T05:40:00.000Z",
+    "record_updated_at": "2026-10-09T05:45:00.000Z"
+  },
+  {
+    "question_id": "Q-IS-001",
+    "canonical_question": "What is the maximum project cost and subsidy under PMEGP for manufacturing units?",
+    "normalized_question": "What are the project cost limits and subsidy percentages under PMEGP?",
+    "alternate_phrasings": [
+      "PMEGP me manufacturing ke liye kitna loan milta hai?",
+      "PMEGP 50 lakh manufacturing vs 20 lakh service limit",
+      "PMEGP margin money subsidy percentage urban rural"
+    ],
+    "category": "Investment Schemes",
+    "subcategory": "PMEGP (Prime Minister Employment Generation Programme)",
+    "search_intent": "informational",
+    "audience": "msmes",
+    "geography": "India (All)",
+    "language": "en",
+    "evidence_status": "OFFICIAL_SOURCE_VERIFIED",
+    "observed_on_google": false,
+    "source_type": "official_gov_faq",
+    "source_urls": [
+      "https://www.kviconline.gov.in/pmegp/"
+    ],
+    "answer_status": "UNANSWERED",
+    "verification_status": "GOV_VERIFIED",
+    "last_verified_at": "2026-10-09",
+    "suggested_existing_page": "/investment-schemes/pmegp",
+    "related_question_ids": [
+      "Q-IS-002",
+      "Q-IS-003",
+      "Q-CMP-004",
+      "Q-OS-003"
+    ],
+    "relationships": {
+      "broader_question": null,
+      "narrower_questions": [
+        "Q-IS-002",
+        "Q-IS-003"
+      ],
+      "comparison_questions": [
+        "Q-CMP-004"
+      ],
+      "eligibility_question": "Q-IS-002",
+      "application_question": null,
+      "document_requirement_question": null,
+      "status_tracking_question": null,
+      "deadline_question": null,
+      "related_calculator": null,
+      "related_official_source": "https://www.kviconline.gov.in"
+    },
+    "duplicate_of": null,
+    "review_required": false,
+    "priority": "CRITICAL",
+    "record_created_at": "2026-10-09T05:40:00.000Z",
+    "record_updated_at": "2026-10-09T05:45:00.000Z"
+  },
+  {
+    "question_id": "Q-IS-002",
+    "canonical_question": "Is educational qualification required to apply for a PMEGP loan?",
+    "normalized_question": "What is the minimum educational criteria for PMEGP loan eligibility?",
+    "alternate_phrasings": [
+      "PMEGP ke liye kitna padha likha hona chahiye?",
+      "Is 8th pass mandatory for PMEGP projects above 10 lakh?",
+      "Educational qualification for small PMEGP projects"
+    ],
+    "category": "Investment Schemes",
+    "subcategory": "PMEGP (Prime Minister Employment Generation Programme)",
+    "search_intent": "eligibility_check",
+    "audience": "startups",
+    "geography": "India (All)",
+    "language": "en",
+    "evidence_status": "OFFICIAL_SOURCE_VERIFIED",
+    "observed_on_google": false,
+    "source_type": "official_gov_faq",
+    "source_urls": [
+      "https://msme.gov.in/our-schemes"
+    ],
+    "answer_status": "UNANSWERED",
+    "verification_status": "GOV_VERIFIED",
+    "last_verified_at": "2026-10-09",
+    "suggested_existing_page": "/investment-schemes/pmegp",
+    "related_question_ids": [
+      "Q-IS-001",
+      "Q-IS-003"
+    ],
+    "relationships": {
+      "broader_question": "Q-IS-001",
+      "narrower_questions": [],
+      "comparison_questions": [],
+      "eligibility_question": null,
+      "application_question": null,
+      "document_requirement_question": null,
+      "status_tracking_question": null,
+      "deadline_question": null,
+      "related_calculator": null,
+      "related_official_source": "https://msme.gov.in"
+    },
+    "duplicate_of": null,
+    "review_required": false,
+    "priority": "HIGH",
+    "record_created_at": "2026-10-09T05:40:00.000Z",
+    "record_updated_at": "2026-10-09T05:45:00.000Z"
+  },
+  {
+    "question_id": "Q-IS-003",
+    "canonical_question": "Can an existing business apply for a PMEGP subsidy loan?",
+    "normalized_question": "Are existing business units eligible for initial PMEGP loan subsidies?",
+    "alternate_phrasings": [
+      "Can existing unit get PMEGP subsidy?",
+      "Purani dukaan ke liye PMEGP loan mil sakta hai kya?",
+      "PMEGP 2nd loan for expansion vs fresh new projects"
+    ],
+    "category": "Investment Schemes",
+    "subcategory": "PMEGP (Prime Minister Employment Generation Programme)",
+    "search_intent": "eligibility_check",
+    "audience": "msmes",
+    "geography": "India (All)",
+    "language": "en",
+    "evidence_status": "OFFICIAL_SOURCE_VERIFIED",
+    "observed_on_google": false,
+    "source_type": "official_gov_faq",
+    "source_urls": [
+      "https://www.kviconline.gov.in/pmegp/"
+    ],
+    "answer_status": "UNANSWERED",
+    "verification_status": "GOV_VERIFIED",
+    "last_verified_at": "2026-10-09",
+    "suggested_existing_page": "/investment-schemes/pmegp",
+    "related_question_ids": [
+      "Q-IS-001",
+      "Q-IS-002"
+    ],
+    "relationships": {
+      "broader_question": "Q-IS-001",
+      "narrower_questions": [],
+      "comparison_questions": [],
+      "eligibility_question": null,
+      "application_question": null,
+      "document_requirement_question": null,
+      "status_tracking_question": null,
+      "deadline_question": null,
+      "related_calculator": null,
+      "related_official_source": "https://www.kviconline.gov.in"
+    },
+    "duplicate_of": null,
+    "review_required": false,
+    "priority": "HIGH",
+    "record_created_at": "2026-10-09T05:40:00.000Z",
+    "record_updated_at": "2026-10-09T05:45:00.000Z"
+  },
+  {
+    "question_id": "Q-IS-004",
+    "canonical_question": "What are the three categories of Pradhan Mantri Mudra Yojana (PMMY) loans?",
+    "normalized_question": "What are the loan limits for Shishu, Kishor, and Tarun under Mudra Yojana?",
+    "alternate_phrasings": [
+      "Mudra loan me Shishu Kishor Tarun ki limit kya hai?",
+      "Mudra loan amount categories up to 10 lakh and 20 lakh Tarun Plus",
+      "Which Mudra category gives 50000 loan?"
+    ],
+    "category": "Investment Schemes",
+    "subcategory": "Pradhan Mantri Mudra Yojana (PMMY)",
+    "search_intent": "informational",
+    "audience": "msmes",
+    "geography": "India (All)",
+    "language": "en",
+    "evidence_status": "OFFICIAL_SOURCE_VERIFIED",
+    "observed_on_google": false,
+    "source_type": "official_gov_faq",
+    "source_urls": [
+      "https://www.mudra.org.in"
+    ],
+    "answer_status": "UNANSWERED",
+    "verification_status": "GOV_VERIFIED",
+    "last_verified_at": "2026-10-09",
+    "suggested_existing_page": "/investment-schemes/mudra-yojana",
+    "related_question_ids": [
+      "Q-IS-005",
+      "Q-CMP-004",
+      "Q-OS-003"
+    ],
+    "relationships": {
+      "broader_question": null,
+      "narrower_questions": [
+        "Q-IS-005"
+      ],
+      "comparison_questions": [
+        "Q-CMP-004"
+      ],
+      "eligibility_question": null,
+      "application_question": null,
+      "document_requirement_question": null,
+      "status_tracking_question": null,
+      "deadline_question": null,
+      "related_calculator": null,
+      "related_official_source": "https://www.mudra.org.in"
+    },
+    "duplicate_of": null,
+    "review_required": false,
+    "priority": "CRITICAL",
+    "record_created_at": "2026-10-09T05:40:00.000Z",
+    "record_updated_at": "2026-10-09T05:45:00.000Z"
+  },
+  {
+    "question_id": "Q-IS-005",
+    "canonical_question": "Is collateral or security required to get a Mudra loan?",
+    "normalized_question": "Do banks require collateral or third-party guarantee for Mudra loans?",
+    "alternate_phrasings": [
+      "Kya Mudra loan ke liye guarantee chahiye?",
+      "Is Mudra loan 100% collateral free?",
+      "Collateral requirements under PMMY"
+    ],
+    "category": "Investment Schemes",
+    "subcategory": "Pradhan Mantri Mudra Yojana (PMMY)",
+    "search_intent": "informational",
+    "audience": "startups",
+    "geography": "India (All)",
+    "language": "en",
+    "evidence_status": "OFFICIAL_SOURCE_VERIFIED",
+    "observed_on_google": false,
+    "source_type": "official_gov_faq",
+    "source_urls": [
+      "https://www.jansamarth.in"
+    ],
+    "answer_status": "UNANSWERED",
+    "verification_status": "GOV_VERIFIED",
+    "last_verified_at": "2026-10-09",
+    "suggested_existing_page": "/investment-schemes/mudra-yojana",
+    "related_question_ids": [
+      "Q-IS-004",
+      "Q-OS-003"
+    ],
+    "relationships": {
+      "broader_question": "Q-IS-004",
+      "narrower_questions": [],
+      "comparison_questions": [],
+      "eligibility_question": null,
+      "application_question": null,
+      "document_requirement_question": null,
+      "status_tracking_question": null,
+      "deadline_question": null,
+      "related_calculator": null,
+      "related_official_source": "https://www.jansamarth.in"
+    },
+    "duplicate_of": null,
+    "review_required": false,
+    "priority": "HIGH",
+    "record_created_at": "2026-10-09T05:40:00.000Z",
+    "record_updated_at": "2026-10-09T05:45:00.000Z"
+  },
+  {
+    "question_id": "Q-IS-006",
+    "canonical_question": "Who is eligible for loans under the Stand-Up India scheme?",
+    "normalized_question": "What are the beneficiary eligibility criteria for Stand-Up India loans?",
+    "alternate_phrasings": [
+      "Can general category male apply for Stand-Up India?",
+      "Stand Up India loan eligibility for SC ST and women entrepreneurs",
+      "Stand Up India me 10 lakh se 1 crore loan kisko milta hai?"
+    ],
+    "category": "Investment Schemes",
+    "subcategory": "Stand-Up India Scheme",
+    "search_intent": "eligibility_check",
+    "audience": "women",
+    "geography": "India (All)",
+    "language": "en",
+    "evidence_status": "OFFICIAL_SOURCE_VERIFIED",
+    "observed_on_google": false,
+    "source_type": "official_gov_faq",
+    "source_urls": [
+      "https://www.standupmitra.in"
+    ],
+    "answer_status": "UNANSWERED",
+    "verification_status": "GOV_VERIFIED",
+    "last_verified_at": "2026-10-09",
+    "suggested_existing_page": "/investment-schemes/stand-up-india",
+    "related_question_ids": [
+      "Q-IS-001",
+      "Q-IS-004"
+    ],
+    "relationships": {
+      "broader_question": null,
+      "narrower_questions": [],
+      "comparison_questions": [],
+      "eligibility_question": null,
+      "application_question": null,
+      "document_requirement_question": null,
+      "status_tracking_question": null,
+      "deadline_question": null,
+      "related_calculator": null,
+      "related_official_source": "https://www.standupmitra.in"
+    },
+    "duplicate_of": null,
+    "review_required": false,
+    "priority": "HIGH",
+    "record_created_at": "2026-10-09T05:40:00.000Z",
+    "record_updated_at": "2026-10-09T05:45:00.000Z"
+  },
+  {
+    "question_id": "Q-IS-007",
+    "canonical_question": "What benefits and tool-kit incentive are provided under PM Vishwakarma Yojana?",
+    "normalized_question": "What financial and skill benefits are available under PM Vishwakarma Yojana?",
+    "alternate_phrasings": [
+      "PM Vishwakarma toolkit 15000 grant and 5% loan",
+      "PM Vishwakarma yojana me kitna loan milta hai?",
+      "Which 18 traditional trades are eligible for PM Vishwakarma?"
+    ],
+    "category": "Investment Schemes",
+    "subcategory": "PM Vishwakarma Yojana",
+    "search_intent": "informational",
+    "audience": "citizens",
+    "geography": "India (All)",
+    "language": "en",
+    "evidence_status": "DIRECTLY_OBSERVED",
+    "observed_on_google": true,
+    "source_type": "google_search_observed",
+    "source_urls": [
+      "https://pmvishwakarma.gov.in"
+    ],
+    "answer_status": "UNANSWERED",
+    "verification_status": "GOV_VERIFIED",
+    "last_verified_at": "2026-10-09",
+    "suggested_existing_page": "/investment-schemes/pm-vishwakarma",
+    "related_question_ids": [
+      "Q-IS-001"
+    ],
+    "relationships": {
+      "broader_question": null,
+      "narrower_questions": [],
+      "comparison_questions": [],
+      "eligibility_question": null,
+      "application_question": null,
+      "document_requirement_question": null,
+      "status_tracking_question": null,
+      "deadline_question": null,
+      "related_calculator": null,
+      "related_official_source": "https://pmvishwakarma.gov.in"
+    },
+    "duplicate_of": null,
+    "review_required": false,
+    "priority": "HIGH",
+    "record_created_at": "2026-10-09T05:40:00.000Z",
+    "record_updated_at": "2026-10-09T05:45:00.000Z"
+  },
+  {
+    "question_id": "Q-SB-001",
+    "canonical_question": "How much subsidy is provided for rooftop solar under PM Surya Ghar Muft Bijli Yojana?",
+    "normalized_question": "What is the subsidy slab for residential rooftop solar under PM Surya Ghar?",
+    "alternate_phrasings": [
+      "PM Surya Ghar subsidy amount for 1kW, 2kW, and 3kW",
+      "Solar rooftop par kitni subsidy milti hai 78000?",
+      "Maximum CFA subsidy cap under PM Surya Ghar"
+    ],
+    "category": "Subsidies & Benefits",
+    "subcategory": "PM Surya Ghar Muft Bijli Yojana",
+    "search_intent": "informational",
+    "audience": "citizens",
+    "geography": "India (All)",
+    "language": "en",
+    "evidence_status": "OFFICIAL_SOURCE_VERIFIED",
+    "observed_on_google": false,
+    "source_type": "official_gov_faq",
+    "source_urls": [
+      "https://pib.gov.in/PressReleasePage.aspx?PRID=2008749"
+    ],
+    "answer_status": "UNANSWERED",
+    "verification_status": "GOV_VERIFIED",
+    "last_verified_at": "2026-10-09",
+    "suggested_existing_page": "/subsidies/pm-surya-ghar-muft-bijli-yojana",
+    "related_question_ids": [
+      "Q-SB-002"
+    ],
+    "relationships": {
+      "broader_question": null,
+      "narrower_questions": [
+        "Q-SB-002"
+      ],
+      "comparison_questions": [],
+      "eligibility_question": "Q-SB-002",
+      "application_question": null,
+      "document_requirement_question": null,
+      "status_tracking_question": null,
+      "deadline_question": null,
+      "related_calculator": null,
+      "related_official_source": "https://pib.gov.in"
+    },
+    "duplicate_of": null,
+    "review_required": false,
+    "priority": "CRITICAL",
+    "record_created_at": "2026-10-09T05:40:00.000Z",
+    "record_updated_at": "2026-10-09T05:45:00.000Z"
+  },
+  {
+    "question_id": "Q-SB-002",
+    "canonical_question": "Can commercial buildings or rented shops get PM Surya Ghar solar subsidy?",
+    "normalized_question": "Are commercial entities eligible for PM Surya Ghar rooftop solar subsidy?",
+    "alternate_phrasings": [
+      "Is PM Surya Ghar only for residential houses?",
+      "Can housing societies and flats apply for PM Surya Ghar?",
+      "Dukaan par solar panel lagane par subsidy milti hai kya?"
+    ],
+    "category": "Subsidies & Benefits",
+    "subcategory": "PM Surya Ghar Muft Bijli Yojana",
+    "search_intent": "eligibility_check",
+    "audience": "msmes",
+    "geography": "India (All)",
+    "language": "en",
+    "evidence_status": "DIRECTLY_OBSERVED",
+    "observed_on_google": true,
+    "source_type": "google_search_observed",
+    "source_urls": [
+      "https://www.bluesrenewables.com/pm-surya-ghar-eligibility/"
+    ],
+    "answer_status": "UNANSWERED",
+    "verification_status": "GOV_VERIFIED",
+    "last_verified_at": "2026-10-09",
+    "suggested_existing_page": "/subsidies/pm-surya-ghar-muft-bijli-yojana",
+    "related_question_ids": [
+      "Q-SB-001"
+    ],
+    "relationships": {
+      "broader_question": "Q-SB-001",
+      "narrower_questions": [],
+      "comparison_questions": [],
+      "eligibility_question": null,
+      "application_question": null,
+      "document_requirement_question": null,
+      "status_tracking_question": null,
+      "deadline_question": null,
+      "related_calculator": null,
+      "related_official_source": "https://pmsuryaghar.gov.in"
+    },
+    "duplicate_of": null,
+    "review_required": false,
+    "priority": "HIGH",
+    "record_created_at": "2026-10-09T05:40:00.000Z",
+    "record_updated_at": "2026-10-09T05:45:00.000Z"
+  },
+  {
+    "question_id": "Q-SB-003",
+    "canonical_question": "How to check beneficiary status and eKYC under PM-KISAN Samman Nidhi?",
+    "normalized_question": "How can a farmer verify installment payment status on the PM-KISAN portal?",
+    "alternate_phrasings": [
+      "PM Kisan installment status check by Aadhaar or mobile number",
+      "PM Kisan eKYC kaise kare?",
+      "PM Kisan ka paisa kab aayega next installment?"
+    ],
+    "category": "Subsidies & Benefits",
+    "subcategory": "PM-KISAN Samman Nidhi",
+    "search_intent": "transactional",
+    "audience": "citizens",
+    "geography": "India (All)",
+    "language": "en",
+    "evidence_status": "OFFICIAL_SOURCE_VERIFIED",
+    "observed_on_google": false,
+    "source_type": "official_gov_faq",
+    "source_urls": [
+      "https://pmkisan.gov.in"
+    ],
+    "answer_status": "UNANSWERED",
+    "verification_status": "GOV_VERIFIED",
+    "last_verified_at": "2026-10-09",
+    "suggested_existing_page": "/subsidies/pm-kisan-samman-nidhi",
+    "related_question_ids": [],
+    "relationships": {
+      "broader_question": null,
+      "narrower_questions": [],
+      "comparison_questions": [],
+      "eligibility_question": null,
+      "application_question": null,
+      "document_requirement_question": null,
+      "status_tracking_question": null,
+      "deadline_question": null,
+      "related_calculator": null,
+      "related_official_source": "https://pmkisan.gov.in"
+    },
+    "duplicate_of": null,
+    "review_required": false,
+    "priority": "CRITICAL",
+    "record_created_at": "2026-10-09T05:40:00.000Z",
+    "record_updated_at": "2026-10-09T05:45:00.000Z"
+  },
+  {
+    "question_id": "Q-SB-004",
+    "canonical_question": "Who is eligible for interest subsidy under Pradhan Mantri Awas Yojana (PMAY) Urban 2.0?",
+    "normalized_question": "What are the income slabs and eligibility for PMAY Urban interest subsidy?",
+    "alternate_phrasings": [
+      "PMAY income limit for EWS, LIG, and MIG categories",
+      "Pradhan Mantri Awas Yojana me kitna subsidy milta hai home loan par?",
+      "PMAY housing subsidy eligibility criteria"
+    ],
+    "category": "Subsidies & Benefits",
+    "subcategory": "Pradhan Mantri Awas Yojana (PMAY)",
+    "search_intent": "eligibility_check",
+    "audience": "citizens",
+    "geography": "India (All)",
+    "language": "en",
+    "evidence_status": "DIRECTLY_OBSERVED",
+    "observed_on_google": true,
+    "source_type": "google_search_observed",
+    "source_urls": [
+      "https://pmaymis.gov.in"
+    ],
+    "answer_status": "UNANSWERED",
+    "verification_status": "GOV_VERIFIED",
+    "last_verified_at": "2026-10-09",
+    "suggested_existing_page": "/subsidies/pradhan-mantri-awas-yojana",
+    "related_question_ids": [],
+    "relationships": {
+      "broader_question": null,
+      "narrower_questions": [],
+      "comparison_questions": [],
+      "eligibility_question": null,
+      "application_question": null,
+      "document_requirement_question": null,
+      "status_tracking_question": null,
+      "deadline_question": null,
+      "related_calculator": null,
+      "related_official_source": "https://pmaymis.gov.in"
+    },
+    "duplicate_of": null,
+    "review_required": false,
+    "priority": "HIGH",
+    "record_created_at": "2026-10-09T05:40:00.000Z",
+    "record_updated_at": "2026-10-09T05:45:00.000Z"
+  },
+  {
+    "question_id": "Q-OPP-001",
+    "canonical_question": "What is the PAIMANA portal launched by MoSPI for infrastructure project monitoring?",
+    "normalized_question": "What is the purpose and coverage of the MoSPI PAIMANA infrastructure monitoring portal?",
+    "alternate_phrasings": [
+      "Which infrastructure projects are tracked on PAIMANA?",
+      "PAIMANA portal tracks projects above 150 crore",
+      "Difference between OCMS and PAIMANA portal MoSPI"
+    ],
+    "category": "Opportunities",
+    "subcategory": "Infrastructure Monitoring (MoSPI PAIMANA)",
+    "search_intent": "informational",
+    "audience": "investors",
+    "geography": "India (All)",
+    "language": "en",
+    "evidence_status": "OFFICIAL_SOURCE_VERIFIED",
+    "observed_on_google": false,
+    "source_type": "official_gov_faq",
+    "source_urls": [
+      "https://informatics.nic.in/article/paimana-mospi-infrastructure-monitoring"
+    ],
+    "answer_status": "UNANSWERED",
+    "verification_status": "GOV_VERIFIED",
+    "last_verified_at": "2026-10-09",
+    "suggested_existing_page": "/opportunities",
+    "related_question_ids": [
+      "Q-OPP-002",
+      "Q-OPP-003"
+    ],
+    "relationships": {
+      "broader_question": null,
+      "narrower_questions": [
+        "Q-OPP-002"
+      ],
+      "comparison_questions": [
+        "Q-OPP-002"
+      ],
+      "eligibility_question": null,
+      "application_question": null,
+      "document_requirement_question": null,
+      "status_tracking_question": null,
+      "deadline_question": null,
+      "related_calculator": null,
+      "related_official_source": "https://ipm.mospi.gov.in"
+    },
+    "duplicate_of": null,
+    "review_required": false,
+    "priority": "HIGH",
+    "record_created_at": "2026-10-09T05:40:00.000Z",
+    "record_updated_at": "2026-10-09T05:45:00.000Z"
+  },
+  {
+    "question_id": "Q-OPP-002",
+    "canonical_question": "Why are PAIMANA and MoSPI infrastructure projects categorized as pipeline monitoring rather than commercial tenders?",
+    "normalized_question": "How are government infrastructure tracking records distinguished from procurement tenders or investment offers?",
+    "alternate_phrasings": [
+      "Can contractors directly bid on PAIMANA project listings?",
+      "Are infrastructure projects on SarkarSaathi open for public bidding?",
+      "How to evaluate infrastructure project cost overruns and commissioning dates"
+    ],
+    "category": "Opportunities",
+    "subcategory": "Infrastructure Projects vs Procurement",
+    "search_intent": "informational",
+    "audience": "contractors_bidders",
+    "geography": "India (All)",
+    "language": "en",
+    "evidence_status": "RESEARCH_DERIVED",
+    "observed_on_google": false,
+    "source_type": "research_derived_suggestion",
+    "source_urls": [
+      "https://ipm.mospi.gov.in"
+    ],
+    "answer_status": "UNANSWERED",
+    "verification_status": "NEEDS_REVIEW",
+    "last_verified_at": "2026-10-09",
+    "suggested_existing_page": "/opportunities",
+    "related_question_ids": [
+      "Q-OPP-001",
+      "Q-TND-003"
+    ],
+    "relationships": {
+      "broader_question": "Q-OPP-001",
+      "narrower_questions": [],
+      "comparison_questions": [
+        "Q-CMP-005"
+      ],
+      "eligibility_question": null,
+      "application_question": null,
+      "document_requirement_question": null,
+      "status_tracking_question": null,
+      "deadline_question": null,
+      "related_calculator": null,
+      "related_official_source": "https://ipm.mospi.gov.in"
+    },
+    "duplicate_of": null,
+    "review_required": true,
+    "priority": "MEDIUM",
+    "record_created_at": "2026-10-09T05:40:00.000Z",
+    "record_updated_at": "2026-10-09T05:45:00.000Z"
+  },
+  {
+    "question_id": "Q-OPP-003",
+    "canonical_question": "What is India Investment Grid (IIG) and how do investors evaluate project stages on it?",
+    "normalized_question": "How does the India Investment Grid (IIG) classify project readiness and investment stages?",
+    "alternate_phrasings": [
+      "How to search state sector investment opportunities on IIG",
+      "IIG project stage: conceptual, under implementation, completed",
+      "Who manages India Investment Grid DPIIT Invest India"
+    ],
+    "category": "Opportunities",
+    "subcategory": "India Investment Grid (IIG)",
+    "search_intent": "informational",
+    "audience": "investors",
+    "geography": "India (All)",
+    "language": "en",
+    "evidence_status": "DIRECTLY_OBSERVED",
+    "observed_on_google": true,
+    "source_type": "google_search_observed",
+    "source_urls": [
+      "https://indiainvestmentgrid.gov.in"
+    ],
+    "answer_status": "UNANSWERED",
+    "verification_status": "GOV_VERIFIED",
+    "last_verified_at": "2026-10-09",
+    "suggested_existing_page": "/opportunities",
+    "related_question_ids": [
+      "Q-OPP-001"
+    ],
+    "relationships": {
+      "broader_question": null,
+      "narrower_questions": [],
+      "comparison_questions": [],
+      "eligibility_question": null,
+      "application_question": null,
+      "document_requirement_question": null,
+      "status_tracking_question": null,
+      "deadline_question": null,
+      "related_calculator": null,
+      "related_official_source": "https://indiainvestmentgrid.gov.in"
+    },
+    "duplicate_of": null,
+    "review_required": false,
+    "priority": "HIGH",
+    "record_created_at": "2026-10-09T05:40:00.000Z",
+    "record_updated_at": "2026-10-09T05:45:00.000Z"
+  },
+  {
+    "question_id": "Q-TND-001",
+    "canonical_question": "How can MSMEs and startups get Earnest Money Deposit (EMD) exemption on the GeM portal?",
+    "normalized_question": "What is the procedure to claim EMD exemption using Udyam registration on GeM?",
+    "alternate_phrasings": [
+      "GeM portal par EMD exemption kaise le Udyam certificate se?",
+      "Are medium enterprises eligible for EMD exemption on GeM?",
+      "GFR Rule 170 EMD exemption for micro and small enterprises"
+    ],
+    "category": "Tenders",
+    "subcategory": "Government e-Marketplace (GeM)",
+    "search_intent": "transactional",
+    "audience": "msmes",
+    "geography": "India (All)",
+    "language": "en",
+    "evidence_status": "OFFICIAL_SOURCE_VERIFIED",
+    "observed_on_google": false,
+    "source_type": "official_gov_faq",
+    "source_urls": [
+      "https://gem.gov.in"
+    ],
+    "answer_status": "UNANSWERED",
+    "verification_status": "GOV_VERIFIED",
+    "last_verified_at": "2026-10-09",
+    "suggested_existing_page": "/tenders",
+    "related_question_ids": [
+      "Q-TND-002",
+      "Q-TND-005",
+      "Q-CMP-005"
+    ],
+    "relationships": {
+      "broader_question": null,
+      "narrower_questions": [
+        "Q-TND-002"
+      ],
+      "comparison_questions": [
+        "Q-CMP-005"
+      ],
+      "eligibility_question": null,
+      "application_question": null,
+      "document_requirement_question": null,
+      "status_tracking_question": null,
+      "deadline_question": null,
+      "related_calculator": null,
+      "related_official_source": "https://gem.gov.in"
+    },
+    "duplicate_of": null,
+    "review_required": false,
+    "priority": "CRITICAL",
+    "record_created_at": "2026-10-09T05:40:00.000Z",
+    "record_updated_at": "2026-10-09T05:45:00.000Z"
+  },
+  {
+    "question_id": "Q-TND-002",
+    "canonical_question": "Has GeM removed mandatory Caution Money deposit for sellers and service providers?",
+    "normalized_question": "What is the current policy regarding Caution Money on Government e-Marketplace (GeM)?",
+    "alternate_phrasings": [
+      "Is caution money still required on GeM portal?",
+      "GeM caution money removal notification for sellers",
+      "GeM par caution money kitna lagta hai?"
+    ],
+    "category": "Tenders",
+    "subcategory": "Government e-Marketplace (GeM)",
+    "search_intent": "informational",
+    "audience": "msmes",
+    "geography": "India (All)",
+    "language": "en",
+    "evidence_status": "DIRECTLY_OBSERVED",
+    "observed_on_google": true,
+    "source_type": "google_search_observed",
+    "source_urls": [
+      "https://gem.gov.in"
+    ],
+    "answer_status": "UNANSWERED",
+    "verification_status": "GOV_VERIFIED",
+    "last_verified_at": "2026-10-09",
+    "suggested_existing_page": "/tenders",
+    "related_question_ids": [
+      "Q-TND-001"
+    ],
+    "relationships": {
+      "broader_question": "Q-TND-001",
+      "narrower_questions": [],
+      "comparison_questions": [],
+      "eligibility_question": null,
+      "application_question": null,
+      "document_requirement_question": null,
+      "status_tracking_question": null,
+      "deadline_question": null,
+      "related_calculator": null,
+      "related_official_source": "https://gem.gov.in"
+    },
+    "duplicate_of": null,
+    "review_required": false,
+    "priority": "HIGH",
+    "record_created_at": "2026-10-09T05:40:00.000Z",
+    "record_updated_at": "2026-10-09T05:45:00.000Z"
+  },
+  {
+    "question_id": "Q-TND-003",
+    "canonical_question": "Why is a Class 3 Digital Signature Certificate (DSC) mandatory for e-procurement on CPPP?",
+    "normalized_question": "What type of DSC is required to bid on the Central Public Procurement Portal (CPPP)?",
+    "alternate_phrasings": [
+      "Can I use Class 2 DSC on eprocure portal?",
+      "Class 3 combo DSC signing plus encryption for CPPP tender bidding",
+      "CPPP par tender submit karne ke liye DSC kaise banwaye?"
+    ],
+    "category": "Tenders",
+    "subcategory": "Central Public Procurement Portal (CPPP)",
+    "search_intent": "document_check",
+    "audience": "contractors_bidders",
+    "geography": "India (All)",
+    "language": "en",
+    "evidence_status": "DIRECTLY_OBSERVED",
+    "observed_on_google": true,
+    "source_type": "google_search_observed",
+    "source_urls": [
+      "https://eprocure.gov.in"
+    ],
+    "answer_status": "UNANSWERED",
+    "verification_status": "GOV_VERIFIED",
+    "last_verified_at": "2026-10-09",
+    "suggested_existing_page": "/tenders",
+    "related_question_ids": [
+      "Q-TND-004",
+      "Q-CMP-005"
+    ],
+    "relationships": {
+      "broader_question": null,
+      "narrower_questions": [],
+      "comparison_questions": [
+        "Q-CMP-005"
+      ],
+      "eligibility_question": null,
+      "application_question": null,
+      "document_requirement_question": null,
+      "status_tracking_question": null,
+      "deadline_question": null,
+      "related_calculator": null,
+      "related_official_source": "https://eprocure.gov.in"
+    },
+    "duplicate_of": null,
+    "review_required": false,
+    "priority": "HIGH",
+    "record_created_at": "2026-10-09T05:40:00.000Z",
+    "record_updated_at": "2026-10-09T05:45:00.000Z"
+  },
+  {
+    "question_id": "Q-TND-004",
+    "canonical_question": "What is a tender corrigendum and why must bidders check it before final bid submission?",
+    "normalized_question": "What is the legal importance of a corrigendum published on government tender portals?",
+    "alternate_phrasings": [
+      "What happens if bidder ignores corrigendum amendment?",
+      "Corrigendum kya hota hai tender me?",
+      "Where to find latest corrigendum on eprocure portal"
+    ],
+    "category": "Tenders",
+    "subcategory": "Tender Process & Compliance",
+    "search_intent": "informational",
+    "audience": "contractors_bidders",
+    "geography": "India (All)",
+    "language": "en",
+    "evidence_status": "DIRECTLY_OBSERVED",
+    "observed_on_google": true,
+    "source_type": "google_search_observed",
+    "source_urls": [
+      "https://eprocure.gov.in"
+    ],
+    "answer_status": "UNANSWERED",
+    "verification_status": "GOV_VERIFIED",
+    "last_verified_at": "2026-10-09",
+    "suggested_existing_page": "/tenders",
+    "related_question_ids": [
+      "Q-TND-003"
+    ],
+    "relationships": {
+      "broader_question": null,
+      "narrower_questions": [],
+      "comparison_questions": [],
+      "eligibility_question": null,
+      "application_question": null,
+      "document_requirement_question": null,
+      "status_tracking_question": null,
+      "deadline_question": null,
+      "related_calculator": null,
+      "related_official_source": "https://eprocure.gov.in"
+    },
+    "duplicate_of": null,
+    "review_required": false,
+    "priority": "HIGH",
+    "record_created_at": "2026-10-09T05:40:00.000Z",
+    "record_updated_at": "2026-10-09T05:45:00.000Z"
+  },
+  {
+    "question_id": "Q-TND-005",
+    "canonical_question": "How does the L1 purchase preference work for MSMEs in government tenders?",
+    "normalized_question": "How can MSEs match L1 price within a 15% margin to secure tender quota?",
+    "alternate_phrasings": [
+      "MSME 15 percent price band matching L1 price rule",
+      "Mandatory 25 percent annual procurement from MSEs by CPSUs",
+      "GeM L1 price matching preference for small businesses"
+    ],
+    "category": "Tenders",
+    "subcategory": "Public Procurement Policy for MSEs",
+    "search_intent": "informational",
+    "audience": "msmes",
+    "geography": "India (All)",
+    "language": "en",
+    "evidence_status": "OFFICIAL_SOURCE_VERIFIED",
+    "observed_on_google": false,
+    "source_type": "official_gov_faq",
+    "source_urls": [
+      "https://msme.gov.in/procurement-policy"
+    ],
+    "answer_status": "UNANSWERED",
+    "verification_status": "GOV_VERIFIED",
+    "last_verified_at": "2026-10-09",
+    "suggested_existing_page": "/tenders",
+    "related_question_ids": [
+      "Q-TND-001",
+      "Q-CMP-005"
+    ],
+    "relationships": {
+      "broader_question": null,
+      "narrower_questions": [],
+      "comparison_questions": [],
+      "eligibility_question": null,
+      "application_question": null,
+      "document_requirement_question": null,
+      "status_tracking_question": null,
+      "deadline_question": null,
+      "related_calculator": null,
+      "related_official_source": "https://msme.gov.in"
+    },
+    "duplicate_of": null,
+    "review_required": false,
+    "priority": "HIGH",
+    "record_created_at": "2026-10-09T05:40:00.000Z",
+    "record_updated_at": "2026-10-09T05:45:00.000Z"
+  },
+  {
+    "question_id": "Q-NW-001",
+    "canonical_question": "How frequently are small savings scheme interest rates revised by the Ministry of Finance?",
+    "normalized_question": "What is the official schedule and mechanism for small savings interest rate revisions?",
+    "alternate_phrasings": [
+      "Does Ministry of Finance change PPF rate every quarter?",
+      "Small savings interest rate notification schedule quarterly",
+      "Post office scheme ka interest rate kab change hota hai?"
+    ],
+    "category": "News & Updates",
+    "subcategory": "Interest Rate Revisions",
+    "search_intent": "informational",
+    "audience": "citizens",
+    "geography": "India (All)",
+    "language": "en",
+    "evidence_status": "OFFICIAL_SOURCE_VERIFIED",
+    "observed_on_google": false,
+    "source_type": "official_gov_faq",
+    "source_urls": [
+      "https://pib.gov.in"
+    ],
+    "answer_status": "UNANSWERED",
+    "verification_status": "GOV_VERIFIED",
+    "last_verified_at": "2026-10-09",
+    "suggested_existing_page": "/news",
+    "related_question_ids": [
+      "Q-NW-002",
+      "Q-GI-001",
+      "Q-GI-008"
+    ],
+    "relationships": {
+      "broader_question": null,
+      "narrower_questions": [
+        "Q-NW-002"
+      ],
+      "comparison_questions": [],
+      "eligibility_question": null,
+      "application_question": null,
+      "document_requirement_question": null,
+      "status_tracking_question": null,
+      "deadline_question": null,
+      "related_calculator": null,
+      "related_official_source": "https://pib.gov.in"
+    },
+    "duplicate_of": null,
+    "review_required": false,
+    "priority": "HIGH",
+    "record_created_at": "2026-10-09T05:40:00.000Z",
+    "record_updated_at": "2026-10-09T05:45:00.000Z"
+  },
+  {
+    "question_id": "Q-NW-002",
+    "canonical_question": "When small savings interest rates are revised, do existing accounts get the new rate?",
+    "normalized_question": "Do revised interest rates apply to existing small savings accounts or only new deposits?",
+    "alternate_phrasings": [
+      "Will my existing SCSS or NSC interest rate change if government cuts rates?",
+      "Does PPF rate revision affect ongoing PPF accounts?",
+      "Fixed tenure small savings vs floating quarterly PPF rate rule"
+    ],
+    "category": "News & Updates",
+    "subcategory": "Interest Rate Application Rules",
+    "search_intent": "informational",
+    "audience": "investors",
+    "geography": "India (All)",
+    "language": "en",
+    "evidence_status": "DIRECTLY_OBSERVED",
+    "observed_on_google": true,
+    "source_type": "google_search_observed",
+    "source_urls": [
+      "https://economictimes.indiatimes.com/wealth/invest/small-savings-rate-revision-rules"
+    ],
+    "answer_status": "UNANSWERED",
+    "verification_status": "GOV_VERIFIED",
+    "last_verified_at": "2026-10-09",
+    "suggested_existing_page": "/news",
+    "related_question_ids": [
+      "Q-NW-001",
+      "Q-GI-008"
+    ],
+    "relationships": {
+      "broader_question": "Q-NW-001",
+      "narrower_questions": [],
+      "comparison_questions": [],
+      "eligibility_question": null,
+      "application_question": null,
+      "document_requirement_question": null,
+      "status_tracking_question": null,
+      "deadline_question": null,
+      "related_calculator": null,
+      "related_official_source": "https://pib.gov.in"
+    },
+    "duplicate_of": null,
+    "review_required": false,
+    "priority": "HIGH",
+    "record_created_at": "2026-10-09T05:40:00.000Z",
+    "record_updated_at": "2026-10-09T05:45:00.000Z"
+  },
+  {
+    "question_id": "Q-NW-003",
+    "canonical_question": "How can citizens verify whether a WhatsApp or social media scheme notification is official or fake?",
+    "normalized_question": "Where can citizens check PIB Fact Check verifications for viral government scheme claims?",
+    "alternate_phrasings": [
+      "PIB fact check for government money transfer messages",
+      "How to spot fake Sarkari Yojana portals and phishing links",
+      "Sarkari yojana fake news verification kaise kare?"
+    ],
+    "category": "News & Updates",
+    "subcategory": "Fact-Checking & Verifications",
+    "search_intent": "navigational",
+    "audience": "citizens",
+    "geography": "India (All)",
+    "language": "en",
+    "evidence_status": "OFFICIAL_SOURCE_VERIFIED",
+    "observed_on_google": false,
+    "source_type": "official_gov_faq",
+    "source_urls": [
+      "https://factcheck.pib.gov.in"
+    ],
+    "answer_status": "UNANSWERED",
+    "verification_status": "GOV_VERIFIED",
+    "last_verified_at": "2026-10-09",
+    "suggested_existing_page": "/news",
+    "related_question_ids": [],
+    "relationships": {
+      "broader_question": null,
+      "narrower_questions": [],
+      "comparison_questions": [],
+      "eligibility_question": null,
+      "application_question": null,
+      "document_requirement_question": null,
+      "status_tracking_question": null,
+      "deadline_question": null,
+      "related_calculator": null,
+      "related_official_source": "https://factcheck.pib.gov.in"
+    },
+    "duplicate_of": null,
+    "review_required": false,
+    "priority": "HIGH",
+    "record_created_at": "2026-10-09T05:40:00.000Z",
+    "record_updated_at": "2026-10-09T05:45:00.000Z"
+  },
+  {
+    "question_id": "Q-OS-001",
+    "canonical_question": "How does the myScheme portal determine which central and state schemes a citizen is eligible for?",
+    "normalized_question": "What eligibility parameters does the national myScheme portal evaluate?",
+    "alternate_phrasings": [
+      "myScheme portal check eligibility step by step",
+      "Can I apply directly on myScheme portal?",
+      "myScheme par sarkari yojana kaise search kare?"
+    ],
+    "category": "Official Sources",
+    "subcategory": "myScheme National Platform",
+    "search_intent": "informational",
+    "audience": "citizens",
+    "geography": "India (All)",
+    "language": "en",
+    "evidence_status": "OFFICIAL_SOURCE_VERIFIED",
+    "observed_on_google": false,
+    "source_type": "official_gov_faq",
+    "source_urls": [
+      "https://www.myscheme.gov.in"
+    ],
+    "answer_status": "UNANSWERED",
+    "verification_status": "GOV_VERIFIED",
+    "last_verified_at": "2026-10-09",
+    "suggested_existing_page": "/official-sources/myscheme",
+    "related_question_ids": [
+      "Q-OS-002"
+    ],
+    "relationships": {
+      "broader_question": null,
+      "narrower_questions": [
+        "Q-OS-002"
+      ],
+      "comparison_questions": [],
+      "eligibility_question": null,
+      "application_question": null,
+      "document_requirement_question": null,
+      "status_tracking_question": null,
+      "deadline_question": null,
+      "related_calculator": null,
+      "related_official_source": "https://www.myscheme.gov.in"
+    },
+    "duplicate_of": null,
+    "review_required": false,
+    "priority": "HIGH",
+    "record_created_at": "2026-10-09T05:40:00.000Z",
+    "record_updated_at": "2026-10-09T05:45:00.000Z"
+  },
+  {
+    "question_id": "Q-OS-002",
+    "canonical_question": "What is the difference between Central Government portals (.gov.in) and state single window clearance portals?",
+    "normalized_question": "How do national portals differ from state-specific business and citizen single window systems?",
+    "alternate_phrasings": [
+      "National Single Window System (NSWS) vs State Single Window portals",
+      "How to verify government portal domain security .gov.in and .nic.in",
+      "State government industrial portals vs central approvals"
+    ],
+    "category": "Official Sources",
+    "subcategory": "Portal Hierarchy & Single Window Systems",
+    "search_intent": "informational",
+    "audience": "msmes",
+    "geography": "India (All)",
+    "language": "en",
+    "evidence_status": "RESEARCH_DERIVED",
+    "observed_on_google": false,
+    "source_type": "research_derived_suggestion",
+    "source_urls": [
+      "https://www.india.gov.in"
+    ],
+    "answer_status": "UNANSWERED",
+    "verification_status": "NEEDS_REVIEW",
+    "last_verified_at": "2026-10-09",
+    "suggested_existing_page": "/official-sources",
+    "related_question_ids": [
+      "Q-OS-001"
+    ],
+    "relationships": {
+      "broader_question": "Q-OS-001",
+      "narrower_questions": [],
+      "comparison_questions": [],
+      "eligibility_question": null,
+      "application_question": null,
+      "document_requirement_question": null,
+      "status_tracking_question": null,
+      "deadline_question": null,
+      "related_calculator": null,
+      "related_official_source": "https://www.india.gov.in"
+    },
+    "duplicate_of": null,
+    "review_required": true,
+    "priority": "MEDIUM",
+    "record_created_at": "2026-10-09T05:40:00.000Z",
+    "record_updated_at": "2026-10-09T05:45:00.000Z"
+  },
+  {
+    "question_id": "Q-OS-003",
+    "canonical_question": "What is JanSamarth portal and which government loan schemes can be applied through it?",
+    "normalized_question": "Which credit-linked government subsidy schemes are integrated into JanSamarth portal?",
+    "alternate_phrasings": [
+      "Can I apply PMEGP and Mudra loan on JanSamarth portal?",
+      "JanSamarth portal digital approval in principle letter",
+      "JanSamarth portal par loan ke liye apply kaise kare?"
+    ],
+    "category": "Official Sources",
+    "subcategory": "JanSamarth Unified Credit Portal",
+    "search_intent": "navigational",
+    "audience": "startups",
+    "geography": "India (All)",
+    "language": "en",
+    "evidence_status": "OFFICIAL_SOURCE_VERIFIED",
+    "observed_on_google": false,
+    "source_type": "official_gov_faq",
+    "source_urls": [
+      "https://www.jansamarth.in"
+    ],
+    "answer_status": "UNANSWERED",
+    "verification_status": "GOV_VERIFIED",
+    "last_verified_at": "2026-10-09",
+    "suggested_existing_page": "/official-sources",
+    "related_question_ids": [
+      "Q-IS-001",
+      "Q-IS-004"
+    ],
+    "relationships": {
+      "broader_question": null,
+      "narrower_questions": [],
+      "comparison_questions": [],
+      "eligibility_question": null,
+      "application_question": null,
+      "document_requirement_question": null,
+      "status_tracking_question": null,
+      "deadline_question": null,
+      "related_calculator": null,
+      "related_official_source": "https://www.jansamarth.in"
+    },
+    "duplicate_of": null,
+    "review_required": false,
+    "priority": "HIGH",
+    "record_created_at": "2026-10-09T05:40:00.000Z",
+    "record_updated_at": "2026-10-09T05:45:00.000Z"
+  },
+  {
+    "question_id": "Q-CMP-001",
+    "canonical_question": "Which is better for a girl child: Public Provident Fund (PPF) or Sukanya Samriddhi Yojana (SSY)?",
+    "normalized_question": "How do PPF and Sukanya Samriddhi Yojana compare in returns, lock-in, and flexibility?",
+    "alternate_phrasings": [
+      "PPF vs Sukanya Samriddhi which gives higher interest?",
+      "Should I invest in PPF or SSY for daughter?",
+      "PPF ya Sukanya me se kaun si yojana acchi hai?"
+    ],
+    "category": "Comparisons",
+    "subcategory": "PPF vs Sukanya Samriddhi Yojana",
+    "search_intent": "comparison",
+    "audience": "citizens",
+    "geography": "India (All)",
+    "language": "en",
+    "evidence_status": "DIRECTLY_OBSERVED",
+    "observed_on_google": true,
+    "source_type": "google_search_observed",
+    "source_urls": [
+      "https://www.policybazaar.com/financial-tools-calculators/ppf-vs-ssy/"
+    ],
+    "answer_status": "UNANSWERED",
+    "verification_status": "GOV_VERIFIED",
+    "last_verified_at": "2026-10-09",
+    "suggested_existing_page": "/comparisons",
+    "related_question_ids": [
+      "Q-GI-001",
+      "Q-GI-005",
+      "Q-CALC-001",
+      "Q-CALC-002"
+    ],
+    "relationships": {
+      "broader_question": null,
+      "narrower_questions": [],
+      "comparison_questions": [
+        "Q-GI-001",
+        "Q-GI-005"
+      ],
+      "eligibility_question": null,
+      "application_question": null,
+      "document_requirement_question": null,
+      "status_tracking_question": null,
+      "deadline_question": null,
+      "related_calculator": "/tools",
+      "related_official_source": null
+    },
+    "duplicate_of": null,
+    "review_required": false,
+    "priority": "CRITICAL",
+    "record_created_at": "2026-10-09T05:40:00.000Z",
+    "record_updated_at": "2026-10-09T05:45:00.000Z"
+  },
+  {
+    "question_id": "Q-CMP-002",
+    "canonical_question": "What is the difference between Senior Citizen Savings Scheme (SCSS) and Post Office Monthly Income Scheme (POMIS)?",
+    "normalized_question": "How do SCSS and POMIS compare for retirement regular income?",
+    "alternate_phrasings": [
+      "SCSS quarterly payout vs POMIS monthly payout",
+      "Does POMIS have Section 80C tax deduction like SCSS?",
+      "Retiree ke liye SCSS accha hai ya Post Office Monthly Income Scheme?"
+    ],
+    "category": "Comparisons",
+    "subcategory": "SCSS vs POMIS",
+    "search_intent": "comparison",
+    "audience": "senior_citizens",
+    "geography": "India (All)",
+    "language": "en",
+    "evidence_status": "DIRECTLY_OBSERVED",
+    "observed_on_google": true,
+    "source_type": "google_search_observed",
+    "source_urls": [
+      "https://www.valueresearchonline.com/stories/53298/scss-vs-pomis-for-regular-income/"
+    ],
+    "answer_status": "UNANSWERED",
+    "verification_status": "GOV_VERIFIED",
+    "last_verified_at": "2026-10-09",
+    "suggested_existing_page": "/comparisons",
+    "related_question_ids": [
+      "Q-GI-008",
+      "Q-CALC-003"
+    ],
+    "relationships": {
+      "broader_question": null,
+      "narrower_questions": [],
+      "comparison_questions": [
+        "Q-GI-008"
+      ],
+      "eligibility_question": null,
+      "application_question": null,
+      "document_requirement_question": null,
+      "status_tracking_question": null,
+      "deadline_question": null,
+      "related_calculator": "/tools",
+      "related_official_source": "https://www.indiapost.gov.in"
+    },
+    "duplicate_of": null,
+    "review_required": false,
+    "priority": "HIGH",
+    "record_created_at": "2026-10-09T05:40:00.000Z",
+    "record_updated_at": "2026-10-09T05:45:00.000Z"
+  },
+  {
+    "question_id": "Q-CMP-003",
+    "canonical_question": "How do Sovereign Gold Bonds (SGB) compare against physical gold and gold ETFs?",
+    "normalized_question": "What are the advantages and drawbacks of Sovereign Gold Bonds compared to physical gold?",
+    "alternate_phrasings": [
+      "Why SGB has 2.5% extra interest over gold price",
+      "No making charges in SGB vs physical jewelry",
+      "SGB vs Gold ETF tax comparison"
+    ],
+    "category": "Comparisons",
+    "subcategory": "SGB vs Physical Gold",
+    "search_intent": "comparison",
+    "audience": "investors",
+    "geography": "India (All)",
+    "language": "en",
+    "evidence_status": "DIRECTLY_OBSERVED",
+    "observed_on_google": true,
+    "source_type": "google_search_observed",
+    "source_urls": [
+      "https://www.groww.in/blog/sovereign-gold-bonds-vs-physical-gold-vs-gold-etf"
+    ],
+    "answer_status": "UNANSWERED",
+    "verification_status": "GOV_VERIFIED",
+    "last_verified_at": "2026-10-09",
+    "suggested_existing_page": "/comparisons",
+    "related_question_ids": [
+      "Q-GI-010",
+      "Q-GI-011"
+    ],
+    "relationships": {
+      "broader_question": null,
+      "narrower_questions": [],
+      "comparison_questions": [
+        "Q-GI-010"
+      ],
+      "eligibility_question": null,
+      "application_question": null,
+      "document_requirement_question": null,
+      "status_tracking_question": null,
+      "deadline_question": null,
+      "related_calculator": null,
+      "related_official_source": "https://www.rbi.org.in"
+    },
+    "duplicate_of": null,
+    "review_required": false,
+    "priority": "HIGH",
+    "record_created_at": "2026-10-09T05:40:00.000Z",
+    "record_updated_at": "2026-10-09T05:45:00.000Z"
+  },
+  {
+    "question_id": "Q-CMP-004",
+    "canonical_question": "What is the key difference between PMEGP loan and Mudra loan for starting a business?",
+    "normalized_question": "How does PMEGP subsidy differ from Mudra bank loan financing?",
+    "alternate_phrasings": [
+      "Does Mudra loan have capital subsidy like PMEGP?",
+      "PMEGP vs Mudra loan which is easier to get approved?",
+      "Naye business ke liye PMEGP le ya Mudra loan?"
+    ],
+    "category": "Comparisons",
+    "subcategory": "PMEGP vs Mudra Loan",
+    "search_intent": "comparison",
+    "audience": "msmes",
+    "geography": "India (All)",
+    "language": "en",
+    "evidence_status": "DIRECTLY_OBSERVED",
+    "observed_on_google": true,
+    "source_type": "google_search_observed",
+    "source_urls": [
+      "https://www.paisabazaar.com/business-loan/pmegp-vs-mudra-loan/"
+    ],
+    "answer_status": "UNANSWERED",
+    "verification_status": "GOV_VERIFIED",
+    "last_verified_at": "2026-10-09",
+    "suggested_existing_page": "/comparisons",
+    "related_question_ids": [
+      "Q-IS-001",
+      "Q-IS-004"
+    ],
+    "relationships": {
+      "broader_question": null,
+      "narrower_questions": [],
+      "comparison_questions": [
+        "Q-IS-001",
+        "Q-IS-004"
+      ],
+      "eligibility_question": null,
+      "application_question": null,
+      "document_requirement_question": null,
+      "status_tracking_question": null,
+      "deadline_question": null,
+      "related_calculator": null,
+      "related_official_source": "https://www.kviconline.gov.in"
+    },
+    "duplicate_of": null,
+    "review_required": false,
+    "priority": "CRITICAL",
+    "record_created_at": "2026-10-09T05:40:00.000Z",
+    "record_updated_at": "2026-10-09T05:45:00.000Z"
+  },
+  {
+    "question_id": "Q-CMP-005",
+    "canonical_question": "What is the difference between GeM portal and CPPP (eprocure.gov.in) for suppliers?",
+    "normalized_question": "When do government buyers procure through GeM versus publishing tenders on CPPP?",
+    "alternate_phrasings": [
+      "Difference between GeM direct purchase and CPPP open tenders",
+      "Do I need both GeM account and CPPP account for government contracts?",
+      "GeM portal aur eprocure me kya antar hai?"
+    ],
+    "category": "Comparisons",
+    "subcategory": "GeM vs CPPP eProcure",
+    "search_intent": "comparison",
+    "audience": "contractors_bidders",
+    "geography": "India (All)",
+    "language": "en",
+    "evidence_status": "DIRECTLY_OBSERVED",
+    "observed_on_google": true,
+    "source_type": "google_search_observed",
+    "source_urls": [
+      "https://www.tenderdetail.com/knowledge-hub/gem-vs-cppp"
+    ],
+    "answer_status": "UNANSWERED",
+    "verification_status": "GOV_VERIFIED",
+    "last_verified_at": "2026-10-09",
+    "suggested_existing_page": "/comparisons",
+    "related_question_ids": [
+      "Q-TND-001",
+      "Q-TND-003"
+    ],
+    "relationships": {
+      "broader_question": null,
+      "narrower_questions": [],
+      "comparison_questions": [
+        "Q-TND-001",
+        "Q-TND-003"
+      ],
+      "eligibility_question": null,
+      "application_question": null,
+      "document_requirement_question": null,
+      "status_tracking_question": null,
+      "deadline_question": null,
+      "related_calculator": null,
+      "related_official_source": "https://gem.gov.in"
+    },
+    "duplicate_of": null,
+    "review_required": false,
+    "priority": "HIGH",
+    "record_created_at": "2026-10-09T05:40:00.000Z",
+    "record_updated_at": "2026-10-09T05:45:00.000Z"
+  },
+  {
+    "question_id": "Q-CALC-001",
+    "canonical_question": "How does a PPF calculator compute compound interest if deposits are made in installments?",
+    "normalized_question": "What mathematical formula do PPF calculators use to project 15-year maturity value?",
+    "alternate_phrasings": [
+      "PPF calculator formula F = P [({(1+i)^n}-1)/i]",
+      "How to calculate PPF return for 1.5 lakh yearly deposit for 15 years",
+      "PPF calculator me interest compounding kaise hoti hai?"
+    ],
+    "category": "Tools & Calculators",
+    "subcategory": "PPF Calculator",
+    "search_intent": "calculation",
+    "audience": "citizens",
+    "geography": "India (All)",
+    "language": "en",
+    "evidence_status": "OFFICIAL_SOURCE_VERIFIED",
+    "observed_on_google": false,
+    "source_type": "official_gov_faq",
+    "source_urls": [
+      "https://www.bankofbaroda.in/calculators/ppf-calculator"
+    ],
+    "answer_status": "UNANSWERED",
+    "verification_status": "GOV_VERIFIED",
+    "last_verified_at": "2026-10-09",
+    "suggested_existing_page": "/tools",
+    "related_question_ids": [
+      "Q-GI-001",
+      "Q-GI-002",
+      "Q-CALC-004"
+    ],
+    "relationships": {
+      "broader_question": null,
+      "narrower_questions": [],
+      "comparison_questions": [],
+      "eligibility_question": null,
+      "application_question": null,
+      "document_requirement_question": null,
+      "status_tracking_question": null,
+      "deadline_question": null,
+      "related_calculator": "/tools",
+      "related_official_source": "https://www.bankofbaroda.in"
+    },
+    "duplicate_of": null,
+    "review_required": false,
+    "priority": "CRITICAL",
+    "record_created_at": "2026-10-09T05:40:00.000Z",
+    "record_updated_at": "2026-10-09T05:45:00.000Z"
+  },
+  {
+    "question_id": "Q-CALC-002",
+    "canonical_question": "How is maturity amount calculated in Sukanya Samriddhi Yojana if deposit is made for 15 years and account matures at 21 years?",
+    "normalized_question": "How do SSY calculators calculate interest for the non-deposit gap period (years 16 to 21)?",
+    "alternate_phrasings": [
+      "Does SSY earn interest between year 15 and 21 without new deposits?",
+      "Sukanya Samriddhi calculator 1.5 lakh yearly investment maturity estimate",
+      "SSY 21 saal baad kitna milega calculator"
+    ],
+    "category": "Tools & Calculators",
+    "subcategory": "Sukanya Samriddhi Calculator",
+    "search_intent": "calculation",
+    "audience": "citizens",
+    "geography": "India (All)",
+    "language": "en",
+    "evidence_status": "DIRECTLY_OBSERVED",
+    "observed_on_google": true,
+    "source_type": "google_search_observed",
+    "source_urls": [
+      "https://www.adityabirlacapital.com/abc-of-money/how-to-calculate-sukanya-samriddhi-maturity-amount"
+    ],
+    "answer_status": "UNANSWERED",
+    "verification_status": "GOV_VERIFIED",
+    "last_verified_at": "2026-10-09",
+    "suggested_existing_page": "/tools",
+    "related_question_ids": [
+      "Q-GI-005",
+      "Q-GI-007",
+      "Q-CMP-001"
+    ],
+    "relationships": {
+      "broader_question": null,
+      "narrower_questions": [],
+      "comparison_questions": [],
+      "eligibility_question": null,
+      "application_question": null,
+      "document_requirement_question": null,
+      "status_tracking_question": null,
+      "deadline_question": null,
+      "related_calculator": "/tools",
+      "related_official_source": "https://nsiindia.gov.in"
+    },
+    "duplicate_of": null,
+    "review_required": false,
+    "priority": "HIGH",
+    "record_created_at": "2026-10-09T05:40:00.000Z",
+    "record_updated_at": "2026-10-09T05:45:00.000Z"
+  },
+  {
+    "question_id": "Q-CALC-003",
+    "canonical_question": "What is the formula to calculate monthly payout under Post Office Monthly Income Scheme (POMIS)?",
+    "normalized_question": "How is monthly interest income computed for POMIS deposits?",
+    "alternate_phrasings": [
+      "POMIS monthly interest calculation formula P x R / 12",
+      "How much monthly income from 9 lakh in post office MIS at 7.4%?",
+      "Post Office MIS calculator monthly payout"
+    ],
+    "category": "Tools & Calculators",
+    "subcategory": "Monthly Income Scheme Calculator",
+    "search_intent": "calculation",
+    "audience": "senior_citizens",
+    "geography": "India (All)",
+    "language": "en",
+    "evidence_status": "DIRECTLY_OBSERVED",
+    "observed_on_google": true,
+    "source_type": "google_search_observed",
+    "source_urls": [
+      "https://www.indiapost.gov.in"
+    ],
+    "answer_status": "UNANSWERED",
+    "verification_status": "GOV_VERIFIED",
+    "last_verified_at": "2026-10-09",
+    "suggested_existing_page": "/tools",
+    "related_question_ids": [
+      "Q-CMP-002",
+      "Q-CALC-004"
+    ],
+    "relationships": {
+      "broader_question": null,
+      "narrower_questions": [],
+      "comparison_questions": [],
+      "eligibility_question": null,
+      "application_question": null,
+      "document_requirement_question": null,
+      "status_tracking_question": null,
+      "deadline_question": null,
+      "related_calculator": "/tools",
+      "related_official_source": "https://www.indiapost.gov.in"
+    },
+    "duplicate_of": null,
+    "review_required": false,
+    "priority": "HIGH",
+    "record_created_at": "2026-10-09T05:40:00.000Z",
+    "record_updated_at": "2026-10-09T05:45:00.000Z"
+  },
+  {
+    "question_id": "Q-CALC-004",
+    "canonical_question": "Why does compound interest produce significantly higher returns than simple interest in multi-year government bonds?",
+    "normalized_question": "How does annual compounding contrast with simple interest in government savings products?",
+    "alternate_phrasings": [
+      "Compound interest calculator formula A = P(1 + r/n)^(nt)",
+      "Which government schemes pay simple interest vs compound interest?",
+      "Chakravriddhi byaj vs sadharan byaj calculator in savings"
+    ],
+    "category": "Tools & Calculators",
+    "subcategory": "Compound vs Simple Interest Tools",
+    "search_intent": "calculation",
+    "audience": "investors",
+    "geography": "India (All)",
+    "language": "en",
+    "evidence_status": "RESEARCH_DERIVED",
+    "observed_on_google": false,
+    "source_type": "research_derived_suggestion",
+    "source_urls": [
+      "https://sarkarsaathi.org/tools"
+    ],
+    "answer_status": "UNANSWERED",
+    "verification_status": "NEEDS_REVIEW",
+    "last_verified_at": "2026-10-09",
+    "suggested_existing_page": "/tools",
+    "related_question_ids": [
+      "Q-CALC-001",
+      "Q-CALC-003"
+    ],
+    "relationships": {
+      "broader_question": null,
+      "narrower_questions": [],
+      "comparison_questions": [],
+      "eligibility_question": null,
+      "application_question": null,
+      "document_requirement_question": null,
+      "status_tracking_question": null,
+      "deadline_question": null,
+      "related_calculator": "/tools",
+      "related_official_source": null
+    },
+    "duplicate_of": null,
+    "review_required": true,
+    "priority": "MEDIUM",
+    "record_created_at": "2026-10-09T05:40:00.000Z",
+    "record_updated_at": "2026-10-09T05:45:00.000Z"
+  }
+]

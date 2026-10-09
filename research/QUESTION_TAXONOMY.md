@@ -1,7 +1,7 @@
 # SarkarSaathi Question Taxonomy & Domain Classification
 ## Phase 2 Master Reference Guide
 
-**Version:** 1.0.0  
+**Version:** 1.1.0  
 **Status:** Active Canonical Specification  
 **Applies To:** `/research/question_bank.json`, `/research/question_schema.json`
 
@@ -59,6 +59,7 @@ SarkarSaathi organizes all public inquiries, scheme questions, and regulatory in
   - `PM Surya Ghar Muft Bijli Yojana (Rooftop Solar)`
   - `PM-KISAN Samman Nidhi (Farmer Income Support)`
   - `Pradhan Mantri Awas Yojana (PMAY Urban & Gramin)`
+  - `PM Fasal Bima Yojana (Crop Insurance)`
   - `Fertiliser & Agricultural Input Subsidies`
   - `Credit Linked Capital Subsidy Scheme (CLCSS)`
 - **Core User Intents:** Subsidy slabs (e.g. ₹30,000–₹78,000), DISCOM net-metering rules, DBT payment status tracking, eKYC verification, and residential vs. commercial eligibility criteria.
@@ -98,6 +99,7 @@ SarkarSaathi organizes all public inquiries, scheme questions, and regulatory in
 - **Allowed Subcategories:**
   - `myScheme National Platform`
   - `JanSamarth Unified Credit Portal`
+  - `National Single Window System (NSWS)`
   - `Portal Hierarchy & Single Window Systems`
   - `National Portal of India (india.gov.in)`
   - `Open Government Data (Data.gov.in)`
@@ -107,19 +109,26 @@ SarkarSaathi organizes all public inquiries, scheme questions, and regulatory in
 - **Domain Scope:** Direct head-to-head structural and financial comparisons between alternative schemes, products, or channels.
 - **Allowed Subcategories:**
   - `PPF vs Sukanya Samriddhi Yojana`
+  - `PPF vs National Pension System (NPS)`
   - `SCSS vs POMIS`
   - `SGB vs Physical Gold`
   - `PMEGP vs Mudra Loan`
+  - `PMEGP vs Stand-Up India`
+  - `Udyam Registration vs Startup India Recognition`
   - `GeM vs CPPP eProcure`
   - `NSC vs KVP`
+  - `PM Surya Ghar vs PM KUSUM`
 - **Core User Intents:** Relative yield, lock-in duration, tax implications, target beneficiary alignment, liquidity differences, and selecting the optimal scheme for specific life goals.
 
 ### 9. Tools & Calculators
 - **Domain Scope:** Mathematical models, computation formulas, interest calculators, and projection tools.
 - **Allowed Subcategories:**
   - `PPF Calculator`
+  - `PPF Loan & Withdrawal Calculator`
   - `Sukanya Samriddhi Calculator`
   - `Monthly Income Scheme Calculator`
+  - `Senior Citizen Quarterly Interest Calculator`
+  - `Solar Subsidy Estimator`
   - `Compound vs Simple Interest Tools`
   - `Mudra EMI & PMEGP Margin Money Estimator`
 - **Core User Intents:** Exact maturity formulas, non-deposit interest gap calculation (e.g. SSY years 16–21), monthly payout math ($P \times R / 12$), and compound vs. simple interest compounding frequencies.
