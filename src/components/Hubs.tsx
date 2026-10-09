@@ -8,6 +8,7 @@ import { CatalogQueryManager } from '../ingestion/catalogManager';
 import { MasterDetailView } from './detail/MasterDetailView';
 import { useSEO } from '../utils/seo';
 import { getAllOfficialSources, getOfficialSourceSlug, addStateOfficialSources } from '../utils/officialSources';
+import { ContextualFAQSection } from './ContextualFAQSection';
 
 export { MasterDetailView };
 export const DetailView = MasterDetailView;
@@ -815,11 +816,23 @@ export function GenericHubView({
           </div>
         </div>
       )}
+
+      {/* Verified Contextual FAQ Section */}
+      {(() => {
+        let faqCat = '';
+        if (type === 'investments') faqCat = 'Government Investments';
+        else if (type === 'investment-schemes') faqCat = 'Investment Schemes';
+        else if (type === 'opportunities') faqCat = 'Opportunities';
+        else if (type === 'tenders') faqCat = 'Tenders';
+        else if (type === 'news') faqCat = 'News & Updates';
+        
+        return faqCat ? <ContextualFAQSection category={faqCat} onNavigate={onNavigate} /> : null;
+      })()}
     </div>
   );
 }
 
-export function ComparisonsView() {
+export function ComparisonsView({ onNavigate }: { onNavigate?: (route: string, slug?: string) => void } = {}) {
   const [comparisonTab, setComparisonTab] = useState<'investments' | 'schemes' | 'opportunities'>('investments');
   
   const allInvestments = useMemo(() => investmentRepository.getAll(), []);
@@ -1192,11 +1205,14 @@ export function ComparisonsView() {
           </div>
         </div>
       )}
+
+      {/* Verified Comparisons FAQs */}
+      {onNavigate && <ContextualFAQSection category="Comparisons" onNavigate={onNavigate} />}
     </div>
   );
 }
 
-export function ToolsView() {
+export function ToolsView({ onNavigate }: { onNavigate?: (route: string, slug?: string) => void } = {}) {
   const [activeTool, setActiveTool] = useState<'ppf' | 'tax80c' | 'compound' | 'capitalGains' | 'screener'>('ppf');
 
   // Tool 1: PPF Calculator State
@@ -1635,6 +1651,9 @@ export function ToolsView() {
           </div>
         </div>
       )}
+
+      {/* Verified Tools & Calculators FAQs */}
+      {onNavigate && <ContextualFAQSection category="Tools & Calculators" onNavigate={onNavigate} />}
     </div>
   );
 }
@@ -1741,6 +1760,9 @@ export function OfficialSourcesView({ onNavigate }: { onNavigate?: (route: strin
           );
         })}
       </div>
+
+      {/* Verified Official Sources FAQs */}
+      {onNavigate && <ContextualFAQSection category="Official Sources" onNavigate={onNavigate} />}
     </div>
   );
 }

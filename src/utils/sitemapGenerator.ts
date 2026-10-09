@@ -3,6 +3,7 @@ import path from 'path';
 import { InvestmentRepository, InvestmentSchemeRepository, OpportunityRepository, TenderRepository } from '../infrastructure/repositories/InvestmentRepository';
 import { NewsRepository } from '../infrastructure/repositories/NewsRepository';
 import { SubsidyRepository } from '../infrastructure/repositories/SubsidyRepository';
+import { questionRepository } from '../infrastructure/repositories/QuestionRepository';
 import { getAllOfficialSources, getOfficialSourceSlug, stateOfficialSources } from './officialSources';
 
 const baseUrl = 'https://sarkarsaathi.org';
@@ -31,6 +32,7 @@ const hubs = [
   '/official-sources',
   '/comparisons',
   '/tools',
+  '/questions',
   '/about',
   '/contact',
   '/privacy-policy',
@@ -134,6 +136,25 @@ export const generateSitemap = () => {
       }
       rawUrls.add(url);
     }
+  });
+
+  // Verified published questions
+  const publishedQuestions = questionRepository.getAll(true);
+  publishedQuestions.forEach(q => {
+    const url = `${baseUrl}/questions/${q.slug}`;
+    if (url.includes('?') || url.includes('search') || url.includes('filter')) {
+      searchFilterCount++;
+      return;
+    }
+    if (!url.startsWith('https://sarkarsaathi.org/')) {
+      invalidCount++;
+      return;
+    }
+    if (rawUrls.has(url)) {
+      duplicateCount++;
+      return;
+    }
+    rawUrls.add(url);
   });
 
   const validUrls = Array.from(rawUrls);

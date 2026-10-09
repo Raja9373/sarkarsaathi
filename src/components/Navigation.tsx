@@ -31,6 +31,7 @@ export function Navbar({ currentRoute, onNavigate }: NavbarProps) {
     { label: 'Recent', path: '/recently-viewed' },
     { label: 'Comparisons', path: '/comparisons' },
     { label: 'Tools', path: '/tools' },
+    { label: 'Q&A', path: '/questions' },
     { label: 'Official Sources', path: '/official-sources' },
   ];
 
@@ -165,6 +166,7 @@ export function Footer({ onNavigate }: { onNavigate: (route: string) => void }) 
             <button onClick={() => onNavigate('/privacy-policy')} className="hover:text-white transition">Privacy Policy</button>
             <button onClick={() => onNavigate('/terms')} className="hover:text-white transition">Terms of Service</button>
             <button onClick={() => onNavigate('/disclaimer')} className="hover:text-white transition">Disclaimer</button>
+            <button onClick={() => onNavigate('/questions')} className="hover:text-white transition">Questions &amp; Answers</button>
             <button onClick={() => onNavigate('/official-sources')} className="hover:text-white transition">Government Sources Directory</button>
           </div>
         </div>

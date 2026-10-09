@@ -3,6 +3,7 @@ import { Search, ExternalLink, ShieldCheck, ArrowRight, Filter, X, RotateCcw, Ch
 import { subsidyRepository } from '../infrastructure/repositories/SubsidyRepository';
 import { Subsidy } from '../types';
 import { CatalogQueryOptions, PaginatedResult } from '../ingestion/types';
+import { ContextualFAQSection } from './ContextualFAQSection';
 
 interface SubsidyHubProps {
   onNavigate: (route: string, slug?: string) => void;
@@ -344,6 +345,9 @@ export function SubsidyHubView({ onNavigate }: SubsidyHubProps) {
           </div>
         </div>
       )}
+
+      {/* Verified Category FAQs */}
+      <ContextualFAQSection category="Subsidies & Benefits" onNavigate={onNavigate} />
     </div>
   );
 }

@@ -9,8 +9,11 @@ import { SavedView, RecentlyViewedView } from './components/SavedAndRecent';
 import { AdminImport } from './components/AdminImport';
 import { NotFoundView } from './components/NotFoundView';
 import { OfficialSourceDetailView } from './components/detail/OfficialSourceDetailView';
+import { QuestionsHubView } from './components/QuestionsHubView';
+import { QuestionDetailView } from './components/QuestionDetailView';
 import { investmentRepository, investmentSchemeRepository, opportunityRepository, tenderRepository, newsRepository } from './infrastructure/repositories/InvestmentRepository';
 import { subsidyRepository } from './infrastructure/repositories/SubsidyRepository';
+import { questionRepository } from './infrastructure/repositories/QuestionRepository';
 import { getOfficialSourceBySlug } from './utils/officialSources';
 import { updateSEO } from './utils/seo';
 
@@ -26,6 +29,7 @@ const VALID_ROUTES = [
   '/recently-viewed',
   '/comparisons',
   '/tools',
+  '/questions',
   '/official-sources',
   '/about',
   '/contact',
@@ -36,7 +40,7 @@ const VALID_ROUTES = [
   '/search'
 ];
 
-const VALID_HUBS = ['/investments', '/investment-schemes', '/opportunities', '/tenders', '/news', '/subsidies', '/official-sources'];
+const VALID_HUBS = ['/investments', '/investment-schemes', '/opportunities', '/tenders', '/news', '/subsidies', '/official-sources', '/questions'];
 
 export default function App() {
   const getInitialRouteState = () => {
@@ -69,6 +73,7 @@ export default function App() {
       else if (root === '/news') exists = !!newsRepository.getBySlug(slug);
       else if (root === '/subsidies') exists = !!subsidyRepository.getBySlug(slug);
       else if (root === '/official-sources') exists = !!getOfficialSourceBySlug(slug);
+      else if (root === '/questions') exists = !!questionRepository.getBySlug(slug);
 
       if (!exists) {
         return { route: '/404', slug: null };
@@ -208,6 +213,16 @@ export default function App() {
           });
           return;
         }
+      } else if (currentRoute === '/questions') {
+        const item = questionRepository.getBySlug(selectedSlug);
+        if (item) {
+          updateSEO({
+            title: `${item.canonical_question} | SarkarSaathi Q&A`,
+            description: item.short_answer.length > 155 ? `${item.short_answer.slice(0, 152)}...` : item.short_answer,
+            canonicalPath: `/questions/${item.slug}`,
+          });
+          return;
+        }
       }
     }
 
@@ -251,6 +266,10 @@ export default function App() {
       '/official-sources': {
         title: 'Official Government Sources & Portals - SarkarSaathi',
         description: 'Verified directory of official central and state government portals, scheme registries, and citizen service endpoints.',
+      },
+      '/questions': {
+        title: 'Questions & Verified Answers - SarkarSaathi',
+        description: 'Browse verified answers to essential questions across government investments, small savings schemes, subsidies, procurement tenders, and official portals.',
       },
       '/about': {
         title: 'About SarkarSaathi - Independent Public Information Platform',
@@ -395,6 +414,11 @@ export default function App() {
         if (!item) return <NotFoundView onNavigate={navigate} />;
         return <OfficialSourceDetailView item={item} onNavigate={navigate} onBack={() => navigate('/official-sources')} />;
       }
+      if (currentRoute === '/questions') {
+        const item = questionRepository.getBySlug(selectedSlug);
+        if (!item) return <NotFoundView onNavigate={navigate} />;
+        return <QuestionDetailView question={item} onNavigate={navigate} onBack={() => navigate('/questions')} />;
+      }
     }
 
     switch (currentRoute) {
@@ -417,9 +441,11 @@ export default function App() {
       case '/recently-viewed':
         return <RecentlyViewedView onNavigate={navigate} />;
       case '/comparisons':
-        return <ComparisonsView />;
+        return <ComparisonsView onNavigate={navigate} />;
       case '/tools':
-        return <ToolsView />;
+        return <ToolsView onNavigate={navigate} />;
+      case '/questions':
+        return <QuestionsHubView onNavigate={navigate} />;
       case '/official-sources':
         return <OfficialSourcesView onNavigate={navigate} />;
       case '/about':
