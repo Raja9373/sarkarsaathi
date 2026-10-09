@@ -1,0 +1,140 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sarkarsaathi.org/schemas/question_intake_schema.v1.json",
+  "title": "SarkarSaathiQuestionCandidateIntake",
+  "description": "Validation schema for controlled discovery, search-console query intake, and manual candidate research for SarkarSaathi Question Intelligence (Phase 7). Passing this schema DOES NOT grant publication.",
+  "type": "object",
+  "required": [
+    "candidate_id",
+    "original_question_wording",
+    "proposed_canonical_intent",
+    "category",
+    "subcategory",
+    "discovery_source",
+    "discovery_date",
+    "source_url",
+    "source_type",
+    "supporting_evidence_excerpt",
+    "proposed_language",
+    "review_status"
+  ],
+  "properties": {
+    "candidate_id": {
+      "type": "string",
+      "pattern": "^CAND-[A-Z0-9_-]{3,32}$",
+      "description": "Unique, deterministic intake identifier (e.g. CAND-GSC-001, CAND-MAN-002, CAND-GOV-003)."
+    },
+    "original_question_wording": {
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 300,
+      "description": "Original query or raw question phrasing observed from user search, GSC query export, or circular."
+    },
+    "proposed_canonical_intent": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 300,
+      "description": "Standardized canonical question expressing the core underlying statutory/procedural inquiry."
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "Government Investments",
+        "Investment Schemes",
+        "Subsidies & Benefits",
+        "Opportunities",
+        "Tenders",
+        "News & Updates",
+        "Official Sources",
+        "Comparisons",
+        "Tools & Calculators"
+      ],
+      "description": "Primary taxonomy category matching SarkarSaathi core structure."
+    },
+    "subcategory": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 100,
+      "description": "Specific scheme, department, statutory instrument, or topic name."
+    },
+    "discovery_source": {
+      "type": "string",
+      "enum": [
+        "MANUAL_RESEARCH",
+        "GSC_QUERY_EXPORT",
+        "OFFICIAL_GOV_CIRCULAR",
+        "SITE_SEARCH_LOG",
+        "USER_FEEDBACK",
+        "STATUTORY_FAQ_IMPORT"
+      ],
+      "description": "Provenance channel where this candidate was discovered."
+    },
+    "discovery_date": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+      "description": "ISO date (YYYY-MM-DD) when the query or candidate was captured."
+    },
+    "source_url": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https?://.+",
+      "description": "Verifiable HTTP/HTTPS URL of the authoritative statutory/departmental document or portal."
+    },
+    "source_type": {
+      "type": "string",
+      "enum": [
+        "PRIMARY_STATUTORY_RULE",
+        "OFFICIAL_GOV_NOTIFICATION",
+        "OFFICIAL_DEPARTMENT_PORTAL",
+        "OFFICIAL_FAQ_DOCUMENT",
+        "RESEARCH_SYNTHESIS"
+      ],
+      "description": "Evidence hierarchy tier of the supporting document."
+    },
+    "supporting_evidence_excerpt": {
+      "type": "string",
+      "minLength": 20,
+      "maxLength": 2000,
+      "description": "Direct factual excerpt or clause from the cited government document/portal answering or confirming the inquiry."
+    },
+    "existing_related_question_id": {
+      "type": ["string", "null"],
+      "pattern": "^(Q-[A-Z]{2,4}-[0-9]{3})?$",
+      "description": "Optional ID of an already published canonical question if this candidate represents an alternate phrasing or nuance."
+    },
+    "proposed_language": {
+      "type": "string",
+      "enum": ["en", "hi", "hinglish"],
+      "default": "en",
+      "description": "Language in which the inquiry was formulated."
+    },
+    "alternate_phrasings": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 5,
+        "maxLength": 300
+      },
+      "description": "Optional alternative query terms or colloquial variants observed for this canonical intent."
+    },
+    "review_status": {
+      "type": "string",
+      "enum": [
+        "PENDING_TRIAGE",
+        "NEEDS_RESEARCH",
+        "NEEDS_HUMAN_REVIEW",
+        "READY_FOR_EDITORIAL_VERIFICATION",
+        "DUPLICATE_FLAGGED",
+        "REJECTED"
+      ],
+      "default": "PENDING_TRIAGE",
+      "description": "Workflow review stage. Note: Candidates can NEVER be marked VERIFIED or published in the intake stage."
+    },
+    "reviewer_notes": {
+      "type": "string",
+      "maxLength": 1000,
+      "description": "Editorial triage notes, deduplication rationale, or evidence verification observations."
+    }
+  },
+  "additionalProperties": false
+}
