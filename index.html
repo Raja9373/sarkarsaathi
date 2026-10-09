@@ -14,7 +14,10 @@
       (function() {
         try {
           var pathname = window.location.pathname;
-          var cleanPath = pathname.replace(/^\/+|\/+$/g, '');
+          if (pathname.indexOf('/search') === 0 || pathname.indexOf('/admin') === 0 || pathname.indexOf('/404') === 0) {
+            return;
+          }
+          var cleanPath = pathname.replace(/^\/+|\/+$/g, '').toLowerCase();
           var canonicalUrl = 'https://sarkarsaathi.org' + (cleanPath ? '/' + cleanPath : '/');
           var link = document.querySelector('link[rel="canonical"]');
           if (!link) {

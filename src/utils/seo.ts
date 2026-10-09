@@ -19,8 +19,8 @@ export const normalizeCanonicalUrl = (path?: string): string => {
   if (!path || path === '/' || path === '') {
     return `${PRODUCTION_DOMAIN}/`;
   }
-  // Remove leading and trailing slashes, then rebuild clean path
-  const cleanPath = path.replace(/^\/+|\/+$/g, '');
+  // Strip query parameters and hash, remove leading/trailing slashes, and ensure lowercase
+  const cleanPath = path.split('?')[0].split('#')[0].replace(/^\/+|\/+$/g, '').toLowerCase();
   return `${PRODUCTION_DOMAIN}/${cleanPath}`;
 };
 

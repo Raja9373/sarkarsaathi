@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { 
   Search, 
   HelpCircle, 
@@ -13,10 +13,35 @@ import {
   Calendar,
   Languages,
   CheckCircle2,
-  FileText
+  FileText,
+  Compass
 } from 'lucide-react';
 import { questionRepository } from '../infrastructure/repositories/QuestionRepository';
 import { VerifiedQuestionItem } from '../types/question';
+
+const CATEGORY_HUB_ROUTES: Record<string, string> = {
+  'Government Investments': '/investments',
+  'Investment Schemes': '/investment-schemes',
+  'Subsidies & Benefits': '/subsidies',
+  'Opportunities': '/opportunities',
+  'Tenders': '/tenders',
+  'News & Updates': '/news',
+  'Official Sources': '/official-sources',
+  'Comparisons': '/comparisons',
+  'Tools & Calculators': '/tools',
+};
+
+const CORE_CATEGORY_DESTINATIONS = [
+  { name: 'Government Investments', path: '/investments', desc: 'PPF, SGB, SCSS & Sovereign Bonds' },
+  { name: 'Investment Schemes', path: '/investment-schemes', desc: 'Central & State Small Savings' },
+  { name: 'Subsidies & Benefits', path: '/subsidies', desc: 'DBT, Grants & Financial Support' },
+  { name: 'Opportunities', path: '/opportunities', desc: 'Research Grants & Startup Schemes' },
+  { name: 'Tenders', path: '/tenders', desc: 'Public Procurement & GeM Contracts' },
+  { name: 'News & Updates', path: '/news', desc: 'Official Gazettes & Rate Revisions' },
+  { name: 'Official Sources', path: '/official-sources', desc: 'Single-Window Portals & Ministries' },
+  { name: 'Comparisons', path: '/comparisons', desc: 'Side-by-Side Scheme Benchmarks' },
+  { name: 'Tools & Calculators', path: '/tools', desc: 'Interest & Eligibility Simulators' },
+];
 
 interface QuestionsHubProps {
   onNavigate: (route: string, slug?: string) => void;
@@ -28,6 +53,57 @@ export function QuestionsHubView({ onNavigate }: QuestionsHubProps) {
   const [selectedLanguage, setSelectedLanguage] = useState<'all' | 'en' | 'hi' | 'hinglish'>('all');
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
+
+  // Schema.org Structured Data: CollectionPage & BreadcrumbList
+  useEffect(() => {
+    const scriptId = 'questions-collection-jsonld';
+    let script = document.getElementById(scriptId) as HTMLScriptElement | null;
+    if (!script) {
+      script = document.createElement('script');
+      script.id = scriptId;
+      script.type = 'application/ld+json';
+      document.head.appendChild(script);
+    }
+
+    const structuredData = {
+      '@context': 'https://schema.org',
+      '@type': 'CollectionPage',
+      '@id': 'https://sarkarsaathi.org/questions#collection',
+      'url': 'https://sarkarsaathi.org/questions',
+      'name': 'Questions & Verified Answers - SarkarSaathi',
+      'description': 'Browse verified answers to essential questions across government investments, small savings schemes, subsidies, procurement tenders, and official portals.',
+      'isPartOf': {
+        '@type': 'WebSite',
+        '@id': 'https://sarkarsaathi.org/#website',
+        'name': 'SarkarSaathi',
+        'url': 'https://sarkarsaathi.org/'
+      },
+      'breadcrumb': {
+        '@type': 'BreadcrumbList',
+        'itemListElement': [
+          {
+            '@type': 'ListItem',
+            'position': 1,
+            'name': 'Home',
+            'item': 'https://sarkarsaathi.org/'
+          },
+          {
+            '@type': 'ListItem',
+            'position': 2,
+            'name': 'Questions',
+            'item': 'https://sarkarsaathi.org/questions'
+          }
+        ]
+      }
+    };
+
+    script.textContent = JSON.stringify(structuredData);
+
+    return () => {
+      const el = document.getElementById(scriptId);
+      if (el) el.remove();
+    };
+  }, []);
 
   const categories = useMemo(() => [
     'ALL',
@@ -75,7 +151,7 @@ export function QuestionsHubView({ onNavigate }: QuestionsHubProps) {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       {/* Header Banner */}
-      <div className="mb-8">
+      <div className="mb-6">
         <div className="inline-flex items-center space-x-2 bg-blue-50 border border-blue-200 px-3 py-1.5 rounded-full text-xs font-semibold text-blue-800 mb-3">
           <ShieldCheck className="w-3.5 h-3.5 text-blue-600" />
           <span>Verified Government Intelligence &amp; FAQ Engine</span>
@@ -87,6 +163,40 @@ export function QuestionsHubView({ onNavigate }: QuestionsHubProps) {
           Search and browse verified answers to essential questions across government investments, small savings schemes, subsidies, procurement tenders, and single-window portals—backed by statutory rules and official .gov.in sources.
         </p>
       </div>
+
+      {/* Core Category Destinations Section (Crawlable Internal Architecture) */}
+      <section aria-label="Core Topic Categories" className="mb-8">
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center space-x-2 text-xs font-bold text-slate-700 uppercase tracking-wider">
+            <Compass className="w-4 h-4 text-blue-600" />
+            <span>Browse Topics &amp; Primary Catalogues</span>
+          </div>
+          <span className="text-xs text-slate-400">9 Core Domains</span>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          {CORE_CATEGORY_DESTINATIONS.map((dest) => (
+            <a
+              key={dest.path}
+              href={dest.path}
+              onClick={(e) => {
+                e.preventDefault();
+                onNavigate(dest.path);
+              }}
+              className="group p-3 bg-white border border-slate-200 hover:border-blue-400 hover:bg-blue-50/30 rounded-xl transition shadow-xs flex items-center justify-between"
+            >
+              <div className="truncate mr-2">
+                <span className="block text-xs font-bold text-slate-800 group-hover:text-blue-600 transition truncate">
+                  {dest.name}
+                </span>
+                <span className="block text-[11px] text-slate-500 truncate">
+                  {dest.desc}
+                </span>
+              </div>
+              <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 group-hover:translate-x-0.5 transition shrink-0" />
+            </a>
+          ))}
+        </div>
+      </section>
 
       {/* Filter and Search Bar */}
       <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs mb-8 space-y-4">
@@ -237,7 +347,16 @@ export function QuestionsHubView({ onNavigate }: QuestionsHubProps) {
                       {q.id}
                     </span>
                     <span className="text-slate-400">·</span>
-                    <span className="font-semibold text-slate-700">{q.category}</span>
+                    <a
+                      href={CATEGORY_HUB_ROUTES[q.category] || '/questions'}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        onNavigate(CATEGORY_HUB_ROUTES[q.category] || '/questions');
+                      }}
+                      className="font-semibold text-slate-700 hover:text-blue-600 transition"
+                    >
+                      {q.category}
+                    </a>
                     <span className="text-slate-400">/</span>
                     <span className="text-slate-500">{q.subcategory}</span>
                   </div>
@@ -249,11 +368,17 @@ export function QuestionsHubView({ onNavigate }: QuestionsHubProps) {
                 </div>
 
                 {/* Question Heading */}
-                <h2 
-                  onClick={() => onNavigate('/questions', q.slug)}
-                  className="text-base sm:text-lg font-bold text-slate-900 mb-3 hover:text-blue-600 transition cursor-pointer leading-snug"
-                >
-                  {q.canonical_question}
+                <h2 className="text-base sm:text-lg font-bold text-slate-900 mb-3 leading-snug">
+                  <a
+                    href={`/questions/${q.slug}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      onNavigate('/questions', q.slug);
+                    }}
+                    className="hover:text-blue-600 transition block"
+                  >
+                    {q.canonical_question}
+                  </a>
                 </h2>
 
                 {/* Short Answer Preview */}
@@ -288,21 +413,29 @@ export function QuestionsHubView({ onNavigate }: QuestionsHubProps) {
 
                 <div className="flex items-center space-x-3 w-full sm:w-auto justify-end">
                   {q.suggested_existing_page && (
-                    <button
-                      onClick={() => onNavigate(q.suggested_existing_page)}
+                    <a
+                      href={q.suggested_existing_page}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        onNavigate(q.suggested_existing_page);
+                      }}
                       className="text-slate-600 hover:text-slate-900 font-semibold flex items-center transition"
                     >
                       <span>Related Hub</span>
                       <ChevronRight className="w-3.5 h-3.5 ml-0.5" />
-                    </button>
+                    </a>
                   )}
-                  <button
-                    onClick={() => onNavigate('/questions', q.slug)}
+                  <a
+                    href={`/questions/${q.slug}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      onNavigate('/questions', q.slug);
+                    }}
                     className="px-3.5 py-1.5 bg-blue-50 text-blue-700 hover:bg-blue-600 hover:text-white rounded-lg font-semibold transition flex items-center space-x-1"
                   >
                     <span>Read Verified Answer</span>
                     <ArrowRight className="w-3.5 h-3.5 ml-1" />
-                  </button>
+                  </a>
                 </div>
               </div>
             </article>

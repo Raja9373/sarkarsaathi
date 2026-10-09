@@ -224,6 +224,14 @@ export default function App() {
           return;
         }
       }
+
+      // If selectedSlug was provided but item does not exist, trigger genuine 404 SEO (no soft 404)
+      updateSEO({
+        title: 'Page Not Found - SarkarSaathi',
+        description: 'The requested page could not be found on SarkarSaathi.',
+        noIndex: true,
+      });
+      return;
     }
 
     const ROUTE_SEO: Record<string, { title: string; description: string; noIndex?: boolean }> = {
@@ -359,8 +367,26 @@ export default function App() {
           setSelectedSlug(null);
         }
       } else if (VALID_HUBS.includes(root)) {
-        setCurrentRoute(root);
-        setSelectedSlug(itemSlug);
+        let exists = true;
+        if (root === '/investments') exists = !!investmentRepository.getBySlug(itemSlug || '');
+        else if (root === '/investment-schemes') exists = !!investmentSchemeRepository.getBySlug(itemSlug || '');
+        else if (root === '/opportunities') {
+          if (itemSlug?.startsWith('state/') || itemSlug?.startsWith('sector/')) exists = true;
+          else exists = !!opportunityRepository.getBySlug(itemSlug || '');
+        }
+        else if (root === '/tenders') exists = !!tenderRepository.getBySlug(itemSlug || '');
+        else if (root === '/news') exists = !!newsRepository.getBySlug(itemSlug || '');
+        else if (root === '/subsidies') exists = !!subsidyRepository.getBySlug(itemSlug || '');
+        else if (root === '/official-sources') exists = !!getOfficialSourceBySlug(itemSlug || '');
+        else if (root === '/questions') exists = !!questionRepository.getBySlug(itemSlug || '');
+
+        if (!exists) {
+          setCurrentRoute('/404');
+          setSelectedSlug(null);
+        } else {
+          setCurrentRoute(root);
+          setSelectedSlug(itemSlug);
+        }
       } else {
         setCurrentRoute('/404');
         setSelectedSlug(null);

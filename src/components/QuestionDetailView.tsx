@@ -44,9 +44,21 @@ export function QuestionDetailView({ question, onNavigate, onBack }: QuestionDet
     ? question.translations!.hinglish!.detailed_answer
     : question.detailed_answer;
 
-  // JSON-LD Structured Data for QAPage / FAQPage
+  const categoryHubUrl = {
+    'Government Investments': '/investments',
+    'Investment Schemes': '/investment-schemes',
+    'Subsidies & Benefits': '/subsidies',
+    'Opportunities': '/opportunities',
+    'Tenders': '/tenders',
+    'News & Updates': '/news',
+    'Official Sources': '/official-sources',
+    'Comparisons': '/comparisons',
+    'Tools & Calculators': '/tools',
+  }[question.category] || '/questions';
+
+  // Schema.org Structured Data: WebPage & BreadcrumbList
   useEffect(() => {
-    const scriptId = 'question-qa-jsonld';
+    const scriptId = 'question-webpage-jsonld';
     let script = document.getElementById(scriptId) as HTMLScriptElement | null;
     if (!script) {
       script = document.createElement('script');
@@ -57,22 +69,47 @@ export function QuestionDetailView({ question, onNavigate, onBack }: QuestionDet
 
     const structuredData = {
       '@context': 'https://schema.org',
-      '@type': 'QAPage',
-      'mainEntity': {
-        '@type': 'Question',
-        'name': question.canonical_question,
-        'text': question.canonical_question,
-        'answerCount': 1,
-        'acceptedAnswer': {
-          '@type': 'Answer',
-          'text': `${question.short_answer}\n\n${question.detailed_answer}`,
-          'dateCreated': question.verified_at,
-          'author': {
-            '@type': 'Organization',
-            'name': question.source_publisher || 'Government of India'
+      '@type': 'WebPage',
+      '@id': `https://sarkarsaathi.org/questions/${question.slug}#webpage`,
+      'url': `https://sarkarsaathi.org/questions/${question.slug}`,
+      'name': question.canonical_question,
+      'description': question.short_answer,
+      'isPartOf': {
+        '@type': 'WebSite',
+        '@id': 'https://sarkarsaathi.org/#website',
+        'name': 'SarkarSaathi',
+        'url': 'https://sarkarsaathi.org/'
+      },
+      'inLanguage': activeLang === 'hi' ? 'hi-IN' : activeLang === 'hinglish' ? 'en-IN' : 'en-IN',
+      'dateModified': question.verified_at,
+      'breadcrumb': {
+        '@type': 'BreadcrumbList',
+        'itemListElement': [
+          {
+            '@type': 'ListItem',
+            'position': 1,
+            'name': 'Home',
+            'item': 'https://sarkarsaathi.org/'
           },
-          'url': `https://sarkarsaathi.org/questions/${question.slug}`
-        }
+          {
+            '@type': 'ListItem',
+            'position': 2,
+            'name': 'Questions',
+            'item': 'https://sarkarsaathi.org/questions'
+          },
+          {
+            '@type': 'ListItem',
+            'position': 3,
+            'name': question.category,
+            'item': `https://sarkarsaathi.org${categoryHubUrl}`
+          },
+          {
+            '@type': 'ListItem',
+            'position': 4,
+            'name': question.canonical_question,
+            'item': `https://sarkarsaathi.org/questions/${question.slug}`
+          }
+        ]
       }
     };
 
@@ -82,7 +119,7 @@ export function QuestionDetailView({ question, onNavigate, onBack }: QuestionDet
       const el = document.getElementById(scriptId);
       if (el) el.remove();
     };
-  }, [question]);
+  }, [question, activeLang, categoryHubUrl]);
 
   const handleShare = () => {
     const url = window.location.href;
@@ -104,35 +141,46 @@ export function QuestionDetailView({ question, onNavigate, onBack }: QuestionDet
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       {/* Breadcrumb Navigation */}
       <nav aria-label="Breadcrumb" className="mb-6 flex items-center space-x-2 text-xs text-slate-500 overflow-x-auto">
-        <button onClick={() => onNavigate('/')} className="hover:text-slate-900 transition shrink-0">
+        <a 
+          href="/" 
+          onClick={(e) => { e.preventDefault(); onNavigate('/'); }} 
+          className="hover:text-slate-900 transition shrink-0"
+        >
           Home
-        </button>
+        </a>
         <span>/</span>
-        <button onClick={() => onNavigate('/questions')} className="hover:text-slate-900 transition shrink-0">
+        <a 
+          href="/questions" 
+          onClick={(e) => { e.preventDefault(); onNavigate('/questions'); }} 
+          className="hover:text-slate-900 transition shrink-0"
+        >
           Questions
-        </button>
+        </a>
         <span>/</span>
-        <button 
-          onClick={() => {
-            onNavigate('/questions');
+        <a 
+          href={categoryHubUrl} 
+          onClick={(e) => {
+            e.preventDefault();
+            onNavigate(categoryHubUrl);
           }} 
           className="hover:text-slate-900 transition shrink-0"
         >
           {question.category}
-        </button>
+        </a>
         <span>/</span>
         <span className="text-slate-800 font-semibold truncate max-w-xs">{question.id}</span>
       </nav>
 
       {/* Back Button & Actions */}
       <div className="flex items-center justify-between mb-6">
-        <button
-          onClick={onBack}
+        <a
+          href="/questions"
+          onClick={(e) => { e.preventDefault(); onBack(); }}
           className="inline-flex items-center space-x-2 text-sm font-semibold text-slate-600 hover:text-blue-600 transition"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back to All Questions</span>
-        </button>
+        </a>
 
         <button
           onClick={handleShare}
@@ -306,13 +354,17 @@ export function QuestionDetailView({ question, onNavigate, onBack }: QuestionDet
               </a>
             ))}
             {question.suggested_existing_page && (
-              <button
-                onClick={() => onNavigate(question.suggested_existing_page)}
+              <a
+                href={question.suggested_existing_page}
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavigate(question.suggested_existing_page);
+                }}
                 className="inline-flex items-center space-x-1.5 px-3.5 py-2 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-xl text-xs font-semibold transition"
               >
                 <span>Browse Related {question.category} Catalogue</span>
                 <ChevronRight className="w-3.5 h-3.5" />
-              </button>
+              </a>
             )}
           </div>
         </div>
@@ -327,10 +379,14 @@ export function QuestionDetailView({ question, onNavigate, onBack }: QuestionDet
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {relatedQuestions.map((rel) => (
-              <div
+              <a
                 key={rel.id}
-                onClick={() => onNavigate('/questions', rel.slug)}
-                className="bg-white border border-slate-200 rounded-xl p-4 hover:border-blue-400 hover:shadow-xs transition cursor-pointer flex flex-col justify-between"
+                href={`/questions/${rel.slug}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavigate('/questions', rel.slug);
+                }}
+                className="bg-white border border-slate-200 rounded-xl p-4 hover:border-blue-400 hover:shadow-xs transition block flex flex-col justify-between"
               >
                 <div>
                   <span className="text-[11px] font-mono font-semibold text-blue-600 mb-1 block">
@@ -347,7 +403,7 @@ export function QuestionDetailView({ question, onNavigate, onBack }: QuestionDet
                   <span>View Answer</span>
                   <ChevronRight className="w-3.5 h-3.5" />
                 </div>
-              </div>
+              </a>
             ))}
           </div>
         </section>

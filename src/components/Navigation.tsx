@@ -38,7 +38,14 @@ export function Navbar({ currentRoute, onNavigate }: NavbarProps) {
   return (
     <header className="bg-white border-b border-slate-200 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        <div className="flex items-center space-x-3 cursor-pointer select-none" onClick={() => onNavigate('/')}>
+        <a 
+          href="/" 
+          className="flex items-center space-x-3 cursor-pointer select-none" 
+          onClick={(e) => {
+            e.preventDefault();
+            onNavigate('/');
+          }}
+        >
           <SarkarSaathiLogo className="w-10 h-10" />
           <div className="flex flex-col justify-center">
             <span className="text-lg sm:text-xl font-bold tracking-tight text-indigo-950 leading-tight">
@@ -48,15 +55,19 @@ export function Navbar({ currentRoute, onNavigate }: NavbarProps) {
               Independent information platform
             </span>
           </div>
-        </div>
+        </a>
 
         <nav className="hidden lg:flex items-center space-x-5 xl:space-x-6 h-full">
           {navItems.map((item) => {
             const isActive = currentRoute === item.path;
             return (
-              <button
+              <a
                 key={item.path}
-                onClick={() => onNavigate(item.path)}
+                href={item.path}
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavigate(item.path);
+                }}
                 className={`relative h-16 flex items-center text-sm font-medium transition cursor-pointer ${
                   isActive ? 'text-blue-600 font-semibold' : 'text-slate-600 hover:text-blue-600'
                 }`}
@@ -71,7 +82,7 @@ export function Navbar({ currentRoute, onNavigate }: NavbarProps) {
                 {isActive && (
                   <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600" />
                 )}
-              </button>
+              </a>
             );
           })}
         </nav>
@@ -126,9 +137,11 @@ export function Navbar({ currentRoute, onNavigate }: NavbarProps) {
       {mobileMenuOpen && (
         <div className="lg:hidden bg-white border-b border-slate-200 px-4 pt-2 pb-4 space-y-2">
           {navItems.map((item) => (
-            <button
+            <a
               key={item.path}
-              onClick={() => {
+              href={item.path}
+              onClick={(e) => {
+                e.preventDefault();
                 onNavigate(item.path);
                 setMobileMenuOpen(false);
               }}
@@ -137,7 +150,7 @@ export function Navbar({ currentRoute, onNavigate }: NavbarProps) {
               }`}
             >
               {item.label}
-            </button>
+            </a>
           ))}
         </div>
       )}
@@ -161,13 +174,13 @@ export function Footer({ onNavigate }: { onNavigate: (route: string) => void }) 
             </p>
           </div>
           <div className="flex flex-wrap justify-center gap-6 text-xs">
-            <button onClick={() => onNavigate('/about')} className="hover:text-white transition">About</button>
-            <button onClick={() => onNavigate('/contact')} className="hover:text-white transition">Contact</button>
-            <button onClick={() => onNavigate('/privacy-policy')} className="hover:text-white transition">Privacy Policy</button>
-            <button onClick={() => onNavigate('/terms')} className="hover:text-white transition">Terms of Service</button>
-            <button onClick={() => onNavigate('/disclaimer')} className="hover:text-white transition">Disclaimer</button>
-            <button onClick={() => onNavigate('/questions')} className="hover:text-white transition">Questions &amp; Answers</button>
-            <button onClick={() => onNavigate('/official-sources')} className="hover:text-white transition">Government Sources Directory</button>
+            <a href="/about" onClick={(e) => { e.preventDefault(); onNavigate('/about'); }} className="hover:text-white transition">About</a>
+            <a href="/contact" onClick={(e) => { e.preventDefault(); onNavigate('/contact'); }} className="hover:text-white transition">Contact</a>
+            <a href="/privacy-policy" onClick={(e) => { e.preventDefault(); onNavigate('/privacy-policy'); }} className="hover:text-white transition">Privacy Policy</a>
+            <a href="/terms" onClick={(e) => { e.preventDefault(); onNavigate('/terms'); }} className="hover:text-white transition">Terms of Service</a>
+            <a href="/disclaimer" onClick={(e) => { e.preventDefault(); onNavigate('/disclaimer'); }} className="hover:text-white transition">Disclaimer</a>
+            <a href="/questions" onClick={(e) => { e.preventDefault(); onNavigate('/questions'); }} className="hover:text-white transition">Questions &amp; Answers</a>
+            <a href="/official-sources" onClick={(e) => { e.preventDefault(); onNavigate('/official-sources'); }} className="hover:text-white transition">Government Sources Directory</a>
           </div>
         </div>
 

@@ -48,13 +48,17 @@ export function ContextualFAQSection({ category, onNavigate, maxItems = 6 }: Con
           </p>
         </div>
 
-        <button
-          onClick={() => onNavigate('/questions')}
+        <a
+          href="/questions"
+          onClick={(e) => {
+            e.preventDefault();
+            onNavigate('/questions');
+          }}
           className="text-xs font-semibold text-blue-600 hover:text-blue-800 flex items-center shrink-0 transition"
         >
           <span>View All in Questions Hub ({questions.length})</span>
           <ArrowRight className="w-3.5 h-3.5 ml-1" />
-        </button>
+        </a>
       </div>
 
       <div className="space-y-3">
@@ -104,13 +108,17 @@ export function ContextualFAQSection({ category, onNavigate, maxItems = 6 }: Con
                       {q.effective_date && <span>Effective: {q.effective_date}</span>}
                     </div>
 
-                    <button
-                      onClick={() => onNavigate('/questions', q.slug)}
+                    <a
+                      href={`/questions/${q.slug}`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        onNavigate('/questions', q.slug);
+                      }}
                       className="text-blue-600 hover:text-blue-800 font-semibold flex items-center space-x-1"
                     >
                       <span>Complete Citations &amp; Translations</span>
                       <ArrowRight className="w-3.5 h-3.5 ml-0.5" />
-                    </button>
+                    </a>
                   </div>
                 </div>
               )}
