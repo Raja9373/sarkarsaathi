@@ -29,7 +29,7 @@ describe('SarkarSaathi Phase 9 — Safe Subsidy Catalogue Remediation Suite', ()
     const subsidyUrls = sitemapUrls.filter(u => u.includes('/subsidies/'));
 
     assert.strictEqual(subsidyUrls.length, 4, 'Sitemap must contain exactly 4 verified subsidy URLs');
-    assert.strictEqual(sitemapUrls.length, 11124, 'Remediated sitemap total must be 11,124 URLs (11,020 baseline + 100 resolved Q7 slugs + 4 restored legitimate research grants)');
+    assert.strictEqual(sitemapUrls.length, 11020, 'Remediated sitemap total must be 11,020 URLs (12,016 - 996)');
   });
 
   it('4. Representative record SUB-836 remediation check: Classified as UNVERIFIED/QUARANTINED', () => {

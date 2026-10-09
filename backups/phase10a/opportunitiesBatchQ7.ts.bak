@@ -9,7 +9,7 @@ export const OPPORTUNITIES_BATCH_Q7: Opportunity[] = Array.from({ length: 100 },
 
   return {
     id: `OPP-Q7-VERIFIED-${String(idx).padStart(3, '0')}`,
-    slug: `state-energy-infrastructure-project-${idx}`,
+    slug: `renewable-energy-green-hydrogen-project-${idx}`,
     title: `Strategic ${sector} Infrastructure Project #${idx} (${state})`,
     description: `Verified large-scale renewable energy and green hydrogen project promoted under state energy policies.`,
     authority: `State Energy Development Agency (${state})`,

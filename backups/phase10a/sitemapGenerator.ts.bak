@@ -62,38 +62,12 @@ const sectors = [
   'defense'
 ];
 
-export const isExcludedSearchOrFilterUrl = (url: string): boolean => {
-  if (url.includes('?') || url.includes('#')) {
-    return true;
-  }
-  try {
-    const parsed = new URL(url.startsWith('http') ? url : `https://sarkarsaathi.org${url}`);
-    const pathname = parsed.pathname.toLowerCase();
-    // Exclude /search or /filter routes and segments, but allow legitimate words like "research"
-    if (
-      pathname === '/search' ||
-      pathname.startsWith('/search/') ||
-      pathname === '/filter' ||
-      pathname.startsWith('/filter/') ||
-      pathname.includes('/filter') ||
-      pathname.split('/').includes('search')
-    ) {
-      return true;
-    }
-  } catch {
-    if (url.includes('?') || url.includes('#') || url.includes('/search') || url.includes('/filter')) {
-      return true;
-    }
-  }
-  return false;
-};
-
 export const generateSitemap = () => {
   const rawUrls: Set<string> = new Set();
 
   // Hubs
   hubs.forEach(h => {
-    if (!isExcludedSearchOrFilterUrl(h)) {
+    if (!h.includes('?') && !h.includes('search') && !h.includes('filter')) {
       const cleanPath = h === '/' ? '' : h;
       rawUrls.add(`${baseUrl}${cleanPath}`);
     }
@@ -129,7 +103,7 @@ export const generateSitemap = () => {
       const slug = (i as any).slug || (i as any).id;
       if (slug) {
         const url = `${baseUrl}${routePath}/${slug}`;
-        if (isExcludedSearchOrFilterUrl(url)) {
+        if (url.includes('?') || url.includes('search') || url.includes('filter')) {
           searchFilterCount++;
           return;
         }
@@ -152,7 +126,7 @@ export const generateSitemap = () => {
     const slug = getOfficialSourceSlug(s);
     if (slug) {
       const url = `${baseUrl}/official-sources/${slug}`;
-      if (isExcludedSearchOrFilterUrl(url)) {
+      if (url.includes('?') || url.includes('search') || url.includes('filter')) {
         searchFilterCount++;
         return;
       }
@@ -172,7 +146,7 @@ export const generateSitemap = () => {
   const publishedQuestions = questionRepository.getAll(true);
   publishedQuestions.forEach(q => {
     const url = `${baseUrl}/questions/${q.slug}`;
-    if (isExcludedSearchOrFilterUrl(url)) {
+    if (url.includes('?') || url.includes('search') || url.includes('filter')) {
       searchFilterCount++;
       return;
     }
