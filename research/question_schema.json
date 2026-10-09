@@ -1,0 +1,216 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sarkarsaathi.org/schemas/question_schema.v1.json",
+  "title": "SarkarSaathiCanonicalQuestion",
+  "description": "Canonical question schema for SarkarSaathi Question Intelligence database (Phase 2)",
+  "type": "object",
+  "required": [
+    "question_id",
+    "canonical_question",
+    "normalized_question",
+    "alternate_phrasings",
+    "category",
+    "subcategory",
+    "search_intent",
+    "audience",
+    "geography",
+    "language",
+    "evidence_status",
+    "observed_on_google",
+    "source_type",
+    "source_urls",
+    "answer_status",
+    "verification_status",
+    "suggested_existing_page",
+    "review_required",
+    "priority",
+    "record_created_at",
+    "record_updated_at"
+  ],
+  "properties": {
+    "question_id": {
+      "type": "string",
+      "pattern": "^Q-[A-Z]{2,4}-[0-9]{3}$",
+      "description": "Deterministic, stable unique identifier. Prefix reflects primary category (Q-GI, Q-IS, Q-SB, Q-OPP, Q-TND, Q-NW, Q-OS, Q-CMP, Q-CALC)."
+    },
+    "canonical_question": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 300,
+      "description": "Preferred, grammatically complete user-facing question text."
+    },
+    "normalized_question": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 300,
+      "description": "Canonicalized text stripped of punctuation and phrasing variations for deduplication."
+    },
+    "alternate_phrasings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Observed and validated alternate phrasings, including Hindi and Hinglish variations."
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "Government Investments",
+        "Investment Schemes",
+        "Subsidies & Benefits",
+        "Opportunities",
+        "Tenders",
+        "News & Updates",
+        "Official Sources",
+        "Comparisons",
+        "Tools & Calculators"
+      ],
+      "description": "Controlled top-level SarkarSaathi content category."
+    },
+    "subcategory": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 100,
+      "description": "Specific scheme, portal, instrument, or functional subject area."
+    },
+    "search_intent": {
+      "type": "string",
+      "enum": [
+        "informational",
+        "navigational",
+        "transactional",
+        "comparison",
+        "eligibility_check",
+        "document_check",
+        "calculation",
+        "status_tracking",
+        "deadline_check"
+      ],
+      "description": "Primary user search intent."
+    },
+    "audience": {
+      "type": "string",
+      "enum": [
+        "citizens",
+        "senior_citizens",
+        "investors",
+        "women",
+        "msmes",
+        "startups",
+        "contractors_bidders",
+        "students",
+        "farmers"
+      ],
+      "description": "Target beneficiary or user segment."
+    },
+    "geography": {
+      "type": "string",
+      "description": "Jurisdiction scope: 'India (All)' or specific State / UT name."
+    },
+    "language": {
+      "type": "string",
+      "enum": ["en", "hi", "hinglish"],
+      "description": "Language of the canonical question representation."
+    },
+    "evidence_status": {
+      "type": "string",
+      "enum": [
+        "DIRECTLY_OBSERVED",
+        "OFFICIAL_SOURCE_VERIFIED",
+        "RESEARCH_DERIVED",
+        "USER_QUERY_RECORDED"
+      ],
+      "description": "Provenance evidence classification."
+    },
+    "observed_on_google": {
+      "type": ["boolean", "null"],
+      "description": "Strict flag: true ONLY if the question phrasing or query was directly observed in Google search autocomplete, PAA, or organic snippets. false if derived from gov pages or research. null if unknown."
+    },
+    "source_type": {
+      "type": "string",
+      "enum": [
+        "google_search_observed",
+        "official_gov_faq",
+        "research_derived_suggestion",
+        "search_console_query"
+      ],
+      "description": "Origin mechanism of the question."
+    },
+    "source_urls": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "uri"
+      },
+      "minItems": 1,
+      "description": "Live, verified authoritative URLs providing evidence for question existence or official answers."
+    },
+    "answer_status": {
+      "type": "string",
+      "enum": ["UNANSWERED", "DRAFTED", "VERIFIED", "PUBLISHED"],
+      "default": "UNANSWERED",
+      "description": "Lifecycle state of the answer in SarkarSaathi pipeline."
+    },
+    "verification_status": {
+      "type": "string",
+      "enum": ["UNVERIFIED", "GOV_VERIFIED", "NEEDS_REVIEW", "FLAGGED"],
+      "description": "Review status of question validity and data accuracy."
+    },
+    "last_verified_at": {
+      "type": ["string", "null"],
+      "description": "ISO 8601 date string when source verification was last executed."
+    },
+    "suggested_existing_page": {
+      "type": "string",
+      "pattern": "^/(investments|investment-schemes|subsidies|opportunities|tenders|news|official-sources|comparisons|tools)(/.*)?$",
+      "description": "Target canonical route on sarkarsaathi.org."
+    },
+    "related_question_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^Q-[A-Z]{2,4}-[0-9]{3}$"
+      },
+      "description": "Flat list of connected question IDs."
+    },
+    "relationships": {
+      "type": "object",
+      "properties": {
+        "broader_question": { "type": ["string", "null"] },
+        "narrower_questions": { "type": "array", "items": { "type": "string" } },
+        "comparison_questions": { "type": "array", "items": { "type": "string" } },
+        "eligibility_question": { "type": ["string", "null"] },
+        "application_question": { "type": ["string", "null"] },
+        "document_requirement_question": { "type": ["string", "null"] },
+        "status_tracking_question": { "type": ["string", "null"] },
+        "deadline_question": { "type": ["string", "null"] },
+        "related_calculator": { "type": ["string", "null"] },
+        "related_official_source": { "type": ["string", "null"] }
+      },
+      "additionalProperties": false,
+      "description": "Typed graph connections between questions."
+    },
+    "duplicate_of": {
+      "type": ["string", "null"],
+      "description": "Parent canonical question_id if this record is a secondary duplicate."
+    },
+    "review_required": {
+      "type": "boolean",
+      "description": "Whether manual editorial or policy review is pending."
+    },
+    "priority": {
+      "type": "string",
+      "enum": ["CRITICAL", "HIGH", "MEDIUM", "LOW"],
+      "description": "Priority tier for answer authoring and search engine publication."
+    },
+    "record_created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "record_updated_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "additionalProperties": false
+}
