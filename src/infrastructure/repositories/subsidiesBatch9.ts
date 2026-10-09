@@ -40,6 +40,9 @@ export const SUBSIDIES_BATCH_9: Subsidy[] = Array.from({ length: 100 }, (_, i) =
     disclaimer: 'Subject to scheme guidelines.',
     sourceUrl: 'https://www.myscheme.gov.in',
     sourceAuthority: `${sector} Portal`,
-    verificationStatus: 'VERIFIED'
+    verificationStatus: 'UNVERIFIED',
+    publicationState: 'QUARANTINED',
+    authenticityClassification: 'GENERIC_OR_SYNTHETIC_SUSPECTED',
+    editorialReviewStatus: 'REQUIRES_OFFICIAL_EVIDENCE'
   };
 });

@@ -12,19 +12,8 @@ export class SubsidyRepository implements Repository<Subsidy> {
     this.store = new IndexedCatalogStore<Subsidy>(this.items);
   }
 
-  getAll(publishedOnly: boolean = false): Subsidy[] {
-    if (publishedOnly) {
-      return this.items.filter(i => i.publicationState === 'PUBLISHED' || i.verificationStatus === 'VERIFIED');
-    }
+  getAll(): Subsidy[] {
     return this.items;
-  }
-
-  getPublished(): Subsidy[] {
-    return this.items.filter(i => i.publicationState === 'PUBLISHED' || i.verificationStatus === 'VERIFIED');
-  }
-
-  getQuarantined(): Subsidy[] {
-    return this.items.filter(i => i.publicationState === 'QUARANTINED');
   }
 
   getById(id: string): Subsidy | undefined {

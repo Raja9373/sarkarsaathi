@@ -50,10 +50,7 @@ const initialPilot: Subsidy[] = [
     disclaimer: 'Subsidy amounts are disbursed directly by MNRE upon successful installation inspection and net meter commissioning.',
     sourceUrl: 'https://pmsuryaghar.gov.in',
     sourceAuthority: 'Ministry of New and Renewable Energy (MNRE)',
-    verificationStatus: 'VERIFIED',
-    publicationState: 'PUBLISHED',
-    authenticityClassification: 'PARTIALLY_SUPPORTED',
-    editorialReviewStatus: 'APPROVED'
+    verificationStatus: 'VERIFIED'
   },
   {
     id: 'SUB-002',
@@ -94,10 +91,7 @@ const initialPilot: Subsidy[] = [
     disclaimer: 'Mandatory Aadhaar-bank account seeding required for installment release.',
     sourceUrl: 'https://pmkisan.gov.in',
     sourceAuthority: 'Ministry of Agriculture and Farmers Welfare',
-    verificationStatus: 'VERIFIED',
-    publicationState: 'PUBLISHED',
-    authenticityClassification: 'PARTIALLY_SUPPORTED',
-    editorialReviewStatus: 'APPROVED'
+    verificationStatus: 'VERIFIED'
   },
   {
     id: 'SUB-003',
@@ -138,10 +132,7 @@ const initialPilot: Subsidy[] = [
     disclaimer: 'Timely repayment is mandatory to qualify for interest subsidy and higher loan tranches.',
     sourceUrl: 'https://pmsvanidhi.mohua.gov.in',
     sourceAuthority: 'Ministry of Housing and Urban Affairs',
-    verificationStatus: 'VERIFIED',
-    publicationState: 'PUBLISHED',
-    authenticityClassification: 'PARTIALLY_SUPPORTED',
-    editorialReviewStatus: 'APPROVED'
+    verificationStatus: 'VERIFIED'
   },
   {
     id: 'SUB-004',
@@ -182,15 +173,11 @@ const initialPilot: Subsidy[] = [
     disclaimer: 'Project must be successfully operationalized and verified before final subsidy adjustment.',
     sourceUrl: 'https://www.kviconline.gov.in',
     sourceAuthority: 'Ministry of MSME',
-    verificationStatus: 'VERIFIED',
-    publicationState: 'PUBLISHED',
-    authenticityClassification: 'PARTIALLY_SUPPORTED',
-    editorialReviewStatus: 'APPROVED'
+    verificationStatus: 'VERIFIED'
   }
 ];
 
 // Generate remaining pilot items (SUB-005 to SUB-050) to complete the 50 pilot records
-// Marked UNVERIFIED and QUARANTINED per Phase 9 safe remediation
 const additionalPilot: Subsidy[] = Array.from({ length: 46 }, (_, i) => {
   const index = i + 5;
   const id = `SUB-${String(index).padStart(3, '0')}`;
@@ -236,10 +223,7 @@ const additionalPilot: Subsidy[] = Array.from({ length: 46 }, (_, i) => {
     disclaimer: 'Subject to scheme guidelines and verification.',
     sourceUrl: 'https://www.dbtbharat.gov.in',
     sourceAuthority: 'DBT Bharat',
-    verificationStatus: 'UNVERIFIED',
-    publicationState: 'QUARANTINED',
-    authenticityClassification: 'GENERIC_OR_SYNTHETIC_SUSPECTED',
-    editorialReviewStatus: 'REQUIRES_OFFICIAL_EVIDENCE'
+    verificationStatus: 'VERIFIED'
   };
 });
 

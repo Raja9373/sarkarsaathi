@@ -58,6 +58,9 @@ export const SUBSIDIES_BATCH_1: Subsidy[] = Array.from({ length: 90 }, (_, i) =>
     disclaimer: 'Disbursal is subject to physical inspection, document verification, and fund availability.',
     sourceUrl: 'https://www.myscheme.gov.in',
     sourceAuthority: `${sector} Portal`,
-    verificationStatus: 'VERIFIED'
+    verificationStatus: 'UNVERIFIED',
+    publicationState: 'QUARANTINED',
+    authenticityClassification: 'GENERIC_OR_SYNTHETIC_SUSPECTED',
+    editorialReviewStatus: 'REQUIRES_OFFICIAL_EVIDENCE'
   };
 });

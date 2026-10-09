@@ -236,4 +236,7 @@ export interface Subsidy extends BaseEntity {
   lastVerified?: string;
   sourceNotes?: string;
   disclaimer?: string;
+  publicationState?: 'PUBLISHED' | 'QUARANTINED' | 'DRAFT';
+  authenticityClassification?: 'SOURCE_VERIFIED' | 'PARTIALLY_SUPPORTED' | 'GENERIC_OR_SYNTHETIC_SUSPECTED' | 'SOURCE_MISSING' | 'NOT_CHECKED';
+  editorialReviewStatus?: 'APPROVED' | 'PENDING_REVIEW' | 'REQUIRES_OFFICIAL_EVIDENCE';
 }

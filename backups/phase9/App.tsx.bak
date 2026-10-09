@@ -196,14 +196,10 @@ export default function App() {
       } else if (currentRoute === '/subsidies') {
         const item = subsidyRepository.getBySlug(selectedSlug);
         if (item) {
-          const isQuarantined = item.publicationState === 'QUARANTINED' || item.verificationStatus === 'UNVERIFIED';
           updateSEO({
-            title: isQuarantined 
-              ? `${item.title} (Under Review) - SarkarSaathi`
-              : `${item.title} - Government Subsidy & Benefits | SarkarSaathi`,
+            title: `${item.title} - Government Subsidy & Benefits | SarkarSaathi`,
             description: item.description || `Official government subsidy scheme: ${item.title}. Benefit: ${item.maximumBenefit || item.benefits || item.benefitType || 'Government Subsidy'}.`,
             canonicalPath: `/subsidies/${item.slug || item.id || selectedSlug}`,
-            noIndex: isQuarantined,
           });
           return;
         }

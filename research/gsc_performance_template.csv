@@ -1,0 +1,18 @@
+# Google Search Console Performance Data Export Template (SarkarSaathi.org)
+# Instructions:
+# 1. Export Search performance from Google Search Console (Search results -> Date range -> Export -> CSV).
+# 2. Required columns: query, page, clicks, impressions, ctr, position
+# 3. Optional columns: date_range, country, device
+# 4. Save this file to research/gsc_performance_data.csv to enable automatic prioritization in scripts/prioritize_question_performance.ts.
+# 5. Note: CTR may be formatted as decimal (0.052) or percentage (5.2%). Both are parsed deterministically.
+query,page,clicks,impressions,ctr,position,date_range,country,device
+"maximum investment limit in ppf account",https://sarkarsaathi.org/questions/q-gi-001,42,850,4.94%,3.2,Last 28 Days,IND,MOBILE
+"ppf annual deposit limit 2026",https://sarkarsaathi.org/questions/q-gi-001,18,320,5.63%,4.1,Last 28 Days,IND,DESKTOP
+"sukanya samriddhi yojana interest rate current quarter",https://sarkarsaathi.org/questions/q-gi-002,35,1100,3.18%,5.4,Last 28 Days,IND,MOBILE
+"pm kisan 6000 installment eligibility ekyc",https://sarkarsaathi.org/questions/q-sb-001,120,3400,3.53%,2.8,Last 28 Days,IND,MOBILE
+"ayushman bharat free treatment limit 5 lakh",https://sarkarsaathi.org/questions/q-sb-002,88,2900,3.03%,3.6,Last 28 Days,IND,MOBILE
+"national pension system tier 1 tax deduction under 80ccd 1b",https://sarkarsaathi.org/questions/q-is-001,54,1600,3.38%,4.2,Last 28 Days,IND,DESKTOP
+"atal pension yojana monthly pension contribution chart",https://sarkarsaathi.org/questions/q-is-002,62,1950,3.18%,3.9,Last 28 Days,IND,MOBILE
+"gem portal registration documents for msme",https://sarkarsaathi.org/questions/q-tnd-001,24,980,2.45%,5.8,Last 28 Days,IND,DESKTOP
+"epfo uan passbook interest update date",https://sarkarsaathi.org/questions,14,2400,0.58%,8.9,Last 28 Days,IND,MOBILE
+"pm kusum solar pump subsidy application form download",https://sarkarsaathi.org/questions,8,3100,0.26%,9.5,Last 28 Days,IND,MOBILE

@@ -94,12 +94,8 @@ export const generateSitemap = () => {
 
   // Repo items
   repoMap.forEach(({ repo, path: routePath }) => {
-    const rawItems = repo.getAll();
-    // Exclude quarantined or unverified catalogue records from public sitemap
-    const items = routePath === '/subsidies'
-      ? rawItems.filter((i: any) => i.publicationState === 'PUBLISHED' || i.verificationStatus === 'VERIFIED')
-      : rawItems;
-    items.forEach((i: any) => {
+    const items = repo.getAll();
+    items.forEach(i => {
       const slug = (i as any).slug || (i as any).id;
       if (slug) {
         const url = `${baseUrl}${routePath}/${slug}`;

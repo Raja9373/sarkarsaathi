@@ -1,0 +1,136 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sarkarsaathi.org/schemas/gsc_performance_schema.v1.json",
+  "title": "SarkarSaathiGoogleSearchConsolePerformanceData",
+  "description": "Validation schema for manual Google Search Console search performance exports and URL inspection reports.",
+  "type": "object",
+  "required": ["import_metadata", "records"],
+  "properties": {
+    "import_metadata": {
+      "type": "object",
+      "required": ["source_type", "import_timestamp", "data_status"],
+      "properties": {
+        "source_type": {
+          "type": "string",
+          "enum": ["MANUAL_CSV_EXPORT", "AUTHORIZED_API_FEED", "NOT_AVAILABLE"]
+        },
+        "import_timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "data_status": {
+          "type": "string",
+          "enum": ["AVAILABLE", "NOT_AVAILABLE", "INSUFFICIENT_DATA"]
+        },
+        "date_range_start": {
+          "type": ["string", "null"],
+          "format": "date"
+        },
+        "date_range_end": {
+          "type": ["string", "null"],
+          "format": "date"
+        },
+        "total_rows_imported": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["query", "page", "clicks", "impressions", "ctr", "position"],
+        "properties": {
+          "query": {
+            "type": "string",
+            "minLength": 1
+          },
+          "page": {
+            "type": "string",
+            "format": "uri"
+          },
+          "clicks": {
+            "type": "number",
+            "minimum": 0
+          },
+          "impressions": {
+            "type": "number",
+            "minimum": 0
+          },
+          "ctr": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "position": {
+            "type": "number",
+            "minimum": 1
+          },
+          "date": {
+            "type": ["string", "null"]
+          },
+          "country": {
+            "type": ["string", "null"]
+          },
+          "device": {
+            "type": ["string", "null"],
+            "enum": ["DESKTOP", "MOBILE", "TABLET", "ALL", null]
+          }
+        }
+      }
+    },
+    "url_inspection_records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "url",
+          "exists_in_app",
+          "included_in_sitemap",
+          "crawlable",
+          "submitted_for_inspection",
+          "google_indexing_state"
+        ],
+        "properties": {
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "exists_in_app": {
+            "type": "boolean"
+          },
+          "included_in_sitemap": {
+            "type": "boolean"
+          },
+          "crawlable": {
+            "type": "boolean"
+          },
+          "submitted_for_inspection": {
+            "type": "boolean"
+          },
+          "inspection_date": {
+            "type": ["string", "null"]
+          },
+          "google_indexing_state": {
+            "type": "string",
+            "enum": [
+              "INDEXED",
+              "CRAWLED_NOT_INDEXED",
+              "DISCOVERED_NOT_INDEXED",
+              "SUBMITTED_AND_PENDING",
+              "NOT_SUBMITTED",
+              "URL_NOT_INSPECTED"
+            ]
+          },
+          "last_crawl_time": {
+            "type": ["string", "null"]
+          },
+          "coverage_verdict": {
+            "type": ["string", "null"]
+          }
+        }
+      }
+    }
+  }
+}
