@@ -60,7 +60,7 @@ export class DuplicateDetector {
 
     // 4. Check Normalized Source URL
     const normUrl = normalizeUrl(record.sourceUrl);
-    if (normUrl && normUrl !== 'india-investment-grid.gov.in' && normUrl !== 'investindia.gov.in') {
+    if (normUrl && normUrl !== 'india-investment-grid.gov.in' && normUrl !== 'investindia.gov.in' && normUrl !== 'eprocure.gov.in') {
       if (this.opportunitySourceUrls.has(normUrl)) {
         return { isDuplicate: true, reason: `Duplicate Opportunity Official Source URL: ${record.sourceUrl}` };
       }
@@ -100,7 +100,9 @@ export class DuplicateDetector {
       }
     }
     const normUrl = normalizeUrl(record.sourceUrl);
-    if (normUrl && this.tenderSourceUrls.has(normUrl)) {
+    // Exempt generic portal root URLs shared by all tenders
+    const isGenericPortal = normUrl === 'eprocure.gov.in' || normUrl === 'eprocure.gov.in/app' || normUrl === 'etenders.gov.in' || normUrl === 'eprocure.gov.in/eprocure/app';
+    if (normUrl && !isGenericPortal && this.tenderSourceUrls.has(normUrl)) {
       return { isDuplicate: true, reason: `Duplicate Tender Source URL: ${record.sourceUrl}` };
     }
     if (record.title && record.sourceUrl) {
@@ -117,7 +119,7 @@ export class DuplicateDetector {
     if (record.id) this.opportunityIds.add(record.id.trim().toLowerCase());
     if (record.slug) this.opportunitySlugs.add(record.slug.trim().toLowerCase());
     const normUrl = normalizeUrl(record.sourceUrl);
-    if (normUrl && normUrl !== 'india-investment-grid.gov.in' && normUrl !== 'investindia.gov.in') {
+    if (normUrl && normUrl !== 'india-investment-grid.gov.in' && normUrl !== 'investindia.gov.in' && normUrl !== 'eprocure.gov.in') {
       this.opportunitySourceUrls.add(normUrl);
     }
     if (record.title && record.sourceUrl) {
@@ -136,7 +138,8 @@ export class DuplicateDetector {
     if (refId) this.tenderIds.add(refId);
     if (record.slug) this.tenderSlugs.add(record.slug.trim().toLowerCase());
     const normUrl = normalizeUrl(record.sourceUrl);
-    if (normUrl) this.tenderSourceUrls.add(normUrl);
+    const isGenericPortal = normUrl === 'eprocure.gov.in' || normUrl === 'eprocure.gov.in/app' || normUrl === 'etenders.gov.in' || normUrl === 'eprocure.gov.in/eprocure/app';
+    if (normUrl && !isGenericPortal) this.tenderSourceUrls.add(normUrl);
     if (record.title && record.sourceUrl) {
       this.tenderFingerprints.add(`${normalizeText(record.title)}|${normUrl}`);
     }
