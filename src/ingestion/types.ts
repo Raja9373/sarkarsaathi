@@ -20,6 +20,9 @@ export interface VerifiedSource {
   lastVerified: string;
   enabled?: boolean;
   updateMethod?: string;
+  syncFrequency?: 'DAILY' | 'HOURLY' | 'MANUAL';
+  scheduledSyncTime?: string;
+  nextScheduledSync?: string;
   lastChecked?: string;
   lastSuccessfulFetch?: string;
   lastChangeDetected?: string;

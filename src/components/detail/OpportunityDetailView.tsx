@@ -90,6 +90,64 @@ export const OpportunityDetailView: React.FC<OpportunityDetailViewProps> = ({ it
   useEffect(() => {
     if (!item) return;
     document.title = `${item.title} | Government Opportunity | SarkarSaathi`;
+
+    const canonicalUrl = `https://sarkarsaathi.org/opportunities/${item.slug || item.id}`;
+
+    const jsonLd = {
+      '@context': 'https://schema.org',
+      '@type': 'GovernmentService',
+      'name': item.title,
+      'description': item.description || `Official government opportunity: ${item.title}`,
+      'provider': {
+        '@type': 'GovernmentOrganization',
+        'name': item.authority || item.sourceAuthority || 'Government of India',
+        'url': item.sourceUrl || 'https://sarkarsaathi.org'
+      },
+      'areaServed': {
+        '@type': 'AdministrativeArea',
+        'name': item.state || 'India'
+      },
+      'url': canonicalUrl
+    };
+
+    const breadcrumbLd = {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      'itemListElement': [
+        {
+          '@type': 'ListItem',
+          'position': 1,
+          'name': 'Home',
+          'item': 'https://sarkarsaathi.org/'
+        },
+        {
+          '@type': 'ListItem',
+          'position': 2,
+          'name': 'Opportunities',
+          'item': 'https://sarkarsaathi.org/opportunities'
+        },
+        {
+          '@type': 'ListItem',
+          'position': 3,
+          'name': item.title,
+          'item': canonicalUrl
+        }
+      ]
+    };
+
+    const scriptId = 'opportunity-jsonld';
+    let script = document.getElementById(scriptId) as HTMLScriptElement | null;
+    if (!script) {
+      script = document.createElement('script');
+      script.id = scriptId;
+      script.type = 'application/ld+json';
+      document.head.appendChild(script);
+    }
+    script.textContent = JSON.stringify([jsonLd, breadcrumbLd]);
+
+    return () => {
+      if (script) script.remove();
+    };
   }, [item]);
 
   const isPaimana = item.implementingAgency?.includes('PAIMANA') || item.authority?.includes('PAIMANA') || item.sourceAuthority?.includes('PAIMANA') || item.id?.startsWith('paimana-');

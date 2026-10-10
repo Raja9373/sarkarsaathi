@@ -197,6 +197,38 @@ export class AutoUpdateEngine {
       sourceLogs: logs
     };
   }
+
+  async triggerDailyFiveAMSync(scheduledTime: string = '05:00 AM IST'): Promise<RunReportSummary> {
+    const allSources = globalSourceRegistry.getAllSources();
+    const now = new Date();
+    
+    // Calculate next 5:00 AM IST schedule timestamp
+    const nextFiveAM = new Date();
+    nextFiveAM.setHours(5, 0, 0, 0);
+    if (now.getHours() >= 5) {
+      nextFiveAM.setDate(nextFiveAM.getDate() + 1);
+    }
+
+    const report = await this.generateRunReport();
+
+    // Attach daily 5 AM sync audit metadata log
+    this.updateLogs.unshift({
+      id: `LOG-CRON-5AM-${Date.now()}`,
+      sourceId: 'SYSTEM-CRON-JOB',
+      sourceName: 'Daily 5:00 AM IST Automated Pipeline Update Engine',
+      checkTime: now.toISOString(),
+      status: report.workflowStatus === 'FAILED' ? 'FAILED' : 'NO_CHANGE',
+      recordsDetected: report.recordsFetched,
+      recordsStaged: report.recordsAdded,
+      duplicates: 0,
+      validationFailures: report.recordsRejected,
+      errorMessage: `Daily 05:00 AM IST sync executed for ${report.sourcesAttempted} active government sources (Schemes, Subsidies & Tenders). Next run scheduled for ${nextFiveAM.toISOString().split('T')[0]} 05:00:00 IST.`,
+      sourceUrl: 'https://sarkarsaathi.org/admin'
+    });
+
+    return report;
+  }
 }
 
 export const globalAutoUpdateEngine = new AutoUpdateEngine();
+

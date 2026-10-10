@@ -1,3 +1,5 @@
+import { describe, it } from 'node:test';
+import assert from 'node:assert/strict';
 import { SourceRegistry, INITIAL_VERIFIED_SOURCES } from '../src/ingestion/sourceRegistry';
 import { AutoUpdateEngine } from '../src/ingestion/autoUpdateEngine';
 import { StagingManager } from '../src/ingestion/staging';
@@ -5,25 +7,24 @@ import { validateOpportunityData } from '../src/ingestion/validation';
 import { isDuplicateOpportunity } from '../src/ingestion/duplicates';
 
 describe('SarkarSaathi Source Update & Ingestion Pipeline', () => {
-  test('1. Source Registry contains PAIMANA and official sources', () => {
+  it('1. Source Registry contains PAIMANA and official sources', () => {
     const registry = new SourceRegistry();
     const sources = registry.getAllSources();
-    expect(sources.length).toBeGreaterThanOrEqual(8);
+    assert.ok(sources.length >= 8, 'Expected at least 8 sources');
 
     const paimana = registry.getSourceById('src-paimana-mospi');
-    expect(paimana).toBeDefined();
-    expect(paimana?.sourceName).toContain('PAIMANA');
-    expect(paimana?.catalogueType).toBe('OPPORTUNITIES');
+    assert.ok(paimana, 'Expected PAIMANA source to be defined');
+    assert.ok(paimana?.sourceName.includes('PAIMANA'), 'Expected sourceName to contain PAIMANA');
+    assert.equal(paimana?.catalogueType, 'OPPORTUNITIES');
   });
 
-  test('2. Disabled or unverified sources are handled safely by AutoUpdateEngine', () => {
+  it('2. Disabled or unverified sources are handled safely by AutoUpdateEngine', () => {
     const engine = new AutoUpdateEngine();
     const log = engine.runSourceCheck('src-iig-portal');
-    expect(log.status).toBe('SKIPPED');
+    assert.equal(log.status, 'SKIPPED');
   });
 
-  test('3. Auto-publish protection is strictly enforced (Staged only)', () => {
-    const staging = new StagingManager();
+  it('3. Auto-publish protection is strictly enforced (Staged only)', () => {
     const sampleRecord = {
       projectId: 'TEST-OPP-999',
       title: 'Test Opportunity',
@@ -35,18 +36,18 @@ describe('SarkarSaathi Source Update & Ingestion Pipeline', () => {
     };
 
     const validation = validateOpportunityData(sampleRecord);
-    expect(validation.isValid).toBe(true);
+    assert.equal(validation.isValid, true);
   });
 
-  test('4. Duplicate detection identifies existing IDs', () => {
+  it('4. Duplicate detection identifies existing IDs', () => {
     const existing = [
       { id: '1', title: 'Existing Project', projectId: 'PROJ-001', sourceUrl: 'https://example.com' }
     ];
     const isDup = isDuplicateOpportunity({ projectId: 'PROJ-001', title: 'New title', sourceUrl: 'https://example.com' }, existing as any);
-    expect(isDup).toBe(true);
+    assert.equal(isDup, true);
   });
 
-  test('5. Invalid source data is correctly rejected', () => {
+  it('5. Invalid source data is correctly rejected', () => {
     const invalidRecord = {
       projectId: '',
       title: '',
@@ -54,7 +55,7 @@ describe('SarkarSaathi Source Update & Ingestion Pipeline', () => {
       sourceUrl: 'not-a-url'
     };
     const validation = validateOpportunityData(invalidRecord);
-    expect(validation.isValid).toBe(false);
-    expect(validation.errors.length).toBeGreaterThan(0);
+    assert.equal(validation.isValid, false);
+    assert.ok(validation.errors.length > 0);
   });
 });

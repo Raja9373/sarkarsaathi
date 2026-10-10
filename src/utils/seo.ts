@@ -51,61 +51,59 @@ export const updateSEO = ({
       metaRobots.setAttribute('name', 'robots');
       document.head.appendChild(metaRobots);
     }
-    metaRobots.setAttribute('content', 'noindex, nofollow');
-  } else if (metaRobots) {
+    metaRobots.setAttribute('content', 'noindex, follow');
+  } else {
+    if (!metaRobots) {
+      metaRobots = document.createElement('meta');
+      metaRobots.setAttribute('name', 'robots');
+      document.head.appendChild(metaRobots);
+    }
     metaRobots.setAttribute('content', 'index, follow');
   }
 
   // Canonical Link
   let canonical = document.querySelector('link[rel="canonical"]');
-  if (noIndex) {
-    // If noindex, we can keep or remove canonical tag
-    if (canonical) {
-      canonical.remove();
-    }
-  } else {
-    const canonicalUrl = normalizeCanonicalUrl(canonicalPath);
-    if (!canonical) {
-      canonical = document.createElement('link');
-      canonical.setAttribute('rel', 'canonical');
-      document.head.appendChild(canonical);
-    }
-    canonical.setAttribute('href', canonicalUrl);
-
-    // Open Graph
-    const ogTags = [
-      { property: 'og:site_name', content: 'SarkarSaathi' },
-      { property: 'og:title', content: openGraph?.title || title },
-      { property: 'og:description', content: openGraph?.description || description },
-      { property: 'og:url', content: openGraph?.url || canonicalUrl },
-      { property: 'og:type', content: openGraph?.type || 'website' },
-    ];
-    ogTags.forEach(tag => {
-      let meta = document.querySelector(`meta[property="${tag.property}"]`);
-      if (!meta) {
-        meta = document.createElement('meta');
-        meta.setAttribute('property', tag.property);
-        document.head.appendChild(meta);
-      }
-      meta.setAttribute('content', tag.content);
-    });
-
-    // Twitter Card
-    const twitterTags = [
-      { name: 'twitter:card', content: 'summary' },
-      { name: 'twitter:title', content: openGraph?.title || title },
-      { name: 'twitter:description', content: openGraph?.description || description },
-    ];
-    twitterTags.forEach(tag => {
-      let meta = document.querySelector(`meta[name="${tag.name}"]`);
-      if (!meta) {
-        meta = document.createElement('meta');
-        meta.setAttribute('name', tag.name);
-        document.head.appendChild(meta);
-      }
-      meta.setAttribute('content', tag.content);
-    });
+  const canonicalUrl = normalizeCanonicalUrl(canonicalPath);
+  if (!canonical) {
+    canonical = document.createElement('link');
+    canonical.setAttribute('rel', 'canonical');
+    document.head.appendChild(canonical);
   }
+  canonical.setAttribute('href', canonicalUrl);
+
+  // Open Graph
+  const ogTags = [
+    { property: 'og:site_name', content: 'SarkarSaathi' },
+    { property: 'og:title', content: openGraph?.title || title },
+    { property: 'og:description', content: openGraph?.description || description },
+    { property: 'og:url', content: openGraph?.url || canonicalUrl },
+    { property: 'og:type', content: openGraph?.type || 'website' },
+  ];
+  ogTags.forEach(tag => {
+    let meta = document.querySelector(`meta[property="${tag.property}"]`);
+    if (!meta) {
+      meta = document.createElement('meta');
+      meta.setAttribute('property', tag.property);
+      document.head.appendChild(meta);
+    }
+    meta.setAttribute('content', tag.content);
+  });
+
+  // Twitter Card
+  const twitterTags = [
+    { name: 'twitter:card', content: 'summary' },
+    { name: 'twitter:title', content: openGraph?.title || title },
+    { name: 'twitter:description', content: openGraph?.description || description },
+  ];
+  twitterTags.forEach(tag => {
+    let meta = document.querySelector(`meta[name="${tag.name}"]`);
+    if (!meta) {
+      meta = document.createElement('meta');
+      meta.setAttribute('name', tag.name);
+      document.head.appendChild(meta);
+    }
+    meta.setAttribute('content', tag.content);
+  });
 };
 
 export const useSEO = ({

@@ -13,6 +13,8 @@ export const INITIAL_VERIFIED_SOURCES: VerifiedSource[] = [
     verificationStatus: 'VERIFIED',
     enabled: false,
     updateMethod: 'CSV export/feed / MANUAL EXPORT',
+    syncFrequency: 'DAILY',
+    scheduledSyncTime: '05:00 AM IST',
     status: 'MANUAL EXPORT REQUIRED',
     notes: 'Official national investment portal for project pipelines. Intake is supported exclusively via verified administrator-supplied public export files. No public machine-readable unauthenticated API is available.',
     lastVerified: '2026-09-16'
@@ -27,6 +29,8 @@ export const INITIAL_VERIFIED_SOURCES: VerifiedSource[] = [
     verificationStatus: 'VERIFIED',
     enabled: false,
     updateMethod: 'downloadable official PDF / MANUAL / NOT AUTOMATICALLY CONNECTED',
+    syncFrequency: 'DAILY',
+    scheduledSyncTime: '05:00 AM IST',
     status: 'MANUAL / NOT AUTOMATICALLY CONNECTED',
     notes: 'Official MoSPI infrastructure project monitoring. Automated retrieval is NOT CONFIGURED unless an exact verified machine-readable/download endpoint is configured. Classified as INFRASTRUCTURE PROJECT. Never treated automatically as investment products, investment offers, tenders, or funding solicitations.',
     lastVerified: '2026-09-16'
@@ -41,6 +45,8 @@ export const INITIAL_VERIFIED_SOURCES: VerifiedSource[] = [
     verificationStatus: 'VERIFIED',
     enabled: false,
     updateMethod: 'JSON API / CSV export/feed',
+    syncFrequency: 'DAILY',
+    scheduledSyncTime: '05:00 AM IST',
     status: 'REQUIRES AUTHORIZATION',
     notes: 'National open government data platform hosting department-wise public datasets, opportunities, and projects published by ministries.',
     lastVerified: '2026-09-16'
@@ -55,6 +61,8 @@ export const INITIAL_VERIFIED_SOURCES: VerifiedSource[] = [
     verificationStatus: 'VERIFIED',
     enabled: false,
     updateMethod: 'official webpage/manual source',
+    syncFrequency: 'DAILY',
+    scheduledSyncTime: '05:00 AM IST',
     status: 'MANUAL EXPORT REQUIRED',
     notes: 'Official state investment promotion agency or specific ministerial schemes verified by portal administrators.',
     lastVerified: '2026-09-16'
@@ -71,6 +79,8 @@ export const INITIAL_VERIFIED_SOURCES: VerifiedSource[] = [
     verificationStatus: 'VERIFIED',
     enabled: false,
     updateMethod: 'CSV export/feed / official webpage/manual source',
+    syncFrequency: 'DAILY',
+    scheduledSyncTime: '05:00 AM IST',
     status: 'MANUAL EXPORT REQUIRED',
     notes: 'Central government procurement portal for e-tendering across central and state authorities. Batch import supported through admin-uploaded official records.',
     lastVerified: '2026-09-16'
@@ -85,6 +95,8 @@ export const INITIAL_VERIFIED_SOURCES: VerifiedSource[] = [
     verificationStatus: 'VERIFIED',
     enabled: false,
     updateMethod: 'JSON API / XML feed',
+    syncFrequency: 'DAILY',
+    scheduledSyncTime: '05:00 AM IST',
     status: 'REQUIRES AUTHORIZATION',
     notes: 'National open government data repository for public procurement and tender release notices.',
     lastVerified: '2026-09-16'
@@ -99,6 +111,8 @@ export const INITIAL_VERIFIED_SOURCES: VerifiedSource[] = [
     verificationStatus: 'VERIFIED',
     enabled: false,
     updateMethod: 'official webpage/manual source',
+    syncFrequency: 'DAILY',
+    scheduledSyncTime: '05:00 AM IST',
     status: 'MANUAL EXPORT REQUIRED',
     notes: 'Authorized state procurement portal or PSU e-tendering system verified by portal administrators.',
     lastVerified: '2026-09-16'
@@ -115,6 +129,8 @@ export const INITIAL_VERIFIED_SOURCES: VerifiedSource[] = [
     verificationStatus: 'NOT_AVAILABLE',
     enabled: false,
     updateMethod: 'MANUAL / NOT AUTOMATICALLY CONNECTED',
+    syncFrequency: 'DAILY',
+    scheduledSyncTime: '05:00 AM IST',
     status: 'NOT VERIFIED',
     notes: 'No public machine-readable automated bulk API or unauthenticated feed exists. Scraping and unauthorized intake are prohibited. Direct automated imports are unavailable.',
     lastVerified: '2026-09-16'
@@ -129,6 +145,8 @@ export const INITIAL_VERIFIED_SOURCES: VerifiedSource[] = [
     verificationStatus: 'NOT_AVAILABLE',
     enabled: false,
     updateMethod: 'MANUAL / NOT AUTOMATICALLY CONNECTED',
+    syncFrequency: 'DAILY',
+    scheduledSyncTime: '05:00 AM IST',
     status: 'NOT VERIFIED',
     notes: 'Public unauthenticated real-time streaming API is not available. System requires authorized manual export files for procurement intake.',
     lastVerified: '2026-09-16'
