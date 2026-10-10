@@ -37,12 +37,35 @@ export class CatalogQueryManager {
 
     if (options.sector && options.sector !== 'ALL') {
       const sec = options.sector.toLowerCase().trim();
-      filtered = filtered.filter(i => (i.sector && i.sector.toLowerCase().includes(sec)) || (i.category && i.category.toLowerCase().includes(sec)));
+      const sectorMatches = filtered.filter(i => (i.sector && i.sector.toLowerCase().includes(sec)) || (i.category && i.category.toLowerCase().includes(sec)));
+      if (sectorMatches.length < 4) {
+        const sectorIds = new Set(sectorMatches.map(i => i.id));
+        const generalMatches = filtered.filter(i => !sectorIds.has(i.id));
+        filtered = [...sectorMatches, ...generalMatches];
+      } else {
+        filtered = sectorMatches;
+      }
     }
 
     if (options.state && options.state !== 'ALL') {
       const st = options.state.toLowerCase().trim();
-      filtered = filtered.filter(i => (i.state && i.state.toLowerCase().includes(st)) || (i.location && i.location.toLowerCase().includes(st)));
+      const stateMatches = filtered.filter(i => 
+        (i.state && i.state.toLowerCase().includes(st)) || 
+        (i.location && i.location.toLowerCase().includes(st)) ||
+        (i.title && i.title.toLowerCase().includes(st))
+      );
+
+      // Prevent Soft 404s: If state-specific matches are sparse (< 4), append central/pan-India opportunities open to applicants in this state
+      if (stateMatches.length < 4) {
+        const stateIds = new Set(stateMatches.map(i => i.id));
+        const panIndiaMatches = filtered.filter(i => 
+          !stateIds.has(i.id) && 
+          (!i.state || i.state === 'Central' || i.state === 'All-India' || i.state === 'Pan-India' || i.authority?.toLowerCase().includes('government of india') || i.authority?.toLowerCase().includes('ministry') || i.authority?.toLowerCase().includes('department'))
+        );
+        filtered = [...stateMatches, ...panIndiaMatches];
+      } else {
+        filtered = stateMatches;
+      }
     }
 
     if (options.type && options.type !== 'ALL') {

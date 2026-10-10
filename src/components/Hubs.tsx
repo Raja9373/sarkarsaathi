@@ -6,7 +6,7 @@ import { HeroIndiaGateVisual } from './HeroIndiaGateVisual';
 import { CatalogQueryOptions, PaginatedResult } from '../ingestion/types';
 import { CatalogQueryManager } from '../ingestion/catalogManager';
 import { MasterDetailView } from './detail/MasterDetailView';
-import { useSEO } from '../utils/seo';
+import { useSEO, updateSEO } from '../utils/seo';
 import { getAllOfficialSources, getOfficialSourceSlug, addStateOfficialSources } from '../utils/officialSources';
 import { ContextualFAQSection } from './ContextualFAQSection';
 
@@ -359,7 +359,8 @@ export function GenericHubView({
   repository,
   onNavigate,
   initialState = 'ALL',
-  initialSector = 'ALL'
+  initialSector = 'ALL',
+  headerComponent
 }: {
   title: string;
   type: string;
@@ -368,6 +369,7 @@ export function GenericHubView({
   onNavigate: (route: string, slug?: string) => void;
   initialState?: string;
   initialSector?: string;
+  headerComponent?: React.ReactNode;
 }) {
   const [search, setSearch] = useState('');
   const [stateFilter, setStateFilter] = useState(initialState);
@@ -439,6 +441,22 @@ export function GenericHubView({
     }
     return CatalogQueryManager.paginateOpportunities(items, queryOptions);
   }, [repository, type, items, queryOptions]);
+
+  useEffect(() => {
+    if (search.trim()) {
+      updateSEO({
+        title: `Search: ${search.trim()} - SarkarSaathi`,
+        description: `Search results for ${search.trim()} across verified government records on SarkarSaathi.`,
+        noIndex: true
+      });
+    } else if (paginatedResult.total === 0) {
+      updateSEO({
+        title: `${title} - SarkarSaathi`,
+        description: `Browse verified government opportunities and public services on SarkarSaathi.`,
+        noIndex: true
+      });
+    }
+  }, [search, paginatedResult.total, title]);
 
   const handleSearchChange = (val: string) => {
     setSearch(val);
@@ -515,6 +533,12 @@ export function GenericHubView({
           Total Catalogue: {paginatedResult.total.toLocaleString('en-IN')} records
         </div>
       </div>
+
+      {headerComponent && (
+        <div className="mb-8">
+          {headerComponent}
+        </div>
+      )}
 
       {/* Search & Filter Bar */}
       <div className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 shadow-xs mb-8">
