@@ -81,6 +81,23 @@ export default function App() {
       return { route: root, slug };
     }
 
+    if (root === '/schemes') {
+      const slug = parts.slice(1).join('/');
+      if (!slug) {
+        return { route: '/investment-schemes', slug: null };
+      }
+      let targetSlug = slug;
+      if (slug === 'pm-kisan') {
+        targetSlug = 'pm-kisan-samman-nidhi';
+      }
+      if (subsidyRepository.getBySlug(targetSlug)) {
+        return { route: '/subsidies', slug: targetSlug };
+      }
+      if (investmentSchemeRepository.getBySlug(targetSlug)) {
+        return { route: '/investment-schemes', slug: targetSlug };
+      }
+    }
+
     if (root === '/search') {
       return { route: '/search', slug: null };
     }
@@ -390,6 +407,21 @@ export default function App() {
         } else {
           setCurrentRoute(root);
           setSelectedSlug(itemSlug);
+        }
+      } else if (root === '/schemes') {
+        let targetSlug = itemSlug || '';
+        if (targetSlug === 'pm-kisan') {
+          targetSlug = 'pm-kisan-samman-nidhi';
+        }
+        if (subsidyRepository.getBySlug(targetSlug)) {
+          setCurrentRoute('/subsidies');
+          setSelectedSlug(targetSlug);
+        } else if (investmentSchemeRepository.getBySlug(targetSlug)) {
+          setCurrentRoute('/investment-schemes');
+          setSelectedSlug(targetSlug);
+        } else {
+          setCurrentRoute('/404');
+          setSelectedSlug(null);
         }
       } else {
         setCurrentRoute('/404');

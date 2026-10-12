@@ -80,26 +80,35 @@ export const MasterDetailView: React.FC<MasterDetailViewProps> = ({
     }
   };
 
+  const typePath = {
+    'Investments': '/investments',
+    'Investment Schemes': '/investment-schemes',
+    'Opportunities': '/opportunities',
+    'Tenders': '/tenders',
+    'News': '/news',
+  }[type] || `/${type.toLowerCase().replace(/\s+/g, '-')}`;
+
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 space-y-6">
       {/* Breadcrumb Navigation */}
-      <nav className="flex items-center space-x-2 text-xs text-slate-500 font-medium">
-        <button onClick={() => window.location.href = '/'} className="hover:text-indigo-600 transition">Home</button>
+      <nav aria-label="Breadcrumb" className="flex items-center space-x-2 text-xs text-slate-500 font-medium">
+        <a href="/" onClick={(e) => { e.preventDefault(); window.location.href = '/'; }} className="hover:text-indigo-600 transition">Home</a>
         <ChevronRight className="w-3.5 h-3.5" />
-        <button onClick={onBack} className="hover:text-indigo-600 transition">{type}</button>
+        <a href={typePath} onClick={(e) => { e.preventDefault(); onBack(); }} className="hover:text-indigo-600 transition">{type}</a>
         <ChevronRight className="w-3.5 h-3.5" />
         <span className="text-slate-900 font-semibold truncate">{item.title}</span>
       </nav>
 
       {/* Top Action Bar */}
       <div className="flex items-center justify-between">
-        <button
-          onClick={onBack}
+        <a
+          href={typePath}
+          onClick={(e) => { e.preventDefault(); onBack(); }}
           className="inline-flex items-center space-x-1.5 text-xs sm:text-sm font-bold text-indigo-600 hover:text-indigo-800 transition"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back to {type}</span>
-        </button>
+        </a>
 
         <div className="flex items-center space-x-2 sm:space-x-3">
           <button
