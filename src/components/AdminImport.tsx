@@ -37,8 +37,13 @@ import {
   PlusCircle,
   Info,
   ListOrdered,
-  ClipboardList
+  ClipboardList,
+  Globe,
+  FileCode,
+  Code,
+  Copy
 } from 'lucide-react';
+import { generateDynamicSitemap, downloadSitemapXmlFile, DynamicSitemapResult } from '../services/sitemapService';
 
 export const AdminImport: React.FC = () => {
   // Admin authentication state
@@ -49,7 +54,40 @@ export const AdminImport: React.FC = () => {
   const [authError, setAuthError] = useState<string | null>(null);
 
   // Active workflow tab
-  const [activeTab, setActiveTab] = useState<'import' | 'queue' | 'review' | 'history' | 'workspace' | 'paste' | 'tender_paste' | 'manual' | 'registry'>('import');
+  const [activeTab, setActiveTab] = useState<'import' | 'queue' | 'review' | 'history' | 'workspace' | 'paste' | 'tender_paste' | 'manual' | 'registry' | 'sitemap'>('import');
+
+  // Dynamic Sitemap Generator State
+  const [sitemapData, setSitemapData] = useState<DynamicSitemapResult | null>(null);
+  const [isGeneratingSitemap, setIsGeneratingSitemap] = useState<boolean>(false);
+  const [showXmlPreview, setShowXmlPreview] = useState<boolean>(false);
+  const [copySuccess, setCopySuccess] = useState<boolean>(false);
+
+  const handleRunSitemapGenerator = () => {
+    setIsGeneratingSitemap(true);
+    try {
+      const result = generateDynamicSitemap();
+      setSitemapData(result);
+    } catch (err) {
+      console.error('Failed to generate dynamic sitemap:', err);
+    } finally {
+      setIsGeneratingSitemap(false);
+    }
+  };
+
+  const handleDownloadSitemap = () => {
+    if (sitemapData) {
+      downloadSitemapXmlFile(sitemapData.sitemapXml);
+    } else {
+      downloadSitemapXmlFile();
+    }
+  };
+
+  const handleCopySitemapXml = () => {
+    const xml = sitemapData?.sitemapXml || generateDynamicSitemap().sitemapXml;
+    navigator.clipboard.writeText(xml);
+    setCopySuccess(true);
+    setTimeout(() => setCopySuccess(false), 3000);
+  };
 
 
   // Source Registry State
@@ -754,6 +792,22 @@ export const AdminImport: React.FC = () => {
         >
           <Building className="w-4 h-4" />
           <span>Verified Source Registry ({registrySources.length})</span>
+        </button>
+        <button
+          onClick={() => {
+            setActiveTab('sitemap');
+            if (!sitemapData) {
+              handleRunSitemapGenerator();
+            }
+          }}
+          className={`px-4 py-2.5 font-medium whitespace-nowrap transition-colors flex items-center space-x-2 ${
+            activeTab === 'sitemap'
+              ? 'border-b-2 border-emerald-600 text-emerald-700 font-semibold'
+              : 'text-slate-600 hover:text-slate-900'
+          }`}
+        >
+          <Globe className="w-4 h-4 text-emerald-600" />
+          <span>Sitemap Generator</span>
         </button>
       </div>
 
@@ -1628,6 +1682,272 @@ export const AdminImport: React.FC = () => {
                 <span>Register &amp; Save Verified Source</span>
               </button>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* SITEMAP GENERATOR TAB */}
+      {activeTab === 'sitemap' && (
+        <div className="space-y-6">
+          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
+              <div className="flex items-center space-x-3">
+                <div className="p-3 bg-emerald-50 text-emerald-700 rounded-lg">
+                  <Globe className="w-6 h-6" />
+                </div>
+                <div>
+                  <h2 className="text-xl font-bold text-slate-900">Dynamic XML Sitemap Generator</h2>
+                  <p className="text-xs text-slate-500 mt-0.5">
+                    Generate and inspect production-grade sitemap.xml dynamically from active repository data
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center space-x-2 flex-wrap gap-y-2">
+                <button
+                  onClick={handleRunSitemapGenerator}
+                  disabled={isGeneratingSitemap}
+                  className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition-colors shadow-sm disabled:opacity-50"
+                >
+                  <RefreshCw className={`w-3.5 h-3.5 ${isGeneratingSitemap ? 'animate-spin' : ''}`} />
+                  <span>{isGeneratingSitemap ? 'Generating...' : 'Re-Generate Sitemap'}</span>
+                </button>
+
+                <button
+                  onClick={handleDownloadSitemap}
+                  className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition-colors shadow-sm"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  <span>Download sitemap.xml</span>
+                </button>
+
+                <button
+                  onClick={handleCopySitemapXml}
+                  className="px-3 py-2 border border-slate-300 hover:bg-slate-50 rounded-lg text-xs font-semibold text-slate-700 flex items-center space-x-1.5 transition-colors"
+                >
+                  {copySuccess ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
+                  <span>{copySuccess ? 'Copied XML!' : 'Copy XML'}</span>
+                </button>
+
+                <a
+                  href="/sitemap.xml"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-3 py-2 border border-slate-300 hover:bg-slate-50 rounded-lg text-xs font-semibold text-slate-700 flex items-center space-x-1.5 transition-colors"
+                >
+                  <ExternalLink className="w-3.5 h-3.5 text-slate-500" />
+                  <span>View Public /sitemap.xml</span>
+                </a>
+              </div>
+            </div>
+
+            {/* Safeguards Summary Banner */}
+            <div className="p-4 bg-slate-50 border border-slate-200 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs text-slate-700">
+              <div className="flex items-center space-x-2">
+                <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
+                <span>
+                  <strong>Phase 10A Safeguards Enforced:</strong> All search/filter query parameters are excluded. Phase 9 unverified/quarantined subsidies are strictly filtered out.
+                </span>
+              </div>
+              {sitemapData && (
+                <span className="text-[11px] text-slate-500 font-mono shrink-0">
+                  Last Generated: {new Date(sitemapData.generatedAt).toLocaleTimeString()}
+                </span>
+              )}
+            </div>
+
+            {sitemapData ? (
+              <div className="space-y-6">
+                {/* Metric Summary Grid */}
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+                  <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-center">
+                    <span className="text-2xl font-extrabold text-emerald-800 block">{sitemapData.totalUrls.toLocaleString()}</span>
+                    <span className="text-[11px] font-semibold text-emerald-700 uppercase tracking-wider block mt-1">Total Verified URLs</span>
+                  </div>
+
+                  <div className="p-4 bg-blue-50 border border-blue-200 rounded-xl text-center">
+                    <span className="text-2xl font-extrabold text-blue-800 block">
+                      {(sitemapData.categoryBreakdown.opportunities + sitemapData.categoryBreakdown.tenders).toLocaleString()}
+                    </span>
+                    <span className="text-[11px] font-semibold text-blue-700 uppercase tracking-wider block mt-1">Opps &amp; Tenders</span>
+                  </div>
+
+                  <div className="p-4 bg-indigo-50 border border-indigo-200 rounded-xl text-center">
+                    <span className="text-2xl font-extrabold text-indigo-800 block">
+                      {(sitemapData.categoryBreakdown.investments + sitemapData.categoryBreakdown.investmentSchemes).toLocaleString()}
+                    </span>
+                    <span className="text-[11px] font-semibold text-indigo-700 uppercase tracking-wider block mt-1">Investments &amp; Schemes</span>
+                  </div>
+
+                  <div className="p-4 bg-amber-50 border border-amber-200 rounded-xl text-center">
+                    <span className="text-2xl font-extrabold text-amber-800 block">{sitemapData.categoryBreakdown.subsidies.toLocaleString()}</span>
+                    <span className="text-[11px] font-semibold text-amber-700 uppercase tracking-wider block mt-1">Verified Subsidies</span>
+                  </div>
+
+                  <div className="p-4 bg-purple-50 border border-purple-200 rounded-xl text-center">
+                    <span className="text-2xl font-extrabold text-purple-800 block">{sitemapData.categoryBreakdown.questions.toLocaleString()}</span>
+                    <span className="text-[11px] font-semibold text-purple-700 uppercase tracking-wider block mt-1">Verified Questions</span>
+                  </div>
+
+                  <div className="p-4 bg-teal-50 border border-teal-200 rounded-xl text-center">
+                    <span className="text-2xl font-extrabold text-teal-800 block">
+                      {(sitemapData.categoryBreakdown.hubs + sitemapData.categoryBreakdown.states + sitemapData.categoryBreakdown.sectors + sitemapData.categoryBreakdown.officialSources).toLocaleString()}
+                    </span>
+                    <span className="text-[11px] font-semibold text-teal-700 uppercase tracking-wider block mt-1">Hubs &amp; Direct Sources</span>
+                  </div>
+                </div>
+
+                {/* Detailed Breakdown & XML Validation */}
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                  {/* Category Breakdown List */}
+                  <div className="lg:col-span-2 bg-white rounded-xl border border-slate-200 p-5 space-y-4">
+                    <h3 className="font-bold text-slate-900 text-sm flex items-center space-x-2">
+                      <Layers className="w-4 h-4 text-blue-600" />
+                      <span>URL Breakdown by Section</span>
+                    </h3>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                      <div className="flex justify-between items-center p-2.5 bg-slate-50 rounded-lg">
+                        <span className="text-slate-600 font-medium">Core Static Hubs</span>
+                        <span className="font-bold text-slate-900">{sitemapData.categoryBreakdown.hubs}</span>
+                      </div>
+                      <div className="flex justify-between items-center p-2.5 bg-slate-50 rounded-lg">
+                        <span className="text-slate-600 font-medium">State Landing Pages</span>
+                        <span className="font-bold text-slate-900">{sitemapData.categoryBreakdown.states}</span>
+                      </div>
+                      <div className="flex justify-between items-center p-2.5 bg-slate-50 rounded-lg">
+                        <span className="text-slate-600 font-medium">Sector Landing Pages</span>
+                        <span className="font-bold text-slate-900">{sitemapData.categoryBreakdown.sectors}</span>
+                      </div>
+                      <div className="flex justify-between items-center p-2.5 bg-slate-50 rounded-lg">
+                        <span className="text-slate-600 font-medium">Opportunities</span>
+                        <span className="font-bold text-slate-900">{sitemapData.categoryBreakdown.opportunities}</span>
+                      </div>
+                      <div className="flex justify-between items-center p-2.5 bg-slate-50 rounded-lg">
+                        <span className="text-slate-600 font-medium">Government Tenders</span>
+                        <span className="font-bold text-slate-900">{sitemapData.categoryBreakdown.tenders}</span>
+                      </div>
+                      <div className="flex justify-between items-center p-2.5 bg-slate-50 rounded-lg">
+                        <span className="text-slate-600 font-medium">Investment Records</span>
+                        <span className="font-bold text-slate-900">{sitemapData.categoryBreakdown.investments}</span>
+                      </div>
+                      <div className="flex justify-between items-center p-2.5 bg-slate-50 rounded-lg">
+                        <span className="text-slate-600 font-medium">Investment Schemes</span>
+                        <span className="font-bold text-slate-900">{sitemapData.categoryBreakdown.investmentSchemes}</span>
+                      </div>
+                      <div className="flex justify-between items-center p-2.5 bg-slate-50 rounded-lg">
+                        <span className="text-slate-600 font-medium">Verified Subsidies (Phase 9)</span>
+                        <span className="font-bold text-slate-900">{sitemapData.categoryBreakdown.subsidies}</span>
+                      </div>
+                      <div className="flex justify-between items-center p-2.5 bg-slate-50 rounded-lg">
+                        <span className="text-slate-600 font-medium">Civic Intelligence Questions</span>
+                        <span className="font-bold text-slate-900">{sitemapData.categoryBreakdown.questions}</span>
+                      </div>
+                      <div className="flex justify-between items-center p-2.5 bg-slate-50 rounded-lg">
+                        <span className="text-slate-600 font-medium">Official Government Sources</span>
+                        <span className="font-bold text-slate-900">{sitemapData.categoryBreakdown.officialSources}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Audit & Compliance Card */}
+                  <div className="bg-white rounded-xl border border-slate-200 p-5 space-y-4">
+                    <h3 className="font-bold text-slate-900 text-sm flex items-center space-x-2">
+                      <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                      <span>Schema &amp; Safeguards Audit</span>
+                    </h3>
+
+                    <div className="space-y-3 text-xs">
+                      <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-lg flex items-center justify-between">
+                        <span className="font-semibold text-emerald-800">XML 0.9 Schema Validation</span>
+                        <span className="font-extrabold text-emerald-700 bg-emerald-200/60 px-2 py-0.5 rounded">
+                          {sitemapData.xmlValid ? 'PASS' : 'FAIL'}
+                        </span>
+                      </div>
+
+                      <div className="p-3 bg-slate-50 rounded-lg space-y-1.5">
+                        <div className="flex justify-between text-slate-600">
+                          <span>Duplicates Removed:</span>
+                          <span className="font-bold text-slate-900">{sitemapData.duplicateCount}</span>
+                        </div>
+                        <div className="flex justify-between text-slate-600">
+                          <span>Invalid URLs Excluded:</span>
+                          <span className="font-bold text-slate-900">{sitemapData.invalidCount}</span>
+                        </div>
+                        <div className="flex justify-between text-slate-600">
+                          <span>Search/Filter Exclusions:</span>
+                          <span className="font-bold text-slate-900">{sitemapData.searchFilterCount}</span>
+                        </div>
+                      </div>
+
+                      <div className="pt-2 text-[11px] text-slate-500 leading-relaxed">
+                        Sitemap is dynamically generated in memory and synced with public statutory assets. Ready for submission to search engines.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Sample URL List */}
+                <div className="bg-white rounded-xl border border-slate-200 p-5 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-bold text-slate-900 text-sm flex items-center space-x-2">
+                      <FileCode className="w-4 h-4 text-slate-600" />
+                      <span>Sample Included URLs ({sitemapData.sampleUrls.length} of {sitemapData.totalUrls})</span>
+                    </h3>
+                    <button
+                      onClick={() => setShowXmlPreview(!showXmlPreview)}
+                      className="text-xs font-semibold text-blue-600 hover:text-blue-800 flex items-center space-x-1"
+                    >
+                      <Code className="w-3.5 h-3.5" />
+                      <span>{showXmlPreview ? 'Hide Raw XML' : 'Show Raw XML'}</span>
+                    </button>
+                  </div>
+
+                  <div className="bg-slate-900 text-slate-200 p-4 rounded-xl font-mono text-xs overflow-x-auto space-y-1">
+                    {sitemapData.sampleUrls.map((url, idx) => (
+                      <div key={idx} className="hover:text-emerald-400 transition-colors">
+                        <span className="text-slate-500 select-none mr-3">{idx + 1}.</span>
+                        <span>{url}</span>
+                      </div>
+                    ))}
+                    <div className="text-slate-500 text-[11px] pt-2 italic">
+                      ...and {(sitemapData.totalUrls - sitemapData.sampleUrls.length).toLocaleString()} additional verified URLs
+                    </div>
+                  </div>
+                </div>
+
+                {/* Raw XML Preview Drawer */}
+                {showXmlPreview && (
+                  <div className="bg-slate-950 text-slate-100 p-5 rounded-xl border border-slate-800 space-y-3">
+                    <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+                      <span className="text-xs font-mono font-bold text-emerald-400">sitemap.xml (First 1,500 characters)</span>
+                      <button
+                        onClick={handleCopySitemapXml}
+                        className="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-xs font-semibold rounded text-slate-200 flex items-center space-x-1"
+                      >
+                        <Copy className="w-3 h-3" />
+                        <span>Copy Full XML</span>
+                      </button>
+                    </div>
+                    <pre className="text-xs font-mono text-slate-300 overflow-x-auto whitespace-pre-wrap max-h-60 leading-relaxed">
+                      {sitemapData.sitemapXml.substring(0, 1500)}
+                      {sitemapData.sitemapXml.length > 1500 && '\n... [Remaining XML truncated in preview]'}
+                    </pre>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="text-center py-12 space-y-3">
+                <Globe className="w-10 h-10 text-slate-400 mx-auto animate-pulse" />
+                <p className="text-sm text-slate-600 font-medium">Ready to generate dynamic XML sitemap from repository data</p>
+                <button
+                  onClick={handleRunSitemapGenerator}
+                  className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-lg shadow-sm"
+                >
+                  Generate Sitemap Now
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}

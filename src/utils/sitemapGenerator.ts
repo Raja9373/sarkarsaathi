@@ -1,14 +1,22 @@
 import fs from 'fs';
 import path from 'path';
-import { InvestmentRepository, InvestmentSchemeRepository, OpportunityRepository, TenderRepository } from '../infrastructure/repositories/InvestmentRepository';
-import { NewsRepository } from '../infrastructure/repositories/NewsRepository';
-import { SubsidyRepository } from '../infrastructure/repositories/SubsidyRepository';
+import {
+  investmentRepository,
+  investmentSchemeRepository,
+  opportunityRepository,
+  tenderRepository,
+  newsRepository
+} from '../infrastructure/repositories/InvestmentRepository';
+import { subsidyRepository } from '../infrastructure/repositories/SubsidyRepository';
 import { questionRepository } from '../infrastructure/repositories/QuestionRepository';
 import { getAllOfficialSources, getOfficialSourceSlug, stateOfficialSources } from './officialSources';
 
-const baseUrl = 'https://sarkarsaathi.org';
+export const BASE_SITE_URL = 'https://sarkarsaathi.org';
 
-const escapeXml = (str: string): string => {
+/**
+ * Escapes special characters for XML compliance.
+ */
+export const escapeXml = (str: string): string => {
   return str.replace(/[&<>'"]/g, (tag) => {
     const chars: { [key: string]: string } = {
       '&': '&amp;',
@@ -21,55 +29,16 @@ const escapeXml = (str: string): string => {
   });
 };
 
-const hubs = [
-  '/',
-  '/investments',
-  '/investment-schemes',
-  '/opportunities',
-  '/tenders',
-  '/news',
-  '/subsidies',
-  '/official-sources',
-  '/comparisons',
-  '/tools',
-  '/questions',
-  '/about',
-  '/contact',
-  '/privacy-policy',
-  '/disclaimer',
-  '/terms'
-];
-
-const repoMap = [
-  { repo: new InvestmentRepository(), path: '/investments' },
-  { repo: new InvestmentSchemeRepository(), path: '/investment-schemes' },
-  { repo: new OpportunityRepository(), path: '/opportunities' },
-  { repo: new TenderRepository(), path: '/tenders' },
-  { repo: new NewsRepository(), path: '/news' },
-  { repo: new SubsidyRepository(), path: '/subsidies' }
-];
-
-const sectors = [
-  'agriculture',
-  'infrastructure',
-  'healthcare',
-  'education',
-  'technology',
-  'renewable-energy',
-  'manufacturing',
-  'tourism',
-  'msme',
-  'defense'
-];
-
+/**
+ * Phase 10A Protection: Excludes search, filter, and query parameter URLs from sitemap index.
+ */
 export const isExcludedSearchOrFilterUrl = (url: string): boolean => {
   if (url.includes('?') || url.includes('#')) {
     return true;
   }
   try {
-    const parsed = new URL(url.startsWith('http') ? url : `https://sarkarsaathi.org${url}`);
+    const parsed = new URL(url.startsWith('http') ? url : `${BASE_SITE_URL}${url}`);
     const pathname = parsed.pathname.toLowerCase();
-    // Exclude /search or /filter routes and segments, but allow legitimate words like "research"
     if (
       pathname === '/search' ||
       pathname.startsWith('/search/') ||
@@ -88,138 +57,160 @@ export const isExcludedSearchOrFilterUrl = (url: string): boolean => {
   return false;
 };
 
-export const generateSitemap = () => {
-  const rawUrls: Set<string> = new Set();
+/**
+ * Static pages defined in App.tsx
+ */
+export const STATIC_APP_ROUTES = [
+  '/',
+  '/investments',
+  '/investment-schemes',
+  '/subsidies',
+  '/opportunities',
+  '/tenders',
+  '/news',
+  '/comparisons',
+  '/tools',
+  '/questions',
+  '/official-sources',
+  '/about',
+  '/contact',
+  '/privacy-policy',
+  '/disclaimer',
+  '/terms'
+];
 
-  // Hubs
-  hubs.forEach(h => {
-    if (!isExcludedSearchOrFilterUrl(h)) {
-      const cleanPath = h === '/' ? '' : h;
-      rawUrls.add(`${baseUrl}${cleanPath}`);
+export const SECTOR_ROUTES = [
+  'agriculture',
+  'infrastructure',
+  'healthcare',
+  'education',
+  'technology',
+  'renewable-energy',
+  'manufacturing',
+  'tourism',
+  'msme',
+  'defense'
+];
+
+/**
+ * Aggregates all route paths by iterating through the repositories
+ * (investmentRepository, investmentSchemeRepository, opportunityRepository,
+ * tenderRepository, newsRepository, subsidyRepository, and questionRepository)
+ * as well as official sources and static pages in App.tsx.
+ *
+ * Returns a string representing a valid XML sitemap.
+ */
+export const generateSitemap = (): string => {
+  const urlSet: Set<string> = new Set();
+
+  // 1. Static Pages defined in App.tsx
+  STATIC_APP_ROUTES.forEach((route) => {
+    if (!isExcludedSearchOrFilterUrl(route)) {
+      const cleanPath = route === '/' ? '' : route;
+      urlSet.add(`${BASE_SITE_URL}${cleanPath}`);
     }
   });
 
-  let duplicateCount = 0;
-  let invalidCount = 0;
-  let searchFilterCount = 0;
-
-  // State opportunity landing pages
-  stateOfficialSources.forEach(s => {
+  // 2. State Landing Pages
+  stateOfficialSources.forEach((s) => {
     if (s.state) {
       const stateSlug = s.state.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
       if (stateSlug) {
-        rawUrls.add(`${baseUrl}/opportunities/state/${stateSlug}`);
+        const url = `${BASE_SITE_URL}/opportunities/state/${stateSlug}`;
+        if (!isExcludedSearchOrFilterUrl(url)) {
+          urlSet.add(url);
+        }
       }
     }
   });
 
-  // Sector opportunity landing pages
-  sectors.forEach(sec => {
-    rawUrls.add(`${baseUrl}/opportunities/sector/${sec}`);
+  // 3. Sector Landing Pages
+  SECTOR_ROUTES.forEach((sec) => {
+    const url = `${BASE_SITE_URL}/opportunities/sector/${sec}`;
+    if (!isExcludedSearchOrFilterUrl(url)) {
+      urlSet.add(url);
+    }
   });
 
-  // Repo items
-  repoMap.forEach(({ repo, path: routePath }) => {
-    const rawItems = repo.getAll();
-    // Exclude quarantined or unverified catalogue records from public sitemap
-    const items = routePath === '/subsidies'
+  // 4. Repositories
+  const repoMapping: Array<{
+    repo: { getAll(publishedOnly?: boolean): any[] };
+    basePath: string;
+    publishedOnly?: boolean;
+  }> = [
+    { repo: investmentRepository, basePath: '/investments' },
+    { repo: investmentSchemeRepository, basePath: '/investment-schemes' },
+    { repo: opportunityRepository, basePath: '/opportunities' },
+    { repo: tenderRepository, basePath: '/tenders' },
+    { repo: newsRepository, basePath: '/news' },
+    { repo: subsidyRepository, basePath: '/subsidies', publishedOnly: true }
+  ];
+
+  repoMapping.forEach(({ repo, basePath, publishedOnly }) => {
+    const rawItems = publishedOnly ? repo.getAll(true) : repo.getAll();
+    // Phase 9 Safeguard: Exclude quarantined/unverified items from public sitemap
+    const items = publishedOnly
       ? rawItems.filter((i: any) => i.publicationState === 'PUBLISHED' || i.verificationStatus === 'VERIFIED')
       : rawItems;
-    items.forEach((i: any) => {
-      const slug = (i as any).slug || (i as any).id;
+
+    items.forEach((item: any) => {
+      const slug = item.slug || item.id;
       if (slug) {
-        const url = `${baseUrl}${routePath}/${slug}`;
-        if (isExcludedSearchOrFilterUrl(url)) {
-          searchFilterCount++;
-          return;
+        const url = `${BASE_SITE_URL}${basePath}/${slug}`;
+        if (!isExcludedSearchOrFilterUrl(url) && url.startsWith(`${BASE_SITE_URL}/`)) {
+          urlSet.add(url);
         }
-        if (!url.startsWith('https://sarkarsaathi.org/')) {
-          invalidCount++;
-          return;
-        }
-        if (rawUrls.has(url)) {
-          duplicateCount++;
-          return;
-        }
-        rawUrls.add(url);
       }
     });
   });
 
-  // Official sources
+  // 5. Question Repository (questions)
+  const publishedQuestions = questionRepository.getAll(true);
+  publishedQuestions.forEach((q) => {
+    if (q.slug) {
+      const url = `${BASE_SITE_URL}/questions/${q.slug}`;
+      if (!isExcludedSearchOrFilterUrl(url) && url.startsWith(`${BASE_SITE_URL}/`)) {
+        urlSet.add(url);
+      }
+    }
+  });
+
+  // 6. Official Sources
   const officialSources = getAllOfficialSources();
-  officialSources.forEach(s => {
+  officialSources.forEach((s) => {
     const slug = getOfficialSourceSlug(s);
     if (slug) {
-      const url = `${baseUrl}/official-sources/${slug}`;
-      if (isExcludedSearchOrFilterUrl(url)) {
-        searchFilterCount++;
-        return;
+      const url = `${BASE_SITE_URL}/official-sources/${slug}`;
+      if (!isExcludedSearchOrFilterUrl(url) && url.startsWith(`${BASE_SITE_URL}/`)) {
+        urlSet.add(url);
       }
-      if (!url.startsWith('https://sarkarsaathi.org/')) {
-        invalidCount++;
-        return;
-      }
-      if (rawUrls.has(url)) {
-        duplicateCount++;
-        return;
-      }
-      rawUrls.add(url);
     }
   });
 
-  // Verified published questions
-  const publishedQuestions = questionRepository.getAll(true);
-  publishedQuestions.forEach(q => {
-    const url = `${baseUrl}/questions/${q.slug}`;
-    if (isExcludedSearchOrFilterUrl(url)) {
-      searchFilterCount++;
-      return;
-    }
-    if (!url.startsWith('https://sarkarsaathi.org/')) {
-      invalidCount++;
-      return;
-    }
-    if (rawUrls.has(url)) {
-      duplicateCount++;
-      return;
-    }
-    rawUrls.add(url);
-  });
+  const validUrls = Array.from(urlSet);
 
-  const validUrls = Array.from(rawUrls);
+  const urlXmlNodes = validUrls
+    .map((url) => `  <url>\n    <loc>${escapeXml(url)}</loc>\n  </url>`)
+    .join('\n');
 
-  const urlElements = validUrls.map(u => {
-    const escaped = escapeXml(u);
-    return `  <url>\n    <loc>${escaped}</loc>\n  </url>`;
-  }).join('\n');
-
-  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+  const xmlSitemapString = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urlElements}
+${urlXmlNodes}
 </urlset>`;
 
-  const outputPath = path.join(process.cwd(), 'public', 'sitemap.xml');
-  fs.writeFileSync(outputPath, sitemap, 'utf8');
+  // Write to public/sitemap.xml if running in Node environment
+  try {
+    if (typeof process !== 'undefined' && process.cwd) {
+      const outputPath = path.join(process.cwd(), 'public', 'sitemap.xml');
+      fs.writeFileSync(outputPath, xmlSitemapString, 'utf8');
+    }
+  } catch {
+    // Non-node environment
+  }
 
-  // Basic XML validation check
-  const hasXmlHeader = sitemap.startsWith('<?xml');
-  const hasUrlset = sitemap.includes('<urlset') && sitemap.includes('</urlset>');
-  const unescapedAmp = sitemap.match(/&(?!(amp|lt|gt|apos|quot);)/g);
-  const xmlValid = hasXmlHeader && hasUrlset && (!unescapedAmp || unescapedAmp.length === 0);
-
-  console.log(`Sitemap generated successfully in public/sitemap.xml`);
-  console.log(`Total URLs: ${validUrls.length}`);
-  console.log(`Duplicates removed: ${duplicateCount}`);
-  console.log(`Invalid URLs removed: ${invalidCount}`);
-  console.log(`Search/Filter URLs removed: ${searchFilterCount}`);
-  console.log(`XML Validation: ${xmlValid ? 'PASS' : 'FAIL'}`);
-
-  return {
-    totalUrls: validUrls.length,
-    duplicateCount,
-    invalidCount,
-    searchFilterCount,
-    xmlValid
-  };
+  return xmlSitemapString;
 };
+
+export const generateSitemapXml = generateSitemap;
+
+export default generateSitemap;
