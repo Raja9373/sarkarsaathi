@@ -1,11 +1,14 @@
 /**
  * src/ingestion/testOgdaConnector.ts
- * Uses the DATAGOV_API_KEY to fetch from the data.gov.in API, logging the HTTP status
- * and a sample record to verify connectivity.
+ * Uses the DATAGOV_API_KEY to fetch from the data.gov.in API, logging the HTTP status,
+ * response headers, and the first record in the payload to verify connectivity.
+ * 
+ * Benefit: This verifies your API key and connectivity immediately without running full system migrations.
  */
 export async function testOgdaConnector(resourceId?: string, apiKey?: string): Promise<{
   success: boolean;
   status?: number;
+  headers?: Record<string, string>;
   sampleRecord?: any;
   error?: string;
 }> {
@@ -37,12 +40,19 @@ export async function testOgdaConnector(resourceId?: string, apiKey?: string): P
 
     console.log(`[OGD Connector Test] HTTP Status: ${response.status} ${response.statusText}`);
 
+    const headersObj: Record<string, string> = {};
+    response.headers.forEach((val, key) => {
+      headersObj[key] = val;
+    });
+    console.log('[OGD Connector Test] HTTP Headers:', JSON.stringify(headersObj, null, 2));
+
     if (!response.ok) {
       const errBody = await response.text();
       console.error(`[OGD Connector Test] Error Response: ${errBody}`);
       return {
         success: false,
         status: response.status,
+        headers: headersObj,
         error: `HTTP ${response.status}: ${errBody}`
       };
     }
@@ -51,11 +61,12 @@ export async function testOgdaConnector(resourceId?: string, apiKey?: string): P
     const records = data.records || data.data || [];
     const sampleRecord = records.length > 0 ? records[0] : null;
 
-    console.log('[OGD Connector Test] Sample Record:', JSON.stringify(sampleRecord, null, 2));
+    console.log('[OGD Connector Test] Sample Record (First Record in Payload):', JSON.stringify(sampleRecord, null, 2));
 
     return {
       success: true,
       status: response.status,
+      headers: headersObj,
       sampleRecord
     };
   } catch (err: any) {
