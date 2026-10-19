@@ -1,74 +1,65 @@
 /**
- * Diagnostic test script for OGD India API Connector (data.gov.in)
- * Attempts a single fetch using the DATAGOV_API_KEY environment variable and logs
- * HTTP status code, response headers, and the first item of the payload.
+ * src/ingestion/testOgdaConnector.ts
+ * Uses the DATAGOV_API_KEY to fetch from the data.gov.in API, logging the HTTP status
+ * and a sample record to verify connectivity.
  */
-export async function testOgdaApiConnection(resourceId?: string, apiKey?: string): Promise<{
+export async function testOgdaConnector(resourceId?: string, apiKey?: string): Promise<{
   success: boolean;
-  statusCode?: number;
-  headers?: Record<string, string>;
-  firstItem?: any;
+  status?: number;
+  sampleRecord?: any;
   error?: string;
 }> {
-  const key = apiKey || process.env.DATAGOV_API_KEY;
-  const targetResource = resourceId || '3b01bcb8-0b14-4abf-b4f2-c1c118adba9e'; // official sample resource if configured
+  const key = apiKey || (typeof process !== 'undefined' ? process.env.DATAGOV_API_KEY : undefined);
+  const resource = resourceId || '3b01bcb8-0b14-4abf-b4f2-c1c118adba9e'; // official sample resource
 
   if (!key) {
-    console.warn('[OGD Test] DATAGOV_API_KEY is not set in environment. Skipping live diagnostic fetch.');
+    console.warn('[OGD Connector Test] DATAGOV_API_KEY is not configured in the environment.');
     return {
       success: false,
-      error: 'DATAGOV_API_KEY not configured'
+      error: 'DATAGOV_API_KEY missing'
     };
   }
 
-  const url = `https://api.data.gov.in/resource/${targetResource}?api-key=${key}&format=json&limit=1`;
-  console.log(`[OGD Test] Initiating diagnostic fetch to: https://api.data.gov.in/resource/${targetResource}`);
+  const url = `https://api.data.gov.in/resource/${resource}?api-key=${key}&format=json&limit=1`;
+  console.log(`[OGD Connector Test] Fetching from: https://api.data.gov.in/resource/${resource}`);
 
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 10000);
+    const timeout = setTimeout(() => controller.abort(), 8000);
 
     const response = await fetch(url, {
       signal: controller.signal,
       headers: {
-        'User-Agent': 'SarkarSaathi-Diagnostic-Connector/1.0 (Official Public Information Aggregator)'
+        'User-Agent': 'SarkarSaathi-TestConnector/1.0'
       }
     });
-    clearTimeout(timeoutId);
+    clearTimeout(timeout);
 
-    const headersObj: Record<string, string> = {};
-    response.headers.forEach((value, name) => {
-      headersObj[name] = value;
-    });
-
-    console.log(`[OGD Test] HTTP Status Code: ${response.status} ${response.statusText}`);
-    console.log('[OGD Test] Response Headers:', JSON.stringify(headersObj, null, 2));
+    console.log(`[OGD Connector Test] HTTP Status: ${response.status} ${response.statusText}`);
 
     if (!response.ok) {
-      const errorText = await response.text();
-      console.error(`[OGD Test] Error Response Body: ${errorText}`);
+      const errBody = await response.text();
+      console.error(`[OGD Connector Test] Error Response: ${errBody}`);
       return {
         success: false,
-        statusCode: response.status,
-        headers: headersObj,
-        error: `HTTP ${response.status} ${response.statusText}: ${errorText}`
+        status: response.status,
+        error: `HTTP ${response.status}: ${errBody}`
       };
     }
 
     const data = await response.json() as any;
     const records = data.records || data.data || [];
-    const firstItem = records.length > 0 ? records[0] : null;
+    const sampleRecord = records.length > 0 ? records[0] : null;
 
-    console.log('[OGD Test] Payload First Item:', JSON.stringify(firstItem, null, 2));
+    console.log('[OGD Connector Test] Sample Record:', JSON.stringify(sampleRecord, null, 2));
 
     return {
       success: true,
-      statusCode: response.status,
-      headers: headersObj,
-      firstItem
+      status: response.status,
+      sampleRecord
     };
   } catch (err: any) {
-    console.error('[OGD Test] Fetch Exception:', err.message);
+    console.error('[OGD Connector Test] Exception:', err.message);
     return {
       success: false,
       error: err.message
@@ -77,7 +68,7 @@ export async function testOgdaApiConnection(resourceId?: string, apiKey?: string
 }
 
 if (typeof process !== 'undefined' && process.argv[1]?.endsWith('testOgdaConnector.ts')) {
-  testOgdaApiConnection().then(res => {
-    console.log('[OGD Test Result]:', JSON.stringify(res, null, 2));
+  testOgdaConnector().then(res => {
+    console.log('[OGD Connector Test Result]:', JSON.stringify(res, null, 2));
   });
 }
