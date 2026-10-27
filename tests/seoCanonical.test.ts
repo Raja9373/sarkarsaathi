@@ -1,7 +1,8 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { normalizeCanonicalUrl, getInvestmentBreadcrumbSchema } from '../src/utils/seo';
+import { normalizeCanonicalUrl, getInvestmentBreadcrumbSchema, getQuestionFaqSchema, injectQuestionFaqSchema } from '../src/utils/seo';
 import { investmentRepository, investmentSchemeRepository } from '../src/infrastructure/repositories/InvestmentRepository';
+import { questionRepository } from '../src/infrastructure/repositories/QuestionRepository';
 
 describe('SEO Canonical & Detail Page Verification Tests', () => {
   it('1. normalizeCanonicalUrl correctly formats homepage canonical', () => {
@@ -83,6 +84,31 @@ describe('SEO Canonical & Detail Page Verification Tests', () => {
     assert.equal(schema.itemListElement[2].position, 3);
     assert.equal(schema.itemListElement[2].name, item.title);
     assert.equal(schema.itemListElement[2].item, `https://sarkarsaathi.org/investment-schemes/${item.slug}`);
+  });
+
+  it('7. Generates valid FAQPage JSON-LD schema for question detail pages', () => {
+    const question = questionRepository.getBySlug('q-gi-001');
+    assert.ok(question, 'Expected q-gi-001 question to exist in questionRepository');
+    const faqSchema = getQuestionFaqSchema(question);
+    assert.equal(faqSchema['@context'], 'https://schema.org');
+    assert.equal(faqSchema['@type'], 'FAQPage');
+    assert.equal(faqSchema.mainEntity.length, 1);
+    assert.equal(faqSchema.mainEntity[0]['@type'], 'Question');
+    assert.equal(faqSchema.mainEntity[0].name, question.canonical_question);
+    assert.equal(faqSchema.mainEntity[0].acceptedAnswer['@type'], 'Answer');
+    assert.equal(
+      faqSchema.mainEntity[0].acceptedAnswer.text,
+      question.detailed_answer || question.short_answer
+    );
+  });
+
+  it('8. injectQuestionFaqSchema safely manages script tag by unique ID', () => {
+    const question = questionRepository.getBySlug('q-gi-001');
+    assert.ok(question);
+    // In Node environment without DOM document, function should gracefully return a cleanup function
+    const cleanup = injectQuestionFaqSchema(question, 'test-faq-id');
+    assert.equal(typeof cleanup, 'function');
+    assert.doesNotThrow(() => cleanup());
   });
 });
 

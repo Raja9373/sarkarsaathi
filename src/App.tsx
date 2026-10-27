@@ -15,7 +15,7 @@ import { investmentRepository, investmentSchemeRepository, opportunityRepository
 import { subsidyRepository } from './infrastructure/repositories/SubsidyRepository';
 import { questionRepository } from './infrastructure/repositories/QuestionRepository';
 import { getOfficialSourceBySlug } from './utils/officialSources';
-import { updateSEO, injectStructuredData, getInvestmentBreadcrumbSchema } from './utils/seo';
+import { updateSEO, injectStructuredData, getInvestmentBreadcrumbSchema, injectQuestionFaqSchema } from './utils/seo';
 
 const VALID_ROUTES = [
   '/',
@@ -132,17 +132,22 @@ export default function App() {
       }
     }
 
-    // Clean up investment breadcrumb structured data if not on an investment detail page
+    // Clean up structured data script tags if not on corresponding detail page
     if (typeof document !== 'undefined') {
       const existingBreadcrumb = document.getElementById('investment-breadcrumb-jsonld');
       if (existingBreadcrumb && (!selectedSlug || (currentRoute !== '/investments' && currentRoute !== '/investment-schemes'))) {
         existingBreadcrumb.remove();
+      }
+      const existingQuestionFaq = document.getElementById('question-faq-jsonld');
+      if (existingQuestionFaq && (!selectedSlug || currentRoute !== '/questions')) {
+        existingQuestionFaq.remove();
       }
     }
 
     if (currentRoute === '/404') {
       if (typeof document !== 'undefined') {
         document.getElementById('investment-breadcrumb-jsonld')?.remove();
+        document.getElementById('question-faq-jsonld')?.remove();
       }
       updateSEO({
         title: 'Page Not Found - SarkarSaathi',
@@ -261,6 +266,7 @@ export default function App() {
             description: item.short_answer.length > 155 ? `${item.short_answer.slice(0, 152)}...` : item.short_answer,
             canonicalPath: `/questions/${item.slug}`,
           });
+          injectQuestionFaqSchema(item);
           return;
         }
       }
@@ -268,6 +274,7 @@ export default function App() {
       // If selectedSlug was provided but item does not exist, trigger genuine 404 SEO (no soft 404)
       if (typeof document !== 'undefined') {
         document.getElementById('investment-breadcrumb-jsonld')?.remove();
+        document.getElementById('question-faq-jsonld')?.remove();
       }
       updateSEO({
         title: 'Page Not Found - SarkarSaathi',
@@ -459,11 +466,19 @@ export default function App() {
       if (currentRoute === '/investments') {
         const item = investmentRepository.getBySlug(selectedSlug);
         if (!item) return <NotFoundView onNavigate={navigate} />;
+        injectStructuredData(
+          'investment-breadcrumb-jsonld',
+          getInvestmentBreadcrumbSchema('investments', item.title, selectedSlug)
+        );
         return <DetailView item={item} type="Investments" onBack={() => navigate('/investments')} onNavigateComparison={(slug) => navigate('/investments', slug)} />;
       }
       if (currentRoute === '/investment-schemes') {
         const item = investmentSchemeRepository.getBySlug(selectedSlug);
         if (!item) return <NotFoundView onNavigate={navigate} />;
+        injectStructuredData(
+          'investment-breadcrumb-jsonld',
+          getInvestmentBreadcrumbSchema('investment-schemes', item.title, selectedSlug)
+        );
         return <DetailView item={item} type="Investment Schemes" onBack={() => navigate('/investment-schemes')} />;
       }
       if (currentRoute === '/opportunities') {
@@ -502,6 +517,7 @@ export default function App() {
       if (currentRoute === '/questions') {
         const item = questionRepository.getBySlug(selectedSlug);
         if (!item) return <NotFoundView onNavigate={navigate} />;
+        injectQuestionFaqSchema(item);
         return <QuestionDetailView question={item} onNavigate={navigate} onBack={() => navigate('/questions')} />;
       }
     }

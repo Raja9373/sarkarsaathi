@@ -89,22 +89,22 @@ export const MasterDetailView: React.FC<MasterDetailViewProps> = ({
   }[type] || `/${type.toLowerCase().replace(/\s+/g, '-')}`;
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 space-y-6">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-8 lg:py-10 space-y-5 sm:space-y-6">
       {/* Breadcrumb Navigation */}
-      <nav aria-label="Breadcrumb" className="flex items-center space-x-2 text-xs text-slate-500 font-medium">
-        <a href="/" onClick={(e) => { e.preventDefault(); window.location.href = '/'; }} className="hover:text-indigo-600 transition">Home</a>
-        <ChevronRight className="w-3.5 h-3.5" />
-        <a href={typePath} onClick={(e) => { e.preventDefault(); onBack(); }} className="hover:text-indigo-600 transition">{type}</a>
-        <ChevronRight className="w-3.5 h-3.5" />
-        <span className="text-slate-900 font-semibold truncate">{item.title}</span>
+      <nav aria-label="Breadcrumb" className="flex items-center space-x-2 text-xs text-slate-500 font-medium overflow-x-auto pb-1 scrollbar-none">
+        <a href="/" onClick={(e) => { e.preventDefault(); window.location.href = '/'; }} className="hover:text-indigo-600 transition whitespace-nowrap">Home</a>
+        <ChevronRight className="w-3.5 h-3.5 shrink-0" />
+        <a href={typePath} onClick={(e) => { e.preventDefault(); onBack(); }} className="hover:text-indigo-600 transition whitespace-nowrap">{type}</a>
+        <ChevronRight className="w-3.5 h-3.5 shrink-0" />
+        <span className="text-slate-900 font-semibold truncate max-w-[200px] sm:max-w-none">{item.title}</span>
       </nav>
 
       {/* Top Action Bar */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <a
           href={typePath}
           onClick={(e) => { e.preventDefault(); onBack(); }}
-          className="inline-flex items-center space-x-1.5 text-xs sm:text-sm font-bold text-indigo-600 hover:text-indigo-800 transition"
+          className="inline-flex items-center space-x-1.5 text-xs sm:text-sm font-bold text-indigo-600 hover:text-indigo-800 transition min-h-[44px] py-2"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back to {type}</span>
@@ -113,7 +113,7 @@ export const MasterDetailView: React.FC<MasterDetailViewProps> = ({
         <div className="flex items-center space-x-2 sm:space-x-3">
           <button
             onClick={() => toggleSave(item.id)}
-            className={`px-3 py-2 rounded-xl text-xs font-semibold transition flex items-center space-x-1.5 shadow-xs ${
+            className={`flex-1 sm:flex-initial min-h-[44px] px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition flex items-center justify-center space-x-1.5 shadow-xs cursor-pointer ${
               isSaved
                 ? 'bg-indigo-600 text-white'
                 : 'bg-white border border-slate-200 hover:bg-slate-50 text-slate-700'
@@ -125,7 +125,7 @@ export const MasterDetailView: React.FC<MasterDetailViewProps> = ({
 
           <button
             onClick={handleShare}
-            className="px-3 py-2 rounded-xl text-xs font-semibold bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 transition flex items-center space-x-1.5 shadow-xs"
+            className="flex-1 sm:flex-initial min-h-[44px] px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 transition flex items-center justify-center space-x-1.5 shadow-xs cursor-pointer"
           >
             <Share2 className="w-3.5 h-3.5" />
             <span>Share</span>

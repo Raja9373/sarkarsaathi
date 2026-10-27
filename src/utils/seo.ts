@@ -282,3 +282,65 @@ export const getInvestmentBreadcrumbSchema = (
   };
 };
 
+export interface QuestionFaqEntity {
+  '@type': 'Question';
+  name: string;
+  acceptedAnswer: {
+    '@type': 'Answer';
+    text: string;
+  };
+}
+
+export interface QuestionFaqSchema {
+  '@context': 'https://schema.org';
+  '@type': 'FAQPage';
+  mainEntity: QuestionFaqEntity[];
+}
+
+/**
+ * Builds standard FAQPage structured data for a question detail page.
+ */
+export const getQuestionFaqSchema = (question: VerifiedQuestionItem): QuestionFaqSchema => {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: question.canonical_question,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: question.detailed_answer || question.short_answer,
+        },
+      },
+    ],
+  };
+};
+
+/**
+ * Dynamically injects JSON-LD FAQ schema for question detail pages into document.head,
+ * ensuring unique script tags are managed by ID to avoid duplicate schema tags.
+ * Returns a cleanup function to remove the script tag when unmounted.
+ */
+export const injectQuestionFaqSchema = (
+  question: VerifiedQuestionItem,
+  scriptId: string = 'question-faq-jsonld'
+): (() => void) => {
+  if (typeof document === 'undefined') return () => {};
+
+  const structuredData = getQuestionFaqSchema(question);
+  injectStructuredData(scriptId, structuredData);
+
+  return () => {
+    if (typeof document !== 'undefined') {
+      const el = document.getElementById(scriptId);
+      if (el) el.remove();
+    }
+  };
+};
+
+// Compatibility aliases
+export const injectQuestionFAQSchema = injectQuestionFaqSchema;
+export const getQuestionFAQSchema = getQuestionFaqSchema;
+
+

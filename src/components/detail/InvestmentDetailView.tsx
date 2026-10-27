@@ -52,9 +52,9 @@ export const InvestmentDetailView: React.FC<InvestmentDetailViewProps> = ({ item
   const showAuthority = Boolean(item.authority);
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 sm:space-y-8">
       {/* 1. AT A GLANCE & HEADER */}
-      <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-xs space-y-6">
+      <div className="bg-white rounded-2xl sm:rounded-3xl border border-slate-200 p-4 sm:p-6 lg:p-8 shadow-xs space-y-5 sm:space-y-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex flex-wrap items-center gap-2">
             <span className="px-3 py-1 rounded-full text-xs font-bold bg-indigo-50 text-indigo-700 border border-indigo-100">
@@ -73,18 +73,18 @@ export const InvestmentDetailView: React.FC<InvestmentDetailViewProps> = ({ item
         </div>
 
         <div>
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight mb-3">
+          <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight mb-2 sm:mb-3">
             {item.title}
           </h1>
-          <p className="text-base text-slate-600 leading-relaxed max-w-4xl">
+          <p className="text-sm sm:text-base text-slate-600 leading-relaxed max-w-4xl">
             {item.description}
           </p>
         </div>
 
         {/* Core Financial Metric Highlights Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 pt-2">
+        <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-3 pt-2">
           {showMinInvestment && (
-            <div className="bg-slate-50 border border-slate-100 p-4 rounded-2xl">
+            <div className="bg-slate-50 border border-slate-100 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl">
               <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
                 Minimum Investment
               </span>
@@ -98,7 +98,7 @@ export const InvestmentDetailView: React.FC<InvestmentDetailViewProps> = ({ item
           )}
 
           {showMaxInvestment && (
-            <div className="bg-slate-50 border border-slate-100 p-4 rounded-2xl">
+            <div className="bg-slate-50 border border-slate-100 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl">
               <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
                 Maximum Limit
               </span>
@@ -112,7 +112,7 @@ export const InvestmentDetailView: React.FC<InvestmentDetailViewProps> = ({ item
           )}
 
           {showReturn && (
-            <div className="bg-slate-50 border border-slate-100 p-4 rounded-2xl">
+            <div className="bg-slate-50 border border-slate-100 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl">
               <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
                 Return / Yield Type
               </span>
@@ -126,7 +126,7 @@ export const InvestmentDetailView: React.FC<InvestmentDetailViewProps> = ({ item
           )}
 
           {showTenure && (
-            <div className="bg-slate-50 border border-slate-100 p-4 rounded-2xl">
+            <div className="bg-slate-50 border border-slate-100 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl">
               <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
                 Tenure / Lock-in
               </span>
@@ -138,7 +138,7 @@ export const InvestmentDetailView: React.FC<InvestmentDetailViewProps> = ({ item
           )}
 
           {showRisk && (
-            <div className="bg-slate-50 border border-slate-100 p-4 rounded-2xl">
+            <div className="bg-slate-50 border border-slate-100 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl">
               <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
                 Risk Profile
               </span>
@@ -153,7 +153,7 @@ export const InvestmentDetailView: React.FC<InvestmentDetailViewProps> = ({ item
           )}
 
           {showAuthority && !showMaxInvestment && (
-            <div className="bg-slate-50 border border-slate-100 p-4 rounded-2xl">
+            <div className="bg-slate-50 border border-slate-100 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl">
               <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
                 Authority / Issuer
               </span>
@@ -178,7 +178,7 @@ export const InvestmentDetailView: React.FC<InvestmentDetailViewProps> = ({ item
       )}
 
       {/* In-Depth Information Architecture Sections */}
-      <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-xs space-y-8">
+      <div className="bg-white rounded-2xl sm:rounded-3xl border border-slate-200 p-4 sm:p-6 lg:p-8 shadow-xs space-y-6 sm:space-y-8">
         {/* SECTION 2: What is this? & Overview */}
         <section className="space-y-3">
           <h2 className="text-lg font-bold text-slate-900 flex items-center space-x-2">
@@ -472,7 +472,7 @@ export const InvestmentDetailView: React.FC<InvestmentDetailViewProps> = ({ item
                 <button
                   type="button"
                   onClick={() => onNavigateComparison ? onNavigateComparison('public-provident-fund-vs-national-savings-certificate') : window.location.assign('/investments/national-savings-certificate')}
-                  className="text-xs font-bold text-indigo-600 hover:text-indigo-800 flex items-center space-x-1"
+                  className="min-h-[44px] py-2 text-xs sm:text-sm font-bold text-indigo-600 hover:text-indigo-800 inline-flex items-center space-x-1.5 cursor-pointer"
                 >
                   <span>Explore Comparison</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -484,13 +484,13 @@ export const InvestmentDetailView: React.FC<InvestmentDetailViewProps> = ({ item
                   <span className="font-bold text-slate-900 text-sm">PPF vs Sukanya Samriddhi (SSY)</span>
                   <span className="text-[10px] font-bold bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded">Retirement vs Girl Child</span>
                 </div>
-                <p className="text-slate-600">
+                <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
                   Compare PPF with Sukanya Samriddhi Account dedicated to the education and marriage of the girl child.
                 </p>
                 <button
                   type="button"
                   onClick={() => onNavigateComparison ? onNavigateComparison('public-provident-fund-vs-sukanya-samriddhi-account') : window.location.assign('/investments/sukanya-samriddhi-account')}
-                  className="text-xs font-bold text-indigo-600 hover:text-indigo-800 flex items-center space-x-1"
+                  className="min-h-[44px] py-2 text-xs sm:text-sm font-bold text-indigo-600 hover:text-indigo-800 inline-flex items-center space-x-1.5 cursor-pointer"
                 >
                   <span>Explore Comparison</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -507,19 +507,19 @@ export const InvestmentDetailView: React.FC<InvestmentDetailViewProps> = ({ item
               <HelpCircle className="w-5 h-5 text-indigo-600" />
               <span>Frequently Asked Questions</span>
             </h2>
-            <div className="space-y-2">
+            <div className="space-y-2.5">
               {item.faqs.map((faq, idx) => (
                 <div key={idx} className="border border-slate-200 rounded-2xl overflow-hidden">
                   <button
                     type="button"
                     onClick={() => toggleFaq(idx)}
-                    className="w-full p-4 text-left flex items-center justify-between text-xs font-bold text-slate-800 hover:bg-slate-50 transition"
+                    className="w-full min-h-[48px] py-3.5 px-4 text-left flex items-center justify-between text-xs sm:text-sm font-bold text-slate-800 hover:bg-slate-50 transition cursor-pointer"
                   >
-                    <span>{faq.question}</span>
-                    {openFaqIndex === idx ? <ChevronUp className="w-4 h-4 text-indigo-600" /> : <ChevronDown className="w-4 h-4 text-slate-400" />}
+                    <span className="pr-2">{faq.question}</span>
+                    {openFaqIndex === idx ? <ChevronUp className="w-4 h-4 text-indigo-600 shrink-0" /> : <ChevronDown className="w-4 h-4 text-slate-400 shrink-0" />}
                   </button>
                   {openFaqIndex === idx && (
-                    <div className="p-4 pt-0 text-xs text-slate-600 leading-relaxed border-t border-slate-100 bg-slate-50/50">
+                    <div className="p-4 pt-1 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 bg-slate-50/50">
                       {faq.answer}
                     </div>
                   )}

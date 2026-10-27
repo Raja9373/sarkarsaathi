@@ -17,7 +17,7 @@ import {
 } from 'lucide-react';
 import { VerifiedQuestionItem } from '../types/question';
 import { questionRepository } from '../infrastructure/repositories/QuestionRepository';
-import { injectFAQPageSchema } from '../utils/seo';
+import { injectFAQPageSchema, injectQuestionFaqSchema } from '../utils/seo';
 
 interface QuestionDetailProps {
   question: VerifiedQuestionItem;
@@ -63,12 +63,14 @@ export function QuestionDetailView({ question, onNavigate, onBack }: QuestionDet
     .filter((q) => q.id !== question.id)
     .slice(0, 3);
 
-  // Schema.org Structured Data: WebPage, FAQPage & BreadcrumbList
+  // Schema.org Structured Data: FAQPage, WebPage & BreadcrumbList
   useEffect(() => {
+    const cleanupFaq = injectQuestionFaqSchema(question);
     const scriptId = 'question-webpage-jsonld';
     injectFAQPageSchema(question, relatedQuestions, activeLang, categoryHubUrl);
 
     return () => {
+      cleanupFaq?.();
       const el = document.getElementById(scriptId);
       if (el) el.remove();
     };
