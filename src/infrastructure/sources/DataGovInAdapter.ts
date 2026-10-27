@@ -19,7 +19,8 @@ export class DataGovInAdapter implements OfficialSourceAdapter<any, StagedOpport
 
   async fetchBatch(page: number, limit: number): Promise<{ records: any[]; hasMore: boolean }> {
     if (!process.env.DATA_GOV_IN_API_KEY) {
-      throw new Error('DATA_GOV_IN_API_KEY is not configured');
+      console.warn('[DataGovInAdapter] DATA_GOV_IN_API_KEY is not configured. Live data.gov.in integration disabled gracefully.');
+      return { records: [], hasMore: false };
     }
 
     const offset = (page - 1) * limit;

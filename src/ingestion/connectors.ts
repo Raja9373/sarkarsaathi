@@ -34,7 +34,7 @@ export class OGDIndiaConnector {
 
   async fetchAndStage(source: VerifiedSource, apiKey?: string, mockPayload?: any[]): Promise<OGDConnectorResult> {
     const timestamp = new Date().toISOString();
-    const key = apiKey || process.env.DATAGOV_API_KEY;
+    const key = apiKey || process.env.DATAGOV_API_KEY || process.env.DATA_GOV_IN_API_KEY;
 
     if (!key && !mockPayload) {
       return {
@@ -50,7 +50,7 @@ export class OGDIndiaConnector {
         recordsUpdated: 0,
         recordsUnchanged: 0,
         stagedRecords: [],
-        errorMessage: 'DATAGOV_API_KEY environment variable is not configured or resource ID requires explicit verification. Live fetch blocked.',
+        errorMessage: 'DATA_GOV_IN_API_KEY / DATAGOV_API_KEY environment variable is not configured. Live fetch disabled gracefully.',
         fetchTimestamp: timestamp,
         apiKeyConfigured: false
       };
