@@ -56,7 +56,13 @@ export function QuestionDetailView({ question, onNavigate, onBack }: QuestionDet
     'Tools & Calculators': '/tools',
   }[question.category] || '/questions';
 
-  // Schema.org Structured Data: WebPage & BreadcrumbList
+  // Find 3 related questions in same category
+  const relatedQuestions = questionRepository
+    .getByCategory(question.category)
+    .filter((q) => q.id !== question.id)
+    .slice(0, 3);
+
+  // Schema.org Structured Data: WebPage, FAQPage & BreadcrumbList
   useEffect(() => {
     const scriptId = 'question-webpage-jsonld';
     let script = document.getElementById(scriptId) as HTMLScriptElement | null;
@@ -67,9 +73,28 @@ export function QuestionDetailView({ question, onNavigate, onBack }: QuestionDet
       document.head.appendChild(script);
     }
 
+    const faqEntities = [
+      {
+        '@type': 'Question',
+        'name': question.canonical_question,
+        'acceptedAnswer': {
+          '@type': 'Answer',
+          'text': currentDetailedAnswer || currentShortAnswer
+        }
+      },
+      ...relatedQuestions.map(rel => ({
+        '@type': 'Question',
+        'name': rel.canonical_question,
+        'acceptedAnswer': {
+          '@type': 'Answer',
+          'text': rel.short_answer
+        }
+      }))
+    ];
+
     const structuredData = {
       '@context': 'https://schema.org',
-      '@type': 'WebPage',
+      '@type': ['WebPage', 'FAQPage'],
       '@id': `https://sarkarsaathi.org/questions/${question.slug}#webpage`,
       'url': `https://sarkarsaathi.org/questions/${question.slug}`,
       'name': question.canonical_question,
@@ -82,6 +107,7 @@ export function QuestionDetailView({ question, onNavigate, onBack }: QuestionDet
       },
       'inLanguage': activeLang === 'hi' ? 'hi-IN' : activeLang === 'hinglish' ? 'en-IN' : 'en-IN',
       'dateModified': question.verified_at,
+      'mainEntity': faqEntities,
       'breadcrumb': {
         '@type': 'BreadcrumbList',
         'itemListElement': [
@@ -119,7 +145,7 @@ export function QuestionDetailView({ question, onNavigate, onBack }: QuestionDet
       const el = document.getElementById(scriptId);
       if (el) el.remove();
     };
-  }, [question, activeLang, categoryHubUrl]);
+  }, [question, activeLang, categoryHubUrl, relatedQuestions]);
 
   const handleShare = () => {
     const url = window.location.href;
@@ -130,12 +156,6 @@ export function QuestionDetailView({ question, onNavigate, onBack }: QuestionDet
       });
     }
   };
-
-  // Find 3 related questions in same category
-  const relatedQuestions = questionRepository
-    .getByCategory(question.category)
-    .filter((q) => q.id !== question.id)
-    .slice(0, 3);
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
