@@ -2,6 +2,75 @@ import { Investment } from '../../types';
 
 export const coreInvestmentsData: Investment[] = [
   {
+    id: 'inv-54ec',
+    title: '54EC Capital Gain Bonds (REC, PFC, NHAI, IRFC)',
+    slug: '54ec-capital-gain-bonds',
+    description: 'Long-term secured redeemable non-convertible capital gain tax-exemption bonds issued under Section 54EC of the Income Tax Act, 1961 by REC, PFC, NHAI, and IRFC.',
+    authority: 'Central Board of Direct Taxes (CBDT) / Ministry of Finance / REC / PFC / NHAI',
+    category: 'Tax-Saving Bonds',
+    status: 'OPEN / AVAILABLE',
+    sourceUrl: 'https://incometaxindia.gov.in',
+    sourceAuthority: 'Income Tax Department, Government of India',
+    verificationStatus: 'VERIFIED',
+    minInvestment: 10000,
+    maxInvestment: 5000000,
+    expectedReturn: '5.25% p.a. (Payable Annually on 30th June)',
+    notifiedRate: '5.25% per annum',
+    rateEffectivePeriod: 'Fixed for 5-Year Tenor',
+    tenure: '5 Years Fixed',
+    lockInPeriod: '5 Years (Mandatory Lock-in under Section 54EC)',
+    riskLevel: 'Low',
+    returnMechanism: 'Annual fixed interest coupon paid directly into the investor bank account on 30th June every year, with principal redeemed at par after 5 years.',
+    depositRules: 'Minimum ₹10,000 (1 bond of face value ₹10,000). Maximum ₹50,00,000 (₹50 Lakh) per financial year per individual under Section 54EC statutory ceiling.',
+    maturityRules: 'Redeemed at 100% face value upon completion of 5 years from the date of allotment.',
+    extensionRules: 'No extension provision; proceeds are remitted to the investor bank account upon maturity.',
+    withdrawalRules: 'No partial withdrawals or premature redemption permitted during the 5-year lock-in period.',
+    prematureClosureRules: 'Strictly locked in for 5 years with zero premature redemption options by issuers.',
+    loanFacilityRules: 'Cannot be pledged as loan collateral against bank borrowings as per statutory conditions.',
+    taxTreatment: 'Section 54EC Capital Gains Tax Exemption: Long-term capital gains arising from the transfer of land or building (or both) are exempt from tax under Section 54EC if invested in 54EC bonds within 6 months of capital asset transfer, up to ₹50 Lakh per financial year. Annual interest income is taxable at applicable slab rates.',
+    nominationRules: 'Nomination facility available at the time of application.',
+    accountOpeningProcess: [
+      'Download application form from authorized issuing entities (REC, PFC, NHAI, IRFC) or online bond platforms.',
+      'Submit filled application along with PAN card, KYC documents, and capital gains computation proof.',
+      'Transfer subscription funds via RTGS / NEFT / Cheque within 6 months of transfer of the capital asset.',
+      'Receive bond allotment confirmation and demat/physical certificate.'
+    ],
+    whereToInvest: 'Directly through authorized issuing financial institutions (REC, PFC, NHAI, IRFC) and SEBI-registered Online Bond Platforms (OBPPs).',
+    requiredDocuments: [
+      'PAN Card (Permanent Account Number)',
+      'Proof of capital asset transfer (Sale deed, computation of capital gains)',
+      'Cancelled cheque and bank statement',
+      'KYC documents (Aadhaar, Address Proof)'
+    ],
+    importantRules: [
+      'Investment must be made within 6 months from the date of transfer of the original capital asset.',
+      'Maximum statutory exemption limit is ₹50 Lakh per financial year across all 54EC bond issues.',
+      'AAA credit rating by CRISIL, ICRA, and CARE signifying highest safety.'
+    ],
+    risksAndLimitations: [
+      'Strict 5-year lock-in with zero liquidity or premature redemption.',
+      'Moderate 5.25% coupon rate is lower than general debt instruments due to the tax exemption benefit.'
+    ],
+    faqs: [
+      {
+        question: 'What is the maximum investment limit under Section 54EC?',
+        answer: 'The maximum limit for claiming capital gains tax exemption under Section 54EC is ₹50 Lakh per financial year per taxpayer.'
+      },
+      {
+        question: 'What is the lock-in period for 54EC Capital Gain Bonds?',
+        answer: '54EC bonds have a mandatory lock-in period of 5 years.'
+      },
+      {
+        question: 'Within how many months must I invest in 54EC bonds after selling property?',
+        answer: 'You must invest in 54EC capital gain bonds within 6 months from the date of transfer of the original long-term capital asset.'
+      }
+    ],
+    comparisonSlugs: ['nhai-tax-free-bonds', 'public-provident-fund'],
+    calculatorType: 'simple',
+    completenessLevel: 'COMPLETE',
+    lastVerifiedDate: '2026-03-16'
+  },
+  {
     id: 'inv-ppf',
     title: 'Public Provident Fund (PPF)',
     slug: 'public-provident-fund',

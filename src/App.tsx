@@ -15,7 +15,7 @@ import { investmentRepository, investmentSchemeRepository, opportunityRepository
 import { subsidyRepository } from './infrastructure/repositories/SubsidyRepository';
 import { questionRepository } from './infrastructure/repositories/QuestionRepository';
 import { getOfficialSourceBySlug } from './utils/officialSources';
-import { updateSEO } from './utils/seo';
+import { updateSEO, injectStructuredData, getInvestmentBreadcrumbSchema } from './utils/seo';
 
 const VALID_ROUTES = [
   '/',
@@ -132,7 +132,18 @@ export default function App() {
       }
     }
 
+    // Clean up investment breadcrumb structured data if not on an investment detail page
+    if (typeof document !== 'undefined') {
+      const existingBreadcrumb = document.getElementById('investment-breadcrumb-jsonld');
+      if (existingBreadcrumb && (!selectedSlug || (currentRoute !== '/investments' && currentRoute !== '/investment-schemes'))) {
+        existingBreadcrumb.remove();
+      }
+    }
+
     if (currentRoute === '/404') {
+      if (typeof document !== 'undefined') {
+        document.getElementById('investment-breadcrumb-jsonld')?.remove();
+      }
       updateSEO({
         title: 'Page Not Found - SarkarSaathi',
         description: 'The requested page could not be found on SarkarSaathi.',
@@ -150,6 +161,10 @@ export default function App() {
             description: item.description || `Explore ${item.title} scheme details, interest rates, eligibility, and tax benefits on SarkarSaathi.`,
             canonicalPath: `/investments/${selectedSlug}`,
           });
+          injectStructuredData(
+            'investment-breadcrumb-jsonld',
+            getInvestmentBreadcrumbSchema('investments', item.title, selectedSlug)
+          );
           return;
         }
       } else if (currentRoute === '/investment-schemes') {
@@ -160,6 +175,10 @@ export default function App() {
             description: item.description || `Complete details, benefits, and eligibility criteria for ${item.title} on SarkarSaathi.`,
             canonicalPath: `/investment-schemes/${selectedSlug}`,
           });
+          injectStructuredData(
+            'investment-breadcrumb-jsonld',
+            getInvestmentBreadcrumbSchema('investment-schemes', item.title, selectedSlug)
+          );
           return;
         }
       } else if (currentRoute === '/opportunities') {
@@ -247,9 +266,13 @@ export default function App() {
       }
 
       // If selectedSlug was provided but item does not exist, trigger genuine 404 SEO (no soft 404)
+      if (typeof document !== 'undefined') {
+        document.getElementById('investment-breadcrumb-jsonld')?.remove();
+      }
       updateSEO({
         title: 'Page Not Found - SarkarSaathi',
         description: 'The requested page could not be found on SarkarSaathi.',
+        canonicalPath: typeof window !== 'undefined' ? window.location.pathname : undefined,
         noIndex: true,
       });
       return;

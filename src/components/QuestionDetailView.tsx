@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { VerifiedQuestionItem } from '../types/question';
 import { questionRepository } from '../infrastructure/repositories/QuestionRepository';
+import { injectFAQPageSchema } from '../utils/seo';
 
 interface QuestionDetailProps {
   question: VerifiedQuestionItem;
@@ -65,81 +66,7 @@ export function QuestionDetailView({ question, onNavigate, onBack }: QuestionDet
   // Schema.org Structured Data: WebPage, FAQPage & BreadcrumbList
   useEffect(() => {
     const scriptId = 'question-webpage-jsonld';
-    let script = document.getElementById(scriptId) as HTMLScriptElement | null;
-    if (!script) {
-      script = document.createElement('script');
-      script.id = scriptId;
-      script.type = 'application/ld+json';
-      document.head.appendChild(script);
-    }
-
-    const faqEntities = [
-      {
-        '@type': 'Question',
-        'name': question.canonical_question,
-        'acceptedAnswer': {
-          '@type': 'Answer',
-          'text': currentDetailedAnswer || currentShortAnswer
-        }
-      },
-      ...relatedQuestions.map(rel => ({
-        '@type': 'Question',
-        'name': rel.canonical_question,
-        'acceptedAnswer': {
-          '@type': 'Answer',
-          'text': rel.short_answer
-        }
-      }))
-    ];
-
-    const structuredData = {
-      '@context': 'https://schema.org',
-      '@type': ['WebPage', 'FAQPage'],
-      '@id': `https://sarkarsaathi.org/questions/${question.slug}#webpage`,
-      'url': `https://sarkarsaathi.org/questions/${question.slug}`,
-      'name': question.canonical_question,
-      'description': question.short_answer,
-      'isPartOf': {
-        '@type': 'WebSite',
-        '@id': 'https://sarkarsaathi.org/#website',
-        'name': 'SarkarSaathi',
-        'url': 'https://sarkarsaathi.org/'
-      },
-      'inLanguage': activeLang === 'hi' ? 'hi-IN' : activeLang === 'hinglish' ? 'en-IN' : 'en-IN',
-      'dateModified': question.verified_at,
-      'mainEntity': faqEntities,
-      'breadcrumb': {
-        '@type': 'BreadcrumbList',
-        'itemListElement': [
-          {
-            '@type': 'ListItem',
-            'position': 1,
-            'name': 'Home',
-            'item': 'https://sarkarsaathi.org/'
-          },
-          {
-            '@type': 'ListItem',
-            'position': 2,
-            'name': 'Questions',
-            'item': 'https://sarkarsaathi.org/questions'
-          },
-          {
-            '@type': 'ListItem',
-            'position': 3,
-            'name': question.category,
-            'item': `https://sarkarsaathi.org${categoryHubUrl}`
-          },
-          {
-            '@type': 'ListItem',
-            'position': 4,
-            'name': question.canonical_question,
-            'item': `https://sarkarsaathi.org/questions/${question.slug}`
-          }
-        ]
-      }
-    };
-
-    script.textContent = JSON.stringify(structuredData);
+    injectFAQPageSchema(question, relatedQuestions, activeLang, categoryHubUrl);
 
     return () => {
       const el = document.getElementById(scriptId);
