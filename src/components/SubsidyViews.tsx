@@ -4,6 +4,7 @@ import { subsidyRepository } from '../infrastructure/repositories/SubsidyReposit
 import { Subsidy } from '../types';
 import { CatalogQueryOptions, PaginatedResult } from '../ingestion/types';
 import { ContextualFAQSection } from './ContextualFAQSection';
+import { SocialShareBar, WhatsAppShareBanner } from './SocialShareBar';
 
 interface SubsidyHubProps {
   onNavigate: (route: string, slug?: string) => void;
@@ -389,13 +390,23 @@ export function SubsidyDetailView({ item, onBack }: SubsidyDetailProps) {
 
   return (
     <div className="max-w-4xl mx-auto px-3.5 sm:px-6 lg:px-8 py-5 sm:py-8 lg:py-10 space-y-6 sm:space-y-8">
-      <button
-        onClick={onBack}
-        className="inline-flex items-center space-x-2 text-xs font-semibold text-slate-700 hover:text-emerald-700 transition cursor-pointer bg-white min-h-[44px] sm:min-h-[40px] px-4 py-2.5 rounded-xl border border-slate-200 shadow-2xs"
-      >
-        <ChevronLeft className="w-4 h-4 text-slate-500" />
-        <span>Back to Subsidies & Benefits</span>
-      </button>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <button
+          onClick={onBack}
+          className="inline-flex items-center space-x-2 text-xs font-semibold text-slate-700 hover:text-emerald-700 transition cursor-pointer bg-white min-h-[44px] sm:min-h-[40px] px-4 py-2.5 rounded-xl border border-slate-200 shadow-2xs"
+        >
+          <ChevronLeft className="w-4 h-4 text-slate-500" />
+          <span>Back to Subsidies & Benefits</span>
+        </button>
+
+        <SocialShareBar
+          title={item.title}
+          description={item.description}
+          benefit={item.benefits || item.subsidyAmount || item.benefitType}
+          authority={item.ministry || item.authority}
+          category={item.category}
+        />
+      </div>
 
       {/* Editorial Quarantine Notice Banner */}
       {isQuarantined && (
@@ -524,6 +535,15 @@ export function SubsidyDetailView({ item, onBack }: SubsidyDetailProps) {
             )}
           </div>
         </div>
+
+        {/* Viral WhatsApp Share Callout */}
+        {!isQuarantined && (
+          <WhatsAppShareBanner
+            title={item.title}
+            benefit={item.benefits || item.subsidyAmount || item.benefitType}
+            authority={item.ministry || item.authority}
+          />
+        )}
 
         {/* Provenance & Disclaimer Footer */}
         <div className="pt-6 border-t border-slate-200 text-xs text-slate-500 space-y-3 bg-slate-50 p-6 rounded-2xl">

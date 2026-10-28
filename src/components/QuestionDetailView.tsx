@@ -18,6 +18,7 @@ import {
 import { VerifiedQuestionItem } from '../types/question';
 import { questionRepository } from '../infrastructure/repositories/QuestionRepository';
 import { injectFAQPageSchema, injectQuestionFaqSchema } from '../utils/seo';
+import { SocialShareBar, WhatsAppShareBanner } from './SocialShareBar';
 
 interface QuestionDetailProps {
   question: VerifiedQuestionItem;
@@ -27,7 +28,6 @@ interface QuestionDetailProps {
 
 export function QuestionDetailView({ question, onNavigate, onBack }: QuestionDetailProps) {
   const [activeLang, setActiveLang] = useState<'en' | 'hi' | 'hinglish'>('en');
-  const [copied, setCopied] = useState(false);
 
   // Determine available translations
   const hasHindi = !!question.translations?.hi?.detailed_answer;
@@ -76,16 +76,6 @@ export function QuestionDetailView({ question, onNavigate, onBack }: QuestionDet
     };
   }, [question, activeLang, categoryHubUrl, relatedQuestions]);
 
-  const handleShare = () => {
-    const url = window.location.href;
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(url).then(() => {
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-      });
-    }
-  };
-
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       {/* Breadcrumb Navigation */}
@@ -121,7 +111,7 @@ export function QuestionDetailView({ question, onNavigate, onBack }: QuestionDet
       </nav>
 
       {/* Back Button & Actions */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
         <a
           href="/questions"
           onClick={(e) => { e.preventDefault(); onBack(); }}
@@ -131,13 +121,11 @@ export function QuestionDetailView({ question, onNavigate, onBack }: QuestionDet
           <span>Back to All Questions</span>
         </a>
 
-        <button
-          onClick={handleShare}
-          className="inline-flex items-center space-x-1.5 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-lg transition"
-        >
-          <Share2 className="w-3.5 h-3.5" />
-          <span>{copied ? 'Copied Link!' : 'Share Question'}</span>
-        </button>
+        <SocialShareBar
+          title={question.canonical_question}
+          description={question.short_answer}
+          category={question.category}
+        />
       </div>
 
       {/* Main Article Container */}
@@ -318,6 +306,13 @@ export function QuestionDetailView({ question, onNavigate, onBack }: QuestionDet
           </div>
         </div>
       </article>
+
+      {/* WhatsApp Viral Sharing Banner */}
+      <WhatsAppShareBanner
+        title={question.canonical_question}
+        benefit={question.short_answer}
+        authority="Verified Official Information"
+      />
 
       {/* Related Questions in Category */}
       {relatedQuestions.length > 0 && (

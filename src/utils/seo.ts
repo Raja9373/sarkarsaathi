@@ -12,6 +12,7 @@ export interface SEOProps {
     description?: string;
     url?: string;
     type?: string;
+    image?: string;
   };
   noIndex?: boolean;
 }
@@ -58,7 +59,7 @@ export const updateSEO = ({
   if (noIndex === true) {
     metaRobots.setAttribute('content', 'noindex, follow');
   } else {
-    metaRobots.setAttribute('content', 'index, follow');
+    metaRobots.setAttribute('content', 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1');
   }
 
   // Canonical Link
@@ -71,6 +72,9 @@ export const updateSEO = ({
   }
   canonical.setAttribute('href', canonicalUrl);
 
+  const defaultOgImage = `${PRODUCTION_DOMAIN}/india-gate.jpg`;
+  const resolvedOgImage = openGraph?.image || defaultOgImage;
+
   // Open Graph
   const ogTags = [
     { property: 'og:site_name', content: 'SarkarSaathi' },
@@ -78,6 +82,7 @@ export const updateSEO = ({
     { property: 'og:description', content: openGraph?.description || description },
     { property: 'og:url', content: openGraph?.url || canonicalUrl },
     { property: 'og:type', content: openGraph?.type || 'website' },
+    { property: 'og:image', content: resolvedOgImage },
   ];
   ogTags.forEach(tag => {
     let meta = document.querySelector(`meta[property="${tag.property}"]`);
@@ -91,9 +96,10 @@ export const updateSEO = ({
 
   // Twitter Card
   const twitterTags = [
-    { name: 'twitter:card', content: 'summary' },
+    { name: 'twitter:card', content: 'summary_large_image' },
     { name: 'twitter:title', content: openGraph?.title || title },
     { name: 'twitter:description', content: openGraph?.description || description },
+    { name: 'twitter:image', content: resolvedOgImage },
   ];
   twitterTags.forEach(tag => {
     let meta = document.querySelector(`meta[name="${tag.name}"]`);
@@ -342,5 +348,63 @@ export const injectQuestionFaqSchema = (
 // Compatibility aliases
 export const injectQuestionFAQSchema = injectQuestionFaqSchema;
 export const getQuestionFAQSchema = getQuestionFaqSchema;
+
+/**
+ * Builds Schema.org GovernmentService structured data for Subsidies & Benefits.
+ * Recognized by Google to generate rich scheme cards with eligibility and provider details in search results.
+ */
+export const getGovernmentServiceSchema = (item: any): Record<string, any> => {
+  const slug = item.slug || item.id;
+  const canonicalUrl = `${PRODUCTION_DOMAIN}/subsidies/${slug}`;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'GovernmentService',
+    '@id': `${canonicalUrl}#service`,
+    name: item.title,
+    serviceType: item.category || 'Government Subsidy',
+    description: item.description || item.shortDescription || item.title,
+    provider: {
+      '@type': 'GovernmentOrganization',
+      name: item.ministry || item.authority || item.sourceAuthority || 'Government of India',
+      url: item.applicationUrl || item.sourceUrl || canonicalUrl
+    },
+    areaServed: {
+      '@type': 'AdministrativeArea',
+      name: item.state || 'India'
+    },
+    audience: {
+      '@type': 'Audience',
+      audienceType: item.beneficiaryType || 'Citizens of India'
+    },
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'INR',
+      description: item.benefits || item.subsidyAmount || item.benefitType || 'Government Financial Assistance'
+    },
+    url: canonicalUrl,
+    isAccessibleForFree: true
+  };
+};
+
+/**
+ * Dynamically injects GovernmentService JSON-LD schema for subsidy detail pages.
+ */
+export const injectGovernmentServiceSchema = (
+  item: any,
+  scriptId: string = 'subsidy-service-jsonld'
+): (() => void) => {
+  if (typeof document === 'undefined') return () => {};
+
+  const structuredData = getGovernmentServiceSchema(item);
+  injectStructuredData(scriptId, structuredData);
+
+  return () => {
+    if (typeof document !== 'undefined') {
+      const el = document.getElementById(scriptId);
+      if (el) el.remove();
+    }
+  };
+};
 
 

@@ -5,7 +5,8 @@ import { SchemeDetailView } from './SchemeDetailView';
 import { OpportunityDetailView } from './OpportunityDetailView';
 import { TenderDetailView } from './TenderDetailView';
 import { NewsDetailView } from './NewsDetailView';
-import { Bookmark, Share2, ArrowLeft, ChevronRight } from 'lucide-react';
+import { Bookmark, ArrowLeft, ChevronRight } from 'lucide-react';
+import { SocialShareBar, WhatsAppShareBanner } from '../SocialShareBar';
 
 interface MasterDetailViewProps {
   item: any;
@@ -46,23 +47,6 @@ export const MasterDetailView: React.FC<MasterDetailViewProps> = ({
 
   const isSaved = savedIds.includes(item.id);
 
-  const handleShare = async () => {
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: item.title,
-          text: `Check out ${item.title} on SarkarSaathi: ${item.description}`,
-          url: window.location.href,
-        });
-      } catch {
-        // User cancelled
-      }
-    } else {
-      navigator.clipboard.writeText(window.location.href);
-      alert('Link copied to clipboard!');
-    }
-  };
-
   const renderCatalogueDetail = () => {
     switch (type) {
       case 'Investments':
@@ -88,6 +72,8 @@ export const MasterDetailView: React.FC<MasterDetailViewProps> = ({
     'News': '/news',
   }[type] || `/${type.toLowerCase().replace(/\s+/g, '-')}`;
 
+  const benefitValue = item.benefit || item.interestRate || item.rate || item.tenderValue || item.fundingAmount || item.estimatedValue;
+
   return (
     <div className="max-w-5xl mx-auto px-3.5 sm:px-6 lg:px-8 py-4 sm:py-8 lg:py-10 space-y-4 sm:space-y-6">
       {/* Breadcrumb Navigation */}
@@ -110,10 +96,10 @@ export const MasterDetailView: React.FC<MasterDetailViewProps> = ({
           <span>Back to {type}</span>
         </a>
 
-        <div className="flex items-center space-x-2.5 sm:space-x-3">
+        <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
           <button
             onClick={() => toggleSave(item.id)}
-            className={`flex-1 sm:flex-initial min-h-[48px] sm:min-h-[44px] px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition flex items-center justify-center space-x-2 shadow-xs cursor-pointer ${
+            className={`min-h-[44px] px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition flex items-center justify-center space-x-2 shadow-xs cursor-pointer ${
               isSaved
                 ? 'bg-indigo-600 text-white shadow-indigo-200'
                 : 'bg-white border border-slate-200 hover:bg-slate-50 text-slate-700'
@@ -123,18 +109,24 @@ export const MasterDetailView: React.FC<MasterDetailViewProps> = ({
             <span>{isSaved ? 'Saved' : 'Save Record'}</span>
           </button>
 
-          <button
-            onClick={handleShare}
-            className="flex-1 sm:flex-initial min-h-[48px] sm:min-h-[44px] px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 transition flex items-center justify-center space-x-2 shadow-xs cursor-pointer"
-          >
-            <Share2 className="w-4 h-4" />
-            <span>Share</span>
-          </button>
+          <SocialShareBar
+            title={item.title}
+            description={item.description}
+            authority={item.authority || item.ministry || item.issuingAuthority}
+            benefit={benefitValue}
+          />
         </div>
       </div>
 
       {/* Main Detail Content Area */}
       {renderCatalogueDetail()}
+
+      {/* WhatsApp Viral Callout Banner */}
+      <WhatsAppShareBanner
+        title={item.title}
+        authority={item.authority || item.ministry || item.issuingAuthority}
+        benefit={benefitValue}
+      />
     </div>
   );
 };

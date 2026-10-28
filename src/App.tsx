@@ -15,7 +15,7 @@ import { investmentRepository, investmentSchemeRepository, opportunityRepository
 import { subsidyRepository } from './infrastructure/repositories/SubsidyRepository';
 import { questionRepository } from './infrastructure/repositories/QuestionRepository';
 import { getOfficialSourceBySlug } from './utils/officialSources';
-import { updateSEO, injectStructuredData, getInvestmentBreadcrumbSchema, injectQuestionFaqSchema } from './utils/seo';
+import { updateSEO, injectStructuredData, getInvestmentBreadcrumbSchema, injectQuestionFaqSchema, injectGovernmentServiceSchema } from './utils/seo';
 
 const VALID_ROUTES = [
   '/',
@@ -142,12 +142,17 @@ export default function App() {
       if (existingQuestionFaq && (!selectedSlug || currentRoute !== '/questions')) {
         existingQuestionFaq.remove();
       }
+      const existingSubsidyService = document.getElementById('subsidy-service-jsonld');
+      if (existingSubsidyService && (!selectedSlug || currentRoute !== '/subsidies')) {
+        existingSubsidyService.remove();
+      }
     }
 
     if (currentRoute === '/404') {
       if (typeof document !== 'undefined') {
         document.getElementById('investment-breadcrumb-jsonld')?.remove();
         document.getElementById('question-faq-jsonld')?.remove();
+        document.getElementById('subsidy-service-jsonld')?.remove();
       }
       updateSEO({
         title: 'Page Not Found - SarkarSaathi',
@@ -246,6 +251,9 @@ export default function App() {
             canonicalPath: `/subsidies/${item.slug || item.id || selectedSlug}`,
             noIndex: isQuarantined,
           });
+          if (!isQuarantined) {
+            injectGovernmentServiceSchema(item);
+          }
           return;
         }
       } else if (currentRoute === '/official-sources') {
