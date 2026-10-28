@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a3f74"/>
+      <stop offset="50%" stop-color="#093563"/>
+      <stop offset="100%" stop-color="#071b35"/>
+    </linearGradient>
+    <linearGradient id="tricolor" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#38bdf8"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="1080" cy="180" r="320" fill="#38bdf8" opacity="0.16"/>
+  <circle cx="180" cy="520" r="260" fill="#f59e0b" opacity="0.12"/>
+
+  <rect x="0" y="0" width="1200" height="8" fill="#FF9933"/>
+  <rect x="0" y="8" width="1200" height="4" fill="#FFFFFF" opacity="0.8"/>
+  <rect x="0" y="12" width="1200" height="8" fill="#138808"/>
+
+  <g transform="translate(80, 70)">
+    <circle cx="36" cy="36" r="36" fill="#1d4ed8" stroke="#60a5fa" stroke-width="2"/>
+    <path d="M18 28 L36 14 L54 28 Z" fill="#ffffff"/>
+    <rect x="16" y="29" width="40" height="3" rx="1" fill="#ffffff"/>
+    <rect x="20" y="34" width="5" height="15" rx="1" fill="#ffffff"/>
+    <rect x="29" y="34" width="5" height="15" rx="1" fill="#ffffff"/>
+    <rect x="38" y="34" width="5" height="15" rx="1" fill="#ffffff"/>
+    <rect x="47" y="34" width="5" height="15" rx="1" fill="#ffffff"/>
+    <rect x="16" y="50" width="40" height="3" rx="1" fill="#ffffff"/>
+    <text x="90" y="44" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="34" font-weight="800" fill="#ffffff" letter-spacing="-0.5">SarkarSaathi<tspan fill="#38bdf8">.org</tspan></text>
+  </g>
+
+  <g transform="translate(80, 190)">
+    <rect width="380" height="44" rx="22" fill="#1e3a8a" stroke="#3b82f6" stroke-width="1.5"/>
+    <text x="24" y="28" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="16" font-weight="700" fill="#bfdbfe" letter-spacing="1">INDIA'S PUBLIC INFORMATION PLATFORM</text>
+  </g>
+
+  <text x="80" y="310" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="56" font-weight="900" fill="#ffffff" letter-spacing="-1">
+    Government Schemes, Subsidies
+  </text>
+  <text x="80" y="380" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="56" font-weight="900" fill="url(#tricolor)" letter-spacing="-1">
+    Sovereign Bonds &amp; Public Tenders
+  </text>
+
+  <text x="80" y="450" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="22" font-weight="500" fill="#dbeafe">
+    11,200+ Verified Government Opportunities across 36 States &amp; UTs
+  </text>
+  <text x="80" y="490" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="400" fill="#93c5fd">
+    Independent aggregator of official .gov.in notices, citizen benefits &amp; calculators
+  </text>
+
+  <g transform="translate(80, 545)">
+    <rect width="400" height="38" rx="10" fill="#0c2547" stroke="#1d4ed8" stroke-width="1"/>
+    <text x="18" y="24" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="700" fill="#60a5fa">
+      ✓ Free, Open &amp; Direct Links to Official Portals
+    </text>
+  </g>
+</svg>

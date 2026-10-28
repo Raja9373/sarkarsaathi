@@ -1,18 +1,22 @@
 import { useEffect } from 'react';
 import { VerifiedQuestionItem } from '../types/question';
 
-const PRODUCTION_DOMAIN = 'https://sarkarsaathi.org';
+export const PRODUCTION_DOMAIN = 'https://sarkarsaathi.org';
 
 export interface SEOProps {
   title: string;
   description: string;
   canonicalPath?: string;
+  keywords?: string;
   openGraph?: {
     title?: string;
     description?: string;
     url?: string;
     type?: string;
     image?: string;
+    imageAlt?: string;
+    imageWidth?: string;
+    imageHeight?: string;
   };
   noIndex?: boolean;
 }
@@ -30,10 +34,41 @@ export const normalizeCanonicalUrl = (path?: string): string => {
   return `${PRODUCTION_DOMAIN}/${cleanPath}`;
 };
 
+/**
+ * Returns a dedicated, high-converting 1200x630 vector Open Graph image URL
+ * matching the specific hub or detail route to maximize social CTR.
+ */
+export const getHubOgImage = (path: string): string => {
+  const clean = path.toLowerCase();
+  if (clean === '/subsidies' || clean.startsWith('/subsidies/')) {
+    return `${PRODUCTION_DOMAIN}/og/subsidies.svg`;
+  }
+  if (clean === '/investments' || clean.startsWith('/investments/')) {
+    return `${PRODUCTION_DOMAIN}/og/investments.svg`;
+  }
+  if (clean === '/investment-schemes' || clean.startsWith('/investment-schemes/')) {
+    return `${PRODUCTION_DOMAIN}/og/schemes.svg`;
+  }
+  if (clean === '/tenders' || clean.startsWith('/tenders/')) {
+    return `${PRODUCTION_DOMAIN}/og/tenders.svg`;
+  }
+  if (clean === '/opportunities' || clean.startsWith('/opportunities/')) {
+    return `${PRODUCTION_DOMAIN}/og/opportunities.svg`;
+  }
+  if (clean === '/questions' || clean.startsWith('/questions/')) {
+    return `${PRODUCTION_DOMAIN}/og/questions.svg`;
+  }
+  if (clean === '/' || clean === '') {
+    return `${PRODUCTION_DOMAIN}/og/home.svg`;
+  }
+  return `${PRODUCTION_DOMAIN}/india-gate.jpg`;
+};
+
 export const updateSEO = ({
   title,
   description,
   canonicalPath,
+  keywords,
   openGraph,
   noIndex = false,
 }: SEOProps) => {
@@ -48,6 +83,17 @@ export const updateSEO = ({
     document.head.appendChild(metaDescription);
   }
   metaDescription.setAttribute('content', description);
+
+  // Meta keywords
+  if (keywords) {
+    let metaKeywords = document.querySelector('meta[name="keywords"]');
+    if (!metaKeywords) {
+      metaKeywords = document.createElement('meta');
+      metaKeywords.setAttribute('name', 'keywords');
+      document.head.appendChild(metaKeywords);
+    }
+    metaKeywords.setAttribute('content', keywords);
+  }
 
   // Robots meta (explicitly set index, follow or noindex, follow on every route transition)
   let metaRobots = document.querySelector('meta[name="robots"]');
@@ -72,8 +118,11 @@ export const updateSEO = ({
   }
   canonical.setAttribute('href', canonicalUrl);
 
-  const defaultOgImage = `${PRODUCTION_DOMAIN}/india-gate.jpg`;
+  const defaultOgImage = getHubOgImage(canonicalPath || (typeof window !== 'undefined' ? window.location.pathname : '/'));
   const resolvedOgImage = openGraph?.image || defaultOgImage;
+  const imageAlt = openGraph?.imageAlt || title;
+  const imageWidth = openGraph?.imageWidth || '1200';
+  const imageHeight = openGraph?.imageHeight || '630';
 
   // Open Graph
   const ogTags = [
@@ -83,6 +132,9 @@ export const updateSEO = ({
     { property: 'og:url', content: openGraph?.url || canonicalUrl },
     { property: 'og:type', content: openGraph?.type || 'website' },
     { property: 'og:image', content: resolvedOgImage },
+    { property: 'og:image:width', content: imageWidth },
+    { property: 'og:image:height', content: imageHeight },
+    { property: 'og:image:alt', content: imageAlt },
   ];
   ogTags.forEach(tag => {
     let meta = document.querySelector(`meta[property="${tag.property}"]`);
@@ -100,6 +152,7 @@ export const updateSEO = ({
     { name: 'twitter:title', content: openGraph?.title || title },
     { name: 'twitter:description', content: openGraph?.description || description },
     { name: 'twitter:image', content: resolvedOgImage },
+    { name: 'twitter:image:alt', content: imageAlt },
   ];
   twitterTags.forEach(tag => {
     let meta = document.querySelector(`meta[name="${tag.name}"]`);

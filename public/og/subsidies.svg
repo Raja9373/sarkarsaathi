@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#064e3b"/>
+      <stop offset="50%" stop-color="#065f46"/>
+      <stop offset="100%" stop-color="#022c22"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Subtle ambient decorative glow -->
+  <circle cx="1050" cy="150" r="320" fill="#10b981" opacity="0.12"/>
+  <circle cx="150" cy="550" r="280" fill="#fbbf24" opacity="0.08"/>
+
+  <!-- Top Tricolor Accent Bar -->
+  <rect x="0" y="0" width="1200" height="8" fill="#FF9933"/>
+  <rect x="0" y="8" width="1200" height="4" fill="#FFFFFF" opacity="0.8"/>
+  <rect x="0" y="12" width="1200" height="8" fill="#138808"/>
+
+  <!-- SarkarSaathi Logo Badge -->
+  <g transform="translate(80, 70)">
+    <circle cx="36" cy="36" r="36" fill="#047857" stroke="#34d399" stroke-width="2"/>
+    <path d="M18 28 L36 14 L54 28 Z" fill="#ffffff"/>
+    <rect x="16" y="29" width="40" height="3" rx="1" fill="#ffffff"/>
+    <rect x="20" y="34" width="5" height="15" rx="1" fill="#ffffff"/>
+    <rect x="29" y="34" width="5" height="15" rx="1" fill="#ffffff"/>
+    <rect x="38" y="34" width="5" height="15" rx="1" fill="#ffffff"/>
+    <rect x="47" y="34" width="5" height="15" rx="1" fill="#ffffff"/>
+    <rect x="16" y="50" width="40" height="3" rx="1" fill="#ffffff"/>
+    <text x="90" y="44" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="34" font-weight="800" fill="#ffffff" letter-spacing="-0.5">SarkarSaathi<tspan fill="#34d399">.org</tspan></text>
+  </g>
+
+  <!-- Category Badge -->
+  <g transform="translate(80, 190)">
+    <rect width="360" height="44" rx="22" fill="#047857" stroke="#10b981" stroke-width="1.5"/>
+    <text x="24" y="28" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="16" font-weight="700" fill="#a7f3d0" letter-spacing="1">GOVERNMENT SUBSIDIES &amp; BENEFITS</text>
+  </g>
+
+  <!-- Main Title -->
+  <text x="80" y="310" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="56" font-weight="900" fill="#ffffff" letter-spacing="-1">
+    Verified Central &amp; State Subsidies
+  </text>
+  <text x="80" y="380" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="56" font-weight="900" fill="url(#gold)" letter-spacing="-1">
+    Direct Benefit Transfers &amp; Grants
+  </text>
+
+  <!-- Description Bullets -->
+  <text x="80" y="450" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="22" font-weight="500" fill="#d1fae5">
+    Agriculture • MSME Loans • Solar Rooftop • Women &amp; Child • Housing
+  </text>
+  <text x="80" y="490" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="400" fill="#a7f3d0">
+    Statutory eligibility criteria, maximum benefits &amp; official .gov.in application portals
+  </text>
+
+  <!-- Footer Watermark / Trust Indicator -->
+  <g transform="translate(80, 545)">
+    <rect width="420" height="38" rx="10" fill="#064e3b" stroke="#059669" stroke-width="1"/>
+    <text x="18" y="24" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="700" fill="#6ee7b7">
+      ✓ 100% Curated from Official Ministry Portals
+    </text>
+  </g>
+</svg>
