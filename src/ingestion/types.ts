@@ -1,4 +1,4 @@
-import { Opportunity, Tender } from '../types';
+import { Opportunity, Tender, Subsidy } from '../types';
 
 export type OpportunityLifecycleStatus = 'ACTIVE' | 'UPCOMING' | 'CLOSED' | 'EXPIRED' | 'NEEDS_REVIEW';
 export type TenderLifecycleStatus = 'ACTIVE' | 'UPCOMING' | 'CLOSED' | 'CANCELLED' | 'EXTENDED' | 'NEEDS_REVIEW';
@@ -6,7 +6,7 @@ export type VerificationState = 'VERIFIED' | 'PENDING' | 'REJECTED' | 'NEEDS_REV
 
 export type SourceAccessType = 'API' | 'DOWNLOAD' | 'MANUAL_EXPORT' | 'ADMIN_UPLOAD' | 'UNKNOWN';
 export type SourceVerificationStatus = 'VERIFIED' | 'UNVERIFIED' | 'NOT_AVAILABLE';
-export type SourceCatalogueType = 'OPPORTUNITIES' | 'TENDERS' | 'BOTH';
+export type SourceCatalogueType = 'OPPORTUNITIES' | 'TENDERS' | 'SUBSIDIES' | 'BOTH' | 'ALL';
 
 export interface VerifiedSource {
   sourceId: string;
@@ -59,6 +59,17 @@ export interface StagedOpportunity extends Opportunity {
 
 export interface StagedTender extends Tender {
   lifecycleStatus: TenderLifecycleStatus;
+  provenance: IngestionProvenance;
+  validationErrors?: string[];
+  reviewStatus?: ReviewStatus;
+  rejectionReason?: string;
+  reviewedAt?: string;
+  isDuplicate?: boolean;
+  duplicateReason?: string;
+}
+
+export interface StagedSubsidy extends Subsidy {
+  lifecycleStatus?: string;
   provenance: IngestionProvenance;
   validationErrors?: string[];
   reviewStatus?: ReviewStatus;

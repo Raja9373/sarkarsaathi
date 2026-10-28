@@ -24,7 +24,7 @@ describe('Dynamic Sitemap Generator Service & Utility', () => {
     assert.ok(result.categoryBreakdown.officialSources > 0);
   });
 
-  it('3. Strictly enforces Phase 9 subsidy quarantine rules (only 4 verified subsidies in sitemap)', () => {
+  it('3. Strictly enforces subsidy quarantine rules (only verified subsidies in sitemap, quarantined excluded)', () => {
     const xml = generateSitemapXml();
     assert.ok(!xml.includes('/subsidies/sub-836'));
     assert.ok(!xml.includes('/subsidies/SUB-836'));

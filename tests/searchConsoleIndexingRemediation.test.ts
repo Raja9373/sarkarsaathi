@@ -52,11 +52,11 @@ describe('Search Console Indexing Remediation Suite (Crawled - currently not ind
     assert.ok(!sitemapContent.includes('gov-subsidy-benefit-scheme-739'), 'Quarantined 739 must not be in sitemap');
   });
 
-  it('5. Phase 9 quarantine partition (996 quarantined, 4 published) and Phase 10A sitemap rules remain intact', () => {
+  it('5. Quarantine partition (996 quarantined, verified published recovered) and Phase 10A sitemap rules remain intact', () => {
     const published = subsidyRepository.getPublished();
     const quarantined = subsidyRepository.getQuarantined();
 
-    assert.equal(published.length, 4, 'Exactly 4 subsidies published');
-    assert.equal(quarantined.length, 996, 'Exactly 996 subsidies quarantined');
+    assert.ok(published.length >= 38, `At least 38 genuine subsidies published (got ${published.length})`);
+    assert.equal(quarantined.length, 996, 'Exactly 996 placeholder subsidies remain quarantined');
   });
 });

@@ -31,7 +31,7 @@ export const NewsDetailView: React.FC<NewsDetailViewProps> = ({ item }) => {
   return (
     <div className="space-y-8">
       {/* Header Badge & Title */}
-      <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-xs space-y-6">
+      <div className="bg-white rounded-2xl sm:rounded-3xl border border-slate-200 p-4 sm:p-6 lg:p-8 shadow-xs space-y-5 sm:space-y-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex flex-wrap items-center gap-2">
             <span className="px-3 py-1 rounded-full text-xs font-bold bg-indigo-50 text-indigo-700 border border-indigo-100">
@@ -49,16 +49,16 @@ export const NewsDetailView: React.FC<NewsDetailViewProps> = ({ item }) => {
         </div>
 
         <div>
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight mb-3">
+          <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight mb-2 sm:mb-3">
             {item.title}
           </h1>
-          <p className="text-base text-slate-600 leading-relaxed max-w-4xl">
+          <p className="text-sm sm:text-base text-slate-600 leading-relaxed max-w-4xl">
             {item.description}
           </p>
         </div>
 
         {/* Issuing Authority & Context */}
-        <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+        <div className="p-3.5 sm:p-4 bg-slate-50 rounded-xl sm:rounded-2xl border border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
           <div className="flex items-center space-x-2">
             <Building2 className="w-4 h-4 text-indigo-600 shrink-0" />
             <span className="font-semibold text-slate-700">Issuing Authority:</span>
@@ -73,7 +73,7 @@ export const NewsDetailView: React.FC<NewsDetailViewProps> = ({ item }) => {
       </div>
 
       {/* FACT vs SOURCE vs EXPLANATION Triad */}
-      <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-xs space-y-6">
+      <div className="bg-white rounded-2xl sm:rounded-3xl border border-slate-200 p-4 sm:p-6 lg:p-8 shadow-xs space-y-5 sm:space-y-6">
         <h2 className="text-lg font-bold text-slate-900 flex items-center space-x-2">
           <Scale className="w-5 h-5 text-indigo-600" />
           <span>Factual Analysis &amp; Statutory Breakdown</span>

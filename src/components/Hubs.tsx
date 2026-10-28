@@ -521,27 +521,27 @@ export function GenericHubView({
   const endRecord = Math.min(currentPage * pageSize, paginatedResult.total);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-10">
-      <div className="mb-6 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+    <div className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 py-5 sm:py-8 lg:py-10">
+      <div className="mb-5 sm:mb-6 flex flex-col md:flex-row md:items-end md:justify-between gap-3.5 sm:gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mb-1.5">{title}</h1>
-          <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mb-2 leading-tight sm:leading-snug">{title}</h1>
+          <p className="text-slate-600 text-xs sm:text-sm leading-relaxed max-w-2xl">
             High-performance paginated catalogue with official verified records from .gov.in sources.
           </p>
         </div>
-        <div className="text-xs font-semibold px-3 py-1.5 bg-slate-100 border border-slate-200 text-slate-700 rounded-full w-fit self-start md:self-auto">
+        <div className="text-xs font-semibold px-3.5 py-2 min-h-[36px] flex items-center bg-slate-100 border border-slate-200 text-slate-700 rounded-full w-fit self-start md:self-auto shadow-2xs">
           Total Catalogue: {paginatedResult.total.toLocaleString('en-IN')} records
         </div>
       </div>
 
       {headerComponent && (
-        <div className="mb-6 sm:mb-8">
+        <div className="mb-5 sm:mb-8">
           {headerComponent}
         </div>
       )}
 
       {/* Search & Filter Bar */}
-      <div className="bg-white border border-slate-200 rounded-2xl p-3.5 sm:p-5 shadow-xs mb-6 sm:mb-8">
+      <div className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 shadow-xs mb-6 sm:mb-8">
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mb-4">
           <div className="relative flex-1">
             <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
@@ -550,12 +550,12 @@ export function GenericHubView({
               placeholder={`Search ${title.toLowerCase()} by title, sector, authority, location...`}
               value={search}
               onChange={(e) => handleSearchChange(e.target.value)}
-              className="w-full pl-10 pr-10 py-3 sm:py-2.5 min-h-[44px] bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition"
+              className="w-full pl-11 pr-11 py-3 sm:py-2.5 min-h-[48px] sm:min-h-[44px] bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition"
             />
             {search && (
               <button
                 onClick={() => handleSearchChange('')}
-                className="absolute right-1.5 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center text-slate-400 hover:text-slate-600 rounded-lg transition"
+                className="absolute right-1 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center text-slate-400 hover:text-slate-600 rounded-lg transition"
                 aria-label="Clear search"
               >
                 <X className="w-4 h-4" />
@@ -566,7 +566,7 @@ export function GenericHubView({
           <div className="flex items-center gap-2">
             <button
               onClick={() => setShowFilters(!showFilters)}
-              className={`flex-1 sm:flex-initial min-h-[44px] px-4 py-2.5 rounded-xl border text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 transition ${
+              className={`flex-1 sm:flex-initial min-h-[48px] sm:min-h-[44px] px-4 py-2.5 rounded-xl border text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 transition ${
                 showFilters || activeFilterCount > 0
                   ? 'bg-indigo-50 border-indigo-200 text-indigo-700'
                   : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
@@ -584,7 +584,7 @@ export function GenericHubView({
             {activeFilterCount > 0 && (
               <button
                 onClick={resetAllFilters}
-                className="min-h-[44px] px-3.5 py-2.5 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 text-xs sm:text-sm font-semibold flex items-center justify-center gap-1.5 transition"
+                className="min-h-[48px] sm:min-h-[44px] px-3.5 py-2.5 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 text-xs sm:text-sm font-semibold flex items-center justify-center gap-1.5 transition"
                 title="Reset filters"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
@@ -596,14 +596,14 @@ export function GenericHubView({
 
         {/* Expandable Filter & Sort Controls */}
         {showFilters && (
-          <div className="pt-4 border-t border-slate-100 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 text-xs sm:text-sm">
+          <div className="pt-4 border-t border-slate-100 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4 text-xs sm:text-sm">
             {/* State Filter */}
             <div>
               <label className="block text-slate-600 font-semibold mb-1.5 text-xs">State / Region</label>
               <select
                 value={stateFilter}
                 onChange={(e) => handleStateChange(e.target.value)}
-                className="w-full min-h-[44px] py-2.5 px-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-indigo-500 font-medium text-slate-800 text-xs sm:text-sm"
+                className="w-full min-h-[48px] sm:min-h-[44px] py-2.5 px-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-indigo-500 font-medium text-slate-800 text-xs sm:text-sm cursor-pointer"
               >
                 <option value="ALL">All States / Central</option>
                 {facets.states.map((st: string) => (
@@ -618,7 +618,7 @@ export function GenericHubView({
               <select
                 value={sectorFilter}
                 onChange={(e) => handleSectorChange(e.target.value)}
-                className="w-full min-h-[44px] py-2.5 px-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-indigo-500 font-medium text-slate-800 text-xs sm:text-sm"
+                className="w-full min-h-[48px] sm:min-h-[44px] py-2.5 px-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-indigo-500 font-medium text-slate-800 text-xs sm:text-sm cursor-pointer"
               >
                 <option value="ALL">All Sectors</option>
                 {facets.sectors.map((sec: string) => (
@@ -633,7 +633,7 @@ export function GenericHubView({
               <select
                 value={statusFilter}
                 onChange={(e) => handleStatusChange(e.target.value)}
-                className="w-full min-h-[44px] py-2.5 px-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-indigo-500 font-medium text-slate-800 text-xs sm:text-sm"
+                className="w-full min-h-[48px] sm:min-h-[44px] py-2.5 px-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-indigo-500 font-medium text-slate-800 text-xs sm:text-sm cursor-pointer"
               >
                 <option value="ALL">All Statuses</option>
                 {facets.statuses.map((st: string) => (
@@ -648,7 +648,7 @@ export function GenericHubView({
               <select
                 value={sortBy}
                 onChange={(e) => handleSortChange(e.target.value as any)}
-                className="w-full min-h-[44px] py-2.5 px-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-indigo-500 font-medium text-slate-800 text-xs sm:text-sm"
+                className="w-full min-h-[48px] sm:min-h-[44px] py-2.5 px-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-indigo-500 font-medium text-slate-800 text-xs sm:text-sm cursor-pointer"
               >
                 <option value="default">Default Catalogue Order</option>
                 <option value="date">Date / Deadline (Soonest first)</option>
@@ -660,19 +660,19 @@ export function GenericHubView({
         )}
 
         {/* Active Results Summary and Page Sizing */}
-        <div className="pt-3 mt-3 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-2.5">
-          <div>
+        <div className="pt-3.5 mt-3.5 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-3">
+          <div className="text-center sm:text-left leading-relaxed">
             Showing <span className="font-bold text-slate-800">{startRecord}</span> to{' '}
             <span className="font-bold text-slate-800">{endRecord}</span> of{' '}
             <span className="font-bold text-slate-800">{paginatedResult.total.toLocaleString('en-IN')}</span> verified records
           </div>
           <div className="flex items-center gap-2">
-            <span>Per page:</span>
+            <span className="font-medium text-slate-600">Per page:</span>
             {[10, 20, 50].map((size) => (
               <button
                 key={size}
                 onClick={() => { setPageSize(size); setCurrentPage(1); }}
-                className={`min-h-[36px] min-w-[36px] px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center justify-center transition ${
+                className={`min-h-[40px] min-w-[40px] sm:min-h-[36px] sm:min-w-[36px] px-3.5 py-2 rounded-lg text-xs font-semibold flex items-center justify-center transition cursor-pointer ${
                   pageSize === size
                     ? 'bg-indigo-600 text-white shadow-xs'
                     : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
@@ -691,7 +691,7 @@ export function GenericHubView({
           <p className="text-slate-500 text-base font-medium mb-3">No matching records found.</p>
           <button
             onClick={resetAllFilters}
-            className="min-h-[44px] px-4 py-2.5 bg-indigo-50 text-indigo-700 font-semibold text-xs sm:text-sm rounded-xl hover:bg-indigo-100 transition inline-flex items-center justify-center"
+            className="min-h-[48px] sm:min-h-[44px] px-5 py-3 bg-indigo-50 text-indigo-700 font-semibold text-xs sm:text-sm rounded-xl hover:bg-indigo-100 transition inline-flex items-center justify-center"
           >
             Clear all filters
           </button>
@@ -701,7 +701,7 @@ export function GenericHubView({
           {paginatedResult.items.map((item) => (
             <div
               key={item.id}
-              className="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 md:p-6 flex flex-col justify-between shadow-xs hover:shadow-md transition"
+              className="bg-white rounded-2xl border border-slate-200 p-4.5 sm:p-6 flex flex-col justify-between shadow-xs hover:shadow-md transition space-y-4"
             >
               <div>
                 <div className="flex flex-wrap items-center justify-between mb-3 gap-2">
@@ -710,34 +710,34 @@ export function GenericHubView({
                   </span>
                   <div className="flex items-center gap-1.5 sm:gap-2">
                     {item.state && (
-                      <span className="px-2 py-0.5 rounded text-[11px] font-medium bg-slate-100 text-slate-700">
+                      <span className="px-2.5 py-1 rounded text-[11px] font-medium bg-slate-100 text-slate-700">
                         {item.state}
                       </span>
                     )}
-                    <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full">
+                    <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200/60">
                       {item.status || 'VERIFIED'}
                     </span>
                   </div>
                 </div>
 
-                <h3 className="text-base sm:text-lg font-bold text-slate-900 mb-2 leading-snug">{item.title}</h3>
+                <h3 className="text-base sm:text-lg md:text-xl font-bold text-slate-900 mb-2 leading-snug sm:leading-normal">{item.title}</h3>
                 <p className="text-slate-600 text-xs sm:text-sm mb-4 line-clamp-3 leading-relaxed">{item.description}</p>
 
                 {/* Additional Key Metrics if available */}
                 {(item.fundingAmount || item.tenderValue || item.totalProjectCost || item.deadline || item.submissionDeadline) && (
-                  <div className="mb-4 p-3 bg-slate-50 rounded-xl border border-slate-100 grid grid-cols-1 xs:grid-cols-2 gap-2 text-xs">
+                  <div className="mb-4 p-3.5 sm:p-4 bg-slate-50 rounded-xl border border-slate-100 grid grid-cols-1 xs:grid-cols-2 gap-2.5 sm:gap-3 text-xs sm:text-sm">
                     {(item.fundingAmount || item.tenderValue || item.totalProjectCost) && (
                       <div>
-                        <span className="text-slate-400 block text-[10px] uppercase font-bold">Value / Budget</span>
-                        <span className="font-bold text-slate-800">
+                        <span className="text-slate-400 block text-[10px] uppercase font-bold tracking-wider">Value / Budget</span>
+                        <span className="font-bold text-slate-800 text-xs sm:text-sm">
                           {item.fundingAmount || item.tenderValue || item.totalProjectCost}
                         </span>
                       </div>
                     )}
                     {(item.deadline || item.submissionDeadline) && (
                       <div>
-                        <span className="text-slate-400 block text-[10px] uppercase font-bold">Deadline</span>
-                        <span className="font-semibold text-slate-700">
+                        <span className="text-slate-400 block text-[10px] uppercase font-bold tracking-wider">Deadline</span>
+                        <span className="font-semibold text-slate-700 text-xs sm:text-sm">
                           {item.deadline || item.submissionDeadline}
                         </span>
                       </div>
@@ -747,14 +747,14 @@ export function GenericHubView({
               </div>
 
               <div>
-                <div className="pt-3.5 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 mb-3.5">
+                <div className="pt-3.5 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 mb-4 gap-2">
                   <span className="font-medium text-slate-700 truncate max-w-[200px] sm:max-w-[240px]">{item.authority}</span>
-                  <span className="bg-slate-100 px-2 py-0.5 rounded text-[11px] shrink-0">{item.sourceAuthority}</span>
+                  <span className="bg-slate-100 px-2 py-0.5 rounded text-[11px] shrink-0 font-mono">{item.sourceAuthority}</span>
                 </div>
                 <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-3">
                   <button
                     onClick={() => onNavigate(`/${type}/${item.slug}`)}
-                    className="w-full sm:flex-1 min-h-[44px] py-2.5 px-4 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-xl text-xs sm:text-sm font-semibold transition flex items-center justify-center cursor-pointer"
+                    className="w-full sm:flex-1 min-h-[48px] sm:min-h-[44px] py-3 sm:py-2.5 px-4 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-xl text-xs sm:text-sm font-semibold transition flex items-center justify-center cursor-pointer shadow-2xs"
                   >
                     View Details
                   </button>
@@ -762,10 +762,10 @@ export function GenericHubView({
                     href={item.sourceUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full sm:w-auto min-h-[44px] py-2.5 px-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs sm:text-sm font-semibold transition flex items-center justify-center space-x-1.5"
+                    className="w-full sm:w-auto min-h-[48px] sm:min-h-[44px] py-3 sm:py-2.5 px-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs sm:text-sm font-semibold transition flex items-center justify-center space-x-1.5 shadow-2xs"
                   >
                     <span>Official Source</span>
-                    <ExternalLink className="w-3.5 h-3.5" />
+                    <ExternalLink className="w-3.5 h-3.5 ml-1" />
                   </a>
                 </div>
               </div>
@@ -776,7 +776,7 @@ export function GenericHubView({
 
       {/* Pagination Controls */}
       {paginatedResult.totalPages > 1 && (
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 sm:py-4 sm:px-6 bg-white border border-slate-200 rounded-2xl shadow-xs">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3.5 sm:gap-4 p-4 sm:py-4 sm:px-6 bg-white border border-slate-200 rounded-2xl shadow-xs">
           <div className="text-xs sm:text-sm text-slate-600">
             Page <span className="font-bold text-slate-900">{currentPage}</span> of{' '}
             <span className="font-bold text-slate-900">{paginatedResult.totalPages}</span>
@@ -786,7 +786,7 @@ export function GenericHubView({
             <button
               onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
               disabled={currentPage <= 1}
-              className={`min-h-[44px] px-3.5 py-2 rounded-xl border text-xs sm:text-sm font-semibold flex items-center transition ${
+              className={`min-h-[48px] sm:min-h-[44px] px-4 py-2.5 rounded-xl border text-xs sm:text-sm font-semibold flex items-center justify-center transition ${
                 currentPage <= 1
                   ? 'border-slate-200 text-slate-300 cursor-not-allowed'
                   : 'border-slate-200 text-slate-700 hover:bg-slate-50 cursor-pointer'
@@ -813,7 +813,7 @@ export function GenericHubView({
                     {showEllipsis && <span className="px-1 text-slate-400 text-xs">...</span>}
                     <button
                       onClick={() => setCurrentPage(p)}
-                      className={`min-w-[40px] h-10 sm:min-w-[36px] sm:h-9 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center transition cursor-pointer ${
+                      className={`min-w-[44px] h-11 sm:min-w-[38px] sm:h-9 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center transition cursor-pointer ${
                         currentPage === p
                           ? 'bg-indigo-600 text-white shadow-xs'
                           : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50'
@@ -828,7 +828,7 @@ export function GenericHubView({
             <button
               onClick={() => setCurrentPage((p) => Math.min(paginatedResult.totalPages, p + 1))}
               disabled={currentPage >= paginatedResult.totalPages}
-              className={`min-h-[44px] px-3.5 py-2 rounded-xl border text-xs sm:text-sm font-semibold flex items-center transition ${
+              className={`min-h-[48px] sm:min-h-[44px] px-4 py-2.5 rounded-xl border text-xs sm:text-sm font-semibold flex items-center justify-center transition ${
                 currentPage >= paginatedResult.totalPages
                   ? 'border-slate-200 text-slate-300 cursor-not-allowed'
                   : 'border-slate-200 text-slate-700 hover:bg-slate-50 cursor-pointer'

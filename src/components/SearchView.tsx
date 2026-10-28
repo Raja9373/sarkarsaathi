@@ -11,7 +11,7 @@ export function SearchView({ query, onNavigate }: { query: string; onNavigate: (
       ...opportunityRepository.getAll().map(i => ({ ...i, itemType: 'Opportunities', searchTitle: i.title, searchSlug: i.slug || i.id, routeBase: '/opportunities' })),
       ...tenderRepository.getAll().map(i => ({ ...i, itemType: 'Tenders', searchTitle: i.title, searchSlug: i.slug || i.id, routeBase: '/tenders' })),
       ...newsRepository.getAll().map(i => ({ ...i, itemType: 'News & Updates', searchTitle: i.title, searchSlug: i.slug || i.id, routeBase: '/news' })),
-      ...subsidyRepository.getAll().map(i => ({ ...i, itemType: 'Subsidies & Benefits', searchTitle: i.title, searchSlug: i.slug || i.id, routeBase: '/subsidies' })),
+      ...subsidyRepository.getPublished().map(i => ({ ...i, itemType: 'Subsidies & Benefits', searchTitle: i.title, searchSlug: i.slug || i.id, routeBase: '/subsidies' })),
       ...getAllOfficialSources().map(s => ({ ...s, itemType: 'Official Sources', searchTitle: s.name, searchSlug: getOfficialSourceSlug(s), routeBase: '/official-sources' })),
     ];
   }, []);

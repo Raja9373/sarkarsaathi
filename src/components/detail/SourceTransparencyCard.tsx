@@ -19,10 +19,10 @@ export const SourceTransparencyCard: React.FC<SourceTransparencyCardProps> = ({
   secondarySources
 }) => {
   return (
-    <div className="bg-slate-50 border border-slate-200 rounded-2xl p-6 space-y-4">
+    <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 sm:p-6 space-y-4">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-slate-200 gap-2">
         <div className="flex items-center space-x-2">
-          <ShieldCheck className="w-5 h-5 text-indigo-600" />
+          <ShieldCheck className="w-5 h-5 text-indigo-600 shrink-0" />
           <h3 className="text-sm font-bold text-slate-900">Official Source Transparency & Provenance</h3>
         </div>
         <div className="flex items-center space-x-2">
@@ -54,19 +54,19 @@ export const SourceTransparencyCard: React.FC<SourceTransparencyCardProps> = ({
         </div>
       </div>
 
-      <div className="pt-3 border-t border-slate-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+      <div className="pt-3 border-t border-slate-200 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
         <div className="text-xs text-slate-600 max-w-xl">
           <span className="font-semibold text-slate-700">Authoritative URL: </span>
-          <span className="font-mono text-slate-500 truncate block sm:inline">{sourceUrl}</span>
+          <span className="font-mono text-slate-500 truncate block sm:inline break-all">{sourceUrl}</span>
         </div>
         <a
           href={sourceUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center space-x-1.5 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white rounded-xl text-xs font-bold transition shadow-xs shrink-0"
+          className="inline-flex items-center justify-center space-x-1.5 w-full sm:w-auto px-4 py-2.5 min-h-[48px] sm:min-h-[44px] bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white rounded-xl text-xs sm:text-sm font-bold transition shadow-xs shrink-0 cursor-pointer"
         >
           <span>Open Official Portal</span>
-          <ExternalLink className="w-3.5 h-3.5" />
+          <ExternalLink className="w-3.5 h-3.5 ml-1" />
         </a>
       </div>
 

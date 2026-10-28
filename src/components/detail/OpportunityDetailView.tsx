@@ -247,7 +247,7 @@ export const OpportunityDetailView: React.FC<OpportunityDetailViewProps> = ({ it
   return (
     <div className="space-y-6">
       {/* 1. Header Card */}
-      <div className="bg-white rounded-2xl border border-slate-200/90 p-6 sm:p-8 shadow-xs space-y-5">
+      <div className="bg-white rounded-2xl border border-slate-200/90 p-4 sm:p-6 lg:p-8 shadow-xs space-y-4 sm:space-y-5">
         <div className="flex flex-wrap items-center gap-2">
           {item.opportunityType && (
             <span className="px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700">

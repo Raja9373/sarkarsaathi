@@ -146,5 +146,133 @@ export function validateTenderRecord(record: Partial<Tender>): {
   return { isValid, errors, fieldErrors, lifecycleStatus, verificationStatus };
 }
 
+import { Subsidy } from '../types';
+
+export function validateSubsidyRecord(record: Partial<Subsidy>): {
+  isValid: boolean;
+  errors: string[];
+  fieldErrors: Array<{ field: string; reason: string }>;
+  publicationState: 'PUBLISHED' | 'QUARANTINED' | 'DRAFT';
+  verificationStatus: 'VERIFIED' | 'UNVERIFIED';
+  authenticityClassification: 'SOURCE_VERIFIED' | 'PARTIALLY_SUPPORTED' | 'GENERIC_OR_SYNTHETIC_SUSPECTED' | 'SOURCE_MISSING';
+  editorialReviewStatus: 'APPROVED' | 'PENDING_REVIEW' | 'REQUIRES_OFFICIAL_EVIDENCE';
+} {
+  const errors: string[] = [];
+  const fieldErrors: Array<{ field: string; reason: string }> = [];
+
+  // 1. Title validation
+  const title = String(record.title || '').trim();
+  if (!title || title.length < 3) {
+    errors.push('Title is missing or too short (min 3 chars).');
+    fieldErrors.push({ field: 'title', reason: 'Title is missing or too short.' });
+  }
+
+  // Anti-synthetic check: reject/quarantine generic synthetic titles
+  const isSynthetic = 
+    /Verified Government Subsidy & Assistance Scheme #\d+/i.test(title) ||
+    /Government Subsidy & Incentive Scheme #\d+/i.test(title) ||
+    /Government Subsidy & Benefit Scheme #\d+/i.test(title) ||
+    /\b(dummy|placeholder|sample scheme|test subsidy)\b/i.test(title);
+
+  if (isSynthetic) {
+    errors.push('Title contains generic synthetic pattern without verified statutory scheme name.');
+    fieldErrors.push({ field: 'title', reason: 'Generic synthetic scheme title detected.' });
+  }
+
+  // 2. Authority / Ministry
+  const authority = String(record.authority || record.ministry || record.department || '').trim();
+  if (!authority) {
+    errors.push('Issuing authority, ministry, or department is required.');
+    fieldErrors.push({ field: 'authority', reason: 'Authority or ministry is required.' });
+  }
+
+  // 3. Official Source URL
+  const sourceUrl = String(record.officialSourceUrl || record.sourceUrl || '').trim();
+  const isValidUrl = sourceUrl.startsWith('http://') || sourceUrl.startsWith('https://');
+  if (!sourceUrl || !isValidUrl) {
+    errors.push('Valid official source URL starting with http:// or https:// is required.');
+    fieldErrors.push({ field: 'officialSourceUrl', reason: 'Valid source URL is required.' });
+  }
+
+  // Controlled, auditable official government and statutory institution domain verification
+  const VERIFIED_STATUTORY_DOMAINS = [
+    'gov.in',
+    'nic.in',
+    'ac.in',
+    'res.in',
+    'org.in',
+    'standupmitra.in',
+    'cgtmse.in',
+    'pfrda.org.in',
+    'rbi.org.in',
+    'sidbi.in',
+    'nabard.org',
+    'nhb.org.in',
+    'startupindia.gov.in',
+    'investindia.gov.in',
+    'apprenticeshipindia.gov.in',
+    'dbtbharat.gov.in',
+    'myscheme.gov.in',
+    'alimpco.in',
+    'nikshay.in',
+    'udyamimitra.in'
+  ];
+
+  let isOfficialGovDomain = false;
+  try {
+    const parsed = new URL(sourceUrl.startsWith('http') ? sourceUrl : `https://${sourceUrl}`);
+    const host = parsed.hostname.toLowerCase();
+    isOfficialGovDomain = VERIFIED_STATUTORY_DOMAINS.some(d => host === d || host.endsWith('.' + d));
+  } catch {
+    isOfficialGovDomain = false;
+  }
+
+  if (!isOfficialGovDomain) {
+    errors.push('Official source URL must resolve to a recognized .gov.in, .nic.in, or verified statutory portal domain.');
+    fieldErrors.push({ field: 'officialSourceUrl', reason: 'Unrecognized or non-statutory source domain.' });
+  }
+
+  // 4. Description
+  const description = String(record.description || record.shortDescription || '').trim();
+  if (!description || description.length < 10) {
+    errors.push('Description is missing or too short (min 10 chars).');
+    fieldErrors.push({ field: 'description', reason: 'Description is missing or too short.' });
+  }
+
+  // 5. Benefits and Eligibility
+  const benefits = String(record.benefits || '').trim();
+  const eligibility = String(record.eligibility || '').trim();
+  if (!benefits && !eligibility) {
+    errors.push('Benefits or eligibility information must be provided.');
+    fieldErrors.push({ field: 'benefits', reason: 'Benefits or eligibility is required.' });
+  }
+
+  const isValid = errors.length === 0;
+
+  if (isValid && isOfficialGovDomain && !isSynthetic) {
+    return {
+      isValid: true,
+      errors: [],
+      fieldErrors: [],
+      publicationState: 'PUBLISHED',
+      verificationStatus: 'VERIFIED',
+      authenticityClassification: 'SOURCE_VERIFIED',
+      editorialReviewStatus: 'APPROVED'
+    };
+  }
+
+  // Safe quarantine for unverified, synthetic, or incomplete records
+  return {
+    isValid: false,
+    errors,
+    fieldErrors,
+    publicationState: 'QUARANTINED',
+    verificationStatus: 'UNVERIFIED',
+    authenticityClassification: isSynthetic ? 'GENERIC_OR_SYNTHETIC_SUSPECTED' : (!sourceUrl ? 'SOURCE_MISSING' : 'PARTIALLY_SUPPORTED'),
+    editorialReviewStatus: 'REQUIRES_OFFICIAL_EVIDENCE'
+  };
+}
+
 export const validateOpportunityData = validateOpportunityRecord;
 export const validateTenderData = validateTenderRecord;
+export const validateSubsidyData = validateSubsidyRecord;

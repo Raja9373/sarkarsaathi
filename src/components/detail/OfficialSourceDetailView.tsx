@@ -40,7 +40,7 @@ export function OfficialSourceDetailView({ item, onNavigate, onBack }: OfficialS
   // Find related opportunities, subsidies, or tenders
   const relatedSubsidies = useMemo(() => {
     if (!item.state) return [];
-    return subsidyRepository.getAll()
+    return subsidyRepository.getPublished()
       .filter(s => s.state?.toLowerCase() === item.state?.toLowerCase() || s.authority?.toLowerCase().includes(item.state?.toLowerCase() || ''))
       .slice(0, 4);
   }, [item.state]);

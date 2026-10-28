@@ -35,7 +35,9 @@ export function SubsidyHubView({ onNavigate }: SubsidyHubProps) {
   const [pageSize, setPageSize] = useState(20);
   const [showFilters, setShowFilters] = useState(false);
 
-  const items = useMemo(() => subsidyRepository.getAll(), []);
+  // Only display verified, published subsidies in the public catalogue
+  const items = useMemo(() => subsidyRepository.getPublished(), []);
+  const quarantinedCount = useMemo(() => subsidyRepository.getQuarantined().length, []);
 
   const facets = useMemo(() => {
     const states = new Set<string>();
@@ -114,10 +116,10 @@ export function SubsidyHubView({ onNavigate }: SubsidyHubProps) {
         </div>
         <div className="flex flex-col sm:flex-row gap-2">
           <div className="text-xs font-bold px-3 py-1.5 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl">
-            Verified Published: {items.filter(i => i.publicationState === 'PUBLISHED' || i.verificationStatus === 'VERIFIED').length}
+            Verified Published: {items.length}
           </div>
           <div className="text-xs font-bold px-3 py-1.5 bg-slate-100 border border-slate-200 text-slate-600 rounded-xl">
-            Total Ingested: {items.length} (996 under editorial review)
+            Under Editorial Review: {quarantinedCount} (Quarantined)
           </div>
         </div>
       </div>
@@ -386,18 +388,18 @@ export function SubsidyDetailView({ item, onBack }: SubsidyDetailProps) {
   const getFieldValue = (val?: string) => val && val.trim() ? val : "Not specified in the verified source.";
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+    <div className="max-w-4xl mx-auto px-3.5 sm:px-6 lg:px-8 py-5 sm:py-8 lg:py-10 space-y-6 sm:space-y-8">
       <button
         onClick={onBack}
-        className="inline-flex items-center space-x-1.5 text-xs font-semibold text-slate-600 hover:text-emerald-700 transition cursor-pointer bg-white px-3.5 py-2 rounded-xl border border-slate-200 shadow-2xs"
+        className="inline-flex items-center space-x-2 text-xs font-semibold text-slate-700 hover:text-emerald-700 transition cursor-pointer bg-white min-h-[44px] sm:min-h-[40px] px-4 py-2.5 rounded-xl border border-slate-200 shadow-2xs"
       >
-        <ChevronLeft className="w-4 h-4" />
+        <ChevronLeft className="w-4 h-4 text-slate-500" />
         <span>Back to Subsidies & Benefits</span>
       </button>
 
       {/* Editorial Quarantine Notice Banner */}
       {isQuarantined && (
-        <div className="bg-amber-50 border border-amber-200 rounded-2xl p-5 text-amber-900 space-y-2">
+        <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 sm:p-5 text-amber-900 space-y-2">
           <div className="flex items-center gap-2 font-bold text-sm text-amber-900">
             <AlertTriangle className="w-4 h-4 text-amber-600" />
             <span>Editorial Review & Data Authenticity Notice</span>
@@ -409,7 +411,7 @@ export function SubsidyDetailView({ item, onBack }: SubsidyDetailProps) {
       )}
 
       {/* Main Card */}
-      <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-sm space-y-6">
+      <div className="bg-white rounded-2xl sm:rounded-3xl border border-slate-200 p-4 sm:p-6 lg:p-10 shadow-sm space-y-5 sm:space-y-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <span className="px-3.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800">
             {item.category}
@@ -513,10 +515,10 @@ export function SubsidyDetailView({ item, onBack }: SubsidyDetailProps) {
                   href={item.applicationUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center space-x-2 px-5 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition shadow-sm"
+                  className="w-full sm:w-auto justify-center min-h-[48px] sm:min-h-[44px] inline-flex items-center space-x-2 px-5 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs sm:text-sm font-bold transition shadow-sm"
                 >
                   <span>Access Official Application Portal</span>
-                  <ExternalLink className="w-4 h-4" />
+                  <ExternalLink className="w-4 h-4 shrink-0" />
                 </a>
               </div>
             )}

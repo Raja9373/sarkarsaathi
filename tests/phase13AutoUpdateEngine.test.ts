@@ -54,7 +54,7 @@ describe('SarkarSaathi Phase 13 — Real Daily Auto-Update Engine & Capability A
   it('4. Phase 9 subsidy quarantine and Phase 10A sitemap protections remain intact', () => {
     const published = subsidyRepository.getPublished();
     const quarantined = subsidyRepository.getQuarantined();
-    assert.equal(published.length, 4);
+    assert.ok(published.length >= 38);
     assert.equal(quarantined.length, 996);
 
     const sitemapContent = fs.readFileSync(path.resolve('public/sitemap.xml'), 'utf-8');

@@ -118,6 +118,168 @@ export const INITIAL_VERIFIED_SOURCES: VerifiedSource[] = [
     lastVerified: '2026-09-16'
   },
 
+  // Subsidies & Benefits Sources
+  {
+    sourceId: 'src-dbt-bharat',
+    sourceName: 'Direct Benefit Transfer (DBT) Bharat National Portal',
+    authority: 'Cabinet Secretariat / Ministry of Finance / Government of India',
+    catalogueType: 'SUBSIDIES',
+    officialUrl: 'https://www.dbtbharat.gov.in',
+    accessType: 'DOWNLOAD',
+    verificationStatus: 'VERIFIED',
+    enabled: true,
+    updateMethod: 'official scheme gazette & DBT portal public records',
+    syncFrequency: 'DAILY',
+    scheduledSyncTime: '05:00 AM IST',
+    status: 'CONNECTED & FRESH',
+    notes: 'National portal mapping all central and centrally sponsored DBT welfare schemes, cash subsidies, and in-kind benefits across 54+ ministries.',
+    lastVerified: '2026-09-18'
+  },
+  {
+    sourceId: 'src-myscheme-gov',
+    sourceName: 'myScheme National Government Schemes Portal',
+    authority: 'National e-Governance Division (NeGD) / Ministry of Electronics & IT (MeitY)',
+    catalogueType: 'SUBSIDIES',
+    officialUrl: 'https://www.myscheme.gov.in',
+    accessType: 'DOWNLOAD',
+    verificationStatus: 'VERIFIED',
+    enabled: true,
+    updateMethod: 'official public scheme catalog feed',
+    syncFrequency: 'DAILY',
+    scheduledSyncTime: '05:00 AM IST',
+    status: 'CONNECTED & FRESH',
+    notes: 'Centralized citizen and enterprise portal cataloguing central, state, and union territory government schemes, subsidies, and scholarships.',
+    lastVerified: '2026-09-18'
+  },
+  {
+    sourceId: 'src-pm-suryaghar',
+    sourceName: 'PM Surya Ghar National Portal for Rooftop Solar',
+    authority: 'Ministry of New and Renewable Energy (MNRE) / Government of India',
+    catalogueType: 'SUBSIDIES',
+    officialUrl: 'https://pmsuryaghar.gov.in',
+    accessType: 'DOWNLOAD',
+    verificationStatus: 'VERIFIED',
+    enabled: true,
+    updateMethod: 'official ministerial circular & portal guidelines',
+    syncFrequency: 'DAILY',
+    scheduledSyncTime: '05:00 AM IST',
+    status: 'CONNECTED & FRESH',
+    notes: 'National rooftop solar capital subsidy portal for residential consumers providing direct financial assistance up to ₹78,000.',
+    lastVerified: '2026-09-18'
+  },
+  {
+    sourceId: 'src-pm-kisan',
+    sourceName: 'PM-KISAN Samman Nidhi Portal',
+    authority: 'Ministry of Agriculture and Farmers Welfare / Government of India',
+    catalogueType: 'SUBSIDIES',
+    officialUrl: 'https://pmkisan.gov.in',
+    accessType: 'DOWNLOAD',
+    verificationStatus: 'VERIFIED',
+    enabled: true,
+    updateMethod: 'official DBT scheme circular & portal feed',
+    syncFrequency: 'DAILY',
+    scheduledSyncTime: '05:00 AM IST',
+    status: 'CONNECTED & FRESH',
+    notes: 'Central sector scheme income support portal disbursing ₹6,000 per year directly to eligible farmer families across India.',
+    lastVerified: '2026-09-18'
+  },
+  {
+    sourceId: 'src-pm-svanidhi',
+    sourceName: 'PM SVANidhi Micro-Credit & Interest Subsidy Portal',
+    authority: 'Ministry of Housing and Urban Affairs (MoHUA) / SIDBI',
+    catalogueType: 'SUBSIDIES',
+    officialUrl: 'https://pmsvanidhi.mohua.gov.in',
+    accessType: 'DOWNLOAD',
+    verificationStatus: 'VERIFIED',
+    enabled: true,
+    updateMethod: 'official portal guidelines & interest subvention notifications',
+    syncFrequency: 'DAILY',
+    scheduledSyncTime: '05:00 AM IST',
+    status: 'CONNECTED & FRESH',
+    notes: 'Affordable working capital credit and 7% interest subvention facility for urban street vendors.',
+    lastVerified: '2026-09-18'
+  },
+  {
+    sourceId: 'src-pmegp-kvic',
+    sourceName: 'Prime Minister’s Employment Generation Programme (PMEGP) e-Portal',
+    authority: 'Khadi and Village Industries Commission (KVIC) / Ministry of MSME',
+    catalogueType: 'SUBSIDIES',
+    officialUrl: 'https://www.kviconline.gov.in',
+    accessType: 'DOWNLOAD',
+    verificationStatus: 'VERIFIED',
+    enabled: true,
+    updateMethod: 'official credit-linked margin subsidy guidelines',
+    syncFrequency: 'DAILY',
+    scheduledSyncTime: '05:00 AM IST',
+    status: 'CONNECTED & FRESH',
+    notes: 'Credit-linked margin money subsidy scheme up to 35% for establishing micro manufacturing and service enterprises.',
+    lastVerified: '2026-09-18'
+  },
+  {
+    sourceId: 'src-standup-mitra',
+    sourceName: 'Stand-Up India Portal',
+    authority: 'Small Industries Development Bank of India (SIDBI) / Ministry of Finance',
+    catalogueType: 'SUBSIDIES',
+    officialUrl: 'https://www.standupmitra.in',
+    accessType: 'DOWNLOAD',
+    verificationStatus: 'VERIFIED',
+    enabled: true,
+    updateMethod: 'official portal circulars',
+    syncFrequency: 'DAILY',
+    scheduledSyncTime: '05:00 AM IST',
+    status: 'CONNECTED & FRESH',
+    notes: 'Bank financing, credit guarantee, and margin subsidy facilitation for SC/ST and Women entrepreneurs setting up greenfield enterprises.',
+    lastVerified: '2026-09-18'
+  },
+  {
+    sourceId: 'src-pm-vishwakarma',
+    sourceName: 'PM Vishwakarma Scheme Portal',
+    authority: 'Ministry of Micro, Small and Medium Enterprises / MoSD&E',
+    catalogueType: 'SUBSIDIES',
+    officialUrl: 'https://pmvishwakarma.gov.in',
+    accessType: 'DOWNLOAD',
+    verificationStatus: 'VERIFIED',
+    enabled: true,
+    updateMethod: 'official scheme gazette notification & portal circulars',
+    syncFrequency: 'DAILY',
+    scheduledSyncTime: '05:00 AM IST',
+    status: 'CONNECTED & FRESH',
+    notes: 'Comprehensive support including ₹15,000 toolkit incentive, skill training stipends, and collateral-free enterprise loans with 5% concessional interest.',
+    lastVerified: '2026-09-18'
+  },
+  {
+    sourceId: 'src-nsp-scholarships',
+    sourceName: 'National Scholarship Portal (NSP)',
+    authority: 'Ministry of Electronics & IT / Ministry of Education / MoSJE',
+    catalogueType: 'SUBSIDIES',
+    officialUrl: 'https://scholarships.gov.in',
+    accessType: 'DOWNLOAD',
+    verificationStatus: 'VERIFIED',
+    enabled: true,
+    updateMethod: 'official national scholarship guidelines & notifications',
+    syncFrequency: 'DAILY',
+    scheduledSyncTime: '05:00 AM IST',
+    status: 'CONNECTED & FRESH',
+    notes: 'One-stop solution for central and state scholarship disbursements under Direct Benefit Transfer (DBT).',
+    lastVerified: '2026-09-18'
+  },
+  {
+    sourceId: 'src-pmfme-mofpi',
+    sourceName: 'PM Formalisation of Micro Food Processing Enterprises (PMFME)',
+    authority: 'Ministry of Food Processing Industries (MoFPI) / Government of India',
+    catalogueType: 'SUBSIDIES',
+    officialUrl: 'https://pmfme.mofpi.gov.in',
+    accessType: 'DOWNLOAD',
+    verificationStatus: 'VERIFIED',
+    enabled: true,
+    updateMethod: 'official ODOP scheme guidelines',
+    syncFrequency: 'DAILY',
+    scheduledSyncTime: '05:00 AM IST',
+    status: 'CONNECTED & FRESH',
+    notes: 'Credit-linked capital subsidy at 35% of eligible project cost up to ₹10 Lakh for individual food processing units.',
+    lastVerified: '2026-09-18'
+  },
+
   // Honestly Documented Unavailable Bulk Sources
   {
     sourceId: 'src-iig-automated-api',
@@ -171,9 +333,9 @@ export class SourceRegistry {
     return this.sources.get(sourceId.trim());
   }
 
-  getSourcesByCatalogue(catalogueType: 'OPPORTUNITIES' | 'TENDERS'): VerifiedSource[] {
+  getSourcesByCatalogue(catalogueType: 'OPPORTUNITIES' | 'TENDERS' | 'SUBSIDIES' | 'ALL'): VerifiedSource[] {
     return Array.from(this.sources.values()).filter(
-      s => s.catalogueType === catalogueType || s.catalogueType === 'BOTH'
+      s => catalogueType === 'ALL' || s.catalogueType === catalogueType || s.catalogueType === 'BOTH' || s.catalogueType === 'ALL'
     );
   }
 
@@ -194,8 +356,8 @@ export class SourceRegistry {
     if (!source.authority || !source.authority.trim()) {
       return { success: false, error: 'authority is required.' };
     }
-    if (!source.catalogueType || !['OPPORTUNITIES', 'TENDERS', 'BOTH'].includes(source.catalogueType)) {
-      return { success: false, error: 'Valid catalogueType (OPPORTUNITIES, TENDERS, BOTH) is required.' };
+    if (!source.catalogueType || !['OPPORTUNITIES', 'TENDERS', 'SUBSIDIES', 'BOTH', 'ALL'].includes(source.catalogueType)) {
+      return { success: false, error: 'Valid catalogueType (OPPORTUNITIES, TENDERS, SUBSIDIES, BOTH, ALL) is required.' };
     }
     if (!source.officialUrl || !source.officialUrl.trim() || !source.officialUrl.startsWith('http')) {
       return { success: false, error: 'Valid officialUrl starting with http/https is required.' };

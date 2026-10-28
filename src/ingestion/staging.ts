@@ -1,9 +1,10 @@
-import { Opportunity, Tender } from '../types';
-import { StagedOpportunity, StagedTender, VerificationState, ReviewStatus } from './types';
+import { Opportunity, Tender, Subsidy } from '../types';
+import { StagedOpportunity, StagedTender, StagedSubsidy, VerificationState, ReviewStatus } from './types';
 
 export class StagingQueue {
   private stagedOpportunities: StagedOpportunity[] = [];
   private stagedTenders: StagedTender[] = [];
+  private stagedSubsidies: StagedSubsidy[] = [];
 
   addOpportunity(record: StagedOpportunity) {
     if (!record.reviewStatus) {
@@ -19,6 +20,13 @@ export class StagingQueue {
     this.stagedTenders.push(record);
   }
 
+  addSubsidy(record: StagedSubsidy) {
+    if (!record.reviewStatus) {
+      record.reviewStatus = (record.publicationState === 'PUBLISHED' || record.verificationStatus === 'VERIFIED') ? 'APPROVED' : 'PENDING_REVIEW';
+    }
+    this.stagedSubsidies.push(record);
+  }
+
   getStagedOpportunities(status?: VerificationState | ReviewStatus): StagedOpportunity[] {
     if (!status) return this.stagedOpportunities;
     return this.stagedOpportunities.filter(item => 
@@ -29,6 +37,13 @@ export class StagingQueue {
   getStagedTenders(status?: VerificationState | ReviewStatus): StagedTender[] {
     if (!status) return this.stagedTenders;
     return this.stagedTenders.filter(item => 
+      item.reviewStatus === status || item.verificationStatus === status
+    );
+  }
+
+  getStagedSubsidies(status?: VerificationState | ReviewStatus): StagedSubsidy[] {
+    if (!status) return this.stagedSubsidies;
+    return this.stagedSubsidies.filter(item => 
       item.reviewStatus === status || item.verificationStatus === status
     );
   }
@@ -46,6 +61,15 @@ export class StagingQueue {
     const idx = this.stagedTenders.findIndex(i => i.id === id);
     if (idx !== -1) {
       this.stagedTenders.splice(idx, 1);
+      return true;
+    }
+    return false;
+  }
+
+  removeStagedSubsidy(id: string): boolean {
+    const idx = this.stagedSubsidies.findIndex(i => i.id === id);
+    if (idx !== -1) {
+      this.stagedSubsidies.splice(idx, 1);
       return true;
     }
     return false;
@@ -358,9 +382,62 @@ export class StagingQueue {
     return { published, skipped };
   }
 
+  publishApprovedSubsidies(repository: { getAll: (publishedOnly?: boolean) => Subsidy[]; add?: (item: Subsidy) => boolean }): { published: number; skipped: number } {
+    const existing = repository.getAll();
+    const existingIds = new Set(existing.map(i => i.id));
+    const existingSlugs = new Set(existing.map(i => i.slug).filter(Boolean));
+    const existingUrls = new Set(existing.map(i => i.officialSourceUrl || i.sourceUrl).filter(Boolean));
+
+    let published = 0;
+    let skipped = 0;
+    const remaining: StagedSubsidy[] = [];
+
+    for (const staged of this.stagedSubsidies) {
+      const isApproved = staged.reviewStatus === 'APPROVED' || (staged.verificationStatus === 'VERIFIED' && staged.reviewStatus !== 'REJECTED');
+
+      if (isApproved && staged.publicationState === 'PUBLISHED') {
+        const url = staged.officialSourceUrl || staged.sourceUrl;
+        if (existingIds.has(staged.id) || (staged.slug && existingSlugs.has(staged.slug)) || (url && existingUrls.has(url))) {
+          skipped++;
+          remaining.push(staged);
+          continue;
+        }
+
+        const cleanSubsidy: Subsidy = {
+          ...staged,
+          publicationState: 'PUBLISHED',
+          verificationStatus: 'VERIFIED',
+          authenticityClassification: 'SOURCE_VERIFIED',
+          editorialReviewStatus: 'APPROVED'
+        };
+
+        if (repository.add) {
+          const added = repository.add(cleanSubsidy);
+          if (added) {
+            existingIds.add(cleanSubsidy.id);
+            if (cleanSubsidy.slug) existingSlugs.add(cleanSubsidy.slug);
+            if (url) existingUrls.add(url);
+            published++;
+          } else {
+            skipped++;
+            remaining.push(staged);
+          }
+        } else {
+          remaining.push(staged);
+        }
+      } else {
+        remaining.push(staged);
+      }
+    }
+
+    this.stagedSubsidies = remaining;
+    return { published, skipped };
+  }
+
   clear() {
     this.stagedOpportunities = [];
     this.stagedTenders = [];
+    this.stagedSubsidies = [];
   }
 }
 

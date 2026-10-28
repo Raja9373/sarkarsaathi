@@ -97,7 +97,7 @@ export const TenderDetailView: React.FC<TenderDetailViewProps> = ({ item }) => {
   return (
     <div className="space-y-8">
       {/* Header Card */}
-      <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-xs space-y-6">
+      <div className="bg-white rounded-2xl sm:rounded-3xl border border-slate-200 p-4 sm:p-6 lg:p-8 shadow-xs space-y-5 sm:space-y-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex flex-wrap items-center gap-2">
             {(item.tenderId || item.referenceNumber) && (

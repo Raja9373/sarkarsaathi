@@ -1,4 +1,5 @@
 import { Subsidy } from '../../types';
+import { VERIFIED_RECOVERED_SUBSIDIES } from './verifiedSubsidiesData';
 import { SUBSIDIES_BATCH_1 } from './subsidiesBatch1';
 import { SUBSIDIES_BATCH_2 } from './subsidiesBatch2';
 import { SUBSIDIES_BATCH_3 } from './subsidiesBatch3';
@@ -191,6 +192,8 @@ const initialPilot: Subsidy[] = [
 
 // Generate remaining pilot items (SUB-005 to SUB-050) to complete the 50 pilot records
 // Marked UNVERIFIED and QUARANTINED per Phase 9 safe remediation
+// Generate remaining pilot items (SUB-005 to SUB-050) to complete the 50 pilot records
+// Marked UNVERIFIED and QUARANTINED per Phase 9 safe remediation
 const additionalPilot: Subsidy[] = Array.from({ length: 46 }, (_, i) => {
   const index = i + 5;
   const id = `SUB-${String(index).padStart(3, '0')}`;
@@ -204,10 +207,10 @@ const additionalPilot: Subsidy[] = Array.from({ length: 46 }, (_, i) => {
   const cat = categories[i % categories.length];
   return {
     id,
-    slug: `verified-government-subsidy-scheme-${index}`,
-    title: `Verified Government Subsidy & Assistance Scheme #${index}`,
-    shortDescription: `Official verified government subsidy providing financial assistance and incentives for beneficiaries.`,
-    description: `Government-backed scheme offering financial support, capital subsidy, or interest subvention under official guidelines.`,
+    slug: `gov-subsidy-benefit-scheme-${index}`,
+    title: `Government Subsidy & Incentive Scheme #${index} - ${cat.replace(' Subsidies', '')}`,
+    shortDescription: `Provisional entry pending official verification against statutory gazette notifications.`,
+    description: `Government subsidy and assistance scheme entry pending editorial review and official source verification.`,
     category: cat,
     subcategory: 'Financial Assistance & Subsidy',
     benefitType: 'Capital Subsidy',
@@ -232,8 +235,8 @@ const additionalPilot: Subsidy[] = Array.from({ length: 46 }, (_, i) => {
     officialSource: 'DBT Bharat / Government of India',
     officialSourceUrl: 'https://www.dbtbharat.gov.in',
     lastVerified: '2026-09-18',
-    sourceNotes: 'Verified official record.',
-    disclaimer: 'Subject to scheme guidelines and verification.',
+    sourceNotes: 'Under editorial review. Awaiting gazette verification.',
+    disclaimer: 'This unverified provisional entry is in quarantine. Do not rely on these figures for financial planning.',
     sourceUrl: 'https://www.dbtbharat.gov.in',
     sourceAuthority: 'DBT Bharat',
     verificationStatus: 'UNVERIFIED',
@@ -244,7 +247,7 @@ const additionalPilot: Subsidy[] = Array.from({ length: 46 }, (_, i) => {
 });
 
 export const VERIFIED_SUBSIDIES_PILOT: Subsidy[] = [
-  ...initialPilot,
+  ...VERIFIED_RECOVERED_SUBSIDIES,
   ...additionalPilot,
   ...SUBSIDIES_BATCH_1,
   ...SUBSIDIES_BATCH_2,

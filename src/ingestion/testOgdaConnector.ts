@@ -12,18 +12,19 @@ export async function testOgdaConnector(resourceId?: string, apiKey?: string): P
   sampleRecord?: any;
   error?: string;
 }> {
-  const key = apiKey || (typeof process !== 'undefined' ? process.env.DATAGOV_API_KEY : undefined);
+  const key = apiKey || (typeof process !== 'undefined' ? (process.env.DATA_GOV_IN_API_KEY || process.env.DATAGOV_API_KEY) : undefined);
   const resource = resourceId || '3b01bcb8-0b14-4abf-b4f2-c1c118adba9e'; // official sample resource
 
   if (!key) {
-    console.warn('[OGD Connector Test] DATAGOV_API_KEY is not configured in the environment.');
+    console.warn('[OGD Connector Test] DATA_GOV_IN_API_KEY / DATAGOV_API_KEY is not configured in the environment.');
     return {
       success: false,
-      error: 'DATAGOV_API_KEY missing'
+      error: 'DATA_GOV_IN_API_KEY missing'
     };
   }
 
-  const url = `https://api.data.gov.in/resource/${resource}?api-key=${key}&format=json&limit=1`;
+  // Official query pattern: https://api.data.gov.in/resource/{resource-id}?api-key=${DATA_GOV_IN_API_KEY}&format=json&limit=100
+  const url = `https://api.data.gov.in/resource/${resource}?api-key=${key}&format=json&limit=100`;
   console.log(`[OGD Connector Test] Fetching from: https://api.data.gov.in/resource/${resource}`);
 
   try {

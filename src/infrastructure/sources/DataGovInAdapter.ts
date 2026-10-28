@@ -24,8 +24,9 @@ export class DataGovInAdapter implements OfficialSourceAdapter<any, StagedOpport
     }
 
     const offset = (page - 1) * limit;
-    // API pattern: GET /resource/{RESOURCE_ID}
-    const url = `${this.config.baseUrl}resource/${this.resourceId}?api-key=${process.env.DATA_GOV_IN_API_KEY}&offset=${offset}&limit=${limit}`;
+    const key = process.env.DATA_GOV_IN_API_KEY;
+    // API pattern: https://api.data.gov.in/resource/{resource-id}?api-key=${DATA_GOV_IN_API_KEY}&format=json&limit=100
+    const url = `https://api.data.gov.in/resource/${this.resourceId}?api-key=${key}&format=json&limit=${limit || 100}${offset > 0 ? `&offset=${offset}` : ''}`;
     
     // SAFE IMPLEMENTATION: Mocked fetch for testability/safety per prompt constraints
     console.log(`[Adapter Test] Requesting: ${url}`);

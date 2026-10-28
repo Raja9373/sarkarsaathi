@@ -32,6 +32,13 @@ export class SubsidyRepository implements Repository<Subsidy> {
   }
 
   getBySlug(slug: string): Subsidy | undefined {
+    // Support legacy alias for pilot unverified records
+    if (slug.startsWith('verified-government-subsidy-scheme-')) {
+      const idx = slug.replace('verified-government-subsidy-scheme-', '');
+      const legacyId = `SUB-${idx.padStart(3, '0')}`;
+      const found = this.items.find(i => i.id === legacyId);
+      if (found) return found;
+    }
     return this.store.getBySlug(slug) || this.items.find(i => i.slug === slug);
   }
 
@@ -43,6 +50,16 @@ export class SubsidyRepository implements Repository<Subsidy> {
     if (!this.items.some(i => i.id === item.id)) {
       this.items.push(item);
       this.store.add(item);
+      return true;
+    }
+    return false;
+  }
+
+  remove(id: string): boolean {
+    const idx = this.items.findIndex(i => i.id === id);
+    if (idx !== -1) {
+      this.items.splice(idx, 1);
+      this.store = new IndexedCatalogStore<Subsidy>(this.items);
       return true;
     }
     return false;
