@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Search, ExternalLink, ShieldCheck, ArrowRight, Building2, TrendingUp, Award, FileText, Newspaper, Bookmark, Share2, Lightbulb, Users, Leaf, Megaphone, ChevronLeft, ChevronRight, Filter, X, ArrowUpDown, RotateCcw, Calculator, CheckCircle2, AlertCircle, Info } from 'lucide-react';
 import { investmentRepository, investmentSchemeRepository, opportunityRepository, tenderRepository, newsRepository } from '../infrastructure/repositories/InvestmentRepository';
+import { subsidyRepository } from '../infrastructure/repositories/SubsidyRepository';
 import { useSavedItems, useRecentlyViewed, ShareButton } from './SavedAndRecent';
 import { HeroIndiaGateVisual } from './HeroIndiaGateVisual';
 import { CatalogQueryOptions, PaginatedResult } from '../ingestion/types';
@@ -347,6 +348,227 @@ export function HomeView({ onNavigate }: HubProps) {
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>
+      </section>
+
+      {/* Featured Verified Government Subsidies & Direct Benefit Schemes */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-6">
+          <div>
+            <span className="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full inline-block mb-2">
+              Statutory &amp; Ministry Verified
+            </span>
+            <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+              Flagship Central &amp; State Government Subsidies
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-2xl">
+              Direct Benefit Transfer (DBT) programmes, capital investment subsidies, and interest subvention schemes audited against official ministry guidelines.
+            </p>
+          </div>
+          <button
+            onClick={() => onNavigate('/subsidies')}
+            className="text-emerald-700 hover:text-emerald-800 font-bold text-xs sm:text-sm flex items-center space-x-1.5 cursor-pointer transition shrink-0"
+          >
+            <span>Browse All {subsidyRepository.getPublished().length} Verified Subsidies</span>
+            <ArrowRight className="w-4 h-4" />
+          </button>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {subsidyRepository.getPublished().slice(0, 6).map((sub) => (
+            <div
+              key={sub.id}
+              onClick={() => onNavigate('/subsidies', sub.slug)}
+              className="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs hover:shadow-md hover:border-emerald-300 transition cursor-pointer flex flex-col justify-between group"
+            >
+              <div className="space-y-3">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800">
+                    {sub.category}
+                  </span>
+                  <span className="text-[11px] font-semibold text-slate-500">
+                    {sub.state || 'All India'}
+                  </span>
+                </div>
+                <h3 className="text-base font-bold text-slate-900 group-hover:text-emerald-700 transition leading-snug">
+                  {sub.title}
+                </h3>
+                <p className="text-xs text-slate-600 line-clamp-3 leading-relaxed">
+                  {sub.description}
+                </p>
+              </div>
+              <div className="pt-4 mt-4 border-t border-slate-100 space-y-2">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-slate-400 font-semibold">Key Benefit:</span>
+                  <span className="font-bold text-emerald-700 truncate max-w-[190px]">
+                    {sub.maximumBenefit || sub.subsidyAmount || sub.benefitType}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between text-xs font-bold text-indigo-600 pt-1">
+                  <span>Check Eligibility &amp; Documents</span>
+                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition" />
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Sovereign Savings & Tax-Exemption Comparison Matrix (Editorial Analysis) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+        <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 lg:p-10 shadow-xs space-y-6">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-100 pb-5">
+            <div className="space-y-1.5">
+              <span className="text-xs font-bold uppercase tracking-wider text-indigo-700 bg-indigo-50 px-3 py-1 rounded-full inline-block">
+                2026 Financial Research &amp; Comparison Guide
+              </span>
+              <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+                Sovereign Savings &amp; Capital Gains Tax-Exemption Matrix
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-600 max-w-3xl leading-relaxed">
+                Side-by-side comparison of Government of India backed small savings schemes and statutory tax-saving bonds. All interest rates reflect official Ministry of Finance and RBI notifications.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-2.5 shrink-0">
+              <button
+                onClick={() => onNavigate('/comparisons')}
+                className="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold transition cursor-pointer flex items-center space-x-1.5"
+              >
+                <span>Interactive Comparison Tool</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+              <button
+                onClick={() => onNavigate('/tools')}
+                className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-xl text-xs font-bold transition cursor-pointer flex items-center space-x-1.5"
+              >
+                <Calculator className="w-3.5 h-3.5 text-indigo-600" />
+                <span>Maturity Calculators</span>
+              </button>
+            </div>
+          </div>
+
+          <div className="overflow-x-auto">
+            <table className="w-full text-left border-collapse text-xs sm:text-sm">
+              <thead>
+                <tr className="border-b border-slate-200 text-slate-500 uppercase text-[11px] font-bold bg-slate-50/80">
+                  <th className="py-3.5 px-4 rounded-tl-xl">Instrument / Scheme</th>
+                  <th className="py-3.5 px-4">Issuing Authority</th>
+                  <th className="py-3.5 px-4">Indicative Return / Rate</th>
+                  <th className="py-3.5 px-4">Lock-In / Tenure</th>
+                  <th className="py-3.5 px-4">Income Tax Treatment</th>
+                  <th className="py-3.5 px-4 rounded-tr-xl">Ideal Citizen Profile</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-200/70 text-slate-700">
+                <tr className="hover:bg-slate-50/80 transition cursor-pointer" onClick={() => onNavigate('/investments', '54ec-capital-gain-bonds')}>
+                  <td className="py-3.5 px-4 font-bold text-indigo-700">54EC Capital Gain Bonds (REC / PFC / IRFC)</td>
+                  <td className="py-3.5 px-4">Central Power &amp; Rail PSUs</td>
+                  <td className="py-3.5 px-4 font-semibold text-emerald-700">5.25% p.a. (Annual Payout)</td>
+                  <td className="py-3.5 px-4">5 Years (Mandatory Lock-in)</td>
+                  <td className="py-3.5 px-4">LTCG Tax Exempt up to ₹50 Lakh u/s 54EC</td>
+                  <td className="py-3.5 px-4">Property sellers offsetting Long-Term Capital Gains</td>
+                </tr>
+                <tr className="hover:bg-slate-50/80 transition cursor-pointer" onClick={() => onNavigate('/investments', 'public-provident-fund')}>
+                  <td className="py-3.5 px-4 font-bold text-indigo-700">Public Provident Fund (PPF)</td>
+                  <td className="py-3.5 px-4">Ministry of Finance / Post Office</td>
+                  <td className="py-3.5 px-4 font-semibold text-emerald-700">7.10% p.a. (Compounded Yearly)</td>
+                  <td className="py-3.5 px-4">15 Years (Partial withdrawal Yr 7)</td>
+                  <td className="py-3.5 px-4">EEE Status (80C + Tax-Free Interest &amp; Maturity)</td>
+                  <td className="py-3.5 px-4">Salaried &amp; self-employed long-term retirement savers</td>
+                </tr>
+                <tr className="hover:bg-slate-50/80 transition cursor-pointer" onClick={() => onNavigate('/subsidies', 'sukanya-samriddhi-yojana')}>
+                  <td className="py-3.5 px-4 font-bold text-indigo-700">Sukanya Samriddhi Yojana (SSY)</td>
+                  <td className="py-3.5 px-4">Ministry of Finance / India Post</td>
+                  <td className="py-3.5 px-4 font-semibold text-emerald-700">8.20% p.a. (Highest Tax-Free)</td>
+                  <td className="py-3.5 px-4">21 Years from account opening</td>
+                  <td className="py-3.5 px-4">EEE Status (Full 80C + Tax-Free Maturity)</td>
+                  <td className="py-3.5 px-4">Parents/guardians of girl child below 10 years of age</td>
+                </tr>
+                <tr className="hover:bg-slate-50/80 transition cursor-pointer" onClick={() => onNavigate('/investments', 'senior-citizen-savings-scheme')}>
+                  <td className="py-3.5 px-4 font-bold text-indigo-700">Senior Citizen Savings Scheme (SCSS)</td>
+                  <td className="py-3.5 px-4">Ministry of Finance / Banks</td>
+                  <td className="py-3.5 px-4 font-semibold text-emerald-700">8.20% p.a. (Quarterly Payout)</td>
+                  <td className="py-3.5 px-4">5 Years (Extendable by 3 Years)</td>
+                  <td className="py-3.5 px-4">80C Deduction up to ₹1.5L (Interest taxable, 80TTB applies)</td>
+                  <td className="py-3.5 px-4">Retirees aged 60+ seeking guaranteed quarterly income</td>
+                </tr>
+                <tr className="hover:bg-slate-50/80 transition cursor-pointer" onClick={() => onNavigate('/investments', 'rbi-floating-rate-savings-bonds')}>
+                  <td className="py-3.5 px-4 font-bold text-indigo-700">RBI Floating Rate Savings Bonds</td>
+                  <td className="py-3.5 px-4">Reserve Bank of India (RBI)</td>
+                  <td className="py-3.5 px-4 font-semibold text-emerald-700">8.05% p.a. (NSC + 0.35% spread)</td>
+                  <td className="py-3.5 px-4">7 Years (Premature exit for Seniors)</td>
+                  <td className="py-3.5 px-4">Semi-annual interest taxable as per slab</td>
+                  <td className="py-3.5 px-4">Conservative investors seeking inflation-linked sovereign yield</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      {/* Citizen Handbook: How to Verify Eligibility & Apply Safely */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+        <div className="mb-6">
+          <span className="text-xs font-bold uppercase tracking-wider text-blue-700 bg-blue-50 border border-blue-200 px-3 py-1 rounded-full inline-block mb-2">
+            Citizen Awareness &amp; Application Handbook
+          </span>
+          <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+            How to Navigate Government Schemes, DBT Subsidies &amp; Public Tenders Safely
+          </h2>
+          <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-3xl">
+            Essential domain knowledge compiled by our editorial team to help citizens avoid common application rejections and fraudulent intermediaries.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <article className="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs space-y-3">
+            <div className="flex items-center space-x-2.5 text-indigo-700 font-bold text-sm">
+              <CheckCircle2 className="w-5 h-5 shrink-0" />
+              <h3>1. Aadhaar Seeding vs. Bank Linking for DBT Transfers</h3>
+            </div>
+            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              Over 300 Central and State welfare schemes—including <strong>PM-Kisan Samman Nidhi</strong>, <strong>LPG PAHAL Subsidy</strong>, <strong>National Scholarship Portal (NSP)</strong>, and <strong>State Mahila Samman DBT programmes</strong>—disburse funds exclusively through the National Payments Corporation of India (NPCI) Aadhaar Payment Bridge (APB). Simply giving a bank account with an Aadhaar photocopy is not sufficient; citizens must verify that their bank account has active <strong>NPCI DBT Mapping</strong> enabled at their bank branch or via the official UIDAI/NPCI status checker.
+            </p>
+          </article>
+
+          <article className="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs space-y-3">
+            <div className="flex items-center space-x-2.5 text-emerald-700 font-bold text-sm">
+              <Award className="w-5 h-5 shrink-0" />
+              <h3>2. Understanding Margin Money Subsidy vs. Interest Subvention</h3>
+            </div>
+            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              When applying for entrepreneurship and agriculture schemes such as <strong>PMEGP (Prime Minister's Employment Generation Programme)</strong>, <strong>PMFME (Micro Food Processing)</strong>, or <strong>Agriculture Infrastructure Fund (AIF)</strong>, applicants should distinguish between two distinct benefit structures: <em>Margin Money / Capital Subsidy</em> (a one-time grant of 15% to 35% of project cost kept in a Term Deposit Receipt and adjusted after 3 years of successful operation) and <em>Interest Subvention</em> (an annual reduction of 2% to 3% on bank loan interest rates).
+            </p>
+          </article>
+
+          <article className="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs space-y-3">
+            <div className="flex items-center space-x-2.5 text-blue-700 font-bold text-sm">
+              <FileText className="w-5 h-5 shrink-0" />
+              <h3>3. How MSMEs Can Participate in GeM &amp; CPPP Public Procurement</h3>
+            </div>
+            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              Under the Public Procurement Policy for Micro and Small Enterprises (MSEs), central ministries and PSUs are mandated to procure at least <strong>25% of their annual requirements from MSEs</strong>, including 4% from SC/ST-owned and 3% from women-owned MSEs. Registered Udyam MSMEs typically qualify for <strong>Earnest Money Deposit (EMD) exemption</strong> and prior turnover relaxation on both the Government e-Marketplace (<code>gem.gov.in</code>) and Central Public Procurement Portal (<code>eprocure.gov.in</code>).
+            </p>
+          </article>
+
+          <article className="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs space-y-3">
+            <div className="flex items-center space-x-2.5 text-amber-700 font-bold text-sm">
+              <ShieldCheck className="w-5 h-5 shrink-0" />
+              <h3>4. Verifying Authentic .gov.in Portals &amp; Avoiding Cyber Fraud</h3>
+            </div>
+            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              Before uploading identity documents or paying any application fee, always verify that the destination domain ends with <strong><code>.gov.in</code></strong> or <strong><code>.nic.in</code></strong> (or recognized statutory institutions like <code>rbi.org.in</code>, <code>nabard.org</code>, or <code>sidbi.in</code>). Official government welfare schemes never ask citizens to share UPI PINs, credit card CVVs, or WhatsApp APK files to claim a subsidy. Use our <button onClick={() => onNavigate('/official-sources')} className="text-indigo-600 font-bold underline cursor-pointer">Official Government Sources Directory</button> to cross-check portal authenticity.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      {/* Contextual FAQ Section on Homepage */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+        <ContextualFAQSection
+          category="Government Investments"
+          onNavigate={onNavigate}
+          maxItems={6}
+        />
       </section>
     </div>
   );
