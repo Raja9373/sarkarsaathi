@@ -19,18 +19,54 @@ interface HubProps {
 }
 
 export function HomeView({ onNavigate }: HubProps) {
+  const [selectedProfile, setSelectedProfile] = useState<string>('ALL');
+  const [selectedState, setSelectedState] = useState<string>('All India');
+  const [quickQuery, setQuickQuery] = useState<string>('');
+
+  const publishedSubsidies = useMemo(() => subsidyRepository.getPublished(), []);
+
+  const matchedSubsidies = useMemo(() => {
+    return publishedSubsidies.filter((sub) => {
+      const text = `${sub.title} ${sub.category} ${sub.beneficiaryType || ''} ${sub.description || ''}`.toLowerCase();
+      if (selectedProfile === 'FARMER' && !/farmer|kisan|agri|crop|krishi|dairy|fisheries|kusum/.test(text)) return false;
+      if (selectedProfile === 'MSME' && !/msme|entrepreneur|business|startup|udyam|pmegp|mudra|cgtmse|industrial|manufacturing|food processing/.test(text)) return false;
+      if (selectedProfile === 'SOLAR_HOUSING' && !/solar|surya|rooftop|housing|awas|home|urban|rural|energy/.test(text)) return false;
+      if (selectedProfile === 'WOMEN_CHILD' && !/women|mahila|girl|sukanya|maternity|ladli|shakti|self help|lakhpati/.test(text)) return false;
+      if (selectedProfile === 'EDUCATION' && !/student|scholarship|education|skill|fellowship|youth|apprentice/.test(text)) return false;
+
+      if (selectedState !== 'All India') {
+        const subState = (sub.state || 'All India').toLowerCase();
+        if (subState !== 'all india' && subState !== 'central' && !subState.includes(selectedState.toLowerCase())) {
+          return false;
+        }
+      }
+
+      if (quickQuery.trim()) {
+        const q = quickQuery.trim().toLowerCase();
+        if (!text.includes(q)) return false;
+      }
+
+      return true;
+    });
+  }, [publishedSubsidies, selectedProfile, selectedState, quickQuery]);
+
+  const handleShareMatchesWhatsApp = () => {
+    const topMatches = matchedSubsidies.slice(0, 4);
+    const listText = topMatches
+      .map((s, idx) => `${idx + 1}. *${s.title}* (${s.maximumBenefit || s.subsidyAmount || 'Govt Benefit'})\n   https://sarkarsaathi.org/subsidies/${s.slug}`)
+      .join('\n\n');
+    const message = `*SarkarSaathi Verified Sarkari Yojana Matches (${selectedState})*\n\n${listText}\n\nCheck all ${publishedSubsidies.length}+ verified schemes & 54EC/PPF tax calculators at: https://sarkarsaathi.org/subsidies`;
+    const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`;
+    window.location.href = whatsappUrl;
+  };
+
   return (
     <div className="space-y-8 pb-16">
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-[#0a3f74] via-[#093563] to-[#0a2347] text-white py-12 sm:py-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden border-b border-blue-950/60 shadow-inner">
-        {/* Subtle atmospheric ambient glow */}
         <div className="absolute top-0 right-1/4 w-96 h-96 bg-blue-400/10 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 left-10 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
 
-        {/* 
-          India Gate Landmark Photo Background
-          Feather-blended seamlessly with zero hard borders or cut lines
-        */}
         <div
           className="absolute right-0 top-0 bottom-0 w-full sm:w-[68%] lg:w-[48%] pointer-events-none z-0 select-none overflow-hidden"
           style={{
@@ -46,90 +82,73 @@ export function HomeView({ onNavigate }: HubProps) {
             className="w-full h-full object-cover object-right sm:object-[82%_center]"
             referrerPolicy="no-referrer"
           />
-          {/* Deep ambient tint overlay to melt naturally into the deep ocean blue sky */}
           <div className="absolute inset-0 bg-gradient-to-r from-[#093563] via-[#093563]/40 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0a2347] via-transparent to-[#0a3f74]/30" />
         </div>
 
-        {/* Ambient warm twilight lights */}
         <div className="absolute right-8 top-1/4 w-72 h-72 bg-amber-500/15 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute right-40 top-8 w-80 h-80 bg-sky-400/12 rounded-full blur-3xl pointer-events-none" />
 
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6 items-center">
-            {/* Left Content */}
             <div className="lg:col-span-7 text-left">
-              {/* Badge */}
               <div className="inline-flex items-center space-x-2 bg-blue-800/40 border border-blue-400/30 px-3.5 py-1.5 rounded-full text-xs font-medium text-blue-100 mb-5 backdrop-blur-xs">
                 <ShieldCheck className="w-3.5 h-3.5 text-blue-300" />
-                <span>Independent Information Platform</span>
+                <span>Independent Information Platform · सरकारी योजना एवं निवेश पोर्टल</span>
               </div>
 
-              {/* Headline */}
               <h1 className="text-3xl sm:text-4xl lg:text-[44px] font-extrabold tracking-tight mb-4 text-white leading-[1.18]">
                 India’s Government<br />
-                <span className="text-[#f59e0b]">Investment</span> <span className="text-[#818cf8]">&amp; Opportunity</span> Platform
+                <span className="text-[#f59e0b]">Schemes, Subsidies</span> <span className="text-[#818cf8]">&amp; Investments</span>
               </h1>
 
-              {/* Subheadline */}
               <p className="text-blue-100/90 text-sm sm:text-base mb-8 max-w-xl font-normal leading-relaxed">
-                Explore government investment products, development opportunities, projects, tenders and important updates from official sources across India.
+                Check eligibility for {publishedSubsidies.length}+ verified Central &amp; State Sarkari Yojanas (PM-KISAN, PM Surya Ghar Solar, PMEGP MSME Grants), 54EC Tax-Saving Bonds, PPF/SSY calculators, and live GeM/CPPP public tenders.
               </p>
 
-              {/* CTA Buttons Row */}
+              {/* Crawlable CTA Links Row */}
               <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 mb-8">
-                {/* Primary Button */}
-                <button
-                  onClick={() => onNavigate('/investments')}
-                  className="px-4.5 py-2.5 sm:px-5 sm:py-3 bg-[#2563eb] hover:bg-blue-600 text-white font-semibold rounded-xl flex items-center space-x-2 shadow-lg shadow-blue-950/40 transition cursor-pointer text-sm"
-                >
-                  <TrendingUp className="w-4 h-4" />
-                  <span>Explore Investments</span>
-                  <ArrowRight className="w-4 h-4 ml-0.5" />
-                </button>
-
-                {/* Subsidies Hero Button */}
-                <button
-                  onClick={() => onNavigate('/subsidies')}
+                <a
+                  href="/subsidies"
+                  onClick={(e) => { e.preventDefault(); onNavigate('/subsidies'); }}
                   className="px-4.5 py-2.5 sm:px-5 sm:py-3 bg-amber-500 hover:bg-amber-600 text-slate-950 font-semibold rounded-xl flex items-center space-x-2 shadow-lg shadow-amber-950/20 transition cursor-pointer text-sm"
                 >
                   <Award className="w-4 h-4 text-slate-950" />
-                  <span>Subsidies &amp; Benefits</span>
+                  <span>Subsidies &amp; Sarkari Yojana ({publishedSubsidies.length})</span>
                   <ArrowRight className="w-4 h-4 ml-0.5" />
-                </button>
+                </a>
 
-                {/* Secondary Button 1 */}
-                <button
-                  onClick={() => onNavigate('/opportunities')}
+                <a
+                  href="/investments"
+                  onClick={(e) => { e.preventDefault(); onNavigate('/investments'); }}
+                  className="px-4.5 py-2.5 sm:px-5 sm:py-3 bg-[#2563eb] hover:bg-blue-600 text-white font-semibold rounded-xl flex items-center space-x-2 shadow-lg shadow-blue-950/40 transition cursor-pointer text-sm"
+                >
+                  <TrendingUp className="w-4 h-4" />
+                  <span>54EC &amp; Sovereign Bonds</span>
+                  <ArrowRight className="w-4 h-4 ml-0.5" />
+                </a>
+
+                <a
+                  href="/tools"
+                  onClick={(e) => { e.preventDefault(); onNavigate('/tools'); }}
                   className="px-4.5 py-2.5 sm:px-5 sm:py-3 bg-[#0b2447]/60 hover:bg-[#0b2447]/90 text-white font-medium rounded-xl border border-blue-400/30 flex items-center space-x-2 transition cursor-pointer text-sm"
                 >
-                  <Lightbulb className="w-4 h-4 text-blue-200" />
-                  <span>Explore Opportunities</span>
+                  <Calculator className="w-4 h-4 text-blue-200" />
+                  <span>Subsidy &amp; Return Calculators</span>
                   <ArrowRight className="w-4 h-4 ml-0.5 text-blue-300" />
-                </button>
+                </a>
 
-                {/* Secondary Button 2 */}
-                <button
-                  onClick={() => onNavigate('/tenders')}
+                <a
+                  href="/questions"
+                  onClick={(e) => { e.preventDefault(); onNavigate('/questions'); }}
                   className="px-4.5 py-2.5 sm:px-5 sm:py-3 bg-[#0b2447]/60 hover:bg-[#0b2447]/90 text-white font-medium rounded-xl border border-blue-400/30 flex items-center space-x-2 transition cursor-pointer text-sm"
                 >
                   <FileText className="w-4 h-4 text-blue-200" />
-                  <span>Find Tenders</span>
+                  <span>Hindi / Hinglish Q&amp;A Hub</span>
                   <ArrowRight className="w-4 h-4 ml-0.5 text-blue-300" />
-                </button>
-
-                {/* Secondary Button 3 */}
-                <button
-                  onClick={() => onNavigate('/news')}
-                  className="px-4.5 py-2.5 sm:px-5 sm:py-3 bg-[#0b2447]/60 hover:bg-[#0b2447]/90 text-white font-medium rounded-xl border border-blue-400/30 flex items-center space-x-2 transition cursor-pointer text-sm"
-                >
-                  <Newspaper className="w-4 h-4 text-blue-200" />
-                  <span>View Updates</span>
-                  <ArrowRight className="w-4 h-4 ml-0.5 text-blue-300" />
-                </button>
+                </a>
               </div>
 
-              {/* Trust Bar Row */}
               <div className="flex flex-wrap items-center gap-x-6 gap-y-2.5 text-xs sm:text-sm text-slate-200 font-medium">
                 <div className="flex items-center space-x-1.5">
                   <span className="w-4.5 h-4.5 rounded-full bg-emerald-500 flex items-center justify-center text-white shrink-0 shadow-xs">
@@ -139,13 +158,13 @@ export function HomeView({ onNavigate }: HubProps) {
                 </div>
                 <div className="flex items-center space-x-1.5">
                   <Users className="w-4 h-4 text-sky-400 shrink-0" />
-                  <span>Pan-India Coverage</span>
+                  <span>28 States &amp; 8 UTs Covered</span>
                 </div>
                 <div className="flex items-center space-x-1.5">
                   <span className="w-4.5 h-4.5 rounded-full bg-blue-500/80 flex items-center justify-center text-white shrink-0 shadow-xs">
                     <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                   </span>
-                  <span>100% Free Access</span>
+                  <span>100% Free Citizen Portal</span>
                 </div>
                 <div className="flex items-center space-x-1.5">
                   <Leaf className="w-4 h-4 text-emerald-400 shrink-0" />
@@ -154,10 +173,145 @@ export function HomeView({ onNavigate }: HubProps) {
               </div>
             </div>
 
-            {/* Right Side: India Map + Viksit Bharat Together */}
             <div className="lg:col-span-5 flex justify-center lg:justify-end mt-4 lg:mt-0">
               <HeroIndiaGateVisual />
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Interactive MeriPatrata — 30-Second Sarkari Yojana Eligibility & Benefit Finder */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2">
+        <div className="bg-gradient-to-br from-amber-50/90 via-white to-blue-50/60 border-2 border-amber-200/80 rounded-3xl p-5 sm:p-8 shadow-sm">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
+            <div>
+              <div className="inline-flex items-center space-x-1.5 bg-amber-100 text-amber-900 text-xs font-bold px-3 py-1 rounded-full mb-2">
+                <CheckCircle2 className="w-3.5 h-3.5 text-amber-700" />
+                <span>Instant Eligibility Matcher · अपनी सरकारी योजना पात्रता जांचें</span>
+              </div>
+              <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+                Find Government Subsidies &amp; Benefits You Qualify For in 30 Seconds
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-600 mt-1">
+                Select your category and state to filter verified Central and State subsidies with exact grant amounts, required documents, and direct <code>.gov.in</code> application links.
+              </p>
+            </div>
+            <button
+              onClick={handleShareMatchesWhatsApp}
+              className="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold rounded-xl flex items-center space-x-2 shadow-xs transition cursor-pointer shrink-0 self-start lg:self-auto"
+            >
+              <Share2 className="w-4 h-4" />
+              <span>Share Eligible Schemes on WhatsApp</span>
+            </button>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 mb-6">
+            <div className="lg:col-span-7 flex flex-wrap gap-2">
+              {[
+                { id: 'ALL', label: 'All Citizens (सभी योजनाएं)' },
+                { id: 'FARMER', label: 'Farmer / किसान (PM-KISAN, Kusum)' },
+                { id: 'MSME', label: 'MSME / Business (PMEGP, Mudra)' },
+                { id: 'SOLAR_HOUSING', label: 'Solar & Housing (Surya Ghar, Awas)' },
+                { id: 'WOMEN_CHILD', label: 'Women & Girl Child (महिला योजना)' },
+                { id: 'EDUCATION', label: 'Students & Youth (Scholarship/Skill)' },
+              ].map((prof) => (
+                <button
+                  key={prof.id}
+                  onClick={() => setSelectedProfile(prof.id)}
+                  className={`px-3.5 py-2 rounded-xl text-xs font-bold transition cursor-pointer border ${
+                    selectedProfile === prof.id
+                      ? 'bg-blue-900 text-white border-blue-900 shadow-xs'
+                      : 'bg-white text-slate-700 border-slate-200 hover:border-blue-400'
+                  }`}
+                >
+                  {prof.label}
+                </button>
+              ))}
+            </div>
+
+            <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              <select
+                aria-label="Select State or Union Territory"
+                value={selectedState}
+                onChange={(e) => setSelectedState(e.target.value)}
+                className="px-3.5 py-2 bg-white border border-slate-300 rounded-xl text-xs sm:text-sm font-semibold text-slate-800 focus:outline-none focus:border-blue-600"
+              >
+                <option value="All India">All India + Central Schemes</option>
+                <option value="Uttar Pradesh">Uttar Pradesh (उत्तर प्रदेश)</option>
+                <option value="Maharashtra">Maharashtra (महाराष्ट्र)</option>
+                <option value="Madhya Pradesh">Madhya Pradesh (मध्य प्रदेश)</option>
+                <option value="Rajasthan">Rajasthan (राजस्थान)</option>
+                <option value="Bihar">Bihar (बिहार)</option>
+                <option value="Gujarat">Gujarat (गुजरात)</option>
+                <option value="Haryana">Haryana (हरियाणा)</option>
+                <option value="Delhi">Delhi (दिल्ली)</option>
+                <option value="Karnataka">Karnataka (कर्नाटक)</option>
+                <option value="Tamil Nadu">Tamil Nadu (तमिलनाडु)</option>
+                <option value="West Bengal">West Bengal (पश्चिम बंगाल)</option>
+                <option value="Punjab">Punjab (पंजाब)</option>
+              </select>
+
+              <div className="relative">
+                <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                <input
+                  type="text"
+                  value={quickQuery}
+                  onChange={(e) => setQuickQuery(e.target.value)}
+                  placeholder="Search e.g. Solar, Kisan, PMEGP..."
+                  className="w-full pl-9 pr-3 py-2 bg-white border border-slate-300 rounded-xl text-xs sm:text-sm text-slate-800 focus:outline-none focus:border-blue-600"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {matchedSubsidies.slice(0, 6).map((sub) => (
+              <a
+                key={sub.id}
+                href={`/subsidies/${sub.slug}`}
+                onClick={(e) => { e.preventDefault(); onNavigate('/subsidies', sub.slug); }}
+                className="bg-white rounded-2xl border border-slate-200/90 p-4 hover:border-blue-500 hover:shadow-md transition flex flex-col justify-between group"
+              >
+                <div>
+                  <div className="flex items-center justify-between gap-2 mb-2">
+                    <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
+                      {sub.category}
+                    </span>
+                    <span className="text-[11px] font-semibold text-slate-500">
+                      {sub.state || 'All India'}
+                    </span>
+                  </div>
+                  <h3 className="text-sm sm:text-base font-bold text-slate-900 group-hover:text-blue-700 transition leading-snug mb-1.5">
+                    {sub.title}
+                  </h3>
+                  <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed">
+                    {sub.description}
+                  </p>
+                </div>
+                <div className="pt-3 mt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+                  <span className="font-bold text-emerald-700 truncate max-w-[200px]">
+                    {sub.maximumBenefit || sub.subsidyAmount || sub.benefitType}
+                  </span>
+                  <span className="font-bold text-blue-600 flex items-center">
+                    Apply Guide <ArrowRight className="w-3.5 h-3.5 ml-1 group-hover:translate-x-0.5 transition" />
+                  </span>
+                </div>
+              </a>
+            ))}
+          </div>
+
+          <div className="mt-5 pt-4 border-t border-amber-200/60 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-slate-600">
+            <span>
+              Showing <strong>{Math.min(6, matchedSubsidies.length)}</strong> of <strong>{matchedSubsidies.length}</strong> matching verified government schemes.
+            </span>
+            <a
+              href="/subsidies"
+              onClick={(e) => { e.preventDefault(); onNavigate('/subsidies'); }}
+              className="font-bold text-blue-700 hover:text-blue-900 flex items-center space-x-1"
+            >
+              <span>View All {matchedSubsidies.length} Matching Schemes in Full Directory</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </a>
           </div>
         </div>
       </section>
@@ -166,20 +320,20 @@ export function HomeView({ onNavigate }: HubProps) {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2">
         <div className="flex items-center justify-between mb-5">
           <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">Explore Core Pillars</h2>
-          <button
-            onClick={() => onNavigate('/investments')}
+          <a
+            href="/investments"
+            onClick={(e) => { e.preventDefault(); onNavigate('/investments'); }}
             className="text-blue-600 hover:text-blue-700 font-semibold text-xs sm:text-sm flex items-center space-x-1 cursor-pointer transition"
           >
             <span>View All</span>
             <ArrowRight className="w-3.5 h-3.5" />
-          </button>
+          </a>
         </div>
 
-        {/* Core Pillars Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 mb-5">
-          {/* Card 1: Investments */}
-          <div
-            onClick={() => onNavigate('/investments')}
+          <a
+            href="/investments"
+            onClick={(e) => { e.preventDefault(); onNavigate('/investments'); }}
             className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs hover:shadow-md transition cursor-pointer group flex flex-col justify-between h-full"
           >
             <div>
@@ -191,20 +345,20 @@ export function HomeView({ onNavigate }: HubProps) {
                   <ArrowRight className="w-3.5 h-3.5" />
                 </div>
               </div>
-              <h3 className="text-base font-bold text-slate-900 mb-1">Investments</h3>
+              <h3 className="text-base font-bold text-slate-900 mb-1">54EC Capital Gain &amp; Sovereign Bonds</h3>
               <p className="text-xs text-slate-500 leading-relaxed mb-3">
-                Government investment products and public savings instruments.
+                REC, PFC, IRFC Section 54EC Tax-Exemption Bonds, RBI Floating Rate Bonds, and Sovereign Gold Bonds.
               </p>
             </div>
             <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-blue-600 group-hover:text-blue-700">
               <span>Explore Investments</span>
               <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition" />
             </div>
-          </div>
+          </a>
 
-          {/* Card 2: Investment Schemes */}
-          <div
-            onClick={() => onNavigate('/investment-schemes')}
+          <a
+            href="/investment-schemes"
+            onClick={(e) => { e.preventDefault(); onNavigate('/investment-schemes'); }}
             className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs hover:shadow-md transition cursor-pointer group flex flex-col justify-between h-full"
           >
             <div>
@@ -216,20 +370,20 @@ export function HomeView({ onNavigate }: HubProps) {
                   <ArrowRight className="w-3.5 h-3.5" />
                 </div>
               </div>
-              <h3 className="text-base font-bold text-slate-900 mb-1">Investment Schemes</h3>
+              <h3 className="text-base font-bold text-slate-900 mb-1">Small Savings &amp; Post Office Schemes</h3>
               <p className="text-xs text-slate-500 leading-relaxed mb-3">
-                Government schemes and incentives relevant to investment and development.
+                PPF (7.1%), Sukanya Samriddhi Yojana (8.2%), Senior Citizens Savings Scheme (SCSS), NSC, and KVP guides.
               </p>
             </div>
             <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-blue-600 group-hover:text-blue-700">
-              <span>Explore Investment Schemes</span>
+              <span>Explore Savings Schemes</span>
               <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition" />
             </div>
-          </div>
+          </a>
 
-          {/* Card 3: Subsidies & Benefits */}
-          <div
-            onClick={() => onNavigate('/subsidies')}
+          <a
+            href="/subsidies"
+            onClick={(e) => { e.preventDefault(); onNavigate('/subsidies'); }}
             className="bg-white rounded-2xl border border-blue-200/80 p-5 shadow-xs hover:shadow-md transition cursor-pointer group flex flex-col justify-between h-full relative overflow-hidden"
           >
             <div className="absolute top-0 right-0 w-24 h-24 bg-amber-500/5 rounded-bl-full pointer-events-none" />
@@ -242,20 +396,20 @@ export function HomeView({ onNavigate }: HubProps) {
                   <ArrowRight className="w-3.5 h-3.5" />
                 </div>
               </div>
-              <h3 className="text-base font-bold text-slate-900 mb-1">Subsidies &amp; Benefits</h3>
+              <h3 className="text-base font-bold text-slate-900 mb-1">Subsidies &amp; Benefits (सरकारी सब्सिडी)</h3>
               <p className="text-xs text-slate-500 leading-relaxed mb-3">
-                Discover government subsidies, financial assistance, incentives and benefits with eligibility, documents and official application information.
+                Discover {publishedSubsidies.length}+ verified Central and State subsidies with eligibility, documents, and official portal links.
               </p>
             </div>
             <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-blue-600 group-hover:text-blue-700">
               <span>Explore Subsidies &amp; Benefits</span>
               <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition" />
             </div>
-          </div>
+          </a>
 
-          {/* Card 4: Opportunities */}
-          <div
-            onClick={() => onNavigate('/opportunities')}
+          <a
+            href="/opportunities"
+            onClick={(e) => { e.preventDefault(); onNavigate('/opportunities'); }}
             className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs hover:shadow-md transition cursor-pointer group flex flex-col justify-between h-full"
           >
             <div>
@@ -267,20 +421,20 @@ export function HomeView({ onNavigate }: HubProps) {
                   <ArrowRight className="w-3.5 h-3.5" />
                 </div>
               </div>
-              <h3 className="text-base font-bold text-slate-900 mb-1">Opportunities</h3>
+              <h3 className="text-base font-bold text-slate-900 mb-1">Infrastructure &amp; Industrial Opportunities</h3>
               <p className="text-xs text-slate-500 leading-relaxed mb-3">
-                Development projects and investment opportunities from official sources.
+                State-wise industrial parks, PLI manufacturing corridors, and PAIMANA infrastructure projects across India.
               </p>
             </div>
             <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-blue-600 group-hover:text-blue-700">
               <span>Explore Opportunities</span>
               <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition" />
             </div>
-          </div>
+          </a>
 
-          {/* Card 5: Tenders */}
-          <div
-            onClick={() => onNavigate('/tenders')}
+          <a
+            href="/tenders"
+            onClick={(e) => { e.preventDefault(); onNavigate('/tenders'); }}
             className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs hover:shadow-md transition cursor-pointer group flex flex-col justify-between h-full"
           >
             <div>
@@ -292,20 +446,20 @@ export function HomeView({ onNavigate }: HubProps) {
                   <ArrowRight className="w-3.5 h-3.5" />
                 </div>
               </div>
-              <h3 className="text-base font-bold text-slate-900 mb-1">Tenders</h3>
+              <h3 className="text-base font-bold text-slate-900 mb-1">GeM &amp; CPPP Public Tenders</h3>
               <p className="text-xs text-slate-500 leading-relaxed mb-3">
-                Government and PSU tenders from official procurement sources.
+                Verified Government and PSU procurement notices with EMD rules, MSE 25% reservation, and bid deadlines.
               </p>
             </div>
             <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-blue-600 group-hover:text-blue-700">
               <span>Explore Tenders</span>
               <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition" />
             </div>
-          </div>
+          </a>
 
-          {/* Card 6: News & Updates */}
-          <div
-            onClick={() => onNavigate('/news')}
+          <a
+            href="/questions"
+            onClick={(e) => { e.preventDefault(); onNavigate('/questions'); }}
             className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs hover:shadow-md transition cursor-pointer group flex flex-col justify-between h-full"
           >
             <div>
@@ -317,36 +471,16 @@ export function HomeView({ onNavigate }: HubProps) {
                   <ArrowRight className="w-3.5 h-3.5" />
                 </div>
               </div>
-              <h3 className="text-base font-bold text-slate-900 mb-1">News &amp; Updates</h3>
+              <h3 className="text-base font-bold text-slate-900 mb-1">Citizen Q&amp;A Knowledge Base (प्रश्नोत्तर)</h3>
               <p className="text-xs text-slate-500 leading-relaxed mb-3">
-                Latest updates, announcements and reports from official government sources.
+                143+ verified answers in English, Hindi (हिंदी), and Hinglish on tax rules, subsidies, and official procedures.
               </p>
             </div>
             <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-blue-600 group-hover:text-blue-700">
-              <span>View News &amp; Updates</span>
+              <span>Browse Verified Q&amp;A</span>
               <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition" />
             </div>
-          </div>
-        </div>
-
-        {/* Update Banner */}
-        <div className="bg-blue-50/70 border border-blue-100/90 rounded-2xl p-4 sm:px-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-2xs">
-          <div className="flex items-center space-x-3.5">
-            <div className="w-9 h-9 rounded-xl bg-blue-100/80 text-blue-600 flex items-center justify-center shrink-0">
-              <Megaphone className="w-5 h-5 text-blue-600" />
-            </div>
-            <div className="text-xs sm:text-sm text-slate-600 leading-normal">
-              <span className="font-bold text-blue-900 mr-1.5">Stay Updated:</span>
-              Latest government opportunities, tenders and investment-related news from trusted official sources.
-            </div>
-          </div>
-          <button
-            onClick={() => onNavigate('/news')}
-            className="text-xs sm:text-sm font-semibold text-blue-600 hover:text-blue-700 flex items-center space-x-1.5 shrink-0 whitespace-nowrap cursor-pointer transition self-end sm:self-auto"
-          >
-            <span>View Latest Updates</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </button>
+          </a>
         </div>
       </section>
 
@@ -364,20 +498,22 @@ export function HomeView({ onNavigate }: HubProps) {
               Direct Benefit Transfer (DBT) programmes, capital investment subsidies, and interest subvention schemes audited against official ministry guidelines.
             </p>
           </div>
-          <button
-            onClick={() => onNavigate('/subsidies')}
+          <a
+            href="/subsidies"
+            onClick={(e) => { e.preventDefault(); onNavigate('/subsidies'); }}
             className="text-emerald-700 hover:text-emerald-800 font-bold text-xs sm:text-sm flex items-center space-x-1.5 cursor-pointer transition shrink-0"
           >
-            <span>Browse All {subsidyRepository.getPublished().length} Verified Subsidies</span>
+            <span>Browse All {publishedSubsidies.length} Verified Subsidies</span>
             <ArrowRight className="w-4 h-4" />
-          </button>
+          </a>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {subsidyRepository.getPublished().slice(0, 6).map((sub) => (
-            <div
+          {publishedSubsidies.slice(0, 6).map((sub) => (
+            <a
               key={sub.id}
-              onClick={() => onNavigate('/subsidies', sub.slug)}
+              href={`/subsidies/${sub.slug}`}
+              onClick={(e) => { e.preventDefault(); onNavigate('/subsidies', sub.slug); }}
               className="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs hover:shadow-md hover:border-emerald-300 transition cursor-pointer flex flex-col justify-between group"
             >
               <div className="space-y-3">
@@ -408,7 +544,7 @@ export function HomeView({ onNavigate }: HubProps) {
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition" />
                 </div>
               </div>
-            </div>
+            </a>
           ))}
         </div>
       </section>
@@ -559,6 +695,112 @@ export function HomeView({ onNavigate }: HubProps) {
               Before uploading identity documents or paying any application fee, always verify that the destination domain ends with <strong><code>.gov.in</code></strong> or <strong><code>.nic.in</code></strong> (or recognized statutory institutions like <code>rbi.org.in</code>, <code>nabard.org</code>, or <code>sidbi.in</code>). Official government welfare schemes never ask citizens to share UPI PINs, credit card CVVs, or WhatsApp APK files to claim a subsidy. Use our <button onClick={() => onNavigate('/official-sources')} className="text-indigo-600 font-bold underline cursor-pointer">Official Government Sources Directory</button> to cross-check portal authenticity.
             </p>
           </article>
+        </div>
+      </section>
+
+      {/* Trending Searches & State-Wise Internal Linking Hub (SEO Crawl Mesh) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+        <div className="bg-slate-900 text-white rounded-3xl p-6 sm:p-8 space-y-6">
+          <div>
+            <span className="text-xs font-bold uppercase tracking-wider text-amber-400 bg-amber-400/10 border border-amber-400/30 px-3 py-1 rounded-full inline-block mb-2">
+              Pan-India Scheme &amp; State Directory · लोकप्रिय सरकारी योजनाएं
+            </span>
+            <h2 className="text-xl sm:text-2xl font-extrabold tracking-tight">
+              Trending Sarkari Yojana Searches &amp; State Portals (2026)
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-300 mt-1">
+              Direct access to high-demand Central subsidies, sovereign tax-saving instruments, and state-level industrial &amp; welfare directories.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+            {/* Column 1: High-Volume Subsidies */}
+            <div className="space-y-2.5">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-amber-400 border-b border-slate-800 pb-2">
+                Popular Government Subsidies
+              </h3>
+              <ul className="space-y-2 text-xs sm:text-sm">
+                {publishedSubsidies.slice(0, 8).map((s) => (
+                  <li key={s.id}>
+                    <a
+                      href={`/subsidies/${s.slug}`}
+                      onClick={(e) => { e.preventDefault(); onNavigate('/subsidies', s.slug); }}
+                      className="text-slate-300 hover:text-amber-300 transition flex items-center justify-between gap-2"
+                    >
+                      <span className="truncate">{s.title}</span>
+                      <ArrowRight className="w-3.5 h-3.5 shrink-0 text-slate-500" />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Column 2: State-Wise Portals */}
+            <div className="space-y-2.5">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-sky-400 border-b border-slate-800 pb-2">
+                State-Wise Schemes &amp; Projects (राज्यवार योजनाएं)
+              </h3>
+              <div className="grid grid-cols-2 gap-2 text-xs sm:text-sm">
+                {[
+                  { name: 'Uttar Pradesh', slug: 'uttar-pradesh' },
+                  { name: 'Maharashtra', slug: 'maharashtra' },
+                  { name: 'Madhya Pradesh', slug: 'madhya-pradesh' },
+                  { name: 'Rajasthan', slug: 'rajasthan' },
+                  { name: 'Bihar', slug: 'bihar' },
+                  { name: 'Gujarat', slug: 'gujarat' },
+                  { name: 'Haryana', slug: 'haryana' },
+                  { name: 'Karnataka', slug: 'karnataka' },
+                  { name: 'Tamil Nadu', slug: 'tamil-nadu' },
+                  { name: 'West Bengal', slug: 'west-bengal' },
+                  { name: 'Delhi', slug: 'delhi' },
+                  { name: 'Punjab', slug: 'punjab' },
+                  { name: 'Telangana', slug: 'telangana' },
+                  { name: 'Andhra Pradesh', slug: 'andhra-pradesh' },
+                  { name: 'Odisha', slug: 'odisha' },
+                  { name: 'Assam', slug: 'assam' },
+                ].map((st) => (
+                  <a
+                    key={st.slug}
+                    href={`/opportunities/state/${st.slug}`}
+                    onClick={(e) => { e.preventDefault(); onNavigate('/opportunities', `state/${st.slug}`); }}
+                    className="text-slate-300 hover:text-sky-300 transition truncate"
+                  >
+                    • {st.name}
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            {/* Column 3: Sectors & Financial Tools */}
+            <div className="space-y-2.5">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-emerald-400 border-b border-slate-800 pb-2">
+                Key Sectors &amp; Financial Calculators
+              </h3>
+              <ul className="space-y-2 text-xs sm:text-sm">
+                {[
+                  { label: 'Agriculture & Kisan Subsidies', path: '/opportunities', slug: 'sector/agriculture', href: '/opportunities/sector/agriculture' },
+                  { label: 'MSME & Startup Grants', path: '/opportunities', slug: 'sector/msme', href: '/opportunities/sector/msme' },
+                  { label: 'Renewable Energy & Solar Rooftop', path: '/opportunities', slug: 'sector/renewable-energy', href: '/opportunities/sector/renewable-energy' },
+                  { label: 'Manufacturing & PLI Incentives', path: '/opportunities', slug: 'sector/manufacturing', href: '/opportunities/sector/manufacturing' },
+                  { label: 'PPF, SSY & 54EC Tax Calculators', path: '/tools', slug: undefined, href: '/tools' },
+                  { label: 'Scheme Side-by-Side Comparison', path: '/comparisons', slug: undefined, href: '/comparisons' },
+                  { label: 'Hindi & Hinglish Citizen Q&A', path: '/questions', slug: undefined, href: '/questions' },
+                  { label: 'Verified .gov.in Portal Directory', path: '/official-sources', slug: undefined, href: '/official-sources' },
+                ].map((link) => (
+                  <li key={link.href}>
+                    <a
+                      href={link.href}
+                      onClick={(e) => { e.preventDefault(); onNavigate(link.path, link.slug); }}
+                      className="text-slate-300 hover:text-emerald-300 transition flex items-center justify-between gap-2"
+                    >
+                      <span className="truncate">{link.label}</span>
+                      <ArrowRight className="w-3.5 h-3.5 shrink-0 text-slate-500" />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
         </div>
       </section>
 
