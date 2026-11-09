@@ -142,7 +142,13 @@ ${meta.bodyHtml}
       </footer>
     </div>`;
 
-  html = html.replace(/<div id="root">[\s\S]*?<\/div>\s*(?=<script type="module")/i, `${wrappedBody}\n    `);
+  const rootStart = html.indexOf('<div id="root">');
+  const bodyEnd = html.lastIndexOf('</body>');
+  if (rootStart !== -1 && bodyEnd !== -1 && bodyEnd > rootStart) {
+    html = html.substring(0, rootStart) + wrappedBody + '\n  ' + html.substring(bodyEnd);
+  } else {
+    html = html.replace(/<div id="root">[\s\S]*?<\/div>/i, wrappedBody);
+  }
 
   return html;
 }
@@ -302,31 +308,156 @@ function runPrerender(): void {
       routePath: '/about',
       title: 'About SarkarSaathi.org — Editorial Methodology & 4-Stage Verification | SarkarSaathi',
       description: 'Learn about SarkarSaathi.org, our independent civic research mission, and our 4-stage verification workflow for Indian government schemes.',
-      bodyHtml: `<h1 class="text-2xl font-bold mb-3">About SarkarSaathi.org &amp; Our 4-Stage Verification Methodology</h1><p>SarkarSaathi.org is an independent public-interest research platform dedicated to structuring verified Indian government subsidies, sovereign bonds, and public tenders.</p>`,
+      bodyHtml: `
+        <article class="bg-white p-6 sm:p-10 rounded-2xl border border-gray-200 shadow-sm space-y-6">
+          <div class="inline-block bg-blue-50 text-blue-800 text-xs font-bold px-3 py-1 rounded-full uppercase">Independent Civic Research Platform</div>
+          <h1 class="text-3xl font-extrabold text-gray-900">About SarkarSaathi.org &amp; Editorial Methodology</h1>
+          <p class="text-base text-gray-700 leading-relaxed">SarkarSaathi.org is an independent, non-governmental civic research and public information platform dedicated to simplifying how Indian citizens, farmers, MSME entrepreneurs, students, and senior citizens discover, evaluate, and understand verified government schemes, sovereign savings instruments, subsidies, and public procurement opportunities.</p>
+          
+          <h2 class="text-xl font-bold text-gray-900 mt-6 mb-2">Our Mission &amp; Purpose</h2>
+          <p class="text-gray-700 leading-relaxed">Across India, central ministries, state departments, and statutory public sector undertakings publish thousands of welfare notifications, capital investment subsidies, tax-saving bonds, and procurement tenders across hundreds of separate portals. For an ordinary citizen or small business owner, understanding exact eligibility rules, calculating maturity returns, preparing mandatory KYC documents, and identifying the authentic <code>.gov.in</code> application link is often overwhelming.</p>
+          <p class="text-gray-700 leading-relaxed">SarkarSaathi bridges this critical gap by transforming complex gazette notifications into structured, easy-to-read editorial guides, side-by-side financial comparisons, interactive maturity calculators, and multilingual Q&amp;A explainers in English, Hindi, and Hinglish.</p>
+          
+          <h2 class="text-xl font-bold text-gray-900 mt-6 mb-2">Our 4-Stage Verification &amp; Data Governance Methodology</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-700">
+            <div class="p-4 bg-gray-50 rounded-xl border border-gray-200">
+              <h3 class="font-bold text-blue-900 mb-1">Stage 1: Authoritative Source Mapping</h3>
+              <p>We only track announcements and guidelines from statutory domains including <code>.gov.in</code>, <code>.nic.in</code>, Reserve Bank of India (<code>rbi.org.in</code>), NABARD, SIDBI, NHB, and official state government portals across all 28 States and 8 Union Territories.</p>
+            </div>
+            <div class="p-4 bg-gray-50 rounded-xl border border-gray-200">
+              <h3 class="font-bold text-blue-900 mb-1">Stage 2: Schema &amp; Claim Validation</h3>
+              <p>Every record is audited for five mandatory parameters: Official Scheme Name, Issuing Ministry/Department, Quantified Financial Benefit or Interest Rate, Specific Beneficiary Eligibility Criteria, and Working Official Portal URL.</p>
+            </div>
+            <div class="p-4 bg-gray-50 rounded-xl border border-gray-200">
+              <h3 class="font-bold text-blue-900 mb-1">Stage 3: Plain-Language Editorial Structuring</h3>
+              <p>Legalistic circular language is distilled into structured citizen checklists: What is this scheme?, Who is eligible?, What financial benefit is available?, What documents are required?, and Step-by-step application procedure.</p>
+            </div>
+            <div class="p-4 bg-gray-50 rounded-xl border border-gray-200">
+              <h3 class="font-bold text-blue-900 mb-1">Stage 4: Continuous Freshness &amp; Expiry Audits</h3>
+              <p>Small savings interest rates (reviewed quarterly by the Ministry of Finance), tender closing deadlines, and subsidy budget windows are audited continuously so citizens always see the last verified date on every page.</p>
+            </div>
+          </div>
+
+          <h2 class="text-xl font-bold text-gray-900 mt-6 mb-2">Declaration of Editorial Independence &amp; Non-Affiliation</h2>
+          <p class="text-sm text-gray-600 bg-amber-50 p-4 rounded-xl border border-amber-200 leading-relaxed">
+            SarkarSaathi.org is a privately operated, independent public information platform. We are <strong>NOT affiliated with, endorsed by, sponsored by, or operated by the Government of India, any State Government, or any Ministry/Department</strong>. All official emblems, scheme names, and portal references belong to their respective statutory authorities and are cited strictly for public informational and educational purposes under fair-dealing principles.
+          </p>
+        </article>`,
     },
     {
       routePath: '/contact',
       title: 'Contact Us & Citizen Grievance / Data Correction Desk | SarkarSaathi',
       description: 'Contact the SarkarSaathi editorial and compliance team to report broken .gov.in links, request scheme updates, or submit general inquiries.',
-      bodyHtml: `<h1 class="text-2xl font-bold mb-3">Contact the SarkarSaathi Editorial &amp; Verification Desk</h1><p>Email: contact@sarkarsaathi.org | Editorial corrections are reviewed within 48 business hours.</p>`,
+      bodyHtml: `
+        <article class="bg-white p-6 sm:p-10 rounded-2xl border border-gray-200 shadow-sm space-y-6">
+          <div class="inline-block bg-blue-50 text-blue-800 text-xs font-bold px-3 py-1 rounded-full uppercase">Editorial Desk &amp; Citizen Feedback</div>
+          <h1 class="text-3xl font-extrabold text-gray-900">Contact SarkarSaathi.org</h1>
+          <p class="text-base text-gray-700 leading-relaxed">We welcome feedback from citizens, researchers, CSC operators, and government officials. If you spot an outdated interest rate, a broken official portal link, or wish to suggest a newly notified Central or State government scheme for verification, please reach out to our team.</p>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 my-6">
+            <div class="p-5 bg-gray-50 rounded-xl border border-gray-200">
+              <h2 class="font-bold text-gray-900 text-base mb-2">Editorial Desk &amp; Corrections</h2>
+              <p class="text-xs text-gray-600 mb-3">For reporting scheme guideline updates, subsidy revisions, or broken .gov.in links:</p>
+              <a href="mailto:support@sarkarsaathi.org" class="text-sm font-bold text-blue-700 underline">support@sarkarsaathi.org</a>
+            </div>
+            <div class="p-5 bg-gray-50 rounded-xl border border-gray-200">
+              <h2 class="font-bold text-gray-900 text-base mb-2">Privacy &amp; Grievance Desk</h2>
+              <p class="text-xs text-gray-600 mb-3">For data protection, privacy policy questions, or advertising inquiries:</p>
+              <a href="mailto:grievance@sarkarsaathi.org" class="text-sm font-bold text-emerald-700 underline">grievance@sarkarsaathi.org</a>
+            </div>
+            <div class="p-5 bg-gray-50 rounded-xl border border-gray-200">
+              <h2 class="font-bold text-gray-900 text-base mb-2">Office &amp; Response Time</h2>
+              <p class="text-xs text-gray-600 mb-1">New Delhi, India</p>
+              <p class="text-xs text-gray-600">Response Turnaround: <strong>24 to 48 business hours</strong> (Monday–Saturday, 10:00 AM – 6:00 PM IST).</p>
+            </div>
+          </div>
+
+          <div class="p-4 bg-blue-50 rounded-xl border border-blue-200 text-sm text-blue-900 leading-relaxed">
+            <strong>Security Notice:</strong> SarkarSaathi never charges fees for scheme information and will never ask for your Aadhaar number, PAN, bank account password, or OTP. Never disclose sensitive personal credentials to anyone claiming to represent government departments or this platform.
+          </div>
+        </article>`,
     },
     {
       routePath: '/privacy-policy',
       title: 'Privacy Policy, DPDP Act 2023 Compliance & Google AdSense Cookie Disclosure | SarkarSaathi',
       description: 'Official Privacy Policy for SarkarSaathi.org including Google AdSense DoubleClick DART cookie disclosures, opt-out controls, and DPDP Act 2023 compliance.',
-      bodyHtml: `<h1 class="text-2xl font-bold mb-3">Privacy Policy &amp; Google AdSense Advertising Cookie Disclosure</h1><p>Third-party vendors, including Google, use cookies (such as the DoubleClick DART cookie) to serve ads based on a user's prior visits to SarkarSaathi.org or other websites on the internet. Users may opt out of personalized advertising by visiting Google Ads Settings (https://adssettings.google.com).</p>`,
+      bodyHtml: `
+        <article class="bg-white p-6 sm:p-10 rounded-2xl border border-gray-200 shadow-sm space-y-6 text-gray-700 text-sm leading-relaxed">
+          <div class="inline-block bg-emerald-50 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full uppercase">Privacy, Cookie &amp; Data Protection Policy</div>
+          <h1 class="text-3xl font-extrabold text-gray-900">Privacy Policy — SarkarSaathi.org</h1>
+          <p class="text-xs text-gray-500">Last Updated &amp; Effective Date: November 1, 2026</p>
+          <p class="text-base text-gray-700">At <strong>SarkarSaathi.org</strong> ("we", "our", or "us"), accessible from <code>https://sarkarsaathi.org</code>, protecting visitor privacy is our highest commitment. This Privacy Policy details the types of information we collect, how it is used, and your rights under applicable Indian laws including the Digital Personal Data Protection Act (DPDP Act), 2023.</p>
+
+          <h2 class="text-lg font-bold text-gray-900 mt-6">1. Zero Sensitive Personal or KYC Data Collection</h2>
+          <p>SarkarSaathi.org is an open civic information directory. We do not require account registration, and we never ask for or store sensitive personal or financial identifiers such as Aadhaar numbers, PAN cards, bank account details, IFSC codes, OTPs, or caste/income certificates. All interactive tools (PPF, SSY, SCSS, and 54EC bond calculators) and bookmarking features execute locally within your browser's <code>localStorage</code> and are never transmitted to our servers.</p>
+
+          <div class="p-6 bg-slate-50 border border-slate-200 rounded-xl space-y-3">
+            <h2 class="text-lg font-bold text-gray-900">2. Google AdSense &amp; Third-Party Advertising Cookie Disclosure</h2>
+            <p>We partner with <strong>Google AdSense</strong> to display advertisements across SarkarSaathi.org to fund ongoing civic research, server infrastructure, and daily verification of government schemes while keeping the service 100% free for all citizens.</p>
+            <ul class="list-disc pl-5 space-y-2 text-xs sm:text-sm text-gray-700">
+              <li><strong>Third-Party Vendors &amp; Cookies:</strong> Third-party vendors, including Google, use cookies (such as the DoubleClick DART cookie) to serve ads based on a user's prior visits to <code>https://sarkarsaathi.org</code> or other websites on the internet.</li>
+              <li><strong>Personalized Advertising:</strong> Google's use of advertising cookies enables it and its partners to serve personalized ads to our visitors based on their visit to our site and/or other sites on the Internet.</li>
+              <li><strong>How Users Can Opt Out:</strong> You may opt out of personalized advertising at any time by visiting <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer" class="text-blue-700 font-bold underline">Google Ads Settings (https://adssettings.google.com)</a>. Alternatively, you can opt out of a third-party vendor's use of cookies for personalized advertising by visiting <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener noreferrer" class="text-blue-700 font-bold underline">www.aboutads.info/choices</a>.</li>
+              <li><strong>Google Privacy Policy:</strong> To learn how Google handles user data in its advertising products, please visit <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener noreferrer" class="text-blue-700 font-bold underline">How Google uses information from sites or apps that use our services</a>.</li>
+            </ul>
+          </div>
+
+          <h2 class="text-lg font-bold text-gray-900 mt-6">3. Standard Web Server Log Files</h2>
+          <p>SarkarSaathi.org follows industry-standard server logging procedures for security and performance optimization. These logs record non-identifiable parameters including IP addresses, browser types, Internet Service Providers (ISPs), date/time stamps, referring/exit pages, and click counts. None of this data is linked to personally identifiable information.</p>
+
+          <h2 class="text-lg font-bold text-gray-900 mt-6">4. External Links to Government Portals (.gov.in)</h2>
+          <p>Our platform contains direct reference links to official government websites (e.g. <code>myscheme.gov.in</code>, <code>pmkisan.gov.in</code>, <code>pmsuryaghar.gov.in</code>, <code>gem.gov.in</code>, and <code>rbi.org.in</code>). Once you click an external link and navigate away from SarkarSaathi.org, our Privacy Policy no longer applies. We encourage citizens to review the privacy statements of every official portal they visit.</p>
+
+          <h2 class="text-lg font-bold text-gray-900 mt-6">5. Data Protection Officer &amp; Grievance Redressal</h2>
+          <p>If you have questions regarding this Privacy Policy or wish to request data deletion for any contact correspondence, please email our Grievance Desk at <a href="mailto:grievance@sarkarsaathi.org" class="text-blue-700 font-bold underline">grievance@sarkarsaathi.org</a>.</p>
+        </article>`,
     },
     {
       routePath: '/disclaimer',
       title: 'Official Non-Affiliation & Financial Information Disclaimer | SarkarSaathi',
       description: 'SarkarSaathi.org is an independent information platform and is not affiliated with any government ministry. Read our complete statutory disclaimer.',
-      bodyHtml: `<h1 class="text-2xl font-bold mb-3">Official Non-Affiliation &amp; Financial Disclaimer</h1><p>SarkarSaathi.org is an independent information portal and is NOT an official government website. Always verify final eligibility on the linked .gov.in portal.</p>`,
+      bodyHtml: `
+        <article class="bg-white p-6 sm:p-10 rounded-2xl border border-gray-200 shadow-sm space-y-6 text-gray-700 text-sm leading-relaxed">
+          <div class="inline-block bg-amber-50 text-amber-800 text-xs font-bold px-3 py-1 rounded-full uppercase">Statutory &amp; Non-Affiliation Notice</div>
+          <h1 class="text-3xl font-extrabold text-gray-900">Disclaimer &amp; Non-Affiliation Notice</h1>
+          <p class="text-base text-gray-700">Please read this disclaimer carefully before relying on any information, financial calculations, or scheme guides published on <strong>SarkarSaathi.org</strong>.</p>
+
+          <h2 class="text-lg font-bold text-gray-900 mt-6">1. Not an Official Government Website</h2>
+          <p>SarkarSaathi.org is an independent civic research and informational portal. We are <strong>NOT affiliated with, associated with, authorized by, endorsed by, or in any way officially connected with the Government of India, any State Government, or any Ministry, Department, PSU, or statutory agency</strong>. All official government scheme names, emblems, and portal links are referenced solely for citizen awareness, public education, and fair commentary.</p>
+
+          <h2 class="text-lg font-bold text-gray-900 mt-6">2. No Financial, Tax, or Legal Advisory</h2>
+          <p>Content regarding Sovereign Investments (including Section 54EC Capital Gain Tax Exemption Bonds, Sovereign Gold Bonds, and RBI Floating Rate Bonds) and Small Savings Schemes (including PPF, Sukanya Samriddhi Yojana, SCSS, and Senior Citizen Bonds) is compiled for general educational purposes. It does not constitute certified investment advice, financial planning, or tax advisory under SEBI or Income Tax regulations. Interest rates and tax exemptions are subject to periodic revision by the Ministry of Finance. Always consult a qualified Chartered Accountant or SEBI-registered financial advisor before making investment commitments.</p>
+
+          <h2 class="text-lg font-bold text-gray-900 mt-6">3. Mandatory Verification on Official Portals</h2>
+          <p>While our editorial pipeline verifies records against official gazette notifications, government departments may update eligibility criteria, subsidy allocations, or application windows without notice. Citizens and enterprises must verify all scheme rules, corrigenda, and tender notices directly on the linked official <code>.gov.in</code> or <code>.nic.in</code> portal before submitting any application.</p>
+
+          <h2 class="text-lg font-bold text-gray-900 mt-6">4. Warning Against Fraudulent Middlemen</h2>
+          <p>SarkarSaathi.org never charges fees for scheme guidance, never acts as an intermediary, and never collects fees to expedite government approvals. Apply exclusively through official government portals or authorized Common Service Centres (CSCs).</p>
+        </article>`,
     },
     {
       routePath: '/terms',
       title: 'Terms of Use & Platform Conditions | SarkarSaathi',
       description: 'Terms and conditions governing the use of SarkarSaathi.org directories, calculators, and research archives.',
-      bodyHtml: `<h1 class="text-2xl font-bold mb-3">Terms of Use — SarkarSaathi.org</h1>`,
+      bodyHtml: `
+        <article class="bg-white p-6 sm:p-10 rounded-2xl border border-gray-200 shadow-sm space-y-6 text-gray-700 text-sm leading-relaxed">
+          <div class="inline-block bg-slate-100 text-slate-800 text-xs font-bold px-3 py-1 rounded-full uppercase">Platform Terms &amp; Conditions</div>
+          <h1 class="text-3xl font-extrabold text-gray-900">Terms of Use — SarkarSaathi.org</h1>
+          <p class="text-xs text-gray-500">Effective Date: November 1, 2026</p>
+          <p class="text-base text-gray-700">By accessing and using <strong>SarkarSaathi.org</strong>, you agree to comply with and be bound by these Terms of Service, our Privacy Policy, and our Statutory Disclaimer. If you do not agree with any part of these terms, please discontinue use of the platform.</p>
+
+          <h2 class="text-lg font-bold text-gray-900 mt-6">1. Permitted Informational &amp; Civic Use</h2>
+          <p>SarkarSaathi.org grants visitors a revocable, non-exclusive, non-transferable license to access, view, bookmark, and share compiled scheme guides, financial calculators, and comparison matrices strictly for personal, non-commercial educational and informational use.</p>
+
+          <h2 class="text-lg font-bold text-gray-900 mt-6">2. Intellectual Property &amp; Editorial Content</h2>
+          <p>While underlying statutory facts, public welfare notifications, and government rules are public domain information, all original editorial guides, multilingual translations (Hindi &amp; Hinglish), comparison matrices, visual formatting, and software code on SarkarSaathi.org are protected works under applicable copyright and intellectual property laws.</p>
+
+          <h2 class="text-lg font-bold text-gray-900 mt-6">3. Limitation of Liability</h2>
+          <p>All information, calculators, and tools are provided on an "as-is" and "as-available" basis without warranties of any kind. Under no circumstances shall SarkarSaathi.org, its founders, or contributors be liable for any direct, indirect, incidental, or consequential damages resulting from rejected scheme applications, missed tender deadlines, or changes in government interest rates.</p>
+
+          <h2 class="text-lg font-bold text-gray-900 mt-6">4. Governing Law &amp; Jurisdiction</h2>
+          <p>These Terms shall be governed by and interpreted in accordance with the laws of India. Any disputes arising out of or related to the use of this website shall be subject to the exclusive jurisdiction of the competent courts in New Delhi, India.</p>
+        </article>`,
     },
   ];
 
@@ -387,18 +518,57 @@ function runPrerender(): void {
   for (const inv of investments) {
     const slug = inv.slug || inv.id;
     const routePath = `/investments/${slug}`;
+    const minInv = inv.minInvestment ? `₹${inv.minInvestment.toLocaleString('en-IN')}` : 'As notified';
+    const maxInv = inv.maxInvestment ? (typeof inv.maxInvestment === 'number' ? `₹${inv.maxInvestment.toLocaleString('en-IN')}` : inv.maxInvestment) : 'No upper limit';
+    const returnVal = inv.expectedReturn || inv.notifiedRate || 'Sovereign Rate';
+    const lockVal = inv.lockInPeriod || inv.tenure || 'Statutory Tenure';
+    const taxVal = inv.taxTreatment || 'Section 54EC / Section 80C as applicable';
+
+    const faqsHtml = inv.faqs && inv.faqs.length > 0
+      ? `<section class="mt-6"><h2 class="text-lg font-bold text-gray-900 mb-2">Frequently Asked Questions</h2><div class="space-y-3">${inv.faqs.map(f => `<div class="p-4 bg-gray-50 rounded-lg"><h3 class="font-bold text-sm text-gray-900 mb-1">${escapeHtml(f.question)}</h3><p class="text-xs text-gray-700 leading-relaxed">${escapeHtml(f.answer)}</p></div>`).join('')}</div></section>`
+      : '';
+
+    const docsHtml = inv.requiredDocuments && inv.requiredDocuments.length > 0
+      ? `<section class="mt-4"><h2 class="text-lg font-bold text-gray-900 mb-1">Required Documents (KYC Checklist)</h2><ul class="list-disc pl-5 text-sm text-gray-700 space-y-1">${inv.requiredDocuments.map(d => `<li>${escapeHtml(d)}</li>`).join('')}</ul></section>`
+      : '';
+
+    const processHtml = inv.accountOpeningProcess && inv.accountOpeningProcess.length > 0
+      ? `<section class="mt-4"><h2 class="text-lg font-bold text-gray-900 mb-1">How to Invest &amp; Application Procedure</h2><ol class="list-decimal pl-5 text-sm text-gray-700 space-y-1">${inv.accountOpeningProcess.map(p => `<li>${escapeHtml(p)}</li>`).join('')}</ol></section>`
+      : '';
+
     writeRouteHtml(templateHtml, {
       routePath,
-      title: `${inv.title} — Interest Rate, Tax Exemption & Lock-In | SarkarSaathi`,
-      description: `${inv.title}: Check current interest rate, sovereign backing (${inv.authority || 'Government of India'}), Section 54EC / 80C tax exemption, and investment procedure.`,
+      title: `${inv.title} — Interest Rate (${returnVal}), Tax Exemption & Rules | SarkarSaathi`,
+      description: `${inv.title}: Check current interest rate (${returnVal}), sovereign backing (${inv.authority || 'Government of India'}), Section 54EC / 80C tax exemption, lock-in period (${lockVal}), and application steps.`,
       ogType: 'article',
       jsonLd: getInvestmentBreadcrumbSchema('investments', inv.title, slug),
       bodyHtml: `
-        <article class="bg-white p-6 rounded-xl border border-gray-200 space-y-4">
-          <h1 class="text-2xl font-bold text-gray-900">${escapeHtml(inv.title)}</h1>
-          <p class="text-gray-700">${escapeHtml(inv.description || '')}</p>
-          <p class="text-sm text-gray-600">Issuing Authority: <strong>${escapeHtml(inv.authority || 'Government of India')}</strong></p>
-          <p><a href="/investments" class="text-blue-700 underline">← View All Sovereign Investments &amp; 54EC Bonds</a></p>
+        <article class="bg-white p-6 sm:p-8 rounded-xl border border-gray-200 shadow-sm space-y-5">
+          <div class="text-xs font-semibold text-blue-700 uppercase tracking-wide">Sovereign Investment · ${escapeHtml(inv.riskLevel || 'Low')} Risk · ${escapeHtml(inv.category || 'Government Bond')}</div>
+          <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-900">${escapeHtml(inv.title)}</h1>
+          <p class="text-base text-gray-700 leading-relaxed">${escapeHtml(inv.description || '')}</p>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-slate-50 p-4 rounded-xl border border-slate-200 text-sm">
+            <div><span class="block text-xs font-bold text-gray-500 uppercase">Return / Interest</span><strong class="text-base text-emerald-800">${escapeHtml(returnVal)}</strong></div>
+            <div><span class="block text-xs font-bold text-gray-500 uppercase">Lock-In Period</span><strong class="text-gray-900">${escapeHtml(lockVal)}</strong></div>
+            <div><span class="block text-xs font-bold text-gray-500 uppercase">Min Investment</span><strong class="text-gray-900">${escapeHtml(minInv)}</strong></div>
+            <div><span class="block text-xs font-bold text-gray-500 uppercase">Max Investment</span><strong class="text-gray-900">${escapeHtml(maxInv)}</strong></div>
+          </div>
+
+          <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-200 text-sm text-emerald-950">
+            <h2 class="font-bold mb-1">Tax Exemption &amp; Benefits</h2>
+            <p>${escapeHtml(taxVal)}</p>
+          </div>
+
+          ${docsHtml}
+          ${processHtml}
+          ${faqsHtml}
+
+          <div class="pt-4 border-t border-gray-200 flex flex-wrap gap-4 text-sm font-medium">
+            <a href="/investments" class="text-blue-700 underline font-bold">← All Sovereign Investments &amp; 54EC Bonds</a>
+            <a href="/investment-schemes" class="text-blue-700 underline font-bold">Small Savings Schemes</a>
+            <a href="/tools" class="text-blue-700 underline font-bold">Tax &amp; Return Calculators</a>
+          </div>
         </article>`,
     });
     generatedCount++;
@@ -408,18 +578,58 @@ function runPrerender(): void {
   for (const sc of schemes) {
     const slug = sc.slug || sc.id;
     const routePath = `/investment-schemes/${slug}`;
+
+    const faqsHtml = sc.faqs && sc.faqs.length > 0
+      ? `<section class="mt-6"><h2 class="text-lg font-bold text-gray-900 mb-2">Frequently Asked Questions</h2><div class="space-y-3">${sc.faqs.map(f => `<div class="p-4 bg-gray-50 rounded-lg"><h3 class="font-bold text-sm text-gray-900 mb-1">${escapeHtml(f.question)}</h3><p class="text-xs text-gray-700 leading-relaxed">${escapeHtml(f.answer)}</p></div>`).join('')}</div></section>`
+      : '';
+
+    const docsHtml = sc.requiredDocuments && sc.requiredDocuments.length > 0
+      ? `<section class="mt-4"><h2 class="text-lg font-bold text-gray-900 mb-1">Mandatory Required Documents</h2><ul class="list-disc pl-5 text-sm text-gray-700 space-y-1">${sc.requiredDocuments.map(d => `<li>${escapeHtml(d)}</li>`).join('')}</ul></section>`
+      : '';
+
+    const processHtml = sc.registrationProcess && sc.registrationProcess.length > 0
+      ? `<section class="mt-4"><h2 class="text-lg font-bold text-gray-900 mb-1">Step-by-Step Application &amp; Account Opening</h2><ol class="list-decimal pl-5 text-sm text-gray-700 space-y-1">${sc.registrationProcess.map(p => `<li>${escapeHtml(p)}</li>`).join('')}</ol></section>`
+      : (sc.applicationProcess ? `<section class="mt-4"><h2 class="text-lg font-bold text-gray-900 mb-1">Application Procedure</h2><p class="text-sm text-gray-700">${escapeHtml(sc.applicationProcess)}</p></section>` : '');
+
     writeRouteHtml(templateHtml, {
       routePath,
-      title: `${sc.title} (2026) — Interest Rate, Calculator & Post Office Rules | SarkarSaathi`,
-      description: `${sc.title}: Complete guide to interest rates, maturity calculation, Section 80C tax benefits, and official application rules.`,
+      title: `${sc.title} (2026) — Interest Rate, Rules, Calculator & Benefits | SarkarSaathi`,
+      description: `${sc.title} (${sc.authority || 'Ministry of Finance'}): Complete guide to 2026 interest rates, eligibility criteria, tax exemptions, and step-by-step application rules.`,
       ogType: 'article',
       jsonLd: getInvestmentBreadcrumbSchema('investment-schemes', sc.title, slug),
       bodyHtml: `
-        <article class="bg-white p-6 rounded-xl border border-gray-200 space-y-4">
-          <h1 class="text-2xl font-bold text-gray-900">${escapeHtml(sc.title)}</h1>
-          <p class="text-gray-700">${escapeHtml(sc.description || '')}</p>
-          <p class="text-sm text-gray-600">Authority: <strong>${escapeHtml(sc.authority || 'Ministry of Finance')}</strong></p>
-          <p><a href="/investment-schemes" class="text-blue-700 underline">← View All Government Investment Schemes</a></p>
+        <article class="bg-white p-6 sm:p-8 rounded-xl border border-gray-200 shadow-sm space-y-5">
+          <div class="text-xs font-semibold text-emerald-700 uppercase tracking-wide">Government Small Savings Scheme · ${escapeHtml(sc.authority || 'Ministry of Finance')}</div>
+          <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-900">${escapeHtml(sc.title)} (2026 Rules &amp; Interest Rates)</h1>
+          <p class="text-base text-gray-700 leading-relaxed">${escapeHtml(sc.description || '')}</p>
+
+          ${sc.financialParameters ? `
+          <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-200 text-sm text-emerald-950">
+            <h2 class="font-bold mb-1">Financial Parameters &amp; Notified Rates</h2>
+            <p>${escapeHtml(sc.financialParameters)}</p>
+          </div>` : ''}
+
+          ${sc.benefits ? `
+          <section class="mt-4">
+            <h2 class="text-lg font-bold text-gray-900 mb-1">Key Benefits &amp; Sovereign Guarantee</h2>
+            <p class="text-sm text-gray-700 leading-relaxed">${escapeHtml(sc.benefits)}</p>
+          </section>` : ''}
+
+          ${sc.eligibility ? `
+          <section class="mt-4">
+            <h2 class="text-lg font-bold text-gray-900 mb-1">Eligibility Criteria &amp; Target Beneficiaries</h2>
+            <p class="text-sm text-gray-700 leading-relaxed">${escapeHtml(sc.eligibility)}</p>
+          </section>` : ''}
+
+          ${docsHtml}
+          ${processHtml}
+          ${faqsHtml}
+
+          <div class="pt-4 border-t border-gray-200 flex flex-wrap gap-4 text-sm font-medium">
+            <a href="/investment-schemes" class="text-blue-700 underline font-bold">← All Small Savings Schemes</a>
+            <a href="/investments" class="text-blue-700 underline font-bold">54EC Capital Gain Bonds</a>
+            <a href="/tools" class="text-blue-700 underline font-bold">Maturity Calculators</a>
+          </div>
         </article>`,
     });
     generatedCount++;
@@ -520,22 +730,70 @@ function runPrerender(): void {
     if (!st.state) continue;
     const stateSlug = st.state.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
     if (!stateSlug) continue;
+
+    const stateOpps = opportunityRepository.getPaginated({ page: 1, limit: 12, state: stateSlug }).items;
+    const oppListHtml = stateOpps.length > 0 
+      ? `<div class="mt-6"><h2 class="text-lg font-bold text-gray-900 mb-3">Key Development Projects &amp; Opportunities in ${escapeHtml(st.state)}</h2><ul class="space-y-3">${stateOpps.map(o => `<li><a href="/opportunities/${escapeHtml(o.slug || o.id)}" class="font-bold text-blue-800 underline">${escapeHtml(o.title)}</a> — <span class="text-sm text-gray-600">${escapeHtml(o.authority || '')} (${escapeHtml(o.sector || '')})</span></li>`).join('\n')}</ul></div>`
+      : '';
+
+    const servicesHtml = st.services && st.services.length > 0
+      ? `<div class="mt-4"><h3 class="text-sm font-bold text-gray-700 uppercase">Verified Digital Citizen &amp; Business Services:</h3><ul class="list-disc pl-5 text-sm text-gray-700 mt-1">${st.services.map(s => `<li>${escapeHtml(s)}</li>`).join('')}</ul></div>`
+      : '';
+
     writeRouteHtml(templateHtml, {
       routePath: `/opportunities/state/${stateSlug}`,
-      title: `${st.state} Government Schemes, Subsidies & Industrial Projects (2026) | SarkarSaathi`,
-      description: `Explore verified ${st.state} government subsidies, MSME incentives, industrial parks, and official state portal links on SarkarSaathi.`,
-      bodyHtml: `<article class="bg-white p-6 rounded-xl border border-gray-200"><h1 class="text-2xl font-bold mb-2">${escapeHtml(st.state)} Government Schemes, Subsidies &amp; Infrastructure Opportunities</h1><p>Official State Portal: <a href="${escapeHtml(st.url)}" class="text-blue-700 underline">${escapeHtml(st.name)}</a></p></article>`,
+      title: `${st.state} Government Opportunities, Schemes & Official Portal | SarkarSaathi`,
+      description: `Explore verified ${st.state} state development initiatives, tenders, startup grants, and open central government opportunities applicable to citizens in ${st.state}.`,
+      bodyHtml: `
+        <article class="bg-white p-6 rounded-xl border border-gray-200 space-y-4">
+          <div class="text-xs font-semibold text-emerald-700 uppercase">Verified State Governance Directory · ${escapeHtml(st.type || 'State')}</div>
+          <h1 class="text-2xl font-bold text-gray-900">${escapeHtml(st.state)} Government Investment &amp; Development Opportunities</h1>
+          <p class="text-gray-700 leading-relaxed">${escapeHtml(st.description || '')}</p>
+          <p class="text-sm">Official State Portal: <a href="${escapeHtml(st.officialUrl || '')}" class="text-blue-700 font-bold underline" target="_blank" rel="noopener noreferrer">${escapeHtml(st.name)} (.gov.in)</a></p>
+          ${servicesHtml}
+          ${oppListHtml}
+          <div class="pt-4 border-t border-gray-100 mt-6 flex gap-4 text-sm font-medium">
+            <a href="/opportunities" class="text-blue-700 underline">← All Opportunities</a>
+            <a href="/subsidies" class="text-blue-700 underline">State &amp; Central Subsidies</a>
+            <a href="/official-sources" class="text-blue-700 underline">Official Portals Directory</a>
+          </div>
+        </article>`,
     });
     generatedCount++;
   }
 
-  for (const sec of SECTOR_ROUTES) {
-    const secLabel = sec.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+  const allSectorRoutes = Array.from(new Set([
+    ...SECTOR_ROUTES,
+    'it-ites-technology-parks',
+    'renewable-energy-solar'
+  ]));
+
+  for (const sec of allSectorRoutes) {
+    let secLabel = sec.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+    if (sec === 'it-ites-technology-parks') secLabel = 'IT, ITeS & Technology Parks';
+    if (sec === 'renewable-energy-solar') secLabel = 'Renewable Energy & Solar';
+
+    const secOpps = opportunityRepository.getPaginated({ page: 1, limit: 12, sector: sec }).items;
+    const oppListHtml = secOpps.length > 0 
+      ? `<div class="mt-6"><h2 class="text-lg font-bold text-gray-900 mb-3">Verified ${escapeHtml(secLabel)} Opportunities &amp; Projects (${secOpps.length}+)</h2><ul class="space-y-3">${secOpps.map(o => `<li><a href="/opportunities/${escapeHtml(o.slug || o.id)}" class="font-bold text-blue-800 underline">${escapeHtml(o.title)}</a> — <span class="text-sm text-gray-600">${escapeHtml(o.authority || '')} (${escapeHtml(o.state || 'India')})</span></li>`).join('\n')}</ul></div>`
+      : '';
+
     writeRouteHtml(templateHtml, {
       routePath: `/opportunities/sector/${sec}`,
-      title: `${secLabel} Sector Subsidies, Grants & Government Projects in India | SarkarSaathi`,
-      description: `Browse verified Government of India subsidies, PLI incentives, tenders, and infrastructure projects in the ${secLabel} sector.`,
-      bodyHtml: `<article class="bg-white p-6 rounded-xl border border-gray-200"><h1 class="text-2xl font-bold mb-2">${escapeHtml(secLabel)} Sector Government Schemes &amp; Projects</h1></article>`,
+      title: `${secLabel} Sector Investment Opportunities & Fellowships | SarkarSaathi`,
+      description: `Browse verified government opportunities, tenders, fellowships, and startup grants in the ${secLabel} sector across India.`,
+      bodyHtml: `
+        <article class="bg-white p-6 rounded-xl border border-gray-200 space-y-4">
+          <div class="text-xs font-semibold text-blue-700 uppercase">Sector Opportunity Directory</div>
+          <h1 class="text-2xl font-bold text-gray-900">${escapeHtml(secLabel)} Investment &amp; Development Opportunities</h1>
+          <p class="text-gray-700 leading-relaxed">Explore active Central and State government tenders, research grants, manufacturing corridors, and infrastructure initiatives in the ${escapeHtml(secLabel)} domain.</p>
+          ${oppListHtml}
+          <div class="pt-4 border-t border-gray-100 mt-6 flex gap-4 text-sm font-medium">
+            <a href="/opportunities" class="text-blue-700 underline">← All Opportunities</a>
+            <a href="/tenders" class="text-blue-700 underline">Public Tenders</a>
+            <a href="/investments" class="text-blue-700 underline">Sovereign Investments</a>
+          </div>
+        </article>`,
     });
     generatedCount++;
   }
@@ -558,12 +816,52 @@ function runPrerender(): void {
     const slug = opp.slug || opp.id;
     if (!slug || seenOpps.has(slug)) continue;
     seenOpps.add(slug);
+    const cost = opp.totalProjectCost || opp.fundingAmount || 'As per project notification';
+    const loc = [opp.district, opp.location, opp.state].filter(Boolean).join(', ') || 'India';
+    const statusVal = opp.projectStatus || opp.projectStage || 'Active';
+    const sectorVal = [opp.sector, opp.subSector].filter(Boolean).join(' · ') || 'Development & Infrastructure';
+
     writeRouteHtml(templateHtml, {
       routePath: `/opportunities/${slug}`,
-      title: `${opp.title} (${opp.state || 'India'}) — Project Details & Authority | SarkarSaathi`,
-      description: `${opp.title} in ${opp.state || 'India'} (${opp.sector || 'Infrastructure'}): Implemented by ${opp.authority || 'Government of India'}. Check project outlay, status, and official source.`,
+      title: `${opp.title} (${opp.state || 'India'}) — Project Details, Outlay & Authority | SarkarSaathi`,
+      description: `${opp.title} in ${loc} (${sectorVal}): Nodal Authority: ${opp.authority || 'Government of India'}. Outlay: ${cost}. Status: ${statusVal}. Check participation procedure and official source link.`,
       ogType: 'article',
-      bodyHtml: `<article class="bg-white p-6 rounded-xl border border-gray-200"><h1 class="text-2xl font-bold mb-2">${escapeHtml(opp.title)}</h1><p>${escapeHtml(opp.description || '')}</p><p class="text-sm text-gray-600 mt-2">Authority: ${escapeHtml(opp.authority || '')} | State: ${escapeHtml(opp.state || 'India')}</p></article>`,
+      bodyHtml: `
+        <article class="bg-white p-6 sm:p-8 rounded-xl border border-gray-200 shadow-sm space-y-5">
+          <div class="text-xs font-semibold text-blue-700 uppercase tracking-wide">Government Opportunity · ${escapeHtml(sectorVal)} · ${escapeHtml(statusVal)}</div>
+          <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-900">${escapeHtml(opp.title)}</h1>
+          <p class="text-base text-gray-700 leading-relaxed">${escapeHtml(opp.description || '')}</p>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-slate-50 p-4 rounded-xl border border-slate-200 text-sm">
+            <div><span class="block text-xs font-bold text-gray-500 uppercase">Project Outlay</span><strong class="text-gray-900">${escapeHtml(cost)}</strong></div>
+            <div><span class="block text-xs font-bold text-gray-500 uppercase">Location / State</span><strong class="text-gray-900">${escapeHtml(loc)}</strong></div>
+            <div><span class="block text-xs font-bold text-gray-500 uppercase">Implementing Agency</span><strong class="text-gray-900">${escapeHtml(opp.authority || 'Government of India')}</strong></div>
+            <div><span class="block text-xs font-bold text-gray-500 uppercase">Status / Stage</span><strong class="text-emerald-800">${escapeHtml(statusVal)}</strong></div>
+          </div>
+
+          ${opp.infrastructureDetails ? `
+          <section class="mt-4">
+            <h2 class="text-lg font-bold text-gray-900 mb-1">Infrastructure &amp; Project Scope</h2>
+            <p class="text-sm text-gray-700 leading-relaxed">${escapeHtml(opp.infrastructureDetails)}</p>
+          </section>` : ''}
+
+          ${opp.participationProcess && opp.participationProcess.length > 0 ? `
+          <section class="mt-4">
+            <h2 class="text-lg font-bold text-gray-900 mb-1">Participation &amp; Application Procedure</h2>
+            <ol class="list-decimal pl-5 text-sm text-gray-700 space-y-1">${opp.participationProcess.map(p => `<li>${escapeHtml(p)}</li>`).join('')}</ol>
+          </section>` : ''}
+
+          <div class="p-4 bg-blue-50 rounded-xl border border-blue-200 text-sm">
+            <span class="font-bold text-blue-900">Official Source Citation: </span>
+            <a href="${escapeHtml(opp.sourceUrl || '#')}" class="text-blue-700 font-bold underline" target="_blank" rel="noopener noreferrer">${escapeHtml(opp.sourceAuthority || opp.sourceName || 'Official Portal')}</a>
+          </div>
+
+          <div class="pt-4 border-t border-gray-200 flex flex-wrap gap-4 text-sm font-medium">
+            <a href="/opportunities" class="text-blue-700 underline font-bold">← All Opportunities</a>
+            <a href="/subsidies" class="text-blue-700 underline font-bold">Subsidies Directory</a>
+            <a href="/tenders" class="text-blue-700 underline font-bold">Public Tenders</a>
+          </div>
+        </article>`,
     });
     generatedCount++;
   }

@@ -847,6 +847,14 @@ export function GenericHubView({
   const [pageSize, setPageSize] = useState(20);
   const [showFilters, setShowFilters] = useState(false);
 
+  useEffect(() => {
+    setStateFilter(initialState);
+  }, [initialState]);
+
+  useEffect(() => {
+    setSectorFilter(initialSector);
+  }, [initialSector]);
+
   // Facet options extraction (from repository if available, or extracted from items)
   const facets = useMemo(() => {
     if (repository && typeof repository.getFacets === 'function') {

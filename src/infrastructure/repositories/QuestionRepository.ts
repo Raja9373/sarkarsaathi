@@ -1,11 +1,21 @@
 import rawQuestions from '../../data/verifiedQuestionsData.json';
+import { TOP_CITIZEN_QUERIES_ARTICLES } from '../../data/topCitizenQueriesData';
 import { VerifiedQuestionItem, QuestionQueryOptions, PaginatedQuestionResult } from '../../types/question';
 
 export class QuestionRepository {
   private items: VerifiedQuestionItem[];
 
   constructor() {
-    this.items = (rawQuestions as any[]).map((q) => ({
+    const combined = [...TOP_CITIZEN_QUERIES_ARTICLES, ...(rawQuestions as any[])];
+    const seenIds = new Set<string>();
+    const uniqueItems: any[] = [];
+    for (const q of combined) {
+      if (!seenIds.has(q.id)) {
+        seenIds.add(q.id);
+        uniqueItems.push(q);
+      }
+    }
+    this.items = uniqueItems.map((q) => ({
       ...q,
       is_published: this.isEligibleForPublication(q),
     }));
@@ -82,27 +92,35 @@ export class QuestionRepository {
       return results;
     }
 
+    const cleanQ = q.replace(/[^a-z0-9]+/g, ' ').trim();
+    const tokens = cleanQ.split(/\s+/).filter((t) => t.length > 2);
+
     return results.filter((item) => {
-      // Search in canonical question
-      if (item.canonical_question.toLowerCase().includes(q)) return true;
-      // Search in ID
-      if (item.id.toLowerCase().includes(q)) return true;
-      // Search in subcategory
-      if (item.subcategory.toLowerCase().includes(q)) return true;
-      // Search in short or detailed answer
-      if (item.short_answer.toLowerCase().includes(q)) return true;
-      if (item.detailed_answer.toLowerCase().includes(q)) return true;
-      // Search in alternate phrasings
-      if (item.alternate_phrasings.some((alt) => alt.toLowerCase().includes(q))) return true;
-      // Search in Hindi translation
-      if (item.translations?.hi?.short_answer?.toLowerCase().includes(q)) return true;
-      if (item.translations?.hi?.detailed_answer?.toLowerCase().includes(q)) return true;
-      // Search in Hinglish translation
-      if (item.translations?.hinglish?.short_answer?.toLowerCase().includes(q)) return true;
-      if (item.translations?.hinglish?.detailed_answer?.toLowerCase().includes(q)) return true;
-      // Search in publisher or title
-      if (item.source_title?.toLowerCase().includes(q)) return true;
-      if (item.source_publisher?.toLowerCase().includes(q)) return true;
+      const searchableText = [
+        item.canonical_question,
+        item.id,
+        item.subcategory,
+        item.short_answer,
+        item.detailed_answer,
+        ...item.alternate_phrasings,
+        item.translations?.hi?.short_answer || '',
+        item.translations?.hi?.detailed_answer || '',
+        item.translations?.hinglish?.short_answer || '',
+        item.translations?.hinglish?.detailed_answer || '',
+        item.source_title || '',
+        item.source_publisher || '',
+      ]
+        .join(' ')
+        .toLowerCase();
+
+      if (searchableText.includes(q)) return true;
+
+      const normalizedSearchable = searchableText.replace(/[^a-z0-9]+/g, ' ');
+      if (normalizedSearchable.includes(cleanQ)) return true;
+
+      if (tokens.length >= 2 && tokens.every((tok) => normalizedSearchable.includes(tok))) {
+        return true;
+      }
 
       return false;
     });

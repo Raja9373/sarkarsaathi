@@ -329,7 +329,8 @@ export function buildRepresentativeInspectionUrls(
   for (const target of targetCategorySamples) {
     const matches = questions.filter(q => q.category === target.cat).slice(0, target.count);
     for (const q of matches) {
-      const qUrl = `https://sarkarsaathi.org/questions/${(q.id || '').toLowerCase()}`;
+      const qSlug = (q.slug || q.id || '').toLowerCase();
+      const qUrl = `https://sarkarsaathi.org/questions/${qSlug}`;
       items.push({
         url: qUrl,
         url_type: 'QUESTION_DETAIL',

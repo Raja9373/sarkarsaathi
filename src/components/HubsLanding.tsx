@@ -89,21 +89,28 @@ export function StateLandingView({ state, onNavigate }: { state: string, onNavig
     </div>
   );
 
+  const canonicalState = stateSource?.state || formattedState;
+
   return (
     <GenericHubView
-      title={`${formattedState} Government Investment & Development Opportunities`}
+      title={`${canonicalState} Government Investment & Development Opportunities`}
       type="opportunities"
       items={opportunityRepository.getAll()}
       repository={opportunityRepository}
       onNavigate={onNavigate}
-      initialState={state}
+      initialState={canonicalState}
       headerComponent={stateHeaderCard}
     />
   );
 }
 
 export function SectorLandingView({ sector, onNavigate }: { sector: string, onNavigate: (route: string, slug?: string) => void }) {
-  const formattedSector = sector.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(' ');
+  let formattedSector = sector.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(' ');
+  if (sector.toLowerCase() === 'it-ites-technology-parks' || sector.toLowerCase() === 'technology') {
+    formattedSector = 'IT, ITeS & Technology Parks';
+  } else if (sector.toLowerCase() === 'renewable-energy-solar' || sector.toLowerCase() === 'renewable-energy') {
+    formattedSector = 'Renewable Energy & Solar';
+  }
 
   useSEO({
     title: `${formattedSector} Sector Investment Opportunities & Fellowships | SarkarSaathi`,

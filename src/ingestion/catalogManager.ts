@@ -36,11 +36,29 @@ export class CatalogQueryManager {
     }
 
     if (options.sector && options.sector !== 'ALL') {
-      const sec = options.sector.toLowerCase().trim();
-      const sectorMatches = filtered.filter(i => (i.sector && i.sector.toLowerCase().includes(sec)) || (i.category && i.category.toLowerCase().includes(sec)));
+      const fNorm = options.sector.toLowerCase().replace(/[^a-z0-9]/g, '');
+      const sectorMatches = filtered.filter(i => {
+        const sNorm = (i.sector || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+        const cNorm = (i.category || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+        if (sNorm && (sNorm.includes(fNorm) || (sNorm.length >= 4 && fNorm.includes(sNorm)))) return true;
+        if (cNorm && (cNorm.includes(fNorm) || (cNorm.length >= 4 && fNorm.includes(cNorm)))) return true;
+        const targetText = ((i.sector || '') + ' ' + (i.category || '') + ' ' + (i.title || '')).toLowerCase();
+        if (options.sector!.includes('it') || options.sector!.includes('tech')) {
+          if (/information technology|electronics|software|technology|tech|saas|digital/i.test(targetText)) return true;
+        }
+        if (options.sector!.includes('solar') || options.sector!.includes('renewable')) {
+          if (/solar|renewable|clean energy|wind|climate|pv/i.test(targetText)) return true;
+        }
+        const tokens = options.sector!.toLowerCase().split(/[^a-z0-9]+/).filter(t => t.length >= 3 && t !== 'and' && t !== 'the');
+        return tokens.length > 0 && tokens.some(t => targetText.includes(t));
+      });
+
       if (sectorMatches.length < 4) {
         const sectorIds = new Set(sectorMatches.map(i => i.id));
-        const generalMatches = filtered.filter(i => !sectorIds.has(i.id));
+        const generalMatches = filtered.filter(i => 
+          !sectorIds.has(i.id) &&
+          (i.category?.toLowerCase().includes('cross') || i.sector?.toLowerCase().includes('cross') || i.authority?.toLowerCase().includes('government of india') || i.authority?.toLowerCase().includes('ministry'))
+        );
         filtered = [...sectorMatches, ...generalMatches];
       } else {
         filtered = sectorMatches;
@@ -48,12 +66,17 @@ export class CatalogQueryManager {
     }
 
     if (options.state && options.state !== 'ALL') {
-      const st = options.state.toLowerCase().trim();
-      const stateMatches = filtered.filter(i => 
-        (i.state && i.state.toLowerCase().includes(st)) || 
-        (i.location && i.location.toLowerCase().includes(st)) ||
-        (i.title && i.title.toLowerCase().includes(st))
-      );
+      const fNorm = options.state.toLowerCase().replace(/[^a-z0-9]/g, '');
+      const filterTokens = options.state.toLowerCase().split(/[^a-z0-9]+/).filter(t => t.length > 2 && t !== 'and' && t !== 'the');
+
+      const stateMatches = filtered.filter(i => {
+        const sNorm = (i.state || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+        const lNorm = (i.location || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+        if (sNorm && (sNorm.includes(fNorm) || (sNorm.length >= 4 && fNorm.includes(sNorm)))) return true;
+        if (lNorm && (lNorm.includes(fNorm) || (lNorm.length >= 4 && fNorm.includes(lNorm)))) return true;
+        const targetText = ((i.state || '') + ' ' + (i.location || '') + ' ' + (i.title || '')).toLowerCase();
+        return filterTokens.length > 0 && filterTokens.every(t => targetText.includes(t));
+      });
 
       // Prevent Soft 404s: If state-specific matches are sparse (< 4), append central/pan-India opportunities open to applicants in this state
       if (stateMatches.length < 4) {

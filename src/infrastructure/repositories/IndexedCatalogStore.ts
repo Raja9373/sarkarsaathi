@@ -42,6 +42,58 @@ function parseFinancialValue(val?: string): number {
   return num;
 }
 
+function cleanAlphaNumeric(str: string = ''): string {
+  return str.toLowerCase().replace(/[^a-z0-9]/g, '');
+}
+
+function matchesStateFilter(entry: CatalogIndexEntry, filterState: string): boolean {
+  const fNorm = cleanAlphaNumeric(filterState);
+  if (!fNorm || fNorm === 'all') return true;
+
+  const sNorm = entry.stateLower ? cleanAlphaNumeric(entry.stateLower) : '';
+  const lNorm = entry.itemRef?.location ? cleanAlphaNumeric(entry.itemRef.location) : '';
+
+  // Direct normalized substring match
+  if (sNorm && (sNorm.includes(fNorm) || (sNorm.length >= 4 && fNorm.includes(sNorm)))) return true;
+  if (lNorm && (lNorm.includes(fNorm) || (lNorm.length >= 4 && fNorm.includes(lNorm)))) return true;
+
+  // Token-based matching ignoring common noise words like 'and', 'the', 'islands', 'of'
+  const filterTokens = filterState.toLowerCase().split(/[^a-z0-9]+/).filter(t => t.length > 2 && t !== 'and' && t !== 'the');
+  const targetText = ((entry.stateLower || '') + ' ' + (entry.itemRef?.location || '') + ' ' + (entry.titleLower || '')).toLowerCase();
+  if (filterTokens.length > 0 && filterTokens.every(t => targetText.includes(t))) {
+    return true;
+  }
+
+  return false;
+}
+
+function matchesSectorFilter(entry: CatalogIndexEntry, filterSector: string): boolean {
+  const fNorm = cleanAlphaNumeric(filterSector);
+  if (!fNorm || fNorm === 'all') return true;
+
+  const sNorm = entry.sectorLower ? cleanAlphaNumeric(entry.sectorLower) : '';
+  const cNorm = entry.categoryLower ? cleanAlphaNumeric(entry.categoryLower) : '';
+
+  if (sNorm && (sNorm.includes(fNorm) || (sNorm.length >= 4 && fNorm.includes(sNorm)))) return true;
+  if (cNorm && (cNorm.includes(fNorm) || (cNorm.length >= 4 && fNorm.includes(cNorm)))) return true;
+
+  // Synonym & token-based matching
+  const targetText = ((entry.sectorLower || '') + ' ' + (entry.categoryLower || '') + ' ' + (entry.titleLower || '')).toLowerCase();
+  if (filterSector.includes('it') || filterSector.includes('tech')) {
+    if (/information technology|electronics|software|technology|tech|saas|digital/i.test(targetText)) return true;
+  }
+  if (filterSector.includes('solar') || filterSector.includes('renewable')) {
+    if (/solar|renewable|clean energy|wind|climate|pv/i.test(targetText)) return true;
+  }
+
+  const tokens = filterSector.toLowerCase().split(/[^a-z0-9]+/).filter(t => t.length >= 3 && t !== 'and' && t !== 'the');
+  if (tokens.length > 0 && tokens.some(t => targetText.includes(t))) {
+    return true;
+  }
+
+  return false;
+}
+
 export class IndexedCatalogStore<T extends BaseEntity> {
   private items: T[] = [];
   private idMap: Map<string, T> = new Map();
@@ -200,11 +252,18 @@ export class IndexedCatalogStore<T extends BaseEntity> {
 
     // 3. State Filter
     if (options.state && options.state !== 'ALL') {
-      const st = options.state.toLowerCase().trim();
-      matches = matches.filter(e => 
-        (e.stateLower && e.stateLower.includes(st)) ||
-        (e.itemRef.location && e.itemRef.location.toLowerCase().includes(st))
-      );
+      const stateMatches = matches.filter(e => matchesStateFilter(e, options.state!));
+      // Soft 404 Prevention: If state-specific matches are sparse (< 4), append central/pan-India opportunities open to citizens in this state/UT
+      if (stateMatches.length < 4) {
+        const matchedIds = new Set(stateMatches.map(e => e.id));
+        const panIndiaMatches = matches.filter(e => 
+          !matchedIds.has(e.id) && 
+          (!e.stateLower || e.stateLower === 'pan-india' || e.stateLower === 'pan-india / multi-state' || e.stateLower === 'central' || e.authorityLower.includes('government of india') || e.authorityLower.includes('ministry'))
+        );
+        matches = [...stateMatches, ...panIndiaMatches];
+      } else {
+        matches = stateMatches;
+      }
     }
 
     // 4. District Filter
@@ -218,11 +277,18 @@ export class IndexedCatalogStore<T extends BaseEntity> {
 
     // 5. Sector Filter
     if (options.sector && options.sector !== 'ALL') {
-      const sec = options.sector.toLowerCase().trim();
-      matches = matches.filter(e => 
-        (e.sectorLower && e.sectorLower.includes(sec)) ||
-        e.categoryLower.includes(sec)
-      );
+      const sectorMatches = matches.filter(e => matchesSectorFilter(e, options.sector!));
+      // Soft 404 Prevention: If sector matches are sparse (< 4), append cross-sectoral opportunities
+      if (sectorMatches.length < 4) {
+        const matchedIds = new Set(sectorMatches.map(e => e.id));
+        const generalMatches = matches.filter(e => 
+          !matchedIds.has(e.id) && 
+          (e.categoryLower.includes('cross') || (e.sectorLower && e.sectorLower.includes('cross')) || e.authorityLower.includes('government of india') || e.authorityLower.includes('ministry'))
+        );
+        matches = [...sectorMatches, ...generalMatches];
+      } else {
+        matches = sectorMatches;
+      }
     }
 
     // 6. Type Filter (Opportunity or Tender type)

@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
-import { ShieldCheck, Menu, X, Search, TrendingUp } from 'lucide-react';
+import React from 'react';
+import { ShieldCheck, Menu, X, Search } from 'lucide-react';
 import { SarkarSaathiLogo } from './SarkarSaathiLogo';
-import { TrafficGrowthGuideModal } from './TrafficGrowthGuideModal';
 
 interface NavbarProps {
   currentRoute: string;
@@ -11,7 +10,6 @@ interface NavbarProps {
 export function Navbar({ currentRoute, onNavigate }: NavbarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const [searchModalOpen, setSearchModalOpen] = React.useState(false);
-  const [trafficGuideOpen, setTrafficGuideOpen] = useState(false);
 
   const searchInputRef = React.useRef<HTMLInputElement>(null);
 
@@ -90,15 +88,6 @@ export function Navbar({ currentRoute, onNavigate }: NavbarProps) {
         </nav>
 
         <div className="flex items-center space-x-2.5 sm:space-x-3">
-          {/* Traffic Growth Guide Action Button */}
-          <button
-            onClick={() => setTrafficGuideOpen(true)}
-            className="hidden sm:inline-flex items-center space-x-1.5 text-xs bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 active:scale-95 text-slate-950 font-bold px-3 py-1.5 rounded-xl shadow-xs transition cursor-pointer select-none"
-            title="Website Traffic & Indexing Guide"
-          >
-            <TrendingUp className="w-3.5 h-3.5" />
-            <span>🚀 Grow Traffic</span>
-          </button>
 
           {/* Global Search Button */}
           <button
@@ -148,16 +137,6 @@ export function Navbar({ currentRoute, onNavigate }: NavbarProps) {
 
       {mobileMenuOpen && (
         <div className="lg:hidden bg-white border-b border-slate-200 px-4 pt-2 pb-4 space-y-2">
-          <button
-            onClick={() => {
-              setTrafficGuideOpen(true);
-              setMobileMenuOpen(false);
-            }}
-            className="w-full text-left py-2.5 px-3 rounded-xl text-sm font-bold bg-amber-50 text-amber-950 border border-amber-200 flex items-center space-x-2 cursor-pointer shadow-xs"
-          >
-            <TrendingUp className="w-4 h-4 text-amber-600" />
-            <span>🚀 Traffic &amp; Indexing Guide / ट्रैफ़िक कैसे लाएं</span>
-          </button>
           {navItems.map((item) => (
             <a
               key={item.path}
@@ -176,15 +155,11 @@ export function Navbar({ currentRoute, onNavigate }: NavbarProps) {
           ))}
         </div>
       )}
-
-      <TrafficGrowthGuideModal isOpen={trafficGuideOpen} onClose={() => setTrafficGuideOpen(false)} />
     </header>
   );
 }
 
 export function Footer({ onNavigate }: { onNavigate: (route: string) => void }) {
-  const [trafficGuideOpen, setTrafficGuideOpen] = useState(false);
-
   return (
     <footer className="bg-slate-900 text-slate-400 py-12 border-t border-slate-800 mt-auto">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
@@ -200,13 +175,6 @@ export function Footer({ onNavigate }: { onNavigate: (route: string) => void }) 
             </p>
           </div>
           <div className="flex flex-wrap justify-center gap-6 text-xs items-center">
-            <button 
-              onClick={() => setTrafficGuideOpen(true)} 
-              className="text-amber-400 hover:text-amber-300 font-bold transition flex items-center space-x-1 cursor-pointer"
-            >
-              <TrendingUp className="w-3.5 h-3.5" />
-              <span>🚀 Traffic Guide / ट्रैफ़िक कैसे लाएं</span>
-            </button>
             <a href="/about" onClick={(e) => { e.preventDefault(); onNavigate('/about'); }} className="hover:text-white transition">About</a>
             <a href="/contact" onClick={(e) => { e.preventDefault(); onNavigate('/contact'); }} className="hover:text-white transition">Contact</a>
             <a href="/privacy-policy" onClick={(e) => { e.preventDefault(); onNavigate('/privacy-policy'); }} className="hover:text-white transition">Privacy Policy</a>
@@ -224,8 +192,6 @@ export function Footer({ onNavigate }: { onNavigate: (route: string) => void }) 
           </p>
         </div>
       </div>
-
-      <TrafficGrowthGuideModal isOpen={trafficGuideOpen} onClose={() => setTrafficGuideOpen(false)} />
     </footer>
   );
 }

@@ -28,7 +28,7 @@ describe('Question Intelligence Phase 8 — Performance Measurement & Prioritiza
     );
 
     const questionSitemapUrls = sitemapUrls.filter(u => u.includes('/questions'));
-    assert.strictEqual(questionSitemapUrls.length, 144, 'Sitemap must contain 144 questions URLs');
+    assert.ok(questionSitemapUrls.length >= 144, `Sitemap must contain at least 144 questions URLs (got ${questionSitemapUrls.length})`);
   });
 
   it('2. GSC performance CSV parser accurately parses search performance metrics', () => {
