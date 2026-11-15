@@ -1,29 +1,33 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { Navbar, Footer } from './components/Navigation';
-import { HomeView, GenericHubView, DetailView, ComparisonsView, ToolsView, OfficialSourcesView } from './components/Hubs';
-import { SearchView } from './components/SearchView';
+import { HomeView, GenericHubView, DetailView, OfficialSourcesView } from './components/Hubs';
 import { AboutPage, ContactPage, PrivacyPolicyPage, DisclaimerPage, TermsPage } from './components/LegalPages';
 import { StateLandingView, SectorLandingView } from './components/HubsLanding';
 import { SubsidyHubView, SubsidyDetailView } from './components/SubsidyViews';
-import { SavedView, RecentlyViewedView } from './components/SavedAndRecent';
-import { AdminImport } from './components/AdminImport';
-import { NotFoundView } from './components/NotFoundView';
-import { OfficialSourceDetailView } from './components/detail/OfficialSourceDetailView';
 import { QuestionsHubView } from './components/QuestionsHubView';
 import { QuestionDetailView } from './components/QuestionDetailView';
 import { investmentRepository, investmentSchemeRepository, opportunityRepository, tenderRepository, newsRepository } from './infrastructure/repositories/InvestmentRepository';
 import { subsidyRepository } from './infrastructure/repositories/SubsidyRepository';
 import { questionRepository } from './infrastructure/repositories/QuestionRepository';
 import { getOfficialSourceBySlug } from './utils/officialSources';
+import { isIndexableOpportunity } from './utils/seoQualityGate';
 import { 
   updateSEO, 
   injectStructuredData, 
   getInvestmentBreadcrumbSchema, 
-  injectQuestionFaqSchema, 
   injectGovernmentServiceSchema,
   getHubOgImage,
   PRODUCTION_DOMAIN
 } from './utils/seo';
+
+const ComparisonsView = lazy(() => import('./components/Hubs').then(m => ({ default: m.ComparisonsView })));
+const ToolsView = lazy(() => import('./components/Hubs').then(m => ({ default: m.ToolsView })));
+const SearchView = lazy(() => import('./components/SearchView').then(m => ({ default: m.SearchView })));
+const SavedView = lazy(() => import('./components/SavedAndRecent').then(m => ({ default: m.SavedView })));
+const RecentlyViewedView = lazy(() => import('./components/SavedAndRecent').then(m => ({ default: m.RecentlyViewedView })));
+const AdminImport = lazy(() => import('./components/AdminImport').then(m => ({ default: m.AdminImport })));
+const NotFoundView = lazy(() => import('./components/NotFoundView').then(m => ({ default: m.NotFoundView })));
+const OfficialSourceDetailView = lazy(() => import('./components/detail/OfficialSourceDetailView').then(m => ({ default: m.OfficialSourceDetailView })));
 
 const VALID_ROUTES = [
   '/',
@@ -62,6 +66,9 @@ export default function App() {
     const root = `/${parts[0]}`;
 
     if (parts.length === 1) {
+      if (root === '/compare') {
+        return { route: '/comparisons', slug: null };
+      }
       if (VALID_ROUTES.includes(root) || root === '/search') {
         return { route: root, slug: null };
       }
@@ -153,6 +160,10 @@ export default function App() {
       const existingSubsidyService = document.getElementById('subsidy-service-jsonld');
       if (existingSubsidyService && (!selectedSlug || currentRoute !== '/subsidies')) {
         existingSubsidyService.remove();
+      }
+      const existingToolsApp = document.getElementById('tools-webapp-jsonld');
+      if (existingToolsApp && currentRoute !== '/tools') {
+        existingToolsApp.remove();
       }
     }
 
@@ -278,11 +289,13 @@ export default function App() {
         if (item) {
           const canonicalPath = `/opportunities/${selectedSlug}`;
           const ogImage = getHubOgImage(canonicalPath);
+          const indexable = isIndexableOpportunity(item);
           updateSEO({
             title: `${item.title} - Government Opportunity & Grant | SarkarSaathi`,
             description: `Verified government opportunity: ${item.title}. Authority: ${item.authority || 'Government of India'}. Funding: ${item.fundingAmount || 'Check notice'}. Eligibility & apply guide.`,
             canonicalPath,
             keywords: `${item.title}, government grant, ${item.authority || 'govt of india'}, research fellowship, public opportunity`,
+            noIndex: !indexable,
             openGraph: {
               title: `${item.title} - Government Grant & Opportunity`,
               description: `Funding: ${item.fundingAmount || 'Official Grant'}. Authority: ${item.authority || 'Govt of India'}. Full eligibility & apply link on SarkarSaathi.`,
@@ -424,7 +437,6 @@ export default function App() {
               imageHeight: '630',
             },
           });
-          injectQuestionFaqSchema(item);
           return;
         }
       }
@@ -715,6 +727,23 @@ export default function App() {
       openGraph: config.openGraph,
       noIndex: config.noIndex,
     });
+
+    if (currentRoute === '/tools') {
+      injectStructuredData('tools-webapp-jsonld', {
+        '@context': 'https://schema.org',
+        '@type': 'WebApplication',
+        name: 'SarkarSaathi Government Scheme & Return Calculators',
+        url: `${PRODUCTION_DOMAIN}/tools`,
+        applicationCategory: 'FinanceApplication',
+        operatingSystem: 'All',
+        description: 'Free interactive calculators for PPF maturity, Sukanya Samriddhi Yojana (SSY), Senior Citizen Savings Scheme (SCSS), and Section 54EC capital gain tax bonds.',
+        offers: {
+          '@type': 'Offer',
+          price: '0',
+          priceCurrency: 'INR',
+        },
+      });
+    }
   }, [currentRoute, selectedSlug]);
 
   const navigate = (route: string, slug?: string) => {
@@ -743,7 +772,10 @@ export default function App() {
     } else {
       const root = `/${parts[0]}`;
       if (parts.length === 1) {
-        if (VALID_ROUTES.includes(root) || root === '/search') {
+        if (root === '/compare') {
+          setCurrentRoute('/comparisons');
+          setSelectedSlug(null);
+        } else if (VALID_ROUTES.includes(root) || root === '/search') {
           setCurrentRoute(root);
           setSelectedSlug(null);
         } else {
@@ -840,7 +872,7 @@ export default function App() {
       if (currentRoute === '/subsidies') {
         const item = subsidyRepository.getBySlug(selectedSlug);
         if (!item) return <NotFoundView onNavigate={navigate} />;
-        return <SubsidyDetailView item={item} onBack={() => navigate('/subsidies')} />;
+        return <SubsidyDetailView item={item} onBack={() => navigate('/subsidies')} onNavigate={navigate} />;
       }
       if (currentRoute === '/official-sources') {
         const item = getOfficialSourceBySlug(selectedSlug);
@@ -850,7 +882,6 @@ export default function App() {
       if (currentRoute === '/questions') {
         const item = questionRepository.getBySlug(selectedSlug);
         if (!item) return <NotFoundView onNavigate={navigate} />;
-        injectQuestionFaqSchema(item);
         return <QuestionDetailView question={item} onNavigate={navigate} onBack={() => navigate('/questions')} />;
       }
     }
@@ -909,7 +940,15 @@ export default function App() {
     <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans">
       <Navbar currentRoute={currentRoute} onNavigate={navigate} />
       <main className="flex-grow">
-        {renderContent()}
+        <Suspense
+          fallback={
+            <div className="max-w-5xl mx-auto px-4 py-16 text-center text-sm text-slate-500">
+              Loading verified government data...
+            </div>
+          }
+        >
+          {renderContent()}
+        </Suspense>
       </main>
       <Footer onNavigate={navigate} />
     </div>

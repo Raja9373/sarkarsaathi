@@ -370,16 +370,17 @@ export function SubsidyHubView({ onNavigate }: SubsidyHubProps) {
 interface SubsidyDetailProps {
   item: Subsidy;
   onBack: () => void;
+  onNavigate?: (route: string, slug?: string) => void;
 }
 
-export function SubsidyDetailView({ item, onBack }: SubsidyDetailProps) {
+export function SubsidyDetailView({ item, onBack, onNavigate }: SubsidyDetailProps) {
   if (!item) {
     return (
       <div className="max-w-4xl mx-auto px-4 py-16 text-center space-y-4">
         <h2 className="text-2xl font-bold text-slate-900">Subsidy Record Not Found</h2>
         <p className="text-slate-600 text-sm">The requested subsidy or benefit item could not be located in the catalogue.</p>
         <button onClick={onBack} className="px-5 py-2.5 bg-emerald-600 text-white rounded-xl text-xs font-semibold">
-          Back to Subsidies & Benefits
+          Back to Subsidies &amp; Benefits
         </button>
       </div>
     );
@@ -388,8 +389,24 @@ export function SubsidyDetailView({ item, onBack }: SubsidyDetailProps) {
   const isQuarantined = item.publicationState === 'QUARANTINED' || item.verificationStatus === 'UNVERIFIED';
   const getFieldValue = (val?: string) => val && val.trim() ? val : "Not specified in the verified source.";
 
+  const handleInternalLink = (e: React.MouseEvent, route: string) => {
+    if (onNavigate) {
+      e.preventDefault();
+      onNavigate(route);
+    }
+  };
+
   return (
     <div className="max-w-4xl mx-auto px-3.5 sm:px-6 lg:px-8 py-5 sm:py-8 lg:py-10 space-y-6 sm:space-y-8">
+      {/* Semantic Breadcrumb Navigation */}
+      <nav aria-label="Breadcrumb" className="flex items-center flex-wrap gap-1.5 text-xs text-slate-500 font-medium">
+        <a href="/" onClick={(e) => handleInternalLink(e, '/')} className="hover:text-emerald-700 transition">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/subsidies" onClick={(e) => { e.preventDefault(); onBack(); }} className="hover:text-emerald-700 transition">Subsidies &amp; Benefits</a>
+        <span aria-hidden="true">/</span>
+        <span className="text-slate-800 font-semibold truncate max-w-[260px] sm:max-w-none">{item.title}</span>
+      </nav>
+
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <button
           onClick={onBack}
@@ -552,12 +569,34 @@ export function SubsidyDetailView({ item, onBack }: SubsidyDetailProps) {
               <span className="font-bold text-slate-700">Official Source:</span> {getFieldValue(item.officialSource || item.sourceAuthority)}
             </div>
             <div>
-              <span className="font-bold text-slate-700">Last Verified:</span> {getFieldValue(item.lastVerified || item.lastVerifiedDate)}
+              <span className="font-bold text-slate-700">Last Verified:</span> {getFieldValue(item.lastVerified || item.lastVerifiedDate)} ·{' '}
+              <a href="/about" onClick={(e) => handleInternalLink(e, '/about')} className="text-emerald-700 font-semibold hover:underline">
+                Editorial Verification Policy
+              </a>
             </div>
           </div>
           <div className="pt-2 border-t border-slate-200/80 text-[11px] leading-relaxed text-slate-500">
             <span className="font-semibold text-slate-700">Disclaimer:</span> {item.disclaimer || 'SarkarSaathi.org is an independent information platform. Please verify all subsidy terms, eligibility criteria, and deadlines on the official government portal before making any application.'}
           </div>
+        </div>
+      </div>
+
+      {/* Internal Linking Cross-Navigation Mesh */}
+      <div className="bg-slate-900 text-white rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="space-y-1">
+          <h3 className="text-sm sm:text-base font-bold text-white">Explore Related Tools, Sovereign Schemes &amp; Verified Q&amp;A</h3>
+          <p className="text-xs text-slate-300">Calculate returns, compare small savings schemes, or read citizen FAQs in Hindi &amp; Hinglish.</p>
+        </div>
+        <div className="flex flex-wrap gap-2 text-xs font-bold shrink-0">
+          <a href="/tools" onClick={(e) => handleInternalLink(e, '/tools')} className="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg transition">
+            Subsidy &amp; Tax Calculators
+          </a>
+          <a href="/questions" onClick={(e) => handleInternalLink(e, '/questions')} className="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg border border-slate-700 transition">
+            Hindi / Hinglish Q&amp;A
+          </a>
+          <a href="/official-sources" onClick={(e) => handleInternalLink(e, '/official-sources')} className="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg border border-slate-700 transition">
+            Official .gov.in Portals
+          </a>
         </div>
       </div>
     </div>

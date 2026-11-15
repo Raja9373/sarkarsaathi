@@ -1,0 +1,23 @@
+{
+  "name": "SarkarSaathi — Verified Government Schemes, Subsidies & Bonds",
+  "short_name": "SarkarSaathi",
+  "description": "Independent civic research portal for verified Indian government schemes, MSME subsidies, 54EC capital gain bonds, Post Office schemes, and GeM tenders.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0d235f",
+  "theme_color": "#0d235f",
+  "icons": [
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

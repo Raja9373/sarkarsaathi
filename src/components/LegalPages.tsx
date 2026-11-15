@@ -103,6 +103,28 @@ export const AboutPage: React.FC = () => (
       </div>
     </section>
 
+    {/* Editorial Review Policy & Author Attribution (E-E-A-T) */}
+    <section className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-10 shadow-xs space-y-5">
+      <h2 className="text-xl sm:text-2xl font-bold text-slate-900 flex items-center space-x-2.5">
+        <FileText className="w-5 h-5 text-indigo-600 shrink-0" />
+        <span>Editorial Review Policy, Team Attribution &amp; Correction SLA</span>
+      </h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm text-slate-600 leading-relaxed">
+        <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-1.5">
+          <h3 className="font-bold text-slate-900">Editorial &amp; Statutory Research Desk</h3>
+          <p>
+            Every guide on SarkarSaathi.org is compiled, cross-referenced, and reviewed by our civic policy and sovereign finance research editors against primary notifications from RBI, Ministry of Finance, Ministry of Agriculture, MSME Development Institutes, and State Gazette releases.
+          </p>
+        </div>
+        <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-1.5">
+          <h3 className="font-bold text-slate-900">Correction &amp; Rate Revision SLA</h3>
+          <p>
+            Quarterly small-savings interest rate circulars (PPF, SSY, SCSS, NSC, KVP), GeM procurement limit updates, and scheme deadline extensions are audited on a rolling basis. Reported factual discrepancies submitted via <a href="/contact" className="text-indigo-600 font-semibold underline">our Contact Desk</a> are verified and updated within 24–48 business hours.
+          </p>
+        </div>
+      </div>
+    </section>
+
     {/* Non-Affiliation Notice */}
     <section className="bg-indigo-50 border border-indigo-200 rounded-3xl p-6 sm:p-8 space-y-3">
       <div className="flex items-center space-x-2 text-indigo-950 font-bold text-base sm:text-lg">

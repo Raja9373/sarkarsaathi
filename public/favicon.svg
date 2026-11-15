@@ -1,49 +1,50 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
   <defs>
-    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#1e3a8a" />
-      <stop offset="40%" stop-color="#1d4ed8" />
-      <stop offset="100%" stop-color="#0f172a" />
+    <linearGradient id="ssNavBg" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#071238" />
+      <stop offset="55%" stop-color="#0d2366" />
+      <stop offset="100%" stop-color="#193b9e" />
     </linearGradient>
-    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#fef08a" />
-      <stop offset="50%" stop-color="#eab308" />
-      <stop offset="100%" stop-color="#ca8a04" />
+    <linearGradient id="ssGoldTop" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fde68a" />
+      <stop offset="45%" stop-color="#f5c342" />
+      <stop offset="100%" stop-color="#d49617" />
     </linearGradient>
-    <linearGradient id="saffronGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#ea580c" />
-      <stop offset="100%" stop-color="#f97316" />
+    <linearGradient id="ssWhiteBot" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="70%" stop-color="#f1f5f9" />
+      <stop offset="100%" stop-color="#cbd5e1" />
     </linearGradient>
-    <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#16a34a" />
-      <stop offset="100%" stop-color="#22c55e" />
-    </linearGradient>
-    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
-      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.45"/>
+    <filter id="ssDepth" x="-12%" y="-12%" width="124%" height="124%">
+      <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#02081e" flood-opacity="0.5" />
     </filter>
   </defs>
 
-  {/* Outer App Badge */}
-  <rect x="32" y="32" width="448" height="448" rx="112" fill="url(#bgGrad)" stroke="url(#goldGrad)" stroke-width="12" filter="url(#shadow)" />
+  <!-- Commercial Squircle Base -->
+  <rect x="0" y="0" width="512" height="512" rx="118" fill="url(#ssNavBg)" />
 
-  {/* Inner Decorative Accent Ring */}
-  <circle cx="256" cy="256" r="176" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="6" stroke-dasharray="12 8" />
+  <!-- Interlocking Gold & White Ribbon Double-S Mark -->
+  <g filter="url(#ssDepth)">
+    <!-- Upper Brushed Gold Ribbon -->
+    <path
+      d="M 362 128 L 210 128 C 172 128 148 152 148 188 C 148 228 184 246 226 262 C 242 268 250 276 256 284 C 258 248 242 224 214 206 C 198 196 196 180 212 180 L 314 180 L 314 212 Z"
+      fill="url(#ssGoldTop)"
+    />
 
-  {/* Central Shield of Trust */}
-  <path d="M 256 96 L 384 152 V 272 C 384 352 312 408 256 432 C 200 408 128 352 128 272 V 152 Z" fill="url(#goldGrad)" filter="url(#shadow)" opacity="0.95" />
-  <path d="M 256 112 L 368 162 V 268 C 368 338 304 388 256 410 C 208 388 144 338 144 268 V 162 Z" fill="#0f172a" />
+    <!-- Lower Crisp White Ribbon -->
+    <path
+      d="M 150 348 L 302 348 C 340 348 364 324 364 288 C 364 248 328 230 286 214 C 270 208 262 200 256 192 C 254 228 270 252 298 270 C 314 280 316 296 300 296 L 198 296 L 198 264 Z"
+      fill="url(#ssWhiteBot)"
+    />
+  </g>
 
-  {/* Bold Letter 'S' for SarkarSaathi */}
-  <path d="M 292 208 C 292 188 272 176 244 176 C 216 176 200 188 200 208 C 200 228 220 238 252 248 C 292 260 312 276 312 308 C 312 338 284 356 244 356 C 204 356 176 338 176 312" fill="none" stroke="url(#goldGrad)" stroke-width="32" stroke-linecap="round" stroke-linejoin="round" />
-
-  {/* Checkmark Accent (Verified Badge) inside top right */}
-  <circle cx="368" cy="160" r="48" fill="#1e3a8a" stroke="url(#goldGrad)" stroke-width="8" />
-  <path d="M 348 160 L 362 174 L 392 144" fill="none" stroke="#22c55e" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" />
-
-  {/* Tricolor Indicator Bar at Bottom */}
-  <g transform="translate(144, 436)">
-    <rect x="0" y="0" width="74" height="12" rx="6" fill="url(#saffronGrad)" />
-    <rect x="83" y="0" width="74" height="12" rx="6" fill="#ffffff" />
-    <rect x="166" y="0" width="74" height="12" rx="6" fill="url(#greenGrad)" />
+  <!-- Indian Tricolor Precision Pill Accent -->
+  <g transform="translate(148, 382)">
+    <rect x="0" y="0" width="72" height="22" rx="11" fill="#FF9933" />
+    <rect x="72" y="0" width="72" height="22" fill="#FFFFFF" />
+    <rect x="144" y="0" width="72" height="22" rx="11" fill="#16A34A" />
+    <rect x="64" y="0" width="16" height="22" fill="#FF9933" />
+    <rect x="72" y="0" width="72" height="22" fill="#FFFFFF" />
+    <rect x="136" y="0" width="16" height="22" fill="#16A34A" />
   </g>
 </svg>

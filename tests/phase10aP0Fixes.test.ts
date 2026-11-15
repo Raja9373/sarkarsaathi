@@ -62,23 +62,26 @@ describe('Phase 10A: Verified P0 Fixes Regression Suite', () => {
     }
   });
 
-  it('4. Sitemap contains no duplicate URLs and includes the 4 grants and Q7 slugs', () => {
+  it('4. Sitemap contains no duplicate URLs and includes the 4 curated research grants (excluding bulk templates)', () => {
     const sitemapContent = fs.readFileSync('public/sitemap.xml', 'utf8');
     const locMatches = sitemapContent.match(/<loc>(.*?)<\/loc>/g) || [];
     const urls = locMatches.map(m => m.replace(/<\/?loc>/g, ''));
 
     assert.equal(new Set(urls).size, urls.length, 'Sitemap must contain zero duplicate URLs');
-    assert.ok(urls.length >= 11124, `Sitemap must contain valid URLs (expected at least 11,124, got ${urls.length})`);
+    assert.ok(
+      urls.length >= 750 && urls.length <= 2000,
+      `Sitemap must reflect doorway-filtered high-value URLs (got ${urls.length})`
+    );
 
-    // Check inclusion of research grants
+    // Check inclusion of curated research grants
     assert.ok(sitemapContent.includes('anrf-core-research-grant-autumn'));
     assert.ok(sitemapContent.includes('icmr-translational-research-grant'));
     assert.ok(sitemapContent.includes('ccrum-startup-research-grant'));
     assert.ok(sitemapContent.includes('cci-market-research-tech-policy-grant'));
 
-    // Check inclusion of both P2 and Q7
-    assert.ok(sitemapContent.includes('renewable-energy-green-hydrogen-project-1'));
-    assert.ok(sitemapContent.includes('state-energy-infrastructure-project-1'));
+    // Bulk numbered templates remain in repository (verified in test #5) but are excluded from XML sitemap
+    assert.equal(sitemapContent.includes('renewable-energy-green-hydrogen-project-1'), false);
+    assert.equal(sitemapContent.includes('state-energy-infrastructure-project-1'), false);
   });
 
   it('5. Each affected P2 and Q7 published record resolves to the correct detail record', () => {

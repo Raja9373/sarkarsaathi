@@ -17,7 +17,7 @@ import {
 } from 'lucide-react';
 import { VerifiedQuestionItem } from '../types/question';
 import { questionRepository } from '../infrastructure/repositories/QuestionRepository';
-import { injectFAQPageSchema, injectQuestionFaqSchema } from '../utils/seo';
+import { injectFAQPageSchema } from '../utils/seo';
 import { SocialShareBar, WhatsAppShareBanner } from './SocialShareBar';
 
 interface QuestionDetailProps {
@@ -63,14 +63,12 @@ export function QuestionDetailView({ question, onNavigate, onBack }: QuestionDet
     .filter((q) => q.id !== question.id)
     .slice(0, 3);
 
-  // Schema.org Structured Data: FAQPage, WebPage & BreadcrumbList
+  // Schema.org Structured Data: Unified WebPage + FAQPage + BreadcrumbList (zero duplicate FAQPage blocks)
   useEffect(() => {
-    const cleanupFaq = injectQuestionFaqSchema(question);
     const scriptId = 'question-webpage-jsonld';
     injectFAQPageSchema(question, relatedQuestions, activeLang, categoryHubUrl);
 
     return () => {
-      cleanupFaq?.();
       const el = document.getElementById(scriptId);
       if (el) el.remove();
     };
@@ -303,6 +301,23 @@ export function QuestionDetailView({ question, onNavigate, onBack }: QuestionDet
                 <ChevronRight className="w-3.5 h-3.5" />
               </a>
             )}
+            <a
+              href="/tools"
+              onClick={(e) => { e.preventDefault(); onNavigate('/tools'); }}
+              className="inline-flex items-center space-x-1.5 px-3.5 py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 rounded-xl text-xs font-semibold transition"
+            >
+              <span>Open Financial &amp; Subsidy Calculators</span>
+              <ChevronRight className="w-3.5 h-3.5" />
+            </a>
+          </div>
+
+          <div className="mt-5 pt-4 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[11px] text-slate-500">
+            <span>
+              Compiled &amp; fact-checked by <strong>SarkarSaathi Editorial &amp; Policy Research Desk</strong> · <a href="/about" onClick={(e) => { e.preventDefault(); onNavigate('/about'); }} className="underline hover:text-slate-800">Editorial Methodology</a>
+            </span>
+            <span>
+              Spotted a rule change? <a href="/contact" onClick={(e) => { e.preventDefault(); onNavigate('/contact'); }} className="underline text-blue-700 hover:text-blue-900 font-semibold">Report a correction</a>
+            </span>
           </div>
         </div>
       </article>

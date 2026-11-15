@@ -127,6 +127,31 @@ export const MasterDetailView: React.FC<MasterDetailViewProps> = ({
         authority={item.authority || item.ministry || item.issuingAuthority}
         benefit={benefitValue}
       />
+
+      {/* Related Resources & Internal Linking Card */}
+      <aside aria-label="Related Government Resources" className="bg-slate-900 text-white rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="space-y-1">
+          <h3 className="text-sm sm:text-base font-bold text-white">Compare Returns, Calculate Tax Savings &amp; Read Official FAQs</h3>
+          <p className="text-xs text-slate-300">
+            Verified against statutory notifications. Review our{' '}
+            <a href="/about" className="text-amber-300 underline font-semibold">4-stage editorial verification methodology</a>.
+          </p>
+        </div>
+        <div className="flex flex-wrap gap-2 text-xs font-bold shrink-0">
+          <a href="/tools" className="px-3.5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition">
+            Financial Calculators
+          </a>
+          <a href="/comparisons" className="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg border border-slate-700 transition">
+            Compare Schemes
+          </a>
+          <a href="/questions" className="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg border border-slate-700 transition">
+            Verified Q&amp;A
+          </a>
+          <a href="/subsidies" className="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg border border-slate-700 transition">
+            Subsidies Directory
+          </a>
+        </div>
+      </aside>
     </div>
   );
 };

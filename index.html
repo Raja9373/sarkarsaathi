@@ -2,11 +2,18 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="apple-touch-icon" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192x192.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#0d235f" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+    <link rel="preload" as="image" href="/india-gate.jpg" fetchpriority="high" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="google-site-verification" content="google9716624b6641a1be" />
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9048615701580913"
@@ -36,8 +43,10 @@
         } catch (e) {}
       })();
     </script>
+    <link rel="canonical" href="https://sarkarsaathi.org/" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="SarkarSaathi" />
+    <meta property="og:url" content="https://sarkarsaathi.org/" />
     <meta property="og:title" content="SarkarSaathi - Verified Government Schemes, Subsidies & Public Tenders" />
     <meta property="og:description" content="Independent information platform for verified government schemes, PM Kisan, MSME subsidies, solar benefits, 54EC bonds, PPF, and public tenders in India." />
     <meta property="og:image" content="https://sarkarsaathi.org/india-gate.jpg" />
@@ -68,6 +77,29 @@
       }
     }
     </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "@id": "https://sarkarsaathi.org/#organization",
+      "name": "SarkarSaathi",
+      "alternateName": "SarkarSaathi.org",
+      "url": "https://sarkarsaathi.org/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://sarkarsaathi.org/icon-192x192.png",
+        "width": 192,
+        "height": 192
+      },
+      "description": "Independent Indian civic research platform providing verified guides on Central & State government subsidies, Section 54EC bonds, Post Office savings schemes, and public tenders.",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "editorial support",
+        "email": "support@sarkarsaathi.org",
+        "availableLanguage": ["English", "Hindi"]
+      }
+    }
+    </script>
     <script>
       (function() {
         try {
@@ -95,7 +127,7 @@
             <a href="/investments" class="underline hover:text-orange-300">Capital Gain Bonds (54EC)</a>
             <a href="/investment-schemes" class="underline hover:text-orange-300">Sovereign Savings</a>
             <a href="/tenders" class="underline hover:text-orange-300">Public Tenders</a>
-            <a href="/compare" class="underline hover:text-orange-300">Scheme Comparison</a>
+            <a href="/comparisons" class="underline hover:text-orange-300">Scheme Comparison</a>
             <a href="/questions" class="underline hover:text-orange-300">Citizen Q&amp;A Knowledge Base</a>
           </nav>
         </div>

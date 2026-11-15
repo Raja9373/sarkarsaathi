@@ -10,6 +10,7 @@ import {
 import { subsidyRepository } from '../infrastructure/repositories/SubsidyRepository';
 import { questionRepository } from '../infrastructure/repositories/QuestionRepository';
 import { getAllOfficialSources, getOfficialSourceSlug, stateOfficialSources } from './officialSources';
+import { isIndexableOpportunity } from './seoQualityGate';
 
 export const BASE_SITE_URL = 'https://sarkarsaathi.org';
 
@@ -108,7 +109,7 @@ export const generateSitemap = (): string => {
   // 1. Static Pages defined in App.tsx
   STATIC_APP_ROUTES.forEach((route) => {
     if (!isExcludedSearchOrFilterUrl(route)) {
-      const cleanPath = route === '/' ? '' : route;
+      const cleanPath = route === '/' ? '/' : route;
       urlSet.add(`${BASE_SITE_URL}${cleanPath}`);
     }
   });
@@ -150,10 +151,15 @@ export const generateSitemap = (): string => {
 
   repoMapping.forEach(({ repo, basePath, publishedOnly }) => {
     const rawItems = publishedOnly ? repo.getAll(true) : repo.getAll();
-    // Phase 9 Safeguard: Exclude quarantined/unverified items from public sitemap
-    const items = publishedOnly
+    // Phase 9 & Programmatic Quality Gate Safeguard:
+    // Exclude quarantined/unverified subsidies AND mass-templated bulk opportunity pages from public sitemap
+    let items = publishedOnly
       ? rawItems.filter((i: any) => i.publicationState === 'PUBLISHED' || i.verificationStatus === 'VERIFIED')
       : rawItems;
+
+    if (basePath === '/opportunities') {
+      items = items.filter((i: any) => isIndexableOpportunity(i));
+    }
 
     items.forEach((item: any) => {
       const slug = item.slug || item.id;
@@ -190,9 +196,10 @@ export const generateSitemap = (): string => {
   });
 
   const validUrls = Array.from(urlSet);
+  const lastModDate = '2026-11-15';
 
   const urlXmlNodes = validUrls
-    .map((url) => `  <url>\n    <loc>${escapeXml(url)}</loc>\n  </url>`)
+    .map((url) => `  <url>\n    <loc>${escapeXml(url)}</loc>\n    <lastmod>${lastModDate}</lastmod>\n  </url>`)
     .join('\n');
 
   const xmlSitemapString = `<?xml version="1.0" encoding="UTF-8"?>

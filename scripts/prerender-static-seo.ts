@@ -15,6 +15,7 @@ import {
   stateOfficialSources,
 } from '../src/utils/officialSources';
 import { SECTOR_ROUTES } from '../src/utils/sitemapGenerator';
+import { isIndexableOpportunity } from '../src/utils/seoQualityGate';
 import {
   getGovernmentServiceSchema,
   getInvestmentBreadcrumbSchema,
@@ -33,6 +34,11 @@ function escapeHtml(str: string = ''): string {
     .replace(/'/g, '&#39;');
 }
 
+interface BreadcrumbStep {
+  name: string;
+  path: string;
+}
+
 interface PageMeta {
   routePath: string; // e.g., '/subsidies/pm-kisan-samman-nidhi'
   canonicalPath?: string; // defaults to routePath
@@ -40,8 +46,39 @@ interface PageMeta {
   description: string;
   keywords?: string;
   ogType?: string;
+  noIndex?: boolean;
+  breadcrumbs?: BreadcrumbStep[];
   jsonLd?: Record<string, any> | Array<Record<string, any>>;
   bodyHtml: string;
+}
+
+function buildBreadcrumbSchema(steps: BreadcrumbStep[]): Record<string, any> {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: steps.map((step, index) => {
+      const cleanPath = step.path.replace(/^\/+|\/+$/g, '').toLowerCase();
+      const itemUrl = cleanPath ? `${PRODUCTION_DOMAIN}/${cleanPath}` : `${PRODUCTION_DOMAIN}/`;
+      return {
+        '@type': 'ListItem',
+        position: index + 1,
+        name: step.name,
+        item: itemUrl,
+      };
+    }),
+  };
+}
+
+function buildBreadcrumbNavHtml(steps?: BreadcrumbStep[]): string {
+  if (!steps || steps.length === 0) return '';
+  const items = steps.map((step, idx) => {
+    const isLast = idx === steps.length - 1;
+    if (isLast) {
+      return `<li aria-current="page" class="font-semibold text-gray-900 truncate">${escapeHtml(step.name)}</li>`;
+    }
+    return `<li><a href="${escapeHtml(step.path)}" class="text-blue-700 hover:underline">${escapeHtml(step.name)}</a><span aria-hidden="true" class="mx-1.5 text-gray-400">/</span></li>`;
+  });
+  return `<nav aria-label="Breadcrumb" class="mb-4 text-xs sm:text-sm text-gray-600"><ol class="flex flex-wrap items-center">${items.join('')}</ol></nav>`;
 }
 
 function buildHtmlDocument(templateHtml: string, meta: PageMeta): string {
@@ -53,6 +90,14 @@ function buildHtmlDocument(templateHtml: string, meta: PageMeta): string {
   const safeKeywords = meta.keywords ? escapeHtml(meta.keywords) : '';
 
   let html = templateHtml;
+
+  // 0. Enforce noindex, follow when flagged
+  if (meta.noIndex) {
+    html = html.replace(
+      /<meta\s+name="(robots|googlebot|bingbot)"\s+content="[^"]*"\s*\/?>/gi,
+      '<meta name="$1" content="noindex, follow" />'
+    );
+  }
 
   // 1. Replace <title>
   html = html.replace(/<title>[\s\S]*?<\/title>/i, `<title>${safeTitle}</title>`);
@@ -86,8 +131,24 @@ function buildHtmlDocument(templateHtml: string, meta: PageMeta): string {
   );
   html = html.replace(
     /<meta\s+property="og:image"\s+content="[^"]*"\s*\/?>/i,
-    `<meta property="og:image" content="${escapeHtml(ogImage)}" />\n    <meta property="og:url" content="${escapeHtml(canonicalUrl)}" />\n    <link rel="canonical" href="${escapeHtml(canonicalUrl)}" />`
+    `<meta property="og:image" content="${escapeHtml(ogImage)}" />`
   );
+  if (/<meta\s+property="og:url"\s+content="[^"]*"\s*\/?>/i.test(html)) {
+    html = html.replace(
+      /<meta\s+property="og:url"\s+content="[^"]*"\s*\/?>/i,
+      `<meta property="og:url" content="${escapeHtml(canonicalUrl)}" />`
+    );
+  } else {
+    html = html.replace('</head>', `    <meta property="og:url" content="${escapeHtml(canonicalUrl)}" />\n  </head>`);
+  }
+  if (/<link\s+rel="canonical"\s+href="[^"]*"\s*\/?>/i.test(html)) {
+    html = html.replace(
+      /<link\s+rel="canonical"\s+href="[^"]*"\s*\/?>/i,
+      `<link rel="canonical" href="${escapeHtml(canonicalUrl)}" />`
+    );
+  } else {
+    html = html.replace('</head>', `    <link rel="canonical" href="${escapeHtml(canonicalUrl)}" />\n  </head>`);
+  }
   html = html.replace(
     /<meta\s+name="twitter:title"\s+content="[^"]*"\s*\/?>/i,
     `<meta name="twitter:title" content="${safeTitle}" />`
@@ -101,14 +162,26 @@ function buildHtmlDocument(templateHtml: string, meta: PageMeta): string {
     `<meta name="twitter:image" content="${escapeHtml(ogImage)}" />`
   );
 
-  // 5. Inject Page-Specific JSON-LD before </head>
-  if (meta.jsonLd) {
-    const schemas = Array.isArray(meta.jsonLd) ? meta.jsonLd : [meta.jsonLd];
-    const scripts = schemas
+  // 5. Inject Page-Specific JSON-LD (plus BreadcrumbList if missing) before </head>
+  const schemasToInject: Array<Record<string, any>> = meta.jsonLd
+    ? Array.isArray(meta.jsonLd)
+      ? [...meta.jsonLd]
+      : [meta.jsonLd]
+    : [];
+  const hasBreadcrumbSchema = schemasToInject.some(
+    (s) => s['@type'] === 'BreadcrumbList' || Boolean(s.breadcrumb)
+  );
+  if (meta.breadcrumbs && meta.breadcrumbs.length > 0 && !hasBreadcrumbSchema) {
+    schemasToInject.push(buildBreadcrumbSchema(meta.breadcrumbs));
+  }
+  if (schemasToInject.length > 0) {
+    const scripts = schemasToInject
       .map((s) => `    <script type="application/ld+json">\n${JSON.stringify(s)}\n    </script>`)
       .join('\n');
     html = html.replace('</head>', `${scripts}\n  </head>`);
   }
+
+  const breadcrumbNavHtml = buildBreadcrumbNavHtml(meta.breadcrumbs);
 
   // 6. Replace <div id="root">...</div> with page-specific semantic HTML
   const wrappedBody = `    <div id="root">
@@ -126,6 +199,7 @@ function buildHtmlDocument(templateHtml: string, meta: PageMeta): string {
         </div>
       </header>
       <main class="max-w-6xl mx-auto px-4 py-8">
+        ${breadcrumbNavHtml}
 ${meta.bodyHtml}
       </main>
       <footer class="bg-gray-900 text-gray-300 py-6 px-4 mt-12 text-sm">
@@ -278,14 +352,42 @@ function runPrerender(): void {
       routePath: '/tools',
       title: 'Sarkari Yojana Subsidy, PPF, Sukanya Samriddhi & 54EC Tax Saving Calculators | SarkarSaathi',
       description: 'Free interactive calculators for Section 54EC Capital Gains Tax Exemption, PPF maturity, Sukanya Samriddhi Yojana (SSY), Senior Citizen Savings Scheme, and MSME subsidies.',
+      breadcrumbs: [
+        { name: 'Home', path: '/' },
+        { name: 'Calculators', path: '/tools' },
+      ],
+      jsonLd: {
+        '@context': 'https://schema.org',
+        '@type': 'WebApplication',
+        name: 'SarkarSaathi Sovereign Savings & 54EC Tax Calculator Suite',
+        url: `${PRODUCTION_DOMAIN}/tools`,
+        applicationCategory: 'FinanceApplication',
+        operatingSystem: 'Web',
+        inLanguage: ['en-IN', 'hi-IN'],
+        offers: {
+          '@type': 'Offer',
+          price: '0',
+          priceCurrency: 'INR',
+        },
+        description: 'Interactive maturity, tax exemption, and subsidy eligibility calculators for PPF, Sukanya Samriddhi Yojana (SSY), Senior Citizen Savings Scheme (SCSS), and Section 54EC Capital Gains Bonds.',
+      },
       bodyHtml: `
         <h1 class="text-2xl font-bold mb-3">Government Scheme &amp; Sovereign Tax-Saving Calculators</h1>
-        <p>Calculate exact maturity values, Section 54EC LTCG tax savings, and subsidy eligibility amounts.</p>`,
+        <p class="mb-4 text-gray-700">Calculate exact maturity values, Section 54EC LTCG tax savings, PPF compounding, Sukanya Samriddhi Yojana returns, and MSME subsidy eligibility amounts.</p>
+        <div class="flex flex-wrap gap-4 text-sm font-medium">
+          <a href="/investments" class="text-blue-700 underline">54EC Capital Gain Bonds</a>
+          <a href="/investment-schemes" class="text-blue-700 underline">PPF, SSY &amp; SCSS Schemes</a>
+          <a href="/subsidies" class="text-blue-700 underline">Government Subsidies Directory</a>
+        </div>`,
     },
     {
       routePath: '/comparisons',
       title: 'Compare PPF vs SSY vs 54EC Bonds vs SCSS vs RBI Floating Rate Bonds | SarkarSaathi',
       description: 'Side-by-side comparison of Indian government investment schemes, interest rates, lock-in periods, and Section 80C / 54EC tax exemptions.',
+      breadcrumbs: [
+        { name: 'Home', path: '/' },
+        { name: 'Scheme Comparisons', path: '/comparisons' },
+      ],
       bodyHtml: `<h1 class="text-2xl font-bold mb-3">Side-by-Side Government Scheme &amp; Bond Comparison Matrix</h1>`,
     },
     {
@@ -496,6 +598,11 @@ function runPrerender(): void {
       description: `${sub.title} (${ministry}): Get ${benefit}. Check 2026 eligibility rules, required documents, beneficiary status, and official .gov.in online application link.`,
       keywords: `${sub.title}, ${sub.title} online apply, ${sub.title} eligibility, ${sub.category} subsidy, ${stateName} sarkari yojana`,
       ogType: 'article',
+      breadcrumbs: [
+        { name: 'Home', path: '/' },
+        { name: 'Subsidies & Benefits', path: '/subsidies' },
+        { name: sub.title, path: routePath },
+      ],
       jsonLd: getGovernmentServiceSchema(sub),
       bodyHtml,
     };
@@ -541,6 +648,11 @@ function runPrerender(): void {
       title: `${inv.title} — Interest Rate (${returnVal}), Tax Exemption & Rules | SarkarSaathi`,
       description: `${inv.title}: Check current interest rate (${returnVal}), sovereign backing (${inv.authority || 'Government of India'}), Section 54EC / 80C tax exemption, lock-in period (${lockVal}), and application steps.`,
       ogType: 'article',
+      breadcrumbs: [
+        { name: 'Home', path: '/' },
+        { name: 'Sovereign Investments', path: '/investments' },
+        { name: inv.title, path: routePath },
+      ],
       jsonLd: getInvestmentBreadcrumbSchema('investments', inv.title, slug),
       bodyHtml: `
         <article class="bg-white p-6 sm:p-8 rounded-xl border border-gray-200 shadow-sm space-y-5">
@@ -596,6 +708,11 @@ function runPrerender(): void {
       title: `${sc.title} (2026) — Interest Rate, Rules, Calculator & Benefits | SarkarSaathi`,
       description: `${sc.title} (${sc.authority || 'Ministry of Finance'}): Complete guide to 2026 interest rates, eligibility criteria, tax exemptions, and step-by-step application rules.`,
       ogType: 'article',
+      breadcrumbs: [
+        { name: 'Home', path: '/' },
+        { name: 'Investment Schemes', path: '/investment-schemes' },
+        { name: sc.title, path: routePath },
+      ],
       jsonLd: getInvestmentBreadcrumbSchema('investment-schemes', sc.title, slug),
       bodyHtml: `
         <article class="bg-white p-6 sm:p-8 rounded-xl border border-gray-200 shadow-sm space-y-5">
@@ -645,7 +762,12 @@ function runPrerender(): void {
 
     const faqSchema = {
       '@context': 'https://schema.org',
-      '@type': 'FAQPage',
+      '@type': ['WebPage', 'FAQPage'],
+      '@id': `${PRODUCTION_DOMAIN}${routePath}#webpage`,
+      url: `${PRODUCTION_DOMAIN}${routePath}`,
+      name: q.canonical_question,
+      description: q.short_answer,
+      dateModified: q.verified_at || '2026-11-15',
       mainEntity: [
         {
           '@type': 'Question',
@@ -656,6 +778,11 @@ function runPrerender(): void {
           },
         },
       ],
+      breadcrumb: buildBreadcrumbSchema([
+        { name: 'Home', path: '/' },
+        { name: 'Verified Q&A', path: '/questions' },
+        { name: q.canonical_question, path: routePath },
+      ]),
     };
 
     writeRouteHtml(templateHtml, {
@@ -664,10 +791,15 @@ function runPrerender(): void {
       description: q.short_answer.slice(0, 160),
       keywords: [...(q.keywords || []), q.category, q.subcategory].join(', '),
       ogType: 'article',
+      breadcrumbs: [
+        { name: 'Home', path: '/' },
+        { name: 'Verified Q&A', path: '/questions' },
+        { name: q.canonical_question, path: routePath },
+      ],
       jsonLd: faqSchema,
       bodyHtml: `
         <article class="bg-white p-6 rounded-xl border border-gray-200 space-y-4">
-          <div class="text-xs font-semibold text-blue-700">${escapeHtml(q.category)} · ${escapeHtml(q.subcategory)} · Source: ${escapeHtml(q.source_publisher)}</div>
+          <div class="text-xs font-semibold text-blue-700">${escapeHtml(q.category)} · ${escapeHtml(q.subcategory)} · Source: ${escapeHtml(q.source_publisher)} · <a href="/about" class="underline">Verified by SarkarSaathi Editorial Desk</a></div>
           <h1 class="text-2xl font-bold text-gray-900">${escapeHtml(q.canonical_question)}</h1>
           <div class="bg-blue-50 p-4 rounded-lg text-gray-900 font-medium">${escapeHtml(q.short_answer)}</div>
           <div class="text-gray-700 leading-relaxed">${escapeHtml(q.detailed_answer)}</div>
@@ -681,8 +813,12 @@ function runPrerender(): void {
               ? `<section class="pt-4 border-t border-gray-100"><h2 class="text-lg font-bold text-gray-900">Hinglish Guide: ${escapeHtml(hinglishQ)}</h2><p class="text-gray-700 mt-1">${escapeHtml(hinglishA)}</p></section>`
               : ''
           }
-          <p class="text-xs text-gray-500 pt-3">Primary Authority: <a href="${escapeHtml(q.source_url)}" class="underline text-blue-700">${escapeHtml(q.source_title)}</a></p>
-          <p><a href="/questions" class="text-blue-700 underline text-sm">← Back to Citizen Q&amp;A Hub</a></p>
+          <p class="text-xs text-gray-500 pt-3">Primary Authority: <a href="${escapeHtml(q.source_url)}" class="underline text-blue-700" rel="noopener noreferrer">${escapeHtml(q.source_title)}</a> · Last Verified: ${escapeHtml(q.verified_at || '2026-11-15')}</p>
+          <div class="flex flex-wrap gap-4 pt-2 border-t text-sm">
+            <a href="/questions" class="text-blue-700 underline">← Back to Citizen Q&amp;A Hub</a>
+            <a href="/tools" class="text-blue-700 underline">Tax &amp; Maturity Calculators</a>
+            <a href="/subsidies" class="text-blue-700 underline">Verified Subsidies Directory</a>
+          </div>
         </article>`,
     });
     generatedCount++;
@@ -691,24 +827,36 @@ function runPrerender(): void {
   // 6. All Tenders (/tenders/:slug) & News (/news/:slug) & Official Sources (/official-sources/:slug)
   for (const t of tenders) {
     const slug = t.slug || t.id;
+    const routePath = `/tenders/${slug}`;
     writeRouteHtml(templateHtml, {
-      routePath: `/tenders/${slug}`,
+      routePath,
       title: `${t.title} — PSU / Government Tender Notice | SarkarSaathi`,
       description: `${t.title} issued by ${t.authority || 'Government Authority'}. Check tender ID, bid deadline, EMD rules, and official eProcure / GeM link.`,
       ogType: 'article',
-      bodyHtml: `<article class="bg-white p-6 rounded-xl border border-gray-200"><h1 class="text-2xl font-bold mb-2">${escapeHtml(t.title)}</h1><p>${escapeHtml(t.description || '')}</p></article>`,
+      breadcrumbs: [
+        { name: 'Home', path: '/' },
+        { name: 'Public Tenders', path: '/tenders' },
+        { name: t.title, path: routePath },
+      ],
+      bodyHtml: `<article class="bg-white p-6 rounded-xl border border-gray-200 space-y-3"><h1 class="text-2xl font-bold">${escapeHtml(t.title)}</h1><p class="text-gray-700">${escapeHtml(t.description || '')}</p><p class="text-xs text-gray-500">Issuing Authority: ${escapeHtml(t.authority || 'Government of India')} · <a href="/tenders" class="text-blue-700 underline">All Tenders</a> · <a href="/official-sources" class="text-blue-700 underline">Official Portals</a></p></article>`,
     });
     generatedCount++;
   }
 
   for (const n of news) {
     const slug = n.slug || n.id;
+    const routePath = `/news/${slug}`;
     writeRouteHtml(templateHtml, {
-      routePath: `/news/${slug}`,
+      routePath,
       title: `${n.title} — Official Policy Update | SarkarSaathi`,
       description: (n.description || n.title).slice(0, 160),
       ogType: 'article',
-      bodyHtml: `<article class="bg-white p-6 rounded-xl border border-gray-200"><h1 class="text-2xl font-bold mb-2">${escapeHtml(n.title)}</h1><p>${escapeHtml(n.description || '')}</p></article>`,
+      breadcrumbs: [
+        { name: 'Home', path: '/' },
+        { name: 'Policy News', path: '/news' },
+        { name: n.title, path: routePath },
+      ],
+      bodyHtml: `<article class="bg-white p-6 rounded-xl border border-gray-200 space-y-3"><h1 class="text-2xl font-bold">${escapeHtml(n.title)}</h1><p class="text-gray-700">${escapeHtml(n.description || '')}</p><p class="text-xs text-gray-500"><a href="/news" class="text-blue-700 underline">All Policy Updates</a> · <a href="/subsidies" class="text-blue-700 underline">Verified Subsidies</a></p></article>`,
     });
     generatedCount++;
   }
@@ -716,11 +864,17 @@ function runPrerender(): void {
   for (const src of officialSources) {
     const slug = getOfficialSourceSlug(src);
     if (!slug) continue;
+    const routePath = `/official-sources/${slug}`;
     writeRouteHtml(templateHtml, {
-      routePath: `/official-sources/${slug}`,
+      routePath,
       title: `${src.name} — Verified Official Government Portal Guide | SarkarSaathi`,
       description: `${src.name}: Official portal link (${src.url}), department overview, and associated citizen schemes.`,
-      bodyHtml: `<article class="bg-white p-6 rounded-xl border border-gray-200"><h1 class="text-2xl font-bold mb-2">${escapeHtml(src.name)}</h1><p>${escapeHtml(src.description || '')}</p><p class="mt-2"><a href="${escapeHtml(src.url)}" class="text-blue-700 underline">${escapeHtml(src.url)}</a></p></article>`,
+      breadcrumbs: [
+        { name: 'Home', path: '/' },
+        { name: 'Official Sources', path: '/official-sources' },
+        { name: src.name, path: routePath },
+      ],
+      bodyHtml: `<article class="bg-white p-6 rounded-xl border border-gray-200 space-y-3"><h1 class="text-2xl font-bold">${escapeHtml(src.name)}</h1><p class="text-gray-700">${escapeHtml(src.description || '')}</p><p><a href="${escapeHtml(src.url)}" class="text-blue-700 underline" rel="noopener noreferrer">${escapeHtml(src.url)}</a></p><p class="text-xs text-gray-500"><a href="/official-sources" class="text-blue-700 underline">← All Verified Government Portals</a></p></article>`,
     });
     generatedCount++;
   }
@@ -744,6 +898,11 @@ function runPrerender(): void {
       routePath: `/opportunities/state/${stateSlug}`,
       title: `${st.state} Government Opportunities, Schemes & Official Portal | SarkarSaathi`,
       description: `Explore verified ${st.state} state development initiatives, tenders, startup grants, and open central government opportunities applicable to citizens in ${st.state}.`,
+      breadcrumbs: [
+        { name: 'Home', path: '/' },
+        { name: 'Opportunities', path: '/opportunities' },
+        { name: st.state, path: `/opportunities/state/${stateSlug}` },
+      ],
       bodyHtml: `
         <article class="bg-white p-6 rounded-xl border border-gray-200 space-y-4">
           <div class="text-xs font-semibold text-emerald-700 uppercase">Verified State Governance Directory · ${escapeHtml(st.type || 'State')}</div>
@@ -782,6 +941,11 @@ function runPrerender(): void {
       routePath: `/opportunities/sector/${sec}`,
       title: `${secLabel} Sector Investment Opportunities & Fellowships | SarkarSaathi`,
       description: `Browse verified government opportunities, tenders, fellowships, and startup grants in the ${secLabel} sector across India.`,
+      breadcrumbs: [
+        { name: 'Home', path: '/' },
+        { name: 'Opportunities', path: '/opportunities' },
+        { name: secLabel, path: `/opportunities/sector/${sec}` },
+      ],
       bodyHtml: `
         <article class="bg-white p-6 rounded-xl border border-gray-200 space-y-4">
           <div class="text-xs font-semibold text-blue-700 uppercase">Sector Opportunity Directory</div>
@@ -798,7 +962,7 @@ function runPrerender(): void {
     generatedCount++;
   }
 
-  // 8. Top / Representative Opportunities (ensuring GSC inspected URLs have dedicated static HTML)
+  // 8. All Curated Indexable Opportunities (in sitemap.xml) + Legacy GSC Slugs marked noindex, follow
   const priorityOppSlugs = new Set([
     'haryana-industrial-investment-project-79',
     'gidc-infrastructure-project-10',
@@ -807,25 +971,35 @@ function runPrerender(): void {
     'dfccil-freight-project-49',
     'pm-mitra-textile-park-70',
   ]);
-  const topOpportunities = [
-    ...opportunities.filter((o) => priorityOppSlugs.has(o.slug)),
-    ...opportunities.slice(0, 120),
-  ];
+  const indexableOpportunities = opportunities.filter((o) => isIndexableOpportunity(o));
+  const legacyNoIndexOpportunities = opportunities.filter(
+    (o) => priorityOppSlugs.has(o.slug) && !isIndexableOpportunity(o)
+  );
+  const targetOpportunities = [...indexableOpportunities, ...legacyNoIndexOpportunities];
+
   const seenOpps = new Set<string>();
-  for (const opp of topOpportunities) {
+  for (const opp of targetOpportunities) {
     const slug = opp.slug || opp.id;
     if (!slug || seenOpps.has(slug)) continue;
     seenOpps.add(slug);
+    const isIndexed = isIndexableOpportunity(opp);
     const cost = opp.totalProjectCost || opp.fundingAmount || 'As per project notification';
     const loc = [opp.district, opp.location, opp.state].filter(Boolean).join(', ') || 'India';
     const statusVal = opp.projectStatus || opp.projectStage || 'Active';
     const sectorVal = [opp.sector, opp.subSector].filter(Boolean).join(' · ') || 'Development & Infrastructure';
+    const routePath = `/opportunities/${slug}`;
 
     writeRouteHtml(templateHtml, {
-      routePath: `/opportunities/${slug}`,
+      routePath,
       title: `${opp.title} (${opp.state || 'India'}) — Project Details, Outlay & Authority | SarkarSaathi`,
       description: `${opp.title} in ${loc} (${sectorVal}): Nodal Authority: ${opp.authority || 'Government of India'}. Outlay: ${cost}. Status: ${statusVal}. Check participation procedure and official source link.`,
       ogType: 'article',
+      noIndex: !isIndexed,
+      breadcrumbs: [
+        { name: 'Home', path: '/' },
+        { name: 'Opportunities', path: '/opportunities' },
+        { name: opp.title, path: routePath },
+      ],
       bodyHtml: `
         <article class="bg-white p-6 sm:p-8 rounded-xl border border-gray-200 shadow-sm space-y-5">
           <div class="text-xs font-semibold text-blue-700 uppercase tracking-wide">Government Opportunity · ${escapeHtml(sectorVal)} · ${escapeHtml(statusVal)}</div>

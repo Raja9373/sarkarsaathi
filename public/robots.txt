@@ -6,5 +6,7 @@ Allow: /
 Disallow: /search
 Disallow: /admin
 Disallow: /404
+Disallow: /saved
+Disallow: /recently-viewed
 
 Sitemap: https://sarkarsaathi.org/sitemap.xml

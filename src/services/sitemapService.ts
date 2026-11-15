@@ -8,6 +8,7 @@ import {
 import { subsidyRepository } from '../infrastructure/repositories/SubsidyRepository';
 import { questionRepository } from '../infrastructure/repositories/QuestionRepository';
 import { getAllOfficialSources, getOfficialSourceSlug, stateOfficialSources } from '../utils/officialSources';
+import { isIndexableOpportunity } from '../utils/seoQualityGate';
 
 export const BASE_SITE_URL = 'https://sarkarsaathi.org';
 
@@ -135,7 +136,7 @@ export const generateDynamicSitemap = (): DynamicSitemapResult => {
   // 1. Static Hubs
   STATIC_HUBS.forEach((h) => {
     if (!isExcludedSearchOrFilterUrl(h)) {
-      const cleanPath = h === '/' ? '' : h;
+      const cleanPath = h === '/' ? '/' : h;
       const url = `${BASE_SITE_URL}${cleanPath}`;
       if (!rawUrls.has(url)) {
         rawUrls.add(url);
@@ -200,10 +201,14 @@ export const generateDynamicSitemap = (): DynamicSitemapResult => {
 
   repoMap.forEach(({ repo, routePath, categoryKey, filterPublishedOnly }) => {
     const rawItems = repo.getAll();
-    // Phase 9 Safeguard: Exclude quarantined/unverified items from public sitemap
-    const items = filterPublishedOnly
+    // Phase 9 & Programmatic Quality Gate Safeguard: Exclude quarantined subsidies and bulk templated opportunities
+    let items = filterPublishedOnly
       ? rawItems.filter((i: any) => i.publicationState === 'PUBLISHED' || i.verificationStatus === 'VERIFIED')
       : rawItems;
+
+    if (routePath === '/opportunities') {
+      items = items.filter((i: any) => isIndexableOpportunity(i));
+    }
 
     items.forEach((i: any) => {
       const slug = i.slug || i.id;
@@ -274,10 +279,11 @@ export const generateDynamicSitemap = (): DynamicSitemapResult => {
 
   const validUrls = Array.from(rawUrls);
 
+  const lastModDate = '2026-11-15';
   const urlElements = validUrls
     .map((u) => {
       const escaped = escapeXml(u);
-      return `  <url>\n    <loc>${escaped}</loc>\n  </url>`;
+      return `  <url>\n    <loc>${escaped}</loc>\n    <lastmod>${lastModDate}</lastmod>\n  </url>`;
     })
     .join('\n');
 

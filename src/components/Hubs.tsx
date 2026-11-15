@@ -79,6 +79,10 @@ export function HomeView({ onNavigate }: HubProps) {
           <img
             src="/india-gate.jpg"
             alt="India Gate sunset landscape"
+            width={1200}
+            height={630}
+            {...({ fetchpriority: 'high' } as Record<string, string>)}
+            decoding="async"
             className="w-full h-full object-cover object-right sm:object-[82%_center]"
             referrerPolicy="no-referrer"
           />
@@ -473,7 +477,7 @@ export function HomeView({ onNavigate }: HubProps) {
               </div>
               <h3 className="text-base font-bold text-slate-900 mb-1">Citizen Q&amp;A Knowledge Base (प्रश्नोत्तर)</h3>
               <p className="text-xs text-slate-500 leading-relaxed mb-3">
-                143+ verified answers in English, Hindi (हिंदी), and Hinglish on tax rules, subsidies, and official procedures.
+                169+ verified answers in English, Hindi (हिंदी), and Hinglish on tax rules, subsidies, and official procedures.
               </p>
             </div>
             <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-blue-600 group-hover:text-blue-700">
