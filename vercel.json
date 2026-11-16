@@ -1,6 +1,58 @@
 {
   "trailingSlash": false,
   "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/investment-schemes/pli-food-processing",
+      "destination": "/subsidies/pli-scheme-food-processing-industry-plisfpi",
+      "permanent": true
+    },
+    {
+      "source": "/dadra-nagar-haveli-daman-diu/:service*",
+      "destination": "/opportunities/state/dadra-nagar-haveli-and-daman-diu",
+      "permanent": true
+    },
+    {
+      "source": "/karnataka/:service*",
+      "destination": "/opportunities/state/karnataka",
+      "permanent": true
+    },
+    {
+      "source": "/compare",
+      "destination": "/comparisons",
+      "permanent": true
+    },
+    {
+      "source": "/disclaimer.html",
+      "destination": "/disclaimer",
+      "permanent": true
+    },
+    {
+      "source": "/privacy-policy.html",
+      "destination": "/privacy-policy",
+      "permanent": true
+    },
+    {
+      "source": "/terms.html",
+      "destination": "/terms",
+      "permanent": true
+    },
+    {
+      "source": "/about.html",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/contact.html",
+      "destination": "/contact",
+      "permanent": true
+    },
+    {
+      "source": "/index.html",
+      "destination": "/",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/assets/(.*)",
@@ -18,7 +70,8 @@
       "source": "/sitemap(.*)\\.xml",
       "headers": [
         { "key": "Content-Type", "value": "application/xml; charset=utf-8" },
-        { "key": "Cache-Control", "value": "public, max-age=3600" }
+        { "key": "Cache-Control", "value": "public, max-age=3600" },
+        { "key": "X-Robots-Tag", "value": "noindex, follow" }
       ]
     },
     {

@@ -9,7 +9,7 @@ import { QuestionDetailView } from './components/QuestionDetailView';
 import { investmentRepository, investmentSchemeRepository, opportunityRepository, tenderRepository, newsRepository } from './infrastructure/repositories/InvestmentRepository';
 import { subsidyRepository } from './infrastructure/repositories/SubsidyRepository';
 import { questionRepository } from './infrastructure/repositories/QuestionRepository';
-import { getOfficialSourceBySlug } from './utils/officialSources';
+import { getOfficialSourceBySlug, stateOfficialSources } from './utils/officialSources';
 import { isIndexableOpportunity } from './utils/seoQualityGate';
 import { 
   updateSEO, 
@@ -66,17 +66,25 @@ export default function App() {
     const root = `/${parts[0]}`;
 
     if (parts.length === 1) {
-      if (root === '/compare') {
+      const normalizedRoot = root.endsWith('.html') ? root.slice(0, -5) : root;
+      if (normalizedRoot === '/index') {
+        return { route: '/', slug: null };
+      }
+      if (normalizedRoot === '/compare') {
         return { route: '/comparisons', slug: null };
       }
-      if (VALID_ROUTES.includes(root) || root === '/search') {
-        return { route: root, slug: null };
+      if (VALID_ROUTES.includes(normalizedRoot) || normalizedRoot === '/search') {
+        return { route: normalizedRoot, slug: null };
       }
       return { route: '/404', slug: null };
     }
 
     if (VALID_HUBS.includes(root)) {
       const slug = parts.slice(1).join('/');
+      // Legacy alias: /investment-schemes/pli-food-processing -> /subsidies/pli-scheme-food-processing-industry-plisfpi
+      if (root === '/investment-schemes' && slug === 'pli-food-processing') {
+        return { route: '/subsidies', slug: 'pli-scheme-food-processing-industry-plisfpi' };
+      }
       let exists = true;
       if (root === '/investments') exists = !!investmentRepository.getBySlug(slug);
       else if (root === '/investment-schemes') exists = !!investmentSchemeRepository.getBySlug(slug);
@@ -94,6 +102,19 @@ export default function App() {
         return { route: '/404', slug: null };
       }
       return { route: root, slug };
+    }
+
+    // Legacy state/service URLs (e.g. /karnataka/aadhaar-update, /dadra-nagar-haveli-daman-diu/land-jamabandi-records)
+    const rawStateSlug = parts[0].toLowerCase();
+    const stateSlugAliases: Record<string, string> = {
+      'dadra-nagar-haveli-daman-diu': 'dadra-nagar-haveli-and-daman-diu',
+    };
+    const candidateStateSlug = stateSlugAliases[rawStateSlug] || rawStateSlug;
+    const matchedState = stateOfficialSources.find(
+      (s) => s.state && s.state.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') === candidateStateSlug
+    );
+    if (matchedState) {
+      return { route: '/opportunities', slug: `state/${candidateStateSlug}` };
     }
 
     if (root === '/schemes') {
@@ -136,11 +157,14 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    // Normalize trailing slash or /index.html in browser address bar without reload
+    // Normalize trailing slash or legacy .html extensions in browser address bar without reload
     if (typeof window !== 'undefined') {
       const pathname = window.location.pathname;
       if (pathname === '/index.html') {
         window.history.replaceState({}, '', '/' + window.location.search + window.location.hash);
+      } else if (pathname.endsWith('.html') && VALID_ROUTES.includes(pathname.slice(0, -5))) {
+        const clean = pathname.slice(0, -5) + window.location.search + window.location.hash;
+        window.history.replaceState({}, '', clean);
       } else if (pathname !== '/' && pathname.endsWith('/')) {
         const clean = pathname.replace(/\/+$/, '') + window.location.search + window.location.hash;
         window.history.replaceState({}, '', clean);

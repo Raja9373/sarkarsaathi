@@ -81,7 +81,8 @@ export const SECTORS = [
   'msme',
   'defense',
   'it-ites-technology-parks',
-  'renewable-energy-solar'
+  'renewable-energy-solar',
+  'quantum-technologies-deep-tech'
 ];
 
 export interface SitemapCategoryBreakdown {

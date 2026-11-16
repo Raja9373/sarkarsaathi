@@ -110,6 +110,8 @@ export function SectorLandingView({ sector, onNavigate }: { sector: string, onNa
     formattedSector = 'IT, ITeS & Technology Parks';
   } else if (sector.toLowerCase() === 'renewable-energy-solar' || sector.toLowerCase() === 'renewable-energy') {
     formattedSector = 'Renewable Energy & Solar';
+  } else if (sector.toLowerCase() === 'quantum-technologies-deep-tech') {
+    formattedSector = 'Quantum Technologies & Deep Tech';
   }
 
   useSEO({

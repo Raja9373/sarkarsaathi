@@ -160,14 +160,81 @@ if (!fs.existsSync(DIST_DIR)) {
   );
 
   // Check legacy GSC URL has noindex, follow
-  const legacyFile = path.join(DIST_DIR, 'opportunities', 'haryana-industrial-investment-project-79', 'index.html');
-  const legacyHtml = fs.existsSync(legacyFile) ? fs.readFileSync(legacyFile, 'utf8') : '';
+  const legacySlugsToCheck = [
+    'haryana-industrial-investment-project-79',
+    'union-territory-investment-project-18',
+    'state-energy-infrastructure-project-85',
+  ];
+  const legacyPass = legacySlugsToCheck.every((s) => {
+    const f = path.join(DIST_DIR, 'opportunities', s, 'index.html');
+    return fs.existsSync(f) && fs.readFileSync(f, 'utf8').includes('content="noindex, follow"');
+  });
   check(
     'Legacy Bulk URL Noindex Safeguard',
-    legacyHtml.includes('content="noindex, follow"'),
-    legacyHtml.includes('content="noindex, follow"')
-      ? 'Legacy template URL emits <meta name="robots" content="noindex, follow">'
-      : 'Legacy template missing noindex, follow meta tag'
+    legacyPass,
+    legacyPass
+      ? `All ${legacySlugsToCheck.length} GSC-flagged opportunity URLs emit static HTML with <meta name="robots" content="noindex, follow">`
+      : 'One or more legacy GSC URLs missing static HTML or noindex, follow'
+  );
+
+  // Check Vercel 301 redirects for legacy 404 & .html paths + sitemap X-Robots-Tag
+  const vercelCfg = JSON.parse(fs.readFileSync(path.join(ROOT, 'vercel.json'), 'utf8'));
+  const redirectSources = (vercelCfg.redirects || []).map((r: any) => r.source);
+  const redirectsOk =
+    redirectSources.includes('/investment-schemes/pli-food-processing') &&
+    redirectSources.includes('/dadra-nagar-haveli-daman-diu/:service*') &&
+    redirectSources.includes('/karnataka/:service*') &&
+    redirectSources.includes('/disclaimer.html') &&
+    redirectSources.includes('/privacy-policy.html');
+  check(
+    'GSC 404 & Legacy .html 301 Redirects Configured',
+    redirectsOk,
+    '301 permanent redirects active in vercel.json for pli-food-processing, legacy state URLs, and .html compliance paths'
+  );
+
+  const sitemapHeaderRule = (vercelCfg.headers || []).find((h: any) => String(h.source || '').includes('sitemap'));
+  const hasSitemapNoindexHeader = Boolean(
+    sitemapHeaderRule?.headers?.some((kv: any) => kv.key === 'X-Robots-Tag' && String(kv.value).includes('noindex'))
+  );
+  check(
+    'Sitemap X-Robots-Tag Noindex Header',
+    hasSitemapNoindexHeader,
+    'vercel.json sets X-Robots-Tag: noindex, follow on XML sitemaps to prevent GSC Crawled-not-indexed noise'
+  );
+
+  // Check thin-content prevention on all key hub static HTML files & sector parity
+  const hubPaths = [
+    'investments',
+    'investment-schemes',
+    'opportunities',
+    'tenders',
+    'news',
+    'official-sources',
+    'comparisons',
+    'tools',
+    'opportunities/sector/quantum-technologies-deep-tech',
+  ];
+  const thinHubs: string[] = [];
+  for (const hp of hubPaths) {
+    const f = path.join(DIST_DIR, hp, 'index.html');
+    if (!fs.existsSync(f)) {
+      thinHubs.push(`${hp} (missing)`);
+      continue;
+    }
+    const raw = fs.readFileSync(f, 'utf8');
+    const mainMatch = raw.match(/<main[\s\S]*?<\/main>/i);
+    const textOnly = (mainMatch ? mainMatch[0] : '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+    const wordCount = textOnly ? textOnly.split(' ').length : 0;
+    if (wordCount < 60) {
+      thinHubs.push(`${hp} (${wordCount} words)`);
+    }
+  }
+  check(
+    'Zero Thin Pre-Rendered Hubs & Sector Pages',
+    thinHubs.length === 0,
+    thinHubs.length === 0
+      ? `All ${hubPaths.length} hubs & key sectors exceed 60+ static semantic words in raw HTML`
+      : `Thin/missing pages: ${thinHubs.join(', ')}`
   );
 
   // Check WebApplication JSON-LD on /tools and Organization JSON-LD on /

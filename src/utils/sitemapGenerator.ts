@@ -92,7 +92,8 @@ export const SECTOR_ROUTES = [
   'msme',
   'defense',
   'it-ites-technology-parks',
-  'renewable-energy-solar'
+  'renewable-energy-solar',
+  'quantum-technologies-deep-tech'
 ];
 
 /**
