@@ -4,11 +4,13 @@ import { HomeView, GenericHubView, DetailView, OfficialSourcesView } from './com
 import { AboutPage, ContactPage, PrivacyPolicyPage, DisclaimerPage, TermsPage } from './components/LegalPages';
 import { StateLandingView, SectorLandingView } from './components/HubsLanding';
 import { SubsidyHubView, SubsidyDetailView } from './components/SubsidyViews';
+import { GuidesHubView, GuideDetailView } from './components/GuidesViews';
 import { QuestionsHubView } from './components/QuestionsHubView';
 import { QuestionDetailView } from './components/QuestionDetailView';
 import { investmentRepository, investmentSchemeRepository, opportunityRepository, tenderRepository, newsRepository } from './infrastructure/repositories/InvestmentRepository';
 import { subsidyRepository } from './infrastructure/repositories/SubsidyRepository';
 import { questionRepository } from './infrastructure/repositories/QuestionRepository';
+import { getGuideBySlug } from './data/editorialGuidesData';
 import { getOfficialSourceBySlug, stateOfficialSources } from './utils/officialSources';
 import { isIndexableOpportunity } from './utils/seoQualityGate';
 import { 
@@ -31,6 +33,7 @@ const OfficialSourceDetailView = lazy(() => import('./components/detail/Official
 
 const VALID_ROUTES = [
   '/',
+  '/guides',
   '/investments',
   '/investment-schemes',
   '/subsidies',
@@ -52,7 +55,7 @@ const VALID_ROUTES = [
   '/search'
 ];
 
-const VALID_HUBS = ['/investments', '/investment-schemes', '/opportunities', '/tenders', '/news', '/subsidies', '/official-sources', '/questions'];
+const VALID_HUBS = ['/guides', '/investments', '/investment-schemes', '/opportunities', '/tenders', '/news', '/subsidies', '/official-sources', '/questions'];
 
 export default function App() {
   const getInitialRouteState = () => {
@@ -97,6 +100,7 @@ export default function App() {
       else if (root === '/subsidies') exists = !!subsidyRepository.getBySlug(slug);
       else if (root === '/official-sources') exists = !!getOfficialSourceBySlug(slug);
       else if (root === '/questions') exists = !!questionRepository.getBySlug(slug);
+      else if (root === '/guides') exists = !!getGuideBySlug(slug);
 
       if (!exists) {
         return { route: '/404', slug: null };
@@ -463,6 +467,29 @@ export default function App() {
           });
           return;
         }
+      } else if (currentRoute === '/guides') {
+        const guide = getGuideBySlug(selectedSlug);
+        if (guide) {
+          const canonicalPath = `/guides/${guide.slug}`;
+          const ogImage = getHubOgImage(canonicalPath);
+          updateSEO({
+            title: `${guide.title} | SarkarSaathi`,
+            description: guide.metaDescription,
+            canonicalPath,
+            keywords: guide.keywords.join(', '),
+            openGraph: {
+              title: guide.title,
+              description: guide.metaDescription,
+              url: `${PRODUCTION_DOMAIN}${canonicalPath}`,
+              type: 'article',
+              image: ogImage,
+              imageAlt: guide.title,
+              imageWidth: '1200',
+              imageHeight: '630',
+            },
+          });
+          return;
+        }
       }
 
       // If selectedSlug was provided but item does not exist, trigger genuine 404 SEO (no soft 404)
@@ -501,10 +528,24 @@ export default function App() {
         description: 'Independent information platform for verified central and state government schemes, PM Kisan, MSME subsidies, solar benefits, 54EC bonds, PPF, and public tenders.',
         keywords: 'sarkari yojana, pm kisan samman nidhi, ladli behna yojana, pm surya ghar muft bijli yojana, msme subsidy, 54ec capital gain bonds, tenders india, dbt bharat',
         openGraph: {
-          title: 'SarkarSaathi - Verified Government Schemes, Subsidies & Public Tenders',
-          description: 'Independent platform aggregating 11,200+ verified government schemes, subsidies, sovereign bonds, and tenders across India.',
+          title: 'SarkarSaathi - Verified Government Schemes, Subsidies & Editorial Guides',
+          description: 'Independent Indian civic research platform publishing original guides, verified government schemes, subsidies, sovereign bonds, and public tenders.',
           image: `${PRODUCTION_DOMAIN}/og/home.svg`,
           imageAlt: 'SarkarSaathi - India Government Schemes and Subsidies Platform',
+          imageWidth: '1200',
+          imageHeight: '630',
+          type: 'website',
+        },
+      },
+      '/guides': {
+        title: 'In-Depth Editorial Handbooks & Government Scheme Guides (2026) | SarkarSaathi',
+        description: 'Original long-form research guides with worked Rupee calculations on Section 54EC bonds, PM Surya Ghar rooftop solar, GeM procurement rules, PPF vs SSY vs SCSS, and MSME loans.',
+        keywords: 'indian government scheme guides, 54ec bond guide, pm surya ghar subsidy guide, gem procurement rules guide, ppf vs ssy vs scss, pmegp mudra cgtmse guide',
+        openGraph: {
+          title: 'In-Depth Editorial Handbooks & Policy Guides (2026) - SarkarSaathi',
+          description: 'Original citizen handbooks backed by primary .gov.in and RBI statutory citations.',
+          image: `${PRODUCTION_DOMAIN}/og/home.svg`,
+          imageAlt: 'SarkarSaathi Editorial Handbooks',
           imageWidth: '1200',
           imageHeight: '630',
           type: 'website',
@@ -691,10 +732,10 @@ export default function App() {
       },
       '/disclaimer': {
         title: 'Disclaimer & Non-Affiliation - SarkarSaathi.org',
-        description: 'Independent aggregator disclaimer and non-affiliation notice regarding official government data and statutory portals.',
+        description: 'Independent civic research publication disclaimer and non-affiliation notice regarding official government data and statutory portals.',
         openGraph: {
           title: 'Disclaimer & Non-Affiliation - SarkarSaathi',
-          description: 'Independent aggregator notice: SarkarSaathi.org is an independent information service not affiliated with any government body.',
+          description: 'Independent civic research publication notice: SarkarSaathi.org is an independent public-interest portal not affiliated with any government body.',
           image: `${PRODUCTION_DOMAIN}/og/home.svg`,
           imageAlt: 'Disclaimer',
           imageWidth: '1200',
@@ -819,6 +860,7 @@ export default function App() {
         else if (root === '/subsidies') exists = !!subsidyRepository.getBySlug(itemSlug || '');
         else if (root === '/official-sources') exists = !!getOfficialSourceBySlug(itemSlug || '');
         else if (root === '/questions') exists = !!questionRepository.getBySlug(itemSlug || '');
+        else if (root === '/guides') exists = !!getGuideBySlug(itemSlug || '');
 
         if (!exists) {
           setCurrentRoute('/404');
@@ -908,11 +950,18 @@ export default function App() {
         if (!item) return <NotFoundView onNavigate={navigate} />;
         return <QuestionDetailView question={item} onNavigate={navigate} onBack={() => navigate('/questions')} />;
       }
+      if (currentRoute === '/guides') {
+        const guide = getGuideBySlug(selectedSlug);
+        if (!guide) return <NotFoundView onNavigate={navigate} />;
+        return <GuideDetailView guide={guide} onNavigate={navigate} />;
+      }
     }
 
     switch (currentRoute) {
       case '/':
         return <HomeView onNavigate={navigate} />;
+      case '/guides':
+        return <GuidesHubView onNavigate={navigate} />;
       case '/investments':
         return <GenericHubView title="Sovereign & Government Investments" type="investments" items={investmentRepository.getAll()} repository={investmentRepository} onNavigate={navigate} />;
       case '/investment-schemes':
@@ -920,7 +969,7 @@ export default function App() {
       case '/subsidies':
         return <SubsidyHubView onNavigate={navigate} />;
       case '/opportunities':
-        return <GenericHubView title="Government Opportunities & Grants" type="opportunities" items={opportunityRepository.getAll()} repository={opportunityRepository} onNavigate={navigate} />;
+        return <GenericHubView title="Verified National Grants, Innovation Calls & Fellowships" type="opportunities" items={opportunityRepository.getAll().filter(isIndexableOpportunity)} onNavigate={navigate} />;
       case '/tenders':
         return <GenericHubView title="Government Tenders & Procurements" type="tenders" items={tenderRepository.getAll()} repository={tenderRepository} onNavigate={navigate} />;
       case '/news':

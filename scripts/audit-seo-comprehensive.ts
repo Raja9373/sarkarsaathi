@@ -250,6 +250,87 @@ if (!fs.existsSync(DIST_DIR)) {
       toolsHtml.includes('"@type":"WebApplication"'),
     'Organization/WebSite schemas active, broken /compare link eliminated, and WebApplication schema active on /tools'
   );
+
+  // AdSense Content Quality Checks
+  const guideUrls = sitemapUrls.filter((u) => new URL(u).pathname.startsWith('/guides/'));
+  const thinGuides: string[] = [];
+  for (const gu of guideUrls) {
+    const p = new URL(gu).pathname.replace(/^\/+|\/+$/g, '');
+    const html = fs.readFileSync(path.join(DIST_DIR, p, 'index.html'), 'utf8');
+    const mainMatch = html.match(/<main[\s\S]*?<\/main>/i);
+    const words = (mainMatch ? mainMatch[0] : '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().split(' ').length;
+    if (words < 550 || !html.includes('"@type":"Article"')) {
+      thinGuides.push(`${p} (${words}w)`);
+    }
+  }
+  check(
+    'AdSense Long-Form Editorial Handbooks Depth (550+ words + Article JSON-LD)',
+    guideUrls.length >= 8 && thinGuides.length === 0,
+    guideUrls.length >= 8 && thinGuides.length === 0
+      ? `All ${guideUrls.length} editorial handbooks exceed 550+ static words with Article JSON-LD`
+      : `Found ${guideUrls.length} guides; thin/invalid: ${thinGuides.join(', ')}`
+  );
+
+  // Curated opportunities average word count check (was ~71w, now must exceed 200w)
+  const curatedOppUrls = sitemapUrls.filter((u) => {
+    const p = new URL(u).pathname;
+    return p.startsWith('/opportunities/') && !p.startsWith('/opportunities/state/') && !p.startsWith('/opportunities/sector/');
+  });
+  let oppWordSum = 0;
+  for (const ou of curatedOppUrls) {
+    const p = new URL(ou).pathname.replace(/^\/+|\/+$/g, '');
+    const html = fs.readFileSync(path.join(DIST_DIR, p, 'index.html'), 'utf8');
+    const mainMatch = html.match(/<main[\s\S]*?<\/main>/i);
+    const words = (mainMatch ? mainMatch[0] : '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().split(' ').length;
+    oppWordSum += words;
+  }
+  const avgOppWords = curatedOppUrls.length > 0 ? Math.round(oppWordSum / curatedOppUrls.length) : 0;
+  check(
+    'Curated Opportunities Static HTML Depth (Avg >= 200 words)',
+    avgOppWords >= 200,
+    `Average static word count across ${curatedOppUrls.length} curated opportunities: ${avgOppWords} words`
+  );
+
+  // Zero synthetic boilerplate links in /opportunities, state, and sector landing HTML
+  const sampleDirectoryPaths = [
+    'opportunities/index.html',
+    'opportunities/state/maharashtra/index.html',
+    'opportunities/state/madhya-pradesh/index.html',
+    'opportunities/sector/agriculture/index.html',
+    'opportunities/sector/msme/index.html',
+  ];
+  const syntheticLeaks = sampleDirectoryPaths.filter((rel) => {
+    const html = fs.readFileSync(path.join(DIST_DIR, rel), 'utf8');
+    return /mospi-paimana-infrastructure-project-|industrial-investment-project-|gidc-infrastructure-project-/.test(html);
+  });
+  check(
+    'Zero Synthetic Boilerplate Links on Opportunities / State / Sector Pages',
+    syntheticLeaks.length === 0,
+    syntheticLeaks.length === 0
+      ? `All ${sampleDirectoryPaths.length} sampled directory pages link strictly to curated opportunities & verified subsidies`
+      : `Synthetic links leaked in: ${syntheticLeaks.join(', ')}`
+  );
+
+  // Zero broken comparison links & zero noIndex AdSense script leaks
+  const compHtml = fs.readFileSync(path.join(DIST_DIR, 'comparisons', 'index.html'), 'utf8');
+  const brokenCompLinks = [
+    '/investment-schemes/public-provident-fund-ppf',
+    '/investment-schemes/sukanya-samriddhi-yojana-ssy',
+    '/investment-schemes/senior-citizens-savings-scheme-scss',
+    '/investments/rec-54ec-capital-gain-bonds',
+    '/investments/rbi-floating-rate-savings-bonds"',
+  ].filter((bad) => compHtml.includes(bad));
+  const legacyNoIndexHtml = fs.readFileSync(
+    path.join(DIST_DIR, 'opportunities', 'haryana-industrial-investment-project-79', 'index.html'),
+    'utf8'
+  );
+  const noIndexStrippedAdsense = !legacyNoIndexHtml.includes('adsbygoogle.js');
+  const rootHasAdsenseMeta = rootHtml.includes('name="google-adsense-account" content="ca-pub-9048615701580913"');
+  check(
+    'AdSense Policy Hygiene (Zero Broken Comparison Links, No Ad Script on Noindex Pages, Ownership Meta Active)',
+    brokenCompLinks.length === 0 && noIndexStrippedAdsense && rootHasAdsenseMeta,
+    `Broken comparison links: ${brokenCompLinks.length}; AdSense stripped on noindex: ${noIndexStrippedAdsense}; Root meta active: ${rootHasAdsenseMeta}`
+  );
 }
 
 const failed = results.filter((r) => !r.pass);

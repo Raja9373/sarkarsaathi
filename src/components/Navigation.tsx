@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShieldCheck, Menu, X, Search } from 'lucide-react';
+import { ShieldCheck, Menu, X, Search, Bookmark } from 'lucide-react';
 import { SarkarSaathiLogo } from './SarkarSaathiLogo';
 
 interface NavbarProps {
@@ -21,14 +21,13 @@ export function Navbar({ currentRoute, onNavigate }: NavbarProps) {
 
   const navItems = [
     { label: 'Home', path: '/' },
+    { label: 'Guides', path: '/guides' },
+    { label: 'Subsidies', path: '/subsidies' },
     { label: 'Investments', path: '/investments' },
     { label: 'Schemes', path: '/investment-schemes' },
-    { label: 'Subsidies & Benefits', path: '/subsidies' },
     { label: 'Opportunities', path: '/opportunities' },
     { label: 'Tenders', path: '/tenders' },
     { label: 'News', path: '/news' },
-    { label: 'Saved', path: '/saved' },
-    { label: 'Recent', path: '/recently-viewed' },
     { label: 'Comparisons', path: '/comparisons' },
     { label: 'Tools', path: '/tools' },
     { label: 'Q&A', path: '/questions' },
@@ -52,12 +51,12 @@ export function Navbar({ currentRoute, onNavigate }: NavbarProps) {
               SarkarSaathi
             </span>
             <span className="text-[11px] sm:text-xs text-slate-500 font-medium whitespace-nowrap leading-tight">
-              Independent information platform
+              Independent civic research portal
             </span>
           </div>
         </a>
 
-        <nav className="hidden lg:flex items-center space-x-5 xl:space-x-6 h-full">
+        <nav className="hidden lg:flex items-center space-x-4 xl:space-x-5 h-full">
           {navItems.map((item) => {
             const isActive = currentRoute === item.path;
             return (
@@ -87,11 +86,22 @@ export function Navbar({ currentRoute, onNavigate }: NavbarProps) {
           })}
         </nav>
 
-        <div className="flex items-center space-x-2.5 sm:space-x-3">
+        <div className="flex items-center space-x-2 sm:space-x-2.5">
+          {/* Bookmarks Utility Button (non-indexed client tool) */}
+          <button
+            onClick={() => onNavigate('/saved')}
+            aria-label="Saved bookmarks"
+            title="Saved bookmarks"
+            className="p-2 rounded-lg text-slate-600 hover:bg-slate-100 cursor-pointer"
+          >
+            <Bookmark className="w-5 h-5" />
+          </button>
 
           {/* Global Search Button */}
           <button
             onClick={() => setSearchModalOpen(true)}
+            aria-label="Search site"
+            title="Search site"
             className="p-2 rounded-lg text-slate-600 hover:bg-slate-100 cursor-pointer"
           >
             <Search className="w-5 h-5" />
@@ -99,10 +109,11 @@ export function Navbar({ currentRoute, onNavigate }: NavbarProps) {
           
           <div className="hidden 2xl:flex items-center space-x-1.5 text-xs bg-blue-50/90 text-blue-600 px-3.5 py-1.5 rounded-xl border border-blue-200/70 font-medium whitespace-nowrap">
             <ShieldCheck className="w-4 h-4 text-blue-600 flex-shrink-0" />
-            <span>Curated from Verified .gov.in Sources</span>
+            <span>Verified .gov.in Research</span>
           </div>
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle menu"
             className="lg:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100 cursor-pointer"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -122,7 +133,7 @@ export function Navbar({ currentRoute, onNavigate }: NavbarProps) {
             <input
               ref={searchInputRef}
               type="text"
-              placeholder="Search..."
+              placeholder="Search schemes, 54EC bonds, GeM rules, subsidies..."
               className="w-full pl-3 pr-4 py-3 text-lg border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
@@ -168,13 +179,13 @@ export function Footer({ onNavigate }: { onNavigate: (route: string) => void }) 
             <div className="flex items-center justify-center sm:justify-start space-x-2.5 mb-2">
               <SarkarSaathiLogo className="w-7 h-7" />
               <span className="text-lg font-bold text-white">SarkarSaathi.org</span>
-              <span className="text-xs bg-indigo-900 text-indigo-300 px-2 py-0.5 rounded font-mono">v3.0</span>
             </div>
             <p className="text-xs text-slate-400 max-w-md">
-              India's Private Aggregator for Government Schemes & Tenders. Information curated from verified .gov.in sources.
+              Independent Civic Research &amp; Editorial Publication covering Indian Government Schemes, Sovereign Investments, Subsidies &amp; Public Procurement.
             </p>
           </div>
           <div className="flex flex-wrap justify-center gap-6 text-xs items-center">
+            <a href="/guides" onClick={(e) => { e.preventDefault(); onNavigate('/guides'); }} className="hover:text-white transition font-semibold text-slate-200">Editorial Guides</a>
             <a href="/about" onClick={(e) => { e.preventDefault(); onNavigate('/about'); }} className="hover:text-white transition">About</a>
             <a href="/contact" onClick={(e) => { e.preventDefault(); onNavigate('/contact'); }} className="hover:text-white transition">Contact</a>
             <a href="/privacy-policy" onClick={(e) => { e.preventDefault(); onNavigate('/privacy-policy'); }} className="hover:text-white transition">Privacy Policy</a>
@@ -188,7 +199,7 @@ export function Footer({ onNavigate }: { onNavigate: (route: string) => void }) 
         {/* Legal Compliance Disclaimer */}
         <div className="pt-6 border-t border-slate-800/80">
           <p className="text-xs leading-relaxed text-slate-400 text-center sm:text-left">
-            <span className="font-semibold text-slate-300">Disclaimer:</span> SarkarSaathi.org is a private, independent information portal. We are NOT affiliated with any government body. All data is sourced from official .gov.in portals. Please always verify information on the respective official government website before taking any action.
+            <span className="font-semibold text-slate-300">Disclaimer:</span> SarkarSaathi.org is a private, independent civic research publication. We are NOT affiliated with the Government of India or any State Government. All guides and scheme profiles are compiled from official <code>.gov.in</code>, <code>.nic.in</code>, and statutory notifications for educational reference. Always verify current circulars on the respective official government portal before applying.
           </p>
         </div>
       </div>

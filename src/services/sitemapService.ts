@@ -7,6 +7,7 @@ import {
 } from '../infrastructure/repositories/InvestmentRepository';
 import { subsidyRepository } from '../infrastructure/repositories/SubsidyRepository';
 import { questionRepository } from '../infrastructure/repositories/QuestionRepository';
+import { editorialGuides } from '../data/editorialGuidesData';
 import { getAllOfficialSources, getOfficialSourceSlug, stateOfficialSources } from '../utils/officialSources';
 import { isIndexableOpportunity } from '../utils/seoQualityGate';
 
@@ -52,6 +53,7 @@ export const isExcludedSearchOrFilterUrl = (url: string): boolean => {
 
 export const STATIC_HUBS = [
   '/',
+  '/guides',
   '/investments',
   '/investment-schemes',
   '/opportunities',
@@ -87,6 +89,7 @@ export const SECTORS = [
 
 export interface SitemapCategoryBreakdown {
   hubs: number;
+  guides: number;
   states: number;
   sectors: number;
   investments: number;
@@ -118,6 +121,7 @@ export const generateDynamicSitemap = (): DynamicSitemapResult => {
   const rawUrls: Set<string> = new Set();
   const categoryBreakdown: SitemapCategoryBreakdown = {
     hubs: 0,
+    guides: 0,
     states: 0,
     sectors: 0,
     investments: 0,
@@ -278,9 +282,30 @@ export const generateDynamicSitemap = (): DynamicSitemapResult => {
     }
   });
 
+  // 7. Editorial Handbooks & Guides
+  editorialGuides.forEach((g) => {
+    if (g.slug) {
+      const url = `${BASE_SITE_URL}/guides/${g.slug}`;
+      if (isExcludedSearchOrFilterUrl(url)) {
+        searchFilterCount++;
+        return;
+      }
+      if (!url.startsWith(`${BASE_SITE_URL}/`)) {
+        invalidCount++;
+        return;
+      }
+      if (rawUrls.has(url)) {
+        duplicateCount++;
+        return;
+      }
+      rawUrls.add(url);
+      categoryBreakdown.guides++;
+    }
+  });
+
   const validUrls = Array.from(rawUrls);
 
-  const lastModDate = '2026-11-15';
+  const lastModDate = '2026-11-22';
   const urlElements = validUrls
     .map((u) => {
       const escaped = escapeXml(u);

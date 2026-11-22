@@ -9,6 +9,7 @@ import {
 } from '../infrastructure/repositories/InvestmentRepository';
 import { subsidyRepository } from '../infrastructure/repositories/SubsidyRepository';
 import { questionRepository } from '../infrastructure/repositories/QuestionRepository';
+import { editorialGuides } from '../data/editorialGuidesData';
 import { getAllOfficialSources, getOfficialSourceSlug, stateOfficialSources } from './officialSources';
 import { isIndexableOpportunity } from './seoQualityGate';
 
@@ -63,6 +64,7 @@ export const isExcludedSearchOrFilterUrl = (url: string): boolean => {
  */
 export const STATIC_APP_ROUTES = [
   '/',
+  '/guides',
   '/investments',
   '/investment-schemes',
   '/subsidies',
@@ -196,8 +198,18 @@ export const generateSitemap = (): string => {
     }
   });
 
+  // 7. Editorial Handbooks & Guides
+  editorialGuides.forEach((g) => {
+    if (g.slug) {
+      const url = `${BASE_SITE_URL}/guides/${g.slug}`;
+      if (!isExcludedSearchOrFilterUrl(url) && url.startsWith(`${BASE_SITE_URL}/`)) {
+        urlSet.add(url);
+      }
+    }
+  });
+
   const validUrls = Array.from(urlSet);
-  const lastModDate = '2026-11-15';
+  const lastModDate = '2026-11-22';
 
   const urlXmlNodes = validUrls
     .map((url) => `  <url>\n    <loc>${escapeXml(url)}</loc>\n    <lastmod>${lastModDate}</lastmod>\n  </url>`)

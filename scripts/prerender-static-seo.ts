@@ -9,6 +9,7 @@ import {
 } from '../src/infrastructure/repositories/InvestmentRepository';
 import { subsidyRepository } from '../src/infrastructure/repositories/SubsidyRepository';
 import { questionRepository } from '../src/infrastructure/repositories/QuestionRepository';
+import { editorialGuides } from '../src/data/editorialGuidesData';
 import {
   centralOfficialSources,
   getAllOfficialSources,
@@ -108,11 +109,15 @@ function buildHtmlDocument(templateHtml: string, meta: PageMeta): string {
 
   let html = templateHtml;
 
-  // 0. Enforce noindex, follow when flagged
+  // 0. Enforce noindex, follow AND strip AdSense script when flagged (AdSense policy hygiene)
   if (meta.noIndex) {
     html = html.replace(
       /<meta\s+name="(robots|googlebot|bingbot)"\s+content="[^"]*"\s*\/?>/gi,
       '<meta name="$1" content="noindex, follow" />'
+    );
+    html = html.replace(
+      /<script[^>]*pagead2\.googlesyndication\.com\/pagead\/js\/adsbygoogle\.js[^>]*>[\s\S]*?<\/script>\s*/gi,
+      ''
     );
   }
 
@@ -206,6 +211,7 @@ function buildHtmlDocument(templateHtml: string, meta: PageMeta): string {
         <div class="max-w-6xl mx-auto flex flex-wrap justify-between items-center gap-4">
           <a href="/" class="text-xl font-bold text-white">SarkarSaathi.org</a>
           <nav aria-label="Primary Navigation" class="flex flex-wrap gap-4 text-sm">
+            <a href="/guides" class="underline">Guides</a>
             <a href="/subsidies" class="underline">Subsidies</a>
             <a href="/investments" class="underline">54EC &amp; Bonds</a>
             <a href="/investment-schemes" class="underline">Savings Schemes</a>
@@ -275,6 +281,51 @@ function runPrerender(): void {
 
   // 1. Static Hubs & Compliance Pages
   const hubPages: PageMeta[] = [
+    {
+      routePath: '/guides',
+      title: `In-Depth Editorial Handbooks & Government Scheme Guides (${editorialGuides.length} Research Guides) | SarkarSaathi`,
+      description: 'Original long-form citizen handbooks with worked Rupee math, statutory comparison tables, and .gov.in citations on Section 54EC bonds, PM Surya Ghar solar, GeM rules, PPF vs SSY vs SCSS, and MSME loans.',
+      keywords: 'indian government scheme guides, 54ec bond guide, pm surya ghar subsidy guide, gem procurement rules guide, ppf vs ssy vs scss, pmegp mudra cgtmse guide',
+      breadcrumbs: [
+        { name: 'Home', path: '/' },
+        { name: 'Editorial Guides', path: '/guides' },
+      ],
+      jsonLd: {
+        '@context': 'https://schema.org',
+        '@type': 'CollectionPage',
+        name: 'SarkarSaathi In-Depth Editorial Handbooks & Policy Guides',
+        url: `${PRODUCTION_DOMAIN}/guides`,
+        description: 'Original long-form research handbooks covering Indian government schemes, sovereign bonds, small savings tax rules, and public procurement compliance.',
+        hasPart: editorialGuides.map((g) => ({
+          '@type': 'Article',
+          headline: g.title,
+          url: `${PRODUCTION_DOMAIN}/guides/${g.slug}`,
+          datePublished: g.publishedDate,
+          dateModified: g.lastUpdated,
+        })),
+      },
+      bodyHtml: `
+        <article class="space-y-6">
+          <div class="bg-white p-6 sm:p-8 rounded-xl border border-gray-200 space-y-3">
+            <div class="text-xs font-bold uppercase tracking-wider text-blue-700">Original Civic Research &amp; Financial Literacy</div>
+            <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-900">In-Depth Editorial Handbooks &amp; Statutory Guides (${editorialGuides.length} Guides)</h1>
+            <p class="text-gray-700 leading-relaxed">Every handbook in our editorial desk is written from primary Income Tax Act provisions, RBI Master Directions, Ministry of Finance quarterly circulars, and GeM General Terms &amp; Conditions — complete with worked Rupee calculations, side-by-side comparison matrices, and step-by-step troubleshooting checklists.</p>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            ${editorialGuides
+              .map(
+                (g) => `
+              <section class="bg-white p-6 rounded-xl border border-gray-200 space-y-2">
+                <div class="text-xs font-semibold text-indigo-700 uppercase">${escapeHtml(g.category)} · ${g.readTimeMinutes} min read · Updated ${escapeHtml(g.lastUpdated)}</div>
+                <h2 class="text-lg font-bold text-gray-900"><a href="/guides/${escapeHtml(g.slug)}" class="text-blue-800 hover:underline">${escapeHtml(g.title)}</a></h2>
+                <p class="text-sm text-gray-700 leading-relaxed">${escapeHtml(g.summary)}</p>
+                <div class="text-xs text-gray-500 pt-1">By ${escapeHtml(g.authorName)} · Reviewed by ${escapeHtml(g.reviewerName)}</div>
+              </section>`
+              )
+              .join('\n')}
+          </div>
+        </article>`,
+    },
     {
       routePath: '/subsidies',
       title: `Government Subsidies & Sarkari Yojana List 2026 (${publishedSubsidies.length}+ Verified Schemes) | SarkarSaathi`,
@@ -498,11 +549,11 @@ function runPrerender(): void {
                 </tr>
               </thead>
               <tbody class="divide-y divide-gray-200">
-                <tr><td class="p-3 font-bold"><a href="/investment-schemes/public-provident-fund-ppf" class="text-blue-700 underline">Public Provident Fund (PPF)</a></td><td class="p-3">7.1% p.a.</td><td class="p-3">15 Years</td><td class="p-3">₹500 – ₹1.50 Lakh/yr</td><td class="p-3">EEE (Sec 80C + Tax-Free Maturity)</td></tr>
-                <tr><td class="p-3 font-bold"><a href="/investment-schemes/sukanya-samriddhi-yojana-ssy" class="text-blue-700 underline">Sukanya Samriddhi Yojana (SSY)</a></td><td class="p-3">8.2% p.a.</td><td class="p-3">21 Years (15 yrs deposit)</td><td class="p-3">₹250 – ₹1.50 Lakh/yr</td><td class="p-3">EEE (Sec 80C + Tax-Free Maturity)</td></tr>
-                <tr><td class="p-3 font-bold"><a href="/investment-schemes/senior-citizens-savings-scheme-scss" class="text-blue-700 underline">Senior Citizens Savings Scheme (SCSS)</a></td><td class="p-3">8.2% p.a. (Quarterly)</td><td class="p-3">5 Years (+3 yrs ext.)</td><td class="p-3">₹1,000 – ₹30 Lakh</td><td class="p-3">Sec 80C Deduction; Interest Taxable</td></tr>
-                <tr><td class="p-3 font-bold"><a href="/investments/rbi-floating-rate-savings-bonds" class="text-blue-700 underline">RBI Floating Rate Savings Bonds</a></td><td class="p-3">8.05% p.a. (Half-Yearly)</td><td class="p-3">7 Years</td><td class="p-3">₹1,000 – No Upper Cap</td><td class="p-3">Interest Taxable; Sovereign Backed</td></tr>
-                <tr><td class="p-3 font-bold"><a href="/investments/rec-54ec-capital-gain-bonds" class="text-blue-700 underline">54EC Capital Gain Bonds (REC/PFC/IRFC)</a></td><td class="p-3">5.25% p.a. (Annual)</td><td class="p-3">5 Years Non-Transferable</td><td class="p-3">₹10,000 – ₹50 Lakh/FY</td><td class="p-3">100% LTCG Exemption u/s 54EC</td></tr>
+                <tr><td class="p-3 font-bold"><a href="/investments/public-provident-fund" class="text-blue-700 underline">Public Provident Fund (PPF)</a></td><td class="p-3">7.1% p.a.</td><td class="p-3">15 Years</td><td class="p-3">₹500 – ₹1.50 Lakh/yr</td><td class="p-3">EEE (Sec 80C + Tax-Free Maturity)</td></tr>
+                <tr><td class="p-3 font-bold"><a href="/investments/sukanya-samriddhi-account" class="text-blue-700 underline">Sukanya Samriddhi Yojana (SSY)</a></td><td class="p-3">8.2% p.a.</td><td class="p-3">21 Years (15 yrs deposit)</td><td class="p-3">₹250 – ₹1.50 Lakh/yr</td><td class="p-3">EEE (Sec 80C + Tax-Free Maturity)</td></tr>
+                <tr><td class="p-3 font-bold"><a href="/investments/senior-citizens-savings-scheme" class="text-blue-700 underline">Senior Citizens Savings Scheme (SCSS)</a></td><td class="p-3">8.2% p.a. (Quarterly)</td><td class="p-3">5 Years (+3 yrs ext.)</td><td class="p-3">₹1,000 – ₹30 Lakh</td><td class="p-3">Sec 80C Deduction; Interest Taxable</td></tr>
+                <tr><td class="p-3 font-bold"><a href="/investments/rbi-floating-rate-savings-bonds-2020" class="text-blue-700 underline">RBI Floating Rate Savings Bonds</a></td><td class="p-3">8.05% p.a. (Half-Yearly)</td><td class="p-3">7 Years</td><td class="p-3">₹1,000 – No Upper Cap</td><td class="p-3">Interest Taxable; Sovereign Backed</td></tr>
+                <tr><td class="p-3 font-bold"><a href="/investments/54ec-capital-gain-bonds" class="text-blue-700 underline">54EC Capital Gain Bonds (REC/PFC/IRFC)</a></td><td class="p-3">5.25% p.a. (Annual)</td><td class="p-3">5 Years Non-Transferable</td><td class="p-3">₹10,000 – ₹50 Lakh/FY</td><td class="p-3">100% LTCG Exemption u/s 54EC</td></tr>
                 <tr><td class="p-3 font-bold"><a href="/investments/sovereign-gold-bond-scheme" class="text-blue-700 underline">Sovereign Gold Bonds (SGB)</a></td><td class="p-3">2.50% p.a. + Gold Price</td><td class="p-3">8 Years (5th yr exit)</td><td class="p-3">1 gm – 4 kg (Individual)</td><td class="p-3">Capital Gains Tax-Free at Maturity</td></tr>
               </tbody>
             </table>
@@ -732,6 +783,91 @@ function runPrerender(): void {
 
   for (const hp of hubPages) {
     writeRouteHtml(templateHtml, hp);
+    generatedCount++;
+  }
+
+  // 1B. All Long-Form Editorial Handbooks (/guides/:slug)
+  for (const guide of editorialGuides) {
+    const routePath = `/guides/${guide.slug}`;
+    const sectionsHtml = guide.sections
+      .map((sec) => {
+        const parasHtml = sec.paragraphs
+          .map((p) => `<p class="text-gray-700 leading-relaxed text-sm sm:text-base">${escapeHtml(p)}</p>`)
+          .join('\n');
+        const bulletsHtml = sec.bullets && sec.bullets.length > 0
+          ? `<ul class="list-disc pl-5 space-y-1.5 text-sm text-gray-700">${sec.bullets.map((b) => `<li>${escapeHtml(b)}</li>`).join('')}</ul>`
+          : '';
+        const tableHtml = sec.table
+          ? `<div class="overflow-x-auto my-3"><table class="w-full text-left border-collapse text-sm border border-gray-200"><thead><tr class="bg-slate-100 border-b border-gray-200">${sec.table.headers.map((h) => `<th class="p-3 font-bold text-gray-900">${escapeHtml(h)}</th>`).join('')}</tr></thead><tbody class="divide-y divide-gray-200">${sec.table.rows.map((r) => `<tr>${r.map((cell, ci) => `<td class="p-3 ${ci === 0 ? 'font-semibold text-gray-900' : 'text-gray-700'}">${escapeHtml(cell)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`
+          : '';
+        const calloutHtml = sec.callout
+          ? `<div class="p-4 rounded-xl border ${sec.callout.tone === 'warning' ? 'bg-amber-50 border-amber-200 text-amber-950' : sec.callout.tone === 'success' ? 'bg-emerald-50 border-emerald-200 text-emerald-950' : 'bg-blue-50 border-blue-200 text-blue-950'} text-sm"><h3 class="font-bold mb-1">${escapeHtml(sec.callout.title)}</h3><p>${escapeHtml(sec.callout.body)}</p></div>`
+          : '';
+        return `<section class="space-y-3 pt-4 border-t border-gray-100"><h2 class="text-xl font-bold text-gray-900">${escapeHtml(sec.heading)}</h2>${parasHtml}${tableHtml}${bulletsHtml}${calloutHtml}</section>`;
+      })
+      .join('\n');
+
+    const faqsHtml = guide.faqs && guide.faqs.length > 0
+      ? `<section class="space-y-3 pt-6 border-t border-gray-200"><h2 class="text-xl font-bold text-gray-900">Frequently Asked Questions</h2><div class="space-y-3">${guide.faqs.map((f) => `<div class="p-4 bg-gray-50 rounded-lg border border-gray-200"><h3 class="font-bold text-sm text-gray-900 mb-1">${escapeHtml(f.question)}</h3><p class="text-sm text-gray-700 leading-relaxed">${escapeHtml(f.answer)}</p></div>`).join('')}</div></section>`
+      : '';
+
+    const sourcesHtml = guide.primarySources && guide.primarySources.length > 0
+      ? `<section class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2"><h2 class="text-base font-bold text-gray-900">Primary Statutory &amp; Official Portal Citations</h2><ul class="list-disc pl-5 text-sm space-y-1">${guide.primarySources.map((src) => `<li><a href="${escapeHtml(src.url)}" target="_blank" rel="noopener noreferrer" class="text-blue-700 underline font-medium">${escapeHtml(src.label)}</a></li>`).join('')}</ul></section>`
+      : '';
+
+    const relatedHtml = guide.relatedLinks && guide.relatedLinks.length > 0
+      ? `<section class="pt-4 border-t border-gray-200 space-y-2"><h2 class="text-base font-bold text-gray-900">Related Tools &amp; Scheme Profiles</h2><div class="flex flex-wrap gap-4 text-sm font-medium">${guide.relatedLinks.map((rl) => `<a href="${escapeHtml(rl.slug ? `${rl.path}/${rl.slug}` : rl.path)}" class="text-blue-700 underline font-bold">${escapeHtml(rl.label)}</a>`).join('')}<a href="/guides" class="text-blue-700 underline font-bold">← All Editorial Handbooks</a></div></section>`
+      : '';
+
+    const articleSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: guide.title,
+      description: guide.metaDescription,
+      datePublished: guide.publishedDate,
+      dateModified: guide.lastUpdated,
+      inLanguage: 'en-IN',
+      author: {
+        '@type': 'Organization',
+        name: guide.authorName,
+        url: PRODUCTION_DOMAIN,
+      },
+      publisher: {
+        '@type': 'Organization',
+        name: 'SarkarSaathi',
+        url: PRODUCTION_DOMAIN,
+        logo: {
+          '@type': 'ImageObject',
+          url: `${PRODUCTION_DOMAIN}/icon-192x192.png`,
+        },
+      },
+      mainEntityOfPage: `${PRODUCTION_DOMAIN}${routePath}`,
+    };
+
+    writeRouteHtml(templateHtml, {
+      routePath,
+      title: `${guide.title} | SarkarSaathi`,
+      description: guide.metaDescription,
+      keywords: guide.keywords.join(', '),
+      ogType: 'article',
+      breadcrumbs: [
+        { name: 'Home', path: '/' },
+        { name: 'Editorial Guides', path: '/guides' },
+        { name: guide.shortTitle, path: routePath },
+      ],
+      jsonLd: articleSchema,
+      bodyHtml: `
+        <article class="bg-white p-6 sm:p-10 rounded-xl border border-gray-200 shadow-sm space-y-6">
+          <div class="text-xs font-semibold text-indigo-700 uppercase tracking-wide">${escapeHtml(guide.category)} · ${guide.readTimeMinutes} Min Read · Published ${escapeHtml(guide.publishedDate)} · Updated ${escapeHtml(guide.lastUpdated)}</div>
+          <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-900 leading-tight">${escapeHtml(guide.title)}</h1>
+          <p class="text-base text-gray-700 leading-relaxed font-medium bg-slate-50 p-4 rounded-xl border border-slate-200">${escapeHtml(guide.summary)}</p>
+          <div class="text-xs text-gray-600">Author: <strong>${escapeHtml(guide.authorName)}</strong> (${escapeHtml(guide.authorRole)}) · Reviewed by: <strong>${escapeHtml(guide.reviewerName)}</strong></div>
+          ${sectionsHtml}
+          ${faqsHtml}
+          ${sourcesHtml}
+          ${relatedHtml}
+        </article>`,
+    });
     generatedCount++;
   }
 
@@ -1188,41 +1324,65 @@ function runPrerender(): void {
     generatedCount++;
   }
 
-  // 7. State & Sector Landing Pages
+  // 7. State & Sector Landing Pages (STRICTLY Curated Indexable Opportunities + Verified Subsidies — ZERO synthetic boilerplate templates!)
+  const curatedOpportunities = opportunities.filter((o) => isIndexableOpportunity(o));
+
   for (const st of stateOfficialSources) {
     if (!st.state) continue;
     const stateSlug = st.state.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
     if (!stateSlug) continue;
+    const stateLower = st.state.toLowerCase();
 
-    const stateOpps = opportunityRepository.getPaginated({ page: 1, limit: 12, state: stateSlug }).items;
-    const oppListHtml = stateOpps.length > 0 
-      ? `<div class="mt-6"><h2 class="text-lg font-bold text-gray-900 mb-3">Key Development Projects &amp; Opportunities in ${escapeHtml(st.state)}</h2><ul class="space-y-3">${stateOpps.map(o => `<li><a href="/opportunities/${escapeHtml(o.slug || o.id)}" class="font-bold text-blue-800 underline">${escapeHtml(o.title)}</a> — <span class="text-sm text-gray-600">${escapeHtml(o.authority || '')} (${escapeHtml(o.sector || '')})</span></li>`).join('\n')}</ul></div>`
+    const stateCuratedOpps = curatedOpportunities.filter((o) => {
+      const oState = String(o.state || o.location || 'All India').toLowerCase();
+      return (
+        oState.includes(stateLower) ||
+        oState.includes('all india') ||
+        oState.includes('pan india') ||
+        oState === 'india' ||
+        oState === 'central'
+      );
+    }).slice(0, 12);
+
+    const stateSubsidies = publishedSubsidies.filter((sub) => {
+      const subState = String(sub.state || 'All India').toLowerCase();
+      return subState.includes(stateLower) || subState === 'all india' || subState === 'central';
+    }).slice(0, 12);
+
+    const oppListHtml = stateCuratedOpps.length > 0
+      ? `<section class="mt-6"><h2 class="text-lg font-bold text-gray-900 mb-3">Verified National &amp; Regional Grants Applicable in ${escapeHtml(st.state)} (${stateCuratedOpps.length})</h2><ul class="space-y-3">${stateCuratedOpps.map(o => `<li><a href="/opportunities/${escapeHtml(o.slug || o.id)}" class="font-bold text-blue-800 underline">${escapeHtml(o.title)}</a> — <span class="text-sm text-gray-600">${escapeHtml(o.authority || 'Government of India')} (${escapeHtml(o.fundingAmount || o.sector || 'National Program')})</span></li>`).join('\n')}</ul></section>`
+      : '';
+
+    const subsidyListHtml = stateSubsidies.length > 0
+      ? `<section class="mt-6"><h2 class="text-lg font-bold text-gray-900 mb-3">Verified Government Subsidies Open to Citizens in ${escapeHtml(st.state)}</h2><ul class="space-y-2.5">${stateSubsidies.map(sub => `<li><a href="/subsidies/${escapeHtml(sub.slug)}" class="font-bold text-emerald-800 underline">${escapeHtml(sub.title)}</a> — <span class="text-sm text-gray-600">${escapeHtml(sub.maximumBenefit || sub.subsidyAmount || sub.category)} (${escapeHtml(sub.state || 'All India')})</span></li>`).join('\n')}</ul></section>`
       : '';
 
     const servicesHtml = st.services && st.services.length > 0
-      ? `<div class="mt-4"><h3 class="text-sm font-bold text-gray-700 uppercase">Verified Digital Citizen &amp; Business Services:</h3><ul class="list-disc pl-5 text-sm text-gray-700 mt-1">${st.services.map(s => `<li>${escapeHtml(s)}</li>`).join('')}</ul></div>`
+      ? `<section class="mt-4"><h2 class="text-base font-bold text-gray-900 mb-2">Verified Digital Citizen &amp; Business Services in ${escapeHtml(st.state)}</h2><ul class="list-disc pl-5 text-sm text-gray-700 space-y-1">${st.services.map(s => `<li>${escapeHtml(s)}</li>`).join('')}</ul></section>`
       : '';
 
     writeRouteHtml(templateHtml, {
       routePath: `/opportunities/state/${stateSlug}`,
-      title: `${st.state} Government Opportunities, Schemes & Official Portal | SarkarSaathi`,
-      description: `Explore verified ${st.state} state development initiatives, tenders, startup grants, and open central government opportunities applicable to citizens in ${st.state}.`,
+      title: `${st.state} Government Opportunities, Verified Subsidies & Official Portal | SarkarSaathi`,
+      description: `Explore verified ${st.state} citizen portal services, Central & State government subsidies, startup grants, and innovation fellowships applicable to residents and MSMEs in ${st.state}.`,
       breadcrumbs: [
         { name: 'Home', path: '/' },
         { name: 'Opportunities', path: '/opportunities' },
         { name: st.state, path: `/opportunities/state/${stateSlug}` },
       ],
       bodyHtml: `
-        <article class="bg-white p-6 rounded-xl border border-gray-200 space-y-4">
+        <article class="bg-white p-6 sm:p-8 rounded-xl border border-gray-200 space-y-5">
           <div class="text-xs font-semibold text-emerald-700 uppercase">Verified State Governance Directory · ${escapeHtml(st.type || 'State')}</div>
-          <h1 class="text-2xl font-bold text-gray-900">${escapeHtml(st.state)} Government Investment &amp; Development Opportunities</h1>
-          <p class="text-gray-700 leading-relaxed">${escapeHtml(st.description || '')}</p>
-          <p class="text-sm">Official State Portal: <a href="${escapeHtml(st.officialUrl || '')}" class="text-blue-700 font-bold underline" target="_blank" rel="noopener noreferrer">${escapeHtml(st.name)} (.gov.in)</a></p>
+          <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-900">${escapeHtml(st.state)} Government Subsidies, Innovation Grants &amp; Official Portal</h1>
+          <p class="text-gray-700 leading-relaxed">${escapeHtml(st.description || '')} Residents, farmers, students, and Udyam-registered MSMEs in ${escapeHtml(st.state)} can apply directly through the authenticated state portal alongside pan-India Central Ministry schemes listed below.</p>
+          <p class="text-sm bg-blue-50 p-4 rounded-xl border border-blue-200">Official State Portal: <a href="${escapeHtml(st.officialUrl || '')}" class="text-blue-700 font-bold underline" target="_blank" rel="noopener noreferrer">${escapeHtml(st.name)} (.gov.in)</a></p>
           ${servicesHtml}
+          ${subsidyListHtml}
           ${oppListHtml}
-          <div class="pt-4 border-t border-gray-100 mt-6 flex gap-4 text-sm font-medium">
-            <a href="/opportunities" class="text-blue-700 underline">← All Opportunities</a>
-            <a href="/subsidies" class="text-blue-700 underline">State &amp; Central Subsidies</a>
+          <div class="pt-4 border-t border-gray-100 mt-6 flex flex-wrap gap-4 text-sm font-medium">
+            <a href="/opportunities" class="text-blue-700 underline">← Curated National Grants</a>
+            <a href="/subsidies" class="text-blue-700 underline">All Verified Subsidies</a>
+            <a href="/guides" class="text-blue-700 underline">In-Depth Editorial Handbooks</a>
             <a href="/official-sources" class="text-blue-700 underline">Official Portals Directory</a>
           </div>
         </article>`,
@@ -1237,34 +1397,67 @@ function runPrerender(): void {
     'quantum-technologies-deep-tech'
   ]));
 
+  const sectorKeywordMap: Record<string, RegExp> = {
+    'agriculture': /agri|farm|kisan|food|rural|dairy|fisheries|biotech/i,
+    'infrastructure': /infra|transport|urban|smart|housing|rail|port|logistics|civil/i,
+    'healthcare': /health|bio|med|pharma|icmr|birac|clinical|ayush/i,
+    'education': /edu|scholar|fellow|research|student|skill|anrf|dst|academic|science/i,
+    'technology': /tech|it|digital|ai|cyber|quantum|software|electronics|semiconductor|meity|deeptech/i,
+    'renewable-energy': /solar|energy|power|clean|green|ev|battery|climate|wind|hydrogen/i,
+    'renewable-energy-solar': /solar|energy|power|clean|green|surya|kusum|hydrogen/i,
+    'manufacturing': /manufact|pli|msme|textile|industrial|hardware|electronics|make in india/i,
+    'tourism': /tourism|culture|heritage|hospitality|handicraft|artisan/i,
+    'msme': /msme|startup|entrepreneur|business|pmegp|mudra|seed|grant|incubation/i,
+    'defense': /defen|space|aero|idex|drdo|isro|security|drone/i,
+    'it-ites-technology-parks': /tech|it|software|stpi|meity|digital|startup|electronics|ai|cyber/i,
+    'quantum-technologies-deep-tech': /quantum|deep|ai|tech|research|dst|anrf|semiconductor|space/i,
+  };
+
   for (const sec of allSectorRoutes) {
     let secLabel = sec.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
     if (sec === 'it-ites-technology-parks') secLabel = 'IT, ITeS & Technology Parks';
     if (sec === 'renewable-energy-solar') secLabel = 'Renewable Energy & Solar';
     if (sec === 'quantum-technologies-deep-tech') secLabel = 'Quantum Technologies & Deep Tech';
 
-    const secOpps = opportunityRepository.getPaginated({ page: 1, limit: 12, sector: sec }).items;
-    const oppListHtml = secOpps.length > 0 
-      ? `<div class="mt-6"><h2 class="text-lg font-bold text-gray-900 mb-3">Verified ${escapeHtml(secLabel)} Opportunities &amp; Projects (${secOpps.length}+)</h2><ul class="space-y-3">${secOpps.map(o => `<li><a href="/opportunities/${escapeHtml(o.slug || o.id)}" class="font-bold text-blue-800 underline">${escapeHtml(o.title)}</a> — <span class="text-sm text-gray-600">${escapeHtml(o.authority || '')} (${escapeHtml(o.state || 'India')})</span></li>`).join('\n')}</ul></div>`
+    const secRegex = sectorKeywordMap[sec] || new RegExp(sec.split('-').filter(Boolean).join('|'), 'i');
+    const matchedCuratedOpps = curatedOpportunities.filter((o) => {
+      const hay = `${o.title} ${o.sector || ''} ${o.subSector || ''} ${o.description || ''} ${o.authority || ''}`;
+      return secRegex.test(hay);
+    });
+    const secOpps = (matchedCuratedOpps.length > 0 ? matchedCuratedOpps : curatedOpportunities).slice(0, 12);
+
+    const secSubsidies = publishedSubsidies.filter((sub) => {
+      const hay = `${sub.title} ${sub.category || ''} ${sub.description || ''}`;
+      return secRegex.test(hay);
+    }).slice(0, 8);
+
+    const oppListHtml = secOpps.length > 0
+      ? `<section class="mt-6"><h2 class="text-lg font-bold text-gray-900 mb-3">Curated ${escapeHtml(secLabel)} National Grants &amp; Fellowships (${secOpps.length})</h2><ul class="space-y-3">${secOpps.map(o => `<li><a href="/opportunities/${escapeHtml(o.slug || o.id)}" class="font-bold text-blue-800 underline">${escapeHtml(o.title)}</a> — <span class="text-sm text-gray-600">${escapeHtml(o.authority || 'Government of India')} (${escapeHtml(o.fundingAmount || o.sector || 'National Call')})</span></li>`).join('\n')}</ul></section>`
+      : '';
+
+    const secSubsidyHtml = secSubsidies.length > 0
+      ? `<section class="mt-6"><h2 class="text-lg font-bold text-gray-900 mb-3">Related ${escapeHtml(secLabel)} Government Subsidies</h2><ul class="space-y-2">${secSubsidies.map(sub => `<li><a href="/subsidies/${escapeHtml(sub.slug)}" class="font-bold text-emerald-800 underline">${escapeHtml(sub.title)}</a> — <span class="text-sm text-gray-600">${escapeHtml(sub.maximumBenefit || sub.subsidyAmount || sub.category)}</span></li>`).join('\n')}</ul></section>`
       : '';
 
     writeRouteHtml(templateHtml, {
       routePath: `/opportunities/sector/${sec}`,
-      title: `${secLabel} Sector Investment Opportunities & Fellowships | SarkarSaathi`,
-      description: `Browse verified government opportunities, tenders, fellowships, and startup grants in the ${secLabel} sector across India.`,
+      title: `${secLabel} Government Grants, Subsidies & Fellowships | SarkarSaathi`,
+      description: `Browse verified Central and State government grants, research fellowships, subsidies, and startup funding programs in the ${secLabel} sector across India.`,
       breadcrumbs: [
         { name: 'Home', path: '/' },
         { name: 'Opportunities', path: '/opportunities' },
         { name: secLabel, path: `/opportunities/sector/${sec}` },
       ],
       bodyHtml: `
-        <article class="bg-white p-6 rounded-xl border border-gray-200 space-y-4">
-          <div class="text-xs font-semibold text-blue-700 uppercase">Sector Opportunity Directory</div>
-          <h1 class="text-2xl font-bold text-gray-900">${escapeHtml(secLabel)} Investment &amp; Development Opportunities</h1>
-          <p class="text-gray-700 leading-relaxed">Explore active Central and State government tenders, research grants, manufacturing corridors, and infrastructure initiatives in the ${escapeHtml(secLabel)} domain.</p>
+        <article class="bg-white p-6 sm:p-8 rounded-xl border border-gray-200 space-y-5">
+          <div class="text-xs font-semibold text-blue-700 uppercase">Verified Sector Research Directory</div>
+          <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-900">${escapeHtml(secLabel)} — Verified Government Grants, Fellowships &amp; Subsidies</h1>
+          <p class="text-gray-700 leading-relaxed">Explore curated Central Ministry innovation calls, R&amp;D fellowships, startup prototyping grants, and capital subsidy schemes relevant to the ${escapeHtml(secLabel)} ecosystem in India. Every listing links directly to verified <code>.gov.in</code> or statutory agency portals.</p>
           ${oppListHtml}
-          <div class="pt-4 border-t border-gray-100 mt-6 flex gap-4 text-sm font-medium">
-            <a href="/opportunities" class="text-blue-700 underline">← All Opportunities</a>
+          ${secSubsidyHtml}
+          <div class="pt-4 border-t border-gray-100 mt-6 flex flex-wrap gap-4 text-sm font-medium">
+            <a href="/opportunities" class="text-blue-700 underline">← All Curated Grants</a>
+            <a href="/guides" class="text-blue-700 underline">In-Depth Editorial Handbooks</a>
             <a href="/tenders" class="text-blue-700 underline">Public Tenders</a>
             <a href="/investments" class="text-blue-700 underline">Sovereign Investments</a>
           </div>
@@ -1284,7 +1477,7 @@ function runPrerender(): void {
     'union-territory-investment-project-18',
     'state-energy-infrastructure-project-85',
   ]);
-  const indexableOpportunities = opportunities.filter((o) => isIndexableOpportunity(o));
+  const indexableOpportunities = curatedOpportunities;
   const legacyNoIndexOpportunities = opportunities.filter(
     (o) => priorityOppSlugs.has(o.slug) && !isIndexableOpportunity(o)
   );
@@ -1292,20 +1485,39 @@ function runPrerender(): void {
 
   const seenOpps = new Set<string>();
   for (const opp of targetOpportunities) {
+    const oppAny = opp as any;
     const slug = opp.slug || opp.id;
     if (!slug || seenOpps.has(slug)) continue;
     seenOpps.add(slug);
     const isIndexed = isIndexableOpportunity(opp);
-    const cost = opp.totalProjectCost || opp.fundingAmount || 'As per project notification';
-    const loc = [opp.district, opp.location, opp.state].filter(Boolean).join(', ') || 'India';
-    const statusVal = opp.projectStatus || opp.projectStage || 'Active';
-    const sectorVal = [opp.sector, opp.subSector].filter(Boolean).join(' · ') || 'Development & Infrastructure';
+    const cost = oppAny.fundingAmount || opp.totalProjectCost || 'As per official notification';
+    const loc = [opp.district, opp.location, opp.state].filter(Boolean).join(', ') || 'All India';
+    const statusVal = opp.projectStatus || opp.projectStage || oppAny.status || 'Active';
+    const sectorVal = [opp.sector, opp.subSector].filter(Boolean).join(' · ') || 'Innovation & Development';
+    const authorityVal = opp.authority || oppAny.implementingAgency || 'Government of India';
     const routePath = `/opportunities/${slug}`;
+
+    const oppFaqsHtml = Array.isArray(oppAny.faqs) && oppAny.faqs.length > 0
+      ? `<section class="mt-6"><h2 class="text-lg font-bold text-gray-900 mb-2">Frequently Asked Questions</h2><div class="space-y-3">${oppAny.faqs.map((f: any) => `<div class="p-4 bg-gray-50 rounded-lg border border-gray-200"><h3 class="font-bold text-sm text-gray-900 mb-1">${escapeHtml(f.question)}</h3><p class="text-sm text-gray-700 leading-relaxed">${escapeHtml(f.answer)}</p></div>`).join('')}</div></section>`
+      : '';
+
+    const richSections = [
+      oppAny.projectDescription ? renderListSection('Program Overview & Statutory Objective', oppAny.projectDescription) : '',
+      oppAny.opportunityDescription ? renderListSection('Funding Scope & Strategic Opportunity', oppAny.opportunityDescription) : '',
+      oppAny.investorProfile ? renderListSection('Ideal Applicant / Institutional Profile', oppAny.investorProfile) : '',
+      oppAny.eligibility ? renderListSection('Eligibility Criteria & Qualifying Conditions', oppAny.eligibility) : '',
+      opp.infrastructureDetails ? renderListSection('Infrastructure & Technical Scope', opp.infrastructureDetails) : '',
+      oppAny.applicationProcess ? renderListSection('Step-by-Step Application Process', oppAny.applicationProcess, Array.isArray(oppAny.applicationProcess)) : '',
+      opp.participationProcess && opp.participationProcess.length > 0 ? renderListSection('Participation & Selection Workflow', opp.participationProcess, true) : '',
+      oppAny.requiredDocuments ? renderListSection('Mandatory Documents & Proposal Checklist', oppAny.requiredDocuments) : '',
+      oppAny.importantConditions ? renderListSection('Statutory Conditions & Compliance Rules', oppAny.importantConditions) : '',
+      oppAny.howToEvaluate ? renderListSection('How Applicants Should Evaluate This Grant', oppAny.howToEvaluate) : '',
+    ].filter(Boolean).join('\n');
 
     writeRouteHtml(templateHtml, {
       routePath,
-      title: `${opp.title} (${opp.state || 'India'}) — Project Details, Outlay & Authority | SarkarSaathi`,
-      description: `${opp.title} in ${loc} (${sectorVal}): Nodal Authority: ${opp.authority || 'Government of India'}. Outlay: ${cost}. Status: ${statusVal}. Check participation procedure and official source link.`,
+      title: `${opp.title} (${opp.state || 'India'}) — Grant Details, Eligibility & Official Portal | SarkarSaathi`,
+      description: `${opp.title} (${sectorVal}): Nodal Authority: ${authorityVal}. Funding / Outlay: ${cost}. Check eligibility criteria, required documents, and official application steps.`,
       ogType: 'article',
       noIndex: !isIndexed,
       breadcrumbs: [
@@ -1315,36 +1527,28 @@ function runPrerender(): void {
       ],
       bodyHtml: `
         <article class="bg-white p-6 sm:p-8 rounded-xl border border-gray-200 shadow-sm space-y-5">
-          <div class="text-xs font-semibold text-blue-700 uppercase tracking-wide">Government Opportunity · ${escapeHtml(sectorVal)} · ${escapeHtml(statusVal)}</div>
+          <div class="text-xs font-semibold text-blue-700 uppercase tracking-wide">${escapeHtml(oppAny.opportunityType || 'Government Grant / Call')} · ${escapeHtml(sectorVal)} · ${escapeHtml(statusVal)}</div>
           <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-900">${escapeHtml(opp.title)}</h1>
           <p class="text-base text-gray-700 leading-relaxed">${escapeHtml(opp.description || '')}</p>
 
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-slate-50 p-4 rounded-xl border border-slate-200 text-sm">
-            <div><span class="block text-xs font-bold text-gray-500 uppercase">Project Outlay</span><strong class="text-gray-900">${escapeHtml(cost)}</strong></div>
-            <div><span class="block text-xs font-bold text-gray-500 uppercase">Location / State</span><strong class="text-gray-900">${escapeHtml(loc)}</strong></div>
-            <div><span class="block text-xs font-bold text-gray-500 uppercase">Implementing Agency</span><strong class="text-gray-900">${escapeHtml(opp.authority || 'Government of India')}</strong></div>
-            <div><span class="block text-xs font-bold text-gray-500 uppercase">Status / Stage</span><strong class="text-emerald-800">${escapeHtml(statusVal)}</strong></div>
+            <div><span class="block text-xs font-bold text-gray-500 uppercase">Funding / Outlay</span><strong class="text-emerald-800">${escapeHtml(cost)}</strong></div>
+            <div><span class="block text-xs font-bold text-gray-500 uppercase">Coverage / Location</span><strong class="text-gray-900">${escapeHtml(loc)}</strong></div>
+            <div><span class="block text-xs font-bold text-gray-500 uppercase">Implementing Agency</span><strong class="text-gray-900">${escapeHtml(authorityVal)}</strong></div>
+            <div><span class="block text-xs font-bold text-gray-500 uppercase">Timeline / Status</span><strong class="text-gray-900">${escapeHtml(oppAny.timeline || oppAny.deadline || statusVal)}</strong></div>
           </div>
 
-          ${opp.infrastructureDetails ? `
-          <section class="mt-4">
-            <h2 class="text-lg font-bold text-gray-900 mb-1">Infrastructure &amp; Project Scope</h2>
-            <p class="text-sm text-gray-700 leading-relaxed">${escapeHtml(opp.infrastructureDetails)}</p>
-          </section>` : ''}
-
-          ${opp.participationProcess && opp.participationProcess.length > 0 ? `
-          <section class="mt-4">
-            <h2 class="text-lg font-bold text-gray-900 mb-1">Participation &amp; Application Procedure</h2>
-            <ol class="list-decimal pl-5 text-sm text-gray-700 space-y-1">${opp.participationProcess.map(p => `<li>${escapeHtml(p)}</li>`).join('')}</ol>
-          </section>` : ''}
+          ${richSections}
+          ${oppFaqsHtml}
 
           <div class="p-4 bg-blue-50 rounded-xl border border-blue-200 text-sm">
             <span class="font-bold text-blue-900">Official Source Citation: </span>
-            <a href="${escapeHtml(opp.sourceUrl || '#')}" class="text-blue-700 font-bold underline" target="_blank" rel="noopener noreferrer">${escapeHtml(opp.sourceAuthority || opp.sourceName || 'Official Portal')}</a>
+            <a href="${escapeHtml(opp.sourceUrl || '#')}" class="text-blue-700 font-bold underline" target="_blank" rel="noopener noreferrer">${escapeHtml(opp.sourceAuthority || opp.sourceName || authorityVal)}</a>
           </div>
 
           <div class="pt-4 border-t border-gray-200 flex flex-wrap gap-4 text-sm font-medium">
-            <a href="/opportunities" class="text-blue-700 underline font-bold">← All Opportunities</a>
+            <a href="/opportunities" class="text-blue-700 underline font-bold">← All Curated National Grants</a>
+            <a href="/guides" class="text-blue-700 underline font-bold">In-Depth Editorial Handbooks</a>
             <a href="/subsidies" class="text-blue-700 underline font-bold">Subsidies Directory</a>
             <a href="/tenders" class="text-blue-700 underline font-bold">Public Tenders</a>
           </div>
