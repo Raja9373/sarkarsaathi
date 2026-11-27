@@ -112,6 +112,8 @@ export default function App() {
     const rawStateSlug = parts[0].toLowerCase();
     const stateSlugAliases: Record<string, string> = {
       'dadra-nagar-haveli-daman-diu': 'dadra-nagar-haveli-and-daman-diu',
+      'jammu-and-kashmir': 'jammu-kashmir',
+      'andaman-and-nicobar-islands': 'andaman-nicobar-islands',
     };
     const candidateStateSlug = stateSlugAliases[rawStateSlug] || rawStateSlug;
     const matchedState = stateOfficialSources.find(
@@ -893,10 +895,23 @@ export default function App() {
   };
 
   const renderContent = () => {
+    const requestedPath =
+      typeof window !== 'undefined'
+        ? `${window.location.pathname}${window.location.search}${window.location.hash}`
+        : undefined;
+
+    const renderNotFound = (routeContext: string) => (
+      <NotFoundView
+        onNavigate={navigate}
+        requestedPath={requestedPath}
+        routeContext={routeContext}
+      />
+    );
+
     if (selectedSlug) {
       if (currentRoute === '/investments') {
         const item = investmentRepository.getBySlug(selectedSlug);
-        if (!item) return <NotFoundView onNavigate={navigate} />;
+        if (!item) return renderNotFound('missing-investment-slug');
         injectStructuredData(
           'investment-breadcrumb-jsonld',
           getInvestmentBreadcrumbSchema('investments', item.title, selectedSlug)
@@ -905,7 +920,7 @@ export default function App() {
       }
       if (currentRoute === '/investment-schemes') {
         const item = investmentSchemeRepository.getBySlug(selectedSlug);
-        if (!item) return <NotFoundView onNavigate={navigate} />;
+        if (!item) return renderNotFound('missing-investment-scheme-slug');
         injectStructuredData(
           'investment-breadcrumb-jsonld',
           getInvestmentBreadcrumbSchema('investment-schemes', item.title, selectedSlug)
@@ -922,37 +937,37 @@ export default function App() {
           return <SectorLandingView sector={sector} onNavigate={navigate} />;
         }
         const item = opportunityRepository.getBySlug(selectedSlug);
-        if (!item) return <NotFoundView onNavigate={navigate} />;
+        if (!item) return renderNotFound('missing-opportunity-slug');
         return <DetailView item={item} type="Opportunities" onBack={() => navigate('/opportunities')} />;
       }
       if (currentRoute === '/tenders') {
         const item = tenderRepository.getBySlug(selectedSlug);
-        if (!item) return <NotFoundView onNavigate={navigate} />;
+        if (!item) return renderNotFound('missing-tender-slug');
         return <DetailView item={item} type="Tenders" onBack={() => navigate('/tenders')} />;
       }
       if (currentRoute === '/news') {
         const item = newsRepository.getBySlug(selectedSlug);
-        if (!item) return <NotFoundView onNavigate={navigate} />;
+        if (!item) return renderNotFound('missing-news-slug');
         return <DetailView item={item} type="News" onBack={() => navigate('/news')} />;
       }
       if (currentRoute === '/subsidies') {
         const item = subsidyRepository.getBySlug(selectedSlug);
-        if (!item) return <NotFoundView onNavigate={navigate} />;
+        if (!item) return renderNotFound('missing-subsidy-slug');
         return <SubsidyDetailView item={item} onBack={() => navigate('/subsidies')} onNavigate={navigate} />;
       }
       if (currentRoute === '/official-sources') {
         const item = getOfficialSourceBySlug(selectedSlug);
-        if (!item) return <NotFoundView onNavigate={navigate} />;
+        if (!item) return renderNotFound('missing-official-source-slug');
         return <OfficialSourceDetailView item={item} onNavigate={navigate} onBack={() => navigate('/official-sources')} />;
       }
       if (currentRoute === '/questions') {
         const item = questionRepository.getBySlug(selectedSlug);
-        if (!item) return <NotFoundView onNavigate={navigate} />;
+        if (!item) return renderNotFound('missing-question-slug');
         return <QuestionDetailView question={item} onNavigate={navigate} onBack={() => navigate('/questions')} />;
       }
       if (currentRoute === '/guides') {
         const guide = getGuideBySlug(selectedSlug);
-        if (!guide) return <NotFoundView onNavigate={navigate} />;
+        if (!guide) return renderNotFound('missing-guide-slug');
         return <GuideDetailView guide={guide} onNavigate={navigate} />;
       }
     }
@@ -999,13 +1014,13 @@ export default function App() {
       case '/admin/import':
         return <AdminImport />;
       case '/404':
-        return <NotFoundView onNavigate={navigate} />;
+        return renderNotFound('unmatched-route');
       default:
         if (currentRoute.startsWith('/search')) {
             const query = new URLSearchParams(window.location.search).get('q') || '';
             return <SearchView query={query} onNavigate={navigate} />;
         }
-        return <NotFoundView onNavigate={navigate} />;
+        return renderNotFound('fallback-route');
     }
   };
 

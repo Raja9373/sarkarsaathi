@@ -331,6 +331,154 @@ if (!fs.existsSync(DIST_DIR)) {
     brokenCompLinks.length === 0 && noIndexStrippedAdsense && rootHasAdsenseMeta,
     `Broken comparison links: ${brokenCompLinks.length}; AdSense stripped on noindex: ${noIndexStrippedAdsense}; Root meta active: ${rootHasAdsenseMeta}`
   );
+
+  // Vercel SPA Rewrite & GSC 404 Permanent Redirect Coverage Audit
+  const rewrites = vercelCfg.rewrites || [];
+  const cleanUrlsRewriteSafe =
+    !vercelCfg.cleanUrls ||
+    rewrites.every((rw: any) => rw.destination !== '/index.html');
+  const hasSpaFallback = rewrites.some((rw: any) => rw.destination === '/');
+  check(
+    'Vercel cleanUrls + SPA Rewrite Compatibility (Zero NOT_FOUND 404 Bug)',
+    cleanUrlsRewriteSafe && hasSpaFallback,
+    `cleanUrls=${Boolean(vercelCfg.cleanUrls)}; rewrite destination='/' active: ${hasSpaFallback}; forbidden '/index.html' destination absent: ${cleanUrlsRewriteSafe}`
+  );
+
+  // Compile vercel.json redirect patterns into regex matchers and verify all 13 GSC 404 URLs + zero curated collisions
+  const compileVercelPattern = (source: string): RegExp => {
+    const regexStr = source
+      .replace(/:([a-zA-Z0-9_]+)\(([^)]+)\)/g, '($2)')
+      .replace(/\/:([a-zA-Z0-9_]+)\*/g, '(?:/.*)?')
+      .replace(/:([a-zA-Z0-9_]+)/g, '[^/]+');
+    return new RegExp(`^${regexStr}$`);
+  };
+  const compiledRedirects = (vercelCfg.redirects || []).map((r: any) => ({
+    source: String(r.source),
+    destination: String(r.destination),
+    permanent: Boolean(r.permanent),
+    regex: compileVercelPattern(String(r.source)),
+  }));
+
+  const gsc404Urls = [
+    '/opportunities/mospi-paimana-infrastructure-project-1553-coal',
+    '/opportunities/bihar-industrial-investment-project-75',
+    '/opportunities/maharashtra-industrial-development-opportunity-12',
+    '/opportunities/renewable-energy-green-hydrogen-project-88',
+    '/opportunities/chhattisgarh-industrial-investment-project-99',
+    '/opportunities/sagarmala-port-project-48',
+    '/opportunities/madhya-pradesh-industrial-investment-project-46',
+    '/delhi/driving-licence',
+    '/opportunities/manufacturing-industrial-project-3',
+    '/investment-schemes/pli-food-processing',
+    '/opportunities/union-territory-investment-project-18',
+    '/opportunities/state-energy-infrastructure-project-85',
+    '/karnataka/aadhaar-update',
+  ];
+
+  const unmatchedGsc404: string[] = [];
+  const brokenRedirectDestinations: string[] = [];
+  for (const urlPath of gsc404Urls) {
+    const matched = compiledRedirects.find((r: any) => r.permanent && r.regex.test(urlPath));
+    if (!matched) {
+      unmatchedGsc404.push(urlPath);
+    } else {
+      const destClean = matched.destination.replace(/^\/+|\/+$/g, '');
+      const destHtml = destClean
+        ? path.join(DIST_DIR, destClean, 'index.html')
+        : path.join(DIST_DIR, 'index.html');
+      if (!fs.existsSync(destHtml)) {
+        brokenRedirectDestinations.push(`${urlPath} -> ${matched.destination}`);
+      }
+    }
+  }
+  check(
+    'All 13 GSC Reported 404 URLs Have Permanent 301 Redirects to Existing Pre-Rendered Pages',
+    unmatchedGsc404.length === 0 && brokenRedirectDestinations.length === 0,
+    unmatchedGsc404.length === 0 && brokenRedirectDestinations.length === 0
+      ? `13/13 GSC 404 URLs permanently redirect to live pre-rendered pages in dist/`
+      : `Unmatched: ${unmatchedGsc404.join(', ')} | Broken dest: ${brokenRedirectDestinations.join(', ')}`
+  );
+
+  // Verify ZERO of the 62 curated indexable opportunities are accidentally caught by any redirect rule
+  const curatedCollisions = curatedOppUrls.filter((ou) => {
+    const p = new URL(ou).pathname;
+    return compiledRedirects.some((r: any) => r.regex.test(p));
+  });
+  check(
+    'Zero Redirect Collisions on All 62 Curated Indexable Opportunities',
+    curatedCollisions.length === 0,
+    curatedCollisions.length === 0
+      ? `0 / ${curatedOppUrls.length} curated opportunities redirected (100% preserved at HTTP 200)`
+      : `Collisions: ${curatedCollisions.join(', ')}`
+  );
+
+  // Verify ZERO thin pages across ALL 821 indexed sitemap URLs (>= 220 semantic words in <main>)
+  const thinIndexedPages: string[] = [];
+  let totalIndexedWords = 0;
+  for (const urlStr of sitemapUrls) {
+    const pathname = new URL(urlStr).pathname.replace(/^\/+|\/+$/g, '');
+    const htmlFile = pathname
+      ? path.join(DIST_DIR, pathname, 'index.html')
+      : path.join(DIST_DIR, 'index.html');
+    if (!fs.existsSync(htmlFile)) continue;
+    const html = fs.readFileSync(htmlFile, 'utf8');
+    const mainMatch = html.match(/<main[\s\S]*?<\/main>/i);
+    const scope = mainMatch ? mainMatch[0] : html;
+    const text = scope
+      .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+      .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+      .replace(/<[^>]+>/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+    const wc = text ? text.split(' ').length : 0;
+    totalIndexedWords += wc;
+    if (wc < 220) {
+      thinIndexedPages.push(`${pathname || '/'} (${wc}w)`);
+    }
+  }
+  const avgAllIndexedWords = sitemapUrls.length > 0 ? Math.round(totalIndexedWords / sitemapUrls.length) : 0;
+  check(
+    'Zero Thin Indexed Pages Across Entire Sitemap (>= 220 Main Words)',
+    thinIndexedPages.length === 0,
+    thinIndexedPages.length === 0
+      ? `All ${sitemapUrls.length} sitemap pages exceed 220+ semantic words in <main> (site avg: ${avgAllIndexedWords} words)`
+      : `Thin pages (${thinIndexedPages.length}): ${thinIndexedPages.slice(0, 6).join(', ')}`
+  );
+
+  // Verify horizontal semantic cross-linking mesh & rich JSON-LD on sampled detail pages across all 8 categories
+  const sampledDetails = [
+    'official-sources/west-bengal-portal',
+    'official-sources/uttarakhand-portal',
+    'investments/andhra-pradesh-state-development-loan',
+    'investments/sovereign-green-bond-40-year',
+    'investments/rites-corporate-debt',
+    'investment-schemes/atal-incubation-centres',
+    'subsidies/pm-kisan-samman-nidhi',
+    'questions/q-nw-009',
+    'tenders/procurement-enterprise-cloud-servers-san',
+    'news/sebi-introduces-social-stock-exchange-amendments',
+    'opportunities/ayush-grid-innovation-challenge',
+  ];
+  const weakCrossLinks: string[] = [];
+  for (const rel of sampledDetails) {
+    const html = fs.readFileSync(path.join(DIST_DIR, rel, 'index.html'), 'utf8');
+    const mainMatch = html.match(/<main[\s\S]*?<\/main>/i);
+    const mainHtml = mainMatch ? mainMatch[0] : '';
+    const uniqueInternalLinks = new Set(
+      [...mainHtml.matchAll(/href="(\/[^"#?]+)"/gi)].map((m) => m[1])
+    );
+    const hasGuideLink = [...uniqueInternalLinks].some((href) => href.startsWith('/guides/'));
+    if (uniqueInternalLinks.size < 8 || !hasGuideLink) {
+      weakCrossLinks.push(`${rel} (${uniqueInternalLinks.size} internal links, guideLink=${hasGuideLink})`);
+    }
+  }
+  check(
+    'Horizontal Topic-Cluster Internal Linking Mesh Across All Detail Categories',
+    weakCrossLinks.length === 0,
+    weakCrossLinks.length === 0
+      ? `All ${sampledDetails.length} sampled detail pages across 8 categories have >= 8 unique internal links including editorial /guides/* handbooks`
+      : `Weak internal links: ${weakCrossLinks.join('; ')}`
+  );
 }
 
 const failed = results.filter((r) => !r.pass);

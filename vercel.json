@@ -8,16 +8,6 @@
       "permanent": true
     },
     {
-      "source": "/dadra-nagar-haveli-daman-diu/:service*",
-      "destination": "/opportunities/state/dadra-nagar-haveli-and-daman-diu",
-      "permanent": true
-    },
-    {
-      "source": "/karnataka/:service*",
-      "destination": "/opportunities/state/karnataka",
-      "permanent": true
-    },
-    {
       "source": "/compare",
       "destination": "/comparisons",
       "permanent": true
@@ -50,6 +40,656 @@
     {
       "source": "/index.html",
       "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/dadra-nagar-haveli-daman-diu/:service*",
+      "destination": "/opportunities/state/dadra-nagar-haveli-and-daman-diu",
+      "permanent": true
+    },
+    {
+      "source": "/jammu-and-kashmir/:service*",
+      "destination": "/opportunities/state/jammu-kashmir",
+      "permanent": true
+    },
+    {
+      "source": "/andaman-and-nicobar-islands/:service*",
+      "destination": "/opportunities/state/andaman-nicobar-islands",
+      "permanent": true
+    },
+    {
+      "source": "/andhra-pradesh/:service*",
+      "destination": "/opportunities/state/andhra-pradesh",
+      "permanent": true
+    },
+    {
+      "source": "/arunachal-pradesh/:service*",
+      "destination": "/opportunities/state/arunachal-pradesh",
+      "permanent": true
+    },
+    {
+      "source": "/assam/:service*",
+      "destination": "/opportunities/state/assam",
+      "permanent": true
+    },
+    {
+      "source": "/bihar/:service*",
+      "destination": "/opportunities/state/bihar",
+      "permanent": true
+    },
+    {
+      "source": "/chhattisgarh/:service*",
+      "destination": "/opportunities/state/chhattisgarh",
+      "permanent": true
+    },
+    {
+      "source": "/goa/:service*",
+      "destination": "/opportunities/state/goa",
+      "permanent": true
+    },
+    {
+      "source": "/gujarat/:service*",
+      "destination": "/opportunities/state/gujarat",
+      "permanent": true
+    },
+    {
+      "source": "/haryana/:service*",
+      "destination": "/opportunities/state/haryana",
+      "permanent": true
+    },
+    {
+      "source": "/himachal-pradesh/:service*",
+      "destination": "/opportunities/state/himachal-pradesh",
+      "permanent": true
+    },
+    {
+      "source": "/jharkhand/:service*",
+      "destination": "/opportunities/state/jharkhand",
+      "permanent": true
+    },
+    {
+      "source": "/karnataka/:service*",
+      "destination": "/opportunities/state/karnataka",
+      "permanent": true
+    },
+    {
+      "source": "/kerala/:service*",
+      "destination": "/opportunities/state/kerala",
+      "permanent": true
+    },
+    {
+      "source": "/madhya-pradesh/:service*",
+      "destination": "/opportunities/state/madhya-pradesh",
+      "permanent": true
+    },
+    {
+      "source": "/maharashtra/:service*",
+      "destination": "/opportunities/state/maharashtra",
+      "permanent": true
+    },
+    {
+      "source": "/manipur/:service*",
+      "destination": "/opportunities/state/manipur",
+      "permanent": true
+    },
+    {
+      "source": "/meghalaya/:service*",
+      "destination": "/opportunities/state/meghalaya",
+      "permanent": true
+    },
+    {
+      "source": "/mizoram/:service*",
+      "destination": "/opportunities/state/mizoram",
+      "permanent": true
+    },
+    {
+      "source": "/nagaland/:service*",
+      "destination": "/opportunities/state/nagaland",
+      "permanent": true
+    },
+    {
+      "source": "/odisha/:service*",
+      "destination": "/opportunities/state/odisha",
+      "permanent": true
+    },
+    {
+      "source": "/punjab/:service*",
+      "destination": "/opportunities/state/punjab",
+      "permanent": true
+    },
+    {
+      "source": "/rajasthan/:service*",
+      "destination": "/opportunities/state/rajasthan",
+      "permanent": true
+    },
+    {
+      "source": "/sikkim/:service*",
+      "destination": "/opportunities/state/sikkim",
+      "permanent": true
+    },
+    {
+      "source": "/tamil-nadu/:service*",
+      "destination": "/opportunities/state/tamil-nadu",
+      "permanent": true
+    },
+    {
+      "source": "/telangana/:service*",
+      "destination": "/opportunities/state/telangana",
+      "permanent": true
+    },
+    {
+      "source": "/tripura/:service*",
+      "destination": "/opportunities/state/tripura",
+      "permanent": true
+    },
+    {
+      "source": "/uttar-pradesh/:service*",
+      "destination": "/opportunities/state/uttar-pradesh",
+      "permanent": true
+    },
+    {
+      "source": "/uttarakhand/:service*",
+      "destination": "/opportunities/state/uttarakhand",
+      "permanent": true
+    },
+    {
+      "source": "/west-bengal/:service*",
+      "destination": "/opportunities/state/west-bengal",
+      "permanent": true
+    },
+    {
+      "source": "/andaman-nicobar-islands/:service*",
+      "destination": "/opportunities/state/andaman-nicobar-islands",
+      "permanent": true
+    },
+    {
+      "source": "/chandigarh/:service*",
+      "destination": "/opportunities/state/chandigarh",
+      "permanent": true
+    },
+    {
+      "source": "/dadra-nagar-haveli-and-daman-diu/:service*",
+      "destination": "/opportunities/state/dadra-nagar-haveli-and-daman-diu",
+      "permanent": true
+    },
+    {
+      "source": "/delhi/:service*",
+      "destination": "/opportunities/state/delhi",
+      "permanent": true
+    },
+    {
+      "source": "/jammu-kashmir/:service*",
+      "destination": "/opportunities/state/jammu-kashmir",
+      "permanent": true
+    },
+    {
+      "source": "/ladakh/:service*",
+      "destination": "/opportunities/state/ladakh",
+      "permanent": true
+    },
+    {
+      "source": "/lakshadweep/:service*",
+      "destination": "/opportunities/state/lakshadweep",
+      "permanent": true
+    },
+    {
+      "source": "/puducherry/:service*",
+      "destination": "/opportunities/state/puducherry",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/andhra-pradesh-industrial-investment-project-:id([0-9]+)",
+      "destination": "/opportunities/state/andhra-pradesh",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/andhra-pradesh-expansion-investment-project-:id([0-9]+)",
+      "destination": "/opportunities/state/andhra-pradesh",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/apiic-infrastructure-project-:id([0-9]+)",
+      "destination": "/opportunities/state/andhra-pradesh",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/assam-industrial-investment-project-:id([0-9]+)",
+      "destination": "/opportunities/state/assam",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/aiidc-industrial-project-:id([0-9]+)",
+      "destination": "/opportunities/state/assam",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/bihar-industrial-investment-project-:id([0-9]+)",
+      "destination": "/opportunities/state/bihar",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/biada-industrial-project-:id([0-9]+)",
+      "destination": "/opportunities/state/bihar",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/chhattisgarh-industrial-investment-project-:id([0-9]+)",
+      "destination": "/opportunities/state/chhattisgarh",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/delhi-urban-tech-logistics-project-:id([0-9]+)",
+      "destination": "/opportunities/state/delhi",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/goa-industrial-tourism-investment-project-:id([0-9]+)",
+      "destination": "/opportunities/state/goa",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/gsidc-industrial-project-:id([0-9]+)",
+      "destination": "/opportunities/state/goa",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/gujarat-industrial-investment-opportunity-:id([0-9]+)",
+      "destination": "/opportunities/state/gujarat",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/gidc-infrastructure-project-:id([0-9]+)",
+      "destination": "/opportunities/state/gujarat",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/haryana-industrial-investment-project-:id([0-9]+)",
+      "destination": "/opportunities/state/haryana",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/hsiidc-industrial-project-:id([0-9]+)",
+      "destination": "/opportunities/state/haryana",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/himachal-pradesh-industrial-tourism-project-:id([0-9]+)",
+      "destination": "/opportunities/state/himachal-pradesh",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/hpsidc-industrial-project-:id([0-9]+)",
+      "destination": "/opportunities/state/himachal-pradesh",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/jammu-kashmir-industrial-tourism-project-:id([0-9]+)",
+      "destination": "/opportunities/state/jammu-kashmir",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/jharkhand-industrial-investment-project-:id([0-9]+)",
+      "destination": "/opportunities/state/jharkhand",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/jiidco-industrial-project-:id([0-9]+)",
+      "destination": "/opportunities/state/jharkhand",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/karnataka-industrial-opportunity-project-:id([0-9]+)",
+      "destination": "/opportunities/state/karnataka",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/kiadb-industrial-project-:id([0-9]+)",
+      "destination": "/opportunities/state/karnataka",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/kerala-industrial-investment-project-:id([0-9]+)",
+      "destination": "/opportunities/state/kerala",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/kinfra-industrial-project-:id([0-9]+)",
+      "destination": "/opportunities/state/kerala",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/madhya-pradesh-industrial-investment-project-:id([0-9]+)",
+      "destination": "/opportunities/state/madhya-pradesh",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/madhya-pradesh-expansion-investment-project-:id([0-9]+)",
+      "destination": "/opportunities/state/madhya-pradesh",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/mpidc-industrial-project-:id([0-9]+)",
+      "destination": "/opportunities/state/madhya-pradesh",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/maharashtra-industrial-development-opportunity-:id([0-9]+)",
+      "destination": "/opportunities/state/maharashtra",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/midc-infrastructure-project-:id([0-9]+)",
+      "destination": "/opportunities/state/maharashtra",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/manipur-industrial-handloom-project-:id([0-9]+)",
+      "destination": "/opportunities/state/manipur",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/mizoram-industrial-horticulture-project-:id([0-9]+)",
+      "destination": "/opportunities/state/mizoram",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/odisha-industrial-investment-project-:id([0-9]+)",
+      "destination": "/opportunities/state/odisha",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/punjab-industrial-investment-project-:id([0-9]+)",
+      "destination": "/opportunities/state/punjab",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/pidb-industrial-project-:id([0-9]+)",
+      "destination": "/opportunities/state/punjab",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/rajasthan-industrial-investment-project-:id([0-9]+)",
+      "destination": "/opportunities/state/rajasthan",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/rajasthan-expansion-investment-project-:id([0-9]+)",
+      "destination": "/opportunities/state/rajasthan",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/riico-industrial-project-:id([0-9]+)",
+      "destination": "/opportunities/state/rajasthan",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/tamil-nadu-guidance-investment-opportunity-:id([0-9]+)",
+      "destination": "/opportunities/state/tamil-nadu",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/sidco-industrial-project-:id([0-9]+)",
+      "destination": "/opportunities/state/tamil-nadu",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/tidco-infrastructure-project-:id([0-9]+)",
+      "destination": "/opportunities/state/tamil-nadu",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/telangana-industrial-investment-project-:id([0-9]+)",
+      "destination": "/opportunities/state/telangana",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/telangana-expansion-investment-project-:id([0-9]+)",
+      "destination": "/opportunities/state/telangana",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/uttar-pradesh-industrial-investment-project-:id([0-9]+)",
+      "destination": "/opportunities/state/uttar-pradesh",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/uttar-pradesh-expansion-industrial-project-:id([0-9]+)",
+      "destination": "/opportunities/state/uttar-pradesh",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/upidc-industrial-project-:id([0-9]+)",
+      "destination": "/opportunities/state/uttar-pradesh",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/uttarakhand-industrial-investment-project-:id([0-9]+)",
+      "destination": "/opportunities/state/uttarakhand",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/sidcul-industrial-project-:id([0-9]+)",
+      "destination": "/opportunities/state/uttarakhand",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/west-bengal-industrial-investment-project-:id([0-9]+)",
+      "destination": "/opportunities/state/west-bengal",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/wbiidc-industrial-project-:id([0-9]+)",
+      "destination": "/opportunities/state/west-bengal",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/mospi-paimana-infrastructure-project-:id([0-9a-z-]+)",
+      "destination": "/opportunities/sector/infrastructure",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/sagarmala-port-project-:id([0-9]+)",
+      "destination": "/opportunities/sector/infrastructure",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/sagarmala-port-maritime-project-:id([0-9]+)",
+      "destination": "/opportunities/sector/infrastructure",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/aai-airport-project-:id([0-9]+)",
+      "destination": "/opportunities/sector/infrastructure",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/civil-aviation-airport-mro-project-:id([0-9]+)",
+      "destination": "/opportunities/sector/infrastructure",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/dfccil-freight-project-:id([0-9]+)",
+      "destination": "/opportunities/sector/infrastructure",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/dfccil-railway-logistics-project-:id([0-9]+)",
+      "destination": "/opportunities/sector/infrastructure",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/infrastructure-transport-ppp-project-:id([0-9]+)",
+      "destination": "/opportunities/sector/infrastructure",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/logistics-park-warehousing-project-:id([0-9]+)",
+      "destination": "/opportunities/sector/infrastructure",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/morth-logistics-project-:id([0-9]+)",
+      "destination": "/opportunities/sector/infrastructure",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/nhai-road-project-:id([0-9]+)",
+      "destination": "/opportunities/sector/infrastructure",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/nicdc-corridor-project-:id([0-9]+)",
+      "destination": "/opportunities/sector/infrastructure",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/nicdc-industrial-corridor-project-:id([0-9]+)",
+      "destination": "/opportunities/sector/infrastructure",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/nicdc-project-extra-:id([0-9]+)",
+      "destination": "/opportunities/sector/infrastructure",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/mines-mineral-project-:id([0-9]+)",
+      "destination": "/opportunities/sector/infrastructure",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/petroleum-petrochemical-project-:id([0-9]+)",
+      "destination": "/opportunities/sector/infrastructure",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/steel-infrastructure-project-:id([0-9]+)",
+      "destination": "/opportunities/sector/infrastructure",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/renewable-energy-green-hydrogen-project-:id([0-9]+)",
+      "destination": "/opportunities/sector/renewable-energy",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/seci-solar-project-:id([0-9]+)",
+      "destination": "/opportunities/sector/renewable-energy",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/ntpc-power-project-:id([0-9]+)",
+      "destination": "/opportunities/sector/renewable-energy",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/state-energy-infrastructure-project-:id([0-9]+)",
+      "destination": "/opportunities/sector/renewable-energy",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/manufacturing-industrial-project-:id([0-9]+)",
+      "destination": "/opportunities/sector/manufacturing",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/strategic-manufacturing-semiconductor-project-:id([0-9]+)",
+      "destination": "/opportunities/sector/manufacturing",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/strategic-chemical-pharma-metals-project-:id([0-9]+)",
+      "destination": "/opportunities/sector/manufacturing",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/pm-mitra-textile-park-:id([0-9]+)",
+      "destination": "/opportunities/sector/manufacturing",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/msme-industrial-project-:id([0-9]+)",
+      "destination": "/opportunities/sector/msme",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/food-processing-infrastructure-project-:id([0-9]+)",
+      "destination": "/opportunities/sector/agriculture",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/mofpi-food-project-:id([0-9]+)",
+      "destination": "/opportunities/sector/agriculture",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/agro-textile-tourism-infrastructure-project-:id([0-9]+)",
+      "destination": "/opportunities/sector/agriculture",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/healthcare-pharma-datacentre-project-:id([0-9]+)",
+      "destination": "/opportunities/sector/healthcare",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/pharma-infrastructure-project-:id([0-9]+)",
+      "destination": "/opportunities/sector/healthcare",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/pharma-medical-device-project-:id([0-9]+)",
+      "destination": "/opportunities/sector/healthcare",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/data-centre-cloud-infrastructure-project-:id([0-9]+)",
+      "destination": "/opportunities/sector/technology",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/meity-digital-infrastructure-project-:id([0-9]+)",
+      "destination": "/opportunities/sector/technology",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/telecom-infrastructure-project-:id([0-9]+)",
+      "destination": "/opportunities/sector/technology",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/tourism-infrastructure-project-:id([0-9]+)",
+      "destination": "/opportunities/sector/tourism",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/union-territory-investment-project-:id([0-9]+)",
+      "destination": "/opportunities",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/northeast-regional-investment-project-:id([0-9]+)",
+      "destination": "/opportunities",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/regional-economic-development-project-:id([0-9]+)",
+      "destination": "/opportunities",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/national-strategic-industrial-project-:id([0-9]+)",
+      "destination": "/opportunities",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/invest-india-project-:id([0-9]+)",
+      "destination": "/opportunities",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities/invest-india-project-extra-:id([0-9]+)",
+      "destination": "/opportunities",
       "permanent": true
     }
   ],
@@ -99,8 +739,8 @@
   ],
   "rewrites": [
     {
-      "source": "/((?!api/|.*\\..*).*)",
-      "destination": "/index.html"
+      "source": "/((?!api/|assets/|og/|.*\\..*).*)",
+      "destination": "/"
     }
   ]
 }

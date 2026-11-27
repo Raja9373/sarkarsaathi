@@ -1,11 +1,30 @@
-import React from 'react';
-import { FileQuestion, Home, ArrowLeft, Search } from 'lucide-react';
+import React, { useEffect } from 'react';
+import { FileQuestion, Home, ArrowLeft } from 'lucide-react';
+import { logNotFoundHit } from '../utils/notFoundLogger';
 
 interface NotFoundViewProps {
   onNavigate: (route: string, slug?: string) => void;
+  requestedPath?: string;
+  routeContext?: string;
 }
 
-export const NotFoundView: React.FC<NotFoundViewProps> = ({ onNavigate }) => {
+export const NotFoundView: React.FC<NotFoundViewProps> = ({
+  onNavigate,
+  requestedPath,
+  routeContext,
+}) => {
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const requestedUrl = requestedPath
+      ? new URL(requestedPath, window.location.origin).href
+      : window.location.href;
+
+    logNotFoundHit({
+      requestedUrl,
+      routeContext,
+    });
+  }, [requestedPath, routeContext]);
+
   return (
     <div className="min-h-[75vh] flex items-center justify-center px-4 py-16">
       <div className="max-w-md w-full bg-white rounded-2xl shadow-sm border border-slate-100 p-8 text-center">

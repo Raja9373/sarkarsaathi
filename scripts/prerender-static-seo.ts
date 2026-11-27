@@ -278,6 +278,89 @@ function runPrerender(): void {
   const news = newsRepository.getAll();
   const officialSources = getAllOfficialSources();
   const opportunities = opportunityRepository.getAll();
+  const curatedOpportunities = opportunities.filter((o) => isIndexableOpportunity(o));
+
+  // Deterministic circular sibling selector so EVERY indexed page receives balanced horizontal inbound links
+  function pickCircularSiblings<T>(items: T[], currentIndex: number, count: number, sameGroupFn?: (item: T) => boolean): T[] {
+    if (items.length <= 1) return [];
+    const selected: T[] = [];
+    const seen = new Set<number>([currentIndex]);
+    if (sameGroupFn) {
+      const groupIndices: number[] = [];
+      for (let i = 0; i < items.length; i++) {
+        if (sameGroupFn(items[i])) groupIndices.push(i);
+      }
+      const posInGroup = groupIndices.indexOf(currentIndex);
+      if (posInGroup !== -1 && groupIndices.length > 1) {
+        for (let step = 1; step < groupIndices.length && selected.length < count; step++) {
+          const idx = groupIndices[(posInGroup + step) % groupIndices.length];
+          if (!seen.has(idx)) {
+            seen.add(idx);
+            selected.push(items[idx]);
+          }
+        }
+      }
+    }
+    for (let step = 1; step < items.length && selected.length < count; step++) {
+      const idx = (currentIndex + step) % items.length;
+      if (!seen.has(idx)) {
+        seen.add(idx);
+        selected.push(items[idx]);
+      }
+    }
+    return selected;
+  }
+
+  function pickRelatedGuides(contextText: string, limit: number = 2) {
+    const hay = contextText.toLowerCase();
+    const scored = editorialGuides.map((g, idx) => {
+      let score = 0;
+      const tokens = [...g.keywords, g.category, g.shortTitle, g.slug.replace(/-/g, ' ')]
+        .join(' ')
+        .toLowerCase()
+        .split(/[^a-z0-9]+/)
+        .filter((w) => w.length >= 3);
+      const uniqueTokens = new Set(tokens);
+      for (const tok of uniqueTokens) {
+        if (hay.includes(tok)) score += tok.length >= 5 ? 2 : 1;
+      }
+      return { g, score, idx };
+    });
+    scored.sort((a, b) => (b.score - a.score) || (a.idx - b.idx));
+    return scored.slice(0, limit).map((x) => x.g);
+  }
+
+  function renderRelatedLinksSection(
+    heading: string,
+    links: Array<{ href: string; label: string; meta?: string }>
+  ): string {
+    if (links.length === 0) return '';
+    return `<section class="mt-6 pt-5 border-t border-gray-200"><h2 class="text-lg font-bold text-gray-900 mb-3">${escapeHtml(heading)}</h2><ul class="space-y-2 text-sm">${links
+      .map(
+        (l) =>
+          `<li><a href="${escapeHtml(l.href)}" class="font-semibold text-blue-800 hover:underline">${escapeHtml(l.label)}</a>${l.meta ? ` — <span class="text-gray-600">${escapeHtml(l.meta)}</span>` : ''}</li>`
+      )
+      .join('')}</ul></section>`;
+  }
+
+  function buildInvestmentCategoryContext(inv: any): string {
+    const cat = String(inv.category || '').toLowerCase();
+    const title = String(inv.title || 'This instrument');
+    const authority = String(inv.authority || 'Government of India');
+    if (cat.includes('state development loan') || cat.includes('sdl')) {
+      return `State Development Loans (SDLs) such as ${title} are dated sovereign securities issued by ${authority} and auctioned through the Reserve Bank of India (RBI) e-Kuber platform. Retail investors can participate directly without brokerage via an RBI Retail Direct Gilt (RDG) account or hold units in CDSL/NSDL demat form. Coupons are paid semi-annually directly to the linked bank account, interest carries zero TDS under Section 193(iv) of the Income Tax Act (though taxable at the investor's marginal slab), and secondary liquidity is available on the NDS-OM Odd Lot segment and stock exchange debt platforms.`;
+    }
+    if (cat.includes('government securit') || cat.includes('g-sec') || cat.includes('treasury') || cat.includes('t-bill') || cat.includes('green bond')) {
+      return `${title} is a direct sovereign debt instrument backed by ${authority} with zero sovereign credit default risk. Individual Indian residents can bid in non-competitive RBI primary auctions through the free RBI Retail Direct portal (rbiretaildirect.org.in) or purchase on NSE/BSE debt segments. Investors should match holding horizons with maturity tenures to avoid interim mark-to-market interest rate volatility when exiting before maturity.`;
+    }
+    if (cat.includes('corporate') || cat.includes('psu') || cat.includes('debenture') || cat.includes('tax-free') || cat.includes('54ec')) {
+      return `${title} is a public-sector / institutional fixed-income instrument associated with ${authority}. Before subscribing or buying in the secondary bond market, investors should verify current credit ratings (CRISIL/ICRA/CARE), ISIN details, coupon payment dates, call/put options, and applicable capital-gains or interest taxation rules on official exchange or issuer prospectuses.`;
+    }
+    if (cat.includes('mutual fund') || cat.includes('etf') || cat.includes('exchange traded')) {
+      return `${title} operates within SEBI's regulated mutual fund / ETF framework overseen by ${authority}. Investors should review the Scheme Information Document (SID), expense ratio (Direct vs. Regular plan), tracking error, portfolio credit quality or index constituents, and applicable short-term or long-term capital gains tax rules before allocating capital.`;
+    }
+    return `${title} is a verified public savings or sovereign investment option administered under ${authority}. Citizens should confirm current quarterly interest rates, minimum/maximum contribution limits, nomination registration, and KYC documentation directly on the official issuer or post-office/bank portal prior to investing.`;
+  }
 
   // 1. Static Hubs & Compliance Pages
   const hubPages: PageMeta[] = [
@@ -514,14 +597,47 @@ function runPrerender(): void {
         description: 'Interactive maturity, tax exemption, and subsidy eligibility calculators for PPF, Sukanya Samriddhi Yojana (SSY), Senior Citizen Savings Scheme (SCSS), and Section 54EC Capital Gains Bonds.',
       },
       bodyHtml: `
-        <article class="bg-white p-6 rounded-xl border border-gray-200 space-y-4">
-          <h1 class="text-2xl font-bold text-gray-900">Government Scheme &amp; Sovereign Tax-Saving Calculators</h1>
-          <p class="text-gray-700 leading-relaxed">Calculate exact maturity values, Section 54EC Long-Term Capital Gains tax savings (up to ₹50 Lakh/year), Public Provident Fund (PPF at 7.1% p.a.) compounding, Sukanya Samriddhi Yojana (SSY at 8.2% p.a.) returns, Senior Citizens Savings Scheme (SCSS at 8.2% p.a.) quarterly payouts, and PMEGP/PM Surya Ghar MSME &amp; solar subsidy amounts.</p>
-          <div class="flex flex-wrap gap-4 text-sm font-medium pt-2">
-            <a href="/investments" class="text-blue-700 underline">54EC Capital Gain Bonds</a>
-            <a href="/investment-schemes" class="text-blue-700 underline">PPF, SSY &amp; SCSS Schemes</a>
-            <a href="/comparisons" class="text-blue-700 underline">Side-by-Side Comparison Matrix</a>
-            <a href="/subsidies" class="text-blue-700 underline">Government Subsidies Directory</a>
+        <article class="bg-white p-6 sm:p-8 rounded-xl border border-gray-200 space-y-6">
+          <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-900">Government Scheme &amp; Sovereign Tax-Saving Calculators (2026)</h1>
+          <p class="text-gray-700 leading-relaxed">Use SarkarSaathi's free, browser-local statutory calculators to compute exact maturity projections, Section 54EC Long-Term Capital Gains tax exemptions, quarterly senior citizen payouts, and capital subsidy allocations without creating an account or sharing personal KYC data.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+            <section class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-1.5">
+              <h2 class="font-bold text-gray-900 text-base">1. Section 54EC Capital Gains Bond Tax Calculator</h2>
+              <p class="text-gray-700">Estimate LTCG tax saved under Section 54EC by investing up to ₹50 Lakh per financial year in REC, PFC, or IRFC 5-year bonds at 5.25% p.a. annual interest. Verify the strict 6-month investment window from property sale date.</p>
+              <a href="/guides/section-54ec-capital-gain-bonds-complete-guide" class="text-blue-700 underline font-semibold inline-block">Read Complete 54EC Bond Guide →</a>
+            </section>
+            <section class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-1.5">
+              <h2 class="font-bold text-gray-900 text-base">2. Public Provident Fund (PPF) 15-Year Maturity Calculator</h2>
+              <p class="text-gray-700">Model annual compounding at the Ministry of Finance notified 7.1% p.a. EEE rate across 15-year initial lock-in and 5-year extension blocks (₹500 to ₹1,50,000 per financial year).</p>
+              <a href="/investments/public-provident-fund" class="text-blue-700 underline font-semibold inline-block">PPF Official Rules &amp; Rates →</a>
+            </section>
+            <section class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-1.5">
+              <h2 class="font-bold text-gray-900 text-base">3. Sukanya Samriddhi Yojana (SSY) 21-Year Maturity Calculator</h2>
+              <p class="text-gray-700">Project tax-free education and marriage corpus for a girl child at 8.2% p.a. annual compounding with 15 years of contributions and maturity at 21 years from account opening.</p>
+              <a href="/investments/sukanya-samriddhi-account" class="text-blue-700 underline font-semibold inline-block">SSY Eligibility &amp; Rules →</a>
+            </section>
+            <section class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-1.5">
+              <h2 class="font-bold text-gray-900 text-base">4. Senior Citizens Savings Scheme (SCSS) Quarterly Income Calculator</h2>
+              <p class="text-gray-700">Calculate assured quarterly interest payouts at 8.2% p.a. on deposits up to ₹30 Lakh for citizens aged 60+ (or eligible VRS/defence retirees aged 55+/50+) over a 5-year tenure.</p>
+              <a href="/guides/ppf-vs-sukanya-samriddhi-vs-scss-vs-rbi-frsb-comparison" class="text-blue-700 underline font-semibold inline-block">Compare PPF vs SSY vs SCSS vs RBI FRSB →</a>
+            </section>
+            <section class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-1.5">
+              <h2 class="font-bold text-gray-900 text-base">5. PM Surya Ghar Rooftop Solar Subsidy Calculator</h2>
+              <p class="text-gray-700">Compute Central Financial Assistance (₹30,000 for 1 kW, ₹60,000 for 2 kW, capped at ₹78,000 for 3 kW and above) plus net household outlay and monthly electricity bill savings.</p>
+              <a href="/guides/pm-surya-ghar-muft-bijli-yojana-rooftop-solar-guide" class="text-blue-700 underline font-semibold inline-block">PM Surya Ghar Solar Subsidy Guide →</a>
+            </section>
+            <section class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-1.5">
+              <h2 class="font-bold text-gray-900 text-base">6. PMEGP MSME Margin Money Subsidy Calculator</h2>
+              <p class="text-gray-700">Estimate 15%–35% margin money subsidy for General and Special Category entrepreneurs in Urban vs. Rural locations on manufacturing (up to ₹50 Lakh) and service (up to ₹20 Lakh) projects.</p>
+              <a href="/guides/pmegp-vs-mudra-vs-cgtmse-msme-subsidy-loan-guide" class="text-blue-700 underline font-semibold inline-block">PMEGP vs Mudra vs CGTMSE Guide →</a>
+            </section>
+          </div>
+          <div class="flex flex-wrap gap-4 text-sm font-medium pt-3 border-t border-gray-200">
+            <a href="/investments" class="text-blue-700 underline font-bold">54EC Capital Gain Bonds</a>
+            <a href="/investment-schemes" class="text-blue-700 underline font-bold">PPF, SSY &amp; SCSS Schemes</a>
+            <a href="/comparisons" class="text-blue-700 underline font-bold">Side-by-Side Comparison Matrix</a>
+            <a href="/subsidies" class="text-blue-700 underline font-bold">Government Subsidies Directory</a>
+            <a href="/guides" class="text-blue-700 underline font-bold">All 10 Editorial Handbooks</a>
           </div>
         </article>`,
     },
@@ -558,8 +674,24 @@ function runPrerender(): void {
               </tbody>
             </table>
           </div>
-          <div class="flex flex-wrap gap-4 text-sm font-medium pt-2">
+          <section class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm pt-2">
+            <div class="p-4 bg-blue-50 rounded-xl border border-blue-200 space-y-1">
+              <h2 class="font-bold text-blue-950">Best for Tax-Free Long-Term Wealth</h2>
+              <p class="text-blue-900">PPF (7.1%) and Sukanya Samriddhi Yojana (8.2% for a girl child under 10) enjoy full Exempt-Exempt-Exempt (EEE) status — zero tax on maturity interest regardless of tax slab.</p>
+            </div>
+            <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-200 space-y-1">
+              <h2 class="font-bold text-emerald-950">Best for Regular Retirement Cashflow</h2>
+              <p class="text-emerald-900">Senior Citizens Savings Scheme (8.2% quarterly up to ₹30 Lakh) paired with RBI Floating Rate Savings Bonds (8.05% half-yearly with no upper investment cap) delivers sovereign-backed periodic income.</p>
+            </div>
+            <div class="p-4 bg-amber-50 rounded-xl border border-amber-200 space-y-1">
+              <h2 class="font-bold text-amber-950">Best for Property Capital Gains</h2>
+              <p class="text-amber-900">Section 54EC bonds (REC, PFC, IRFC) uniquely shield up to ₹50 Lakh of Long-Term Capital Gains from land or building sales when subscribed within 6 months of transfer.</p>
+            </div>
+          </section>
+          <div class="flex flex-wrap gap-4 text-sm font-medium pt-3 border-t border-gray-200">
             <a href="/tools" class="text-blue-700 underline font-bold">Open Interactive Return Calculators →</a>
+            <a href="/guides/ppf-vs-sukanya-samriddhi-vs-scss-vs-rbi-frsb-comparison" class="text-blue-700 underline font-bold">PPF vs SSY vs SCSS Handbook →</a>
+            <a href="/guides/section-54ec-capital-gain-bonds-complete-guide" class="text-blue-700 underline font-bold">Section 54EC Bond Guide →</a>
             <a href="/questions" class="text-blue-700 underline font-bold">Read Small Savings &amp; 54EC Q&amp;A →</a>
           </div>
         </article>`,
@@ -695,6 +827,17 @@ function runPrerender(): void {
           <div class="p-4 bg-blue-50 rounded-xl border border-blue-200 text-sm text-blue-900 leading-relaxed">
             <strong>Security Notice:</strong> SarkarSaathi never charges fees for scheme information and will never ask for your Aadhaar number, PAN, bank account password, or OTP. Never disclose sensitive personal credentials to anyone claiming to represent government departments or this platform.
           </div>
+
+          <section class="space-y-2 text-sm text-gray-700">
+            <h2 class="text-lg font-bold text-gray-900">How to Submit a Data Correction or Official Gazette Update</h2>
+            <p>To help our editorial verification desk review and publish updates rapidly within our 24–48 hour SLA, please include the following details in your email:</p>
+            <ul class="list-disc pl-5 space-y-1">
+              <li>Exact SarkarSaathi page URL where the outdated rate, deadline, or broken link appears.</li>
+              <li>Official <code>.gov.in</code>, <code>.nic.in</code>, RBI, SEBI, or PIB notification link supporting the revised figure or eligibility rule.</li>
+              <li>Brief note explaining the specific circular number, effective date, or state portal URL change.</li>
+            </ul>
+            <p class="pt-2">For official citizen grievances regarding actual government scheme disbursements (such as PM-KISAN DBT failures or PM Surya Ghar DISCOM delays), please use the official <a href="/official-sources" class="text-blue-700 underline font-semibold">Verified .gov.in Official Portals Directory</a> or read our <a href="/about" class="text-blue-700 underline font-semibold">4-Stage Editorial Verification Methodology</a> and <a href="/disclaimer" class="text-blue-700 underline font-semibold">Non-Affiliation Disclaimer</a>.</p>
+          </section>
         </article>`,
     },
     {
@@ -872,12 +1015,31 @@ function runPrerender(): void {
   }
 
   // 2. All Verified Subsidies (/subsidies/:slug)
-  for (const sub of publishedSubsidies) {
+  for (let subIdx = 0; subIdx < publishedSubsidies.length; subIdx++) {
+    const sub = publishedSubsidies[subIdx];
     const slug = sub.slug || sub.id;
     const benefit = sub.maximumBenefit || sub.subsidyAmount || sub.benefitType || 'Government Financial Assistance';
     const ministry = sub.ministry || sub.authority || 'Government of India';
     const stateName = sub.state || 'All India';
     const routePath = `/subsidies/${slug}`;
+    const siblingSubsidies = pickCircularSiblings(publishedSubsidies, subIdx, 4, (x) => x.category === sub.category);
+    const matchedGuides = pickRelatedGuides(`${sub.title} ${sub.category} ${sub.description || ''} ${stateName}`, 2);
+    const siblingSubHtml = renderRelatedLinksSection(
+      `Related Verified ${sub.category || 'Government'} Subsidies`,
+      siblingSubsidies.map((s) => ({
+        href: `/subsidies/${s.slug || s.id}`,
+        label: s.title,
+        meta: `${s.maximumBenefit || s.subsidyAmount || s.category} (${s.state || 'All India'})`,
+      }))
+    );
+    const guideSubHtml = renderRelatedLinksSection(
+      'Recommended In-Depth Editorial Handbooks',
+      matchedGuides.map((g) => ({
+        href: `/guides/${g.slug}`,
+        label: g.title,
+        meta: `${g.readTimeMinutes} min read`,
+      }))
+    );
     const bodyHtml = `
       <article class="bg-white p-6 rounded-xl border border-gray-200 space-y-4">
         <div class="text-xs font-semibold text-emerald-700">${escapeHtml(sub.category)} · ${escapeHtml(stateName)} · Verified Scheme${sub.lastVerified ? ` · Verified ${escapeHtml(sub.lastVerified)}` : ''}</div>
@@ -895,8 +1057,11 @@ function runPrerender(): void {
         ${sub.documentsRequired && sub.documentsRequired.length ? renderListSection('Required Documents (आवश्यक दस्तावेज)', sub.documentsRequired, false) : ''}
         ${sub.applicationProcess ? renderListSection('How to Apply Online (आवेदन प्रक्रिया)', sub.applicationProcess, Array.isArray(sub.applicationProcess)) : ''}
         ${sub.sourceNotes ? `<p class="text-xs text-gray-600 bg-slate-50 p-3 rounded-lg"><strong>Verification Note:</strong> ${escapeHtml(sub.sourceNotes)}</p>` : ''}
+        ${siblingSubHtml}
+        ${guideSubHtml}
         <div class="text-xs text-gray-500 pt-4 border-t flex flex-wrap gap-4">
           <a href="/subsidies" class="underline text-blue-700 font-semibold">← Browse All ${publishedSubsidies.length} Verified Subsidies</a>
+          <a href="/guides" class="underline text-blue-700 font-semibold">In-Depth Editorial Handbooks</a>
           <a href="/questions" class="underline text-blue-700 font-semibold">Scheme Eligibility Q&amp;A</a>
           <a href="/tools" class="underline text-blue-700 font-semibold">Subsidy &amp; Tax Calculators</a>
         </div>
@@ -932,7 +1097,8 @@ function runPrerender(): void {
   }
 
   // 3. All Sovereign Investments (/investments/:slug)
-  for (const inv of investments) {
+  for (let invIdx = 0; invIdx < investments.length; invIdx++) {
+    const inv = investments[invIdx];
     const slug = inv.slug || inv.id;
     const routePath = `/investments/${slug}`;
     const minInv = inv.minInvestment ? `₹${inv.minInvestment.toLocaleString('en-IN')}` : 'As notified';
@@ -962,6 +1128,41 @@ function runPrerender(): void {
       renderListSection('Key Statutory Conditions & Important Rules', invAny.importantRules),
     ].filter(Boolean).join('\n');
 
+    const categoryContextHtml = `<section class="mt-4 p-4 bg-slate-50 rounded-xl border border-slate-200"><h2 class="text-base font-bold text-gray-900 mb-1">Investor Access, Liquidity &amp; Regulatory Context</h2><p class="text-sm text-gray-700 leading-relaxed">${escapeHtml(buildInvestmentCategoryContext(inv))}</p></section>`;
+
+    const siblingInvestments = pickCircularSiblings(investments, invIdx, 4, (x) => x.category === inv.category);
+    const invGuides = pickRelatedGuides(`${inv.title} ${inv.category || ''} ${inv.description || ''} ${taxVal}`, 2);
+    const siblingInvHtml = renderRelatedLinksSection(
+      `Related ${inv.category || 'Sovereign Investment'} Instruments`,
+      siblingInvestments.map((x) => ({
+        href: `/investments/${x.slug || x.id}`,
+        label: x.title,
+        meta: `${x.expectedReturn || x.category || 'Verified Instrument'} · ${x.authority || 'Government of India'}`,
+      }))
+    );
+    const invGuideHtml = renderRelatedLinksSection(
+      'In-Depth Investment & Tax Handbooks',
+      invGuides.map((g) => ({
+        href: `/guides/${g.slug}`,
+        label: g.title,
+        meta: `${g.readTimeMinutes} min read`,
+      }))
+    );
+
+    const financialProductSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'FinancialProduct',
+      name: inv.title,
+      description: inv.description || `${inv.title} administered by ${inv.authority || 'Government of India'}.`,
+      category: inv.category || 'Sovereign Fixed Income',
+      url: `${PRODUCTION_DOMAIN}${routePath}`,
+      provider: {
+        '@type': 'Organization',
+        name: inv.authority || 'Government of India',
+      },
+      feesAndCommissionsSpecification: taxVal,
+    };
+
     writeRouteHtml(templateHtml, {
       routePath,
       title: `${inv.title} — Interest Rate (${returnVal}), Tax Exemption & Rules | SarkarSaathi`,
@@ -972,7 +1173,7 @@ function runPrerender(): void {
         { name: 'Sovereign Investments', path: '/investments' },
         { name: inv.title, path: routePath },
       ],
-      jsonLd: getInvestmentBreadcrumbSchema('investments', inv.title, slug),
+      jsonLd: [financialProductSchema, getInvestmentBreadcrumbSchema('investments', inv.title, slug)],
       bodyHtml: `
         <article class="bg-white p-6 sm:p-8 rounded-xl border border-gray-200 shadow-sm space-y-5">
           <div class="text-xs font-semibold text-blue-700 uppercase tracking-wide">Sovereign Investment · ${escapeHtml(inv.riskLevel || 'Low')} Risk · ${escapeHtml(inv.category || 'Government Bond')} · ${escapeHtml(inv.authority || 'Government of India')}</div>
@@ -992,14 +1193,18 @@ function runPrerender(): void {
           </div>
 
           ${extraInvSections}
+          ${categoryContextHtml}
           ${docsHtml}
           ${processHtml}
           ${faqsHtml}
+          ${siblingInvHtml}
+          ${invGuideHtml}
 
           <div class="pt-4 border-t border-gray-200 flex flex-wrap gap-4 text-sm font-medium">
             <a href="/investments" class="text-blue-700 underline font-bold">← All Sovereign Investments &amp; 54EC Bonds</a>
             <a href="/comparisons" class="text-blue-700 underline font-bold">Compare With PPF, SSY &amp; SCSS</a>
             <a href="/tools" class="text-blue-700 underline font-bold">Tax &amp; Return Calculators</a>
+            <a href="/guides" class="text-blue-700 underline font-bold">Editorial Handbooks</a>
           </div>
         </article>`,
     });
@@ -1007,7 +1212,8 @@ function runPrerender(): void {
   }
 
   // 4. All Investment Schemes (/investment-schemes/:slug)
-  for (const sc of schemes) {
+  for (let scIdx = 0; scIdx < schemes.length; scIdx++) {
+    const sc = schemes[scIdx];
     const slug = sc.slug || sc.id;
     const routePath = `/investment-schemes/${slug}`;
 
@@ -1023,6 +1229,37 @@ function runPrerender(): void {
       ? `<section class="mt-4"><h2 class="text-lg font-bold text-gray-900 mb-1">Step-by-Step Application &amp; Account Opening</h2><ol class="list-decimal pl-5 text-sm text-gray-700 space-y-1">${sc.registrationProcess.map(p => `<li>${escapeHtml(p)}</li>`).join('')}</ol></section>`
       : (sc.applicationProcess ? `<section class="mt-4"><h2 class="text-lg font-bold text-gray-900 mb-1">Application Procedure</h2><p class="text-sm text-gray-700">${escapeHtml(sc.applicationProcess)}</p></section>` : '');
 
+    const siblingSchemes = pickCircularSiblings(schemes, scIdx, 4, (x) => (x as any).category === (sc as any).category);
+    const scGuides = pickRelatedGuides(`${sc.title} ${sc.authority || ''} ${sc.description || ''}`, 2);
+    const siblingSchemeHtml = renderRelatedLinksSection(
+      'Related Government Savings & Institutional Schemes',
+      siblingSchemes.map((x) => ({
+        href: `/investment-schemes/${x.slug || x.id}`,
+        label: x.title,
+        meta: x.authority || 'Government of India',
+      }))
+    );
+    const scGuideHtml = renderRelatedLinksSection(
+      'Recommended Policy & Tax Handbooks',
+      scGuides.map((g) => ({
+        href: `/guides/${g.slug}`,
+        label: g.title,
+        meta: `${g.readTimeMinutes} min read`,
+      }))
+    );
+
+    const schemeSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'FinancialProduct',
+      name: sc.title,
+      description: sc.description || `${sc.title} administered by ${sc.authority || 'Government of India'}.`,
+      url: `${PRODUCTION_DOMAIN}${routePath}`,
+      provider: {
+        '@type': 'Organization',
+        name: sc.authority || 'Ministry of Finance',
+      },
+    };
+
     writeRouteHtml(templateHtml, {
       routePath,
       title: `${sc.title} (2026) — Interest Rate, Rules, Calculator & Benefits | SarkarSaathi`,
@@ -1033,7 +1270,7 @@ function runPrerender(): void {
         { name: 'Investment Schemes', path: '/investment-schemes' },
         { name: sc.title, path: routePath },
       ],
-      jsonLd: getInvestmentBreadcrumbSchema('investment-schemes', sc.title, slug),
+      jsonLd: [schemeSchema, getInvestmentBreadcrumbSchema('investment-schemes', sc.title, slug)],
       bodyHtml: `
         <article class="bg-white p-6 sm:p-8 rounded-xl border border-gray-200 shadow-sm space-y-5">
           <div class="text-xs font-semibold text-emerald-700 uppercase tracking-wide">Government Small Savings Scheme · ${escapeHtml(sc.authority || 'Ministry of Finance')}</div>
@@ -1061,11 +1298,14 @@ function runPrerender(): void {
           ${docsHtml}
           ${processHtml}
           ${faqsHtml}
+          ${siblingSchemeHtml}
+          ${scGuideHtml}
 
           <div class="pt-4 border-t border-gray-200 flex flex-wrap gap-4 text-sm font-medium">
             <a href="/investment-schemes" class="text-blue-700 underline font-bold">← All Small Savings Schemes</a>
             <a href="/investments" class="text-blue-700 underline font-bold">54EC Capital Gain Bonds</a>
             <a href="/tools" class="text-blue-700 underline font-bold">Maturity Calculators</a>
+            <a href="/guides" class="text-blue-700 underline font-bold">Editorial Handbooks</a>
           </div>
         </article>`,
     });
@@ -1073,12 +1313,32 @@ function runPrerender(): void {
   }
 
   // 5. All Verified Citizen Questions (/questions/:slug) with English + Hindi + Hinglish answers!
-  for (const q of questions) {
+  for (let qIdx = 0; qIdx < questions.length; qIdx++) {
+    const q = questions[qIdx];
     const routePath = `/questions/${q.slug}`;
     const hiQ = q.translations?.hi?.canonical_question || '';
     const hiA = q.translations?.hi?.detailed_answer || q.translations?.hi?.short_answer || '';
     const hinglishQ = q.translations?.hinglish?.canonical_question || '';
     const hinglishA = q.translations?.hinglish?.detailed_answer || q.translations?.hinglish?.short_answer || '';
+
+    const siblingQuestions = pickCircularSiblings(questions, qIdx, 4, (x) => x.category === q.category);
+    const qGuides = pickRelatedGuides(`${q.canonical_question} ${q.category} ${q.subcategory} ${(q.keywords || []).join(' ')}`, 2);
+    const siblingQHtml = renderRelatedLinksSection(
+      `Related Verified Q&A in ${q.category}`,
+      siblingQuestions.map((sq) => ({
+        href: `/questions/${sq.slug}`,
+        label: sq.canonical_question,
+        meta: sq.subcategory,
+      }))
+    );
+    const qGuideHtml = renderRelatedLinksSection(
+      'In-Depth Editorial Handbooks for This Topic',
+      qGuides.map((g) => ({
+        href: `/guides/${g.slug}`,
+        label: g.title,
+        meta: `${g.readTimeMinutes} min read`,
+      }))
+    );
 
     const faqSchema = {
       '@context': 'https://schema.org',
@@ -1149,8 +1409,11 @@ function runPrerender(): void {
               : ''
           }
           <p class="text-xs text-gray-500 pt-3">Primary Authority: <a href="${escapeHtml(q.source_url)}" class="underline text-blue-700" rel="noopener noreferrer">${escapeHtml(q.source_title)}</a> · Last Verified: ${escapeHtml(q.verified_at || '2026-11-15')}</p>
+          ${siblingQHtml}
+          ${qGuideHtml}
           <div class="flex flex-wrap gap-4 pt-2 border-t text-sm">
             <a href="/questions" class="text-blue-700 underline">← Back to Citizen Q&amp;A Hub</a>
+            <a href="/guides" class="text-blue-700 underline">Editorial Handbooks</a>
             <a href="/tools" class="text-blue-700 underline">Tax &amp; Maturity Calculators</a>
             <a href="/subsidies" class="text-blue-700 underline">Verified Subsidies Directory</a>
           </div>
@@ -1160,7 +1423,8 @@ function runPrerender(): void {
   }
 
   // 6. All Tenders (/tenders/:slug) & News (/news/:slug) & Official Sources (/official-sources/:slug)
-  for (const t of tenders) {
+  for (let tIdx = 0; tIdx < tenders.length; tIdx++) {
+    const t = tenders[tIdx];
     const tAny = t as any;
     const slug = t.slug || t.id;
     const routePath = `/tenders/${slug}`;
@@ -1173,6 +1437,37 @@ function runPrerender(): void {
       ? `<section class="mt-6"><h2 class="text-lg font-bold text-gray-900 mb-2">Tender Participation FAQs</h2><div class="space-y-3">${tAny.faqs.map((f: any) => `<div class="p-4 bg-gray-50 rounded-lg"><h3 class="font-bold text-sm text-gray-900 mb-1">${escapeHtml(f.question)}</h3><p class="text-xs text-gray-700 leading-relaxed">${escapeHtml(f.answer)}</p></div>`).join('')}</div></section>`
       : '';
 
+    const siblingTenders = pickCircularSiblings(tenders, tIdx, 4);
+    const tGuides = pickRelatedGuides(`gem procurement tender public sector msme ${t.title} ${t.authority || ''}`, 2);
+    const siblingTenderHtml = renderRelatedLinksSection(
+      'Related Government & PSU Procurement Tenders',
+      siblingTenders.map((st) => ({
+        href: `/tenders/${st.slug || st.id}`,
+        label: st.title,
+        meta: `${st.authority || 'PSU Notice'} · ${(st as any).tenderValue || (st as any).estimatedValue || 'Open Bid'}`,
+      }))
+    );
+    const tenderGuideHtml = renderRelatedLinksSection(
+      'Public Procurement & MSME Compliance Handbooks',
+      tGuides.map((g) => ({
+        href: `/guides/${g.slug}`,
+        label: g.title,
+        meta: `${g.readTimeMinutes} min read`,
+      }))
+    );
+
+    const tenderSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      name: t.title,
+      description: `${t.title} issued by ${t.authority || 'Government Authority'}. Estimated Value: ${tenderVal}.`,
+      url: `${PRODUCTION_DOMAIN}${routePath}`,
+      publisher: {
+        '@type': 'Organization',
+        name: t.authority || tAny.procuringAuthority || 'Government of India',
+      },
+    };
+
     writeRouteHtml(templateHtml, {
       routePath,
       title: `${t.title} — PSU / Government Tender Notice (${tenderVal}) | SarkarSaathi`,
@@ -1183,6 +1478,7 @@ function runPrerender(): void {
         { name: 'Public Tenders', path: '/tenders' },
         { name: t.title, path: routePath },
       ],
+      jsonLd: tenderSchema,
       bodyHtml: `
         <article class="bg-white p-6 sm:p-8 rounded-xl border border-gray-200 shadow-sm space-y-5">
           <div class="text-xs font-semibold text-blue-700 uppercase tracking-wide">${escapeHtml(tAny.tenderType || 'Public Tender')} · ${escapeHtml(tAny.tenderId || tAny.referenceNumber || 'Verified Notice')} · ${escapeHtml(tAny.status || 'OPEN')}</div>
@@ -1205,6 +1501,8 @@ function runPrerender(): void {
             <span class="font-bold text-blue-900">Official Procurement Portal: </span>
             <a href="${escapeHtml(portalUrl)}" class="text-blue-700 font-bold underline" target="_blank" rel="noopener noreferrer">${escapeHtml(tAny.officialSource || tAny.sourceName || 'CPPP / GeM Official Notice')}</a>
           </div>
+          ${siblingTenderHtml}
+          ${tenderGuideHtml}
           <div class="pt-4 border-t border-gray-200 flex flex-wrap gap-4 text-sm font-medium">
             <a href="/tenders" class="text-blue-700 underline font-bold">← All Government &amp; PSU Tenders</a>
             <a href="/official-sources" class="text-blue-700 underline font-bold">eProcure &amp; GeM Official Portals</a>
@@ -1215,7 +1513,8 @@ function runPrerender(): void {
     generatedCount++;
   }
 
-  for (const n of news) {
+  for (let nIdx = 0; nIdx < news.length; nIdx++) {
+    const n = news[nIdx];
     const nAny = n as any;
     const slug = n.slug || n.id;
     const routePath = `/news/${slug}`;
@@ -1243,6 +1542,25 @@ function runPrerender(): void {
     const newsFaqsHtml = Array.isArray(nAny.faqs) && nAny.faqs.length > 0
       ? `<section class="mt-6"><h2 class="text-lg font-bold text-gray-900 mb-2">Policy Update FAQs</h2><div class="space-y-3">${nAny.faqs.map((f: any) => `<div class="p-4 bg-gray-50 rounded-lg"><h3 class="font-bold text-sm text-gray-900 mb-1">${escapeHtml(f.question)}</h3><p class="text-xs text-gray-700 leading-relaxed">${escapeHtml(f.answer)}</p></div>`).join('')}</div></section>`
       : '';
+
+    const siblingNews = pickCircularSiblings(news, nIdx, 4);
+    const nGuides = pickRelatedGuides(`${n.title} ${nAny.category || ''} ${nAny.authority || ''} ${n.description || ''}`, 2);
+    const siblingNewsHtml = renderRelatedLinksSection(
+      'More Verified Policy Updates & Gazette Briefs',
+      siblingNews.map((sn) => ({
+        href: `/news/${sn.slug || sn.id}`,
+        label: sn.title,
+        meta: `${(sn as any).authority || 'Government of India'} (${(sn as any).publishedDate || '2026'})`,
+      }))
+    );
+    const newsGuideHtml = renderRelatedLinksSection(
+      'Related Editorial Research Handbooks',
+      nGuides.map((g) => ({
+        href: `/guides/${g.slug}`,
+        label: g.title,
+        meta: `${g.readTimeMinutes} min read`,
+      }))
+    );
 
     writeRouteHtml(templateHtml, {
       routePath,
@@ -1272,8 +1590,11 @@ function runPrerender(): void {
             <span>${escapeHtml(nAny.officialNotification || nAny.circularNumber || nAny.sourceName || 'Official Gazette')} · </span>
             <a href="${escapeHtml(nAny.sourceUrl || '#')}" class="text-blue-700 font-bold underline" target="_blank" rel="noopener noreferrer">Official Authority Source</a>
           </div>
+          ${siblingNewsHtml}
+          ${newsGuideHtml}
           <div class="pt-4 border-t border-gray-200 flex flex-wrap gap-4 text-sm font-medium">
             <a href="/news" class="text-blue-700 underline font-bold">← All Policy Updates</a>
+            <a href="/guides" class="text-blue-700 underline font-bold">Editorial Handbooks</a>
             <a href="/subsidies" class="text-blue-700 underline font-bold">Verified Subsidies</a>
             <a href="/investments" class="text-blue-700 underline font-bold">Sovereign Investments</a>
           </div>
@@ -1282,40 +1603,138 @@ function runPrerender(): void {
     generatedCount++;
   }
 
-  for (const src of officialSources) {
+  for (let srcIdx = 0; srcIdx < officialSources.length; srcIdx++) {
+    const src = officialSources[srcIdx];
     const srcAny = src as any;
     const slug = getOfficialSourceSlug(src);
     if (!slug) continue;
     const routePath = `/official-sources/${slug}`;
     const portalHref = srcAny.officialUrl || srcAny.url || '#';
-    const stateSlug = srcAny.state ? srcAny.state.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') : '';
+    const stateName = srcAny.state ? String(srcAny.state) : '';
+    const stateSlug = stateName ? stateName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') : '';
+    const stateLower = stateName.toLowerCase();
+
+    // Match verified subsidies & national grants relevant to this State/UT or Central Authority
+    const relevantSubsidies = stateName
+      ? publishedSubsidies
+          .filter((sub) => {
+            const st = String(sub.state || 'All India').toLowerCase();
+            return st.includes(stateLower) || st === 'all india' || st === 'central';
+          })
+          .slice(0, 6)
+      : publishedSubsidies
+          .filter((sub) => {
+            const hay = `${sub.ministry || ''} ${sub.authority || ''} ${sub.officialSource || ''} ${sub.title} ${sub.category}`.toLowerCase();
+            const keys = `${src.name} ${src.authority} ${src.description || ''}`
+              .toLowerCase()
+              .split(/[^a-z0-9]+/)
+              .filter((w) => w.length >= 4 && !['portal', 'india', 'government', 'official', 'ministry', 'national', 'central', 'schemes'].includes(w));
+            return keys.some((k) => hay.includes(k));
+          })
+          .slice(0, 6);
+
+    const fallbackSubsidies = relevantSubsidies.length >= 3 ? relevantSubsidies : publishedSubsidies.slice((srcIdx * 3) % Math.max(1, publishedSubsidies.length - 5), ((srcIdx * 3) % Math.max(1, publishedSubsidies.length - 5)) + 5);
+
+    const relevantGrants = curatedOpportunities
+      .filter((o) => {
+        if (stateName) {
+          const oSt = String(o.state || o.location || 'All India').toLowerCase();
+          return oSt.includes(stateLower) || oSt.includes('all india') || oSt === 'india' || oSt === 'central';
+        }
+        return true;
+      })
+      .slice((srcIdx * 2) % Math.max(1, curatedOpportunities.length - 4), ((srcIdx * 2) % Math.max(1, curatedOpportunities.length - 4)) + 4);
+
+    const siblingPortals = pickCircularSiblings(officialSources, srcIdx, 4, (x) => (x as any).type === srcAny.type);
+    const portalGuides = pickRelatedGuides(`verify gov.in official portal scam safety ${src.name} ${src.authority} ${src.description || ''}`, 2);
+
+    const portalSubsidiesHtml = renderRelatedLinksSection(
+      stateName ? `Verified Government Subsidies Accessible to ${stateName} Citizens` : `Verified Subsidies & Welfare Schemes Linked to ${src.name}`,
+      fallbackSubsidies.map((s) => ({
+        href: `/subsidies/${s.slug || s.id}`,
+        label: s.title,
+        meta: `${s.maximumBenefit || s.subsidyAmount || s.category} (${s.state || 'All India'})`,
+      }))
+    );
+
+    const portalGrantsHtml = renderRelatedLinksSection(
+      stateName ? `Curated National Innovation Grants & Fellowships Open in ${stateName}` : 'Curated National Innovation Grants & Public Programs',
+      relevantGrants.map((o) => ({
+        href: `/opportunities/${o.slug || o.id}`,
+        label: o.title,
+        meta: `${o.authority || 'Government of India'} (${o.fundingAmount || o.sector || 'National Program'})`,
+      }))
+    );
+
+    const siblingPortalsHtml = renderRelatedLinksSection(
+      stateName ? 'Related State & Union Territory Official Portals' : 'Related Central Ministry & Statutory Regulator Portals',
+      siblingPortals.map((sp) => ({
+        href: `/official-sources/${getOfficialSourceSlug(sp)}`,
+        label: sp.name,
+        meta: sp.authority,
+      }))
+    );
+
+    const portalGuidesHtml = renderRelatedLinksSection(
+      'Portal Verification & Scheme Eligibility Handbooks',
+      portalGuides.map((g) => ({
+        href: `/guides/${g.slug}`,
+        label: g.title,
+        meta: `${g.readTimeMinutes} min read`,
+      }))
+    );
+
+    const govOrgSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'GovernmentOrganization',
+      name: src.authority || src.name,
+      alternateName: src.name,
+      description: src.description,
+      url: portalHref,
+      areaServed: {
+        '@type': 'AdministrativeArea',
+        name: stateName || 'India',
+      },
+      mainEntityOfPage: `${PRODUCTION_DOMAIN}${routePath}`,
+    };
 
     writeRouteHtml(templateHtml, {
       routePath,
       title: `${src.name} — Verified Official Government Portal Guide | SarkarSaathi`,
-      description: `${src.name} (${src.authority}): Official .gov.in portal link (${portalHref}), verified digital citizen services, and associated schemes.`,
+      description: `${src.name} (${src.authority}): Official .gov.in portal link (${portalHref}), verified digital citizen services, applicable subsidies, and domain security checklist.`,
       breadcrumbs: [
         { name: 'Home', path: '/' },
         { name: 'Official Sources', path: '/official-sources' },
         { name: src.name, path: routePath },
       ],
+      jsonLd: govOrgSchema,
       bodyHtml: `
         <article class="bg-white p-6 sm:p-8 rounded-xl border border-gray-200 shadow-sm space-y-5">
           <div class="text-xs font-semibold text-emerald-700 uppercase tracking-wide">${escapeHtml(srcAny.category || srcAny.type || 'Official Portal')} · ${escapeHtml(srcAny.sourceType || 'Government Authority')}${srcAny.lastVerified ? ` · Verified ${escapeHtml(srcAny.lastVerified)}` : ''}</div>
           <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-900">${escapeHtml(src.name)} — Official Citizen Portal Guide</h1>
-          <p class="text-base text-gray-700 leading-relaxed">${escapeHtml(src.description || '')}</p>
+          <p class="text-base text-gray-700 leading-relaxed">${escapeHtml(src.description || '')} Citizens, farmers, students, and MSME enterprises ${stateName ? `in ${escapeHtml(stateName)}` : 'across India'} should rely exclusively on this authenticated official portal for online registrations, beneficiary status verification, certificate downloads, and grievance tracking.</p>
           <dl class="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200 text-sm">
             <div><dt class="font-bold text-gray-600">Statutory / Issuing Authority:</dt><dd class="font-semibold text-gray-900">${escapeHtml(src.authority || 'Government of India')}</dd></div>
-            <div><dt class="font-bold text-gray-600">Jurisdiction Coverage:</dt><dd>${escapeHtml(srcAny.state || 'All India (Central)')}</dd></div>
+            <div><dt class="font-bold text-gray-600">Jurisdiction Coverage:</dt><dd>${escapeHtml(stateName || 'All India (Central)')}</dd></div>
             <div class="sm:col-span-2"><dt class="font-bold text-gray-600">Authenticated Official Government Domain:</dt><dd><a href="${escapeHtml(portalHref)}" class="text-blue-700 font-bold underline" target="_blank" rel="noopener noreferrer">${escapeHtml(portalHref)}</a></dd></div>
           </dl>
           ${srcAny.services && srcAny.services.length > 0 ? renderListSection('Verified Digital Citizen & Enterprise Services Available', srcAny.services, false) : ''}
-          <div class="p-4 bg-amber-50 rounded-xl border border-amber-200 text-xs text-amber-950">
-            <strong>Security Check:</strong> Always confirm that your browser address bar displays the exact <code>.gov.in</code>, <code>.nic.in</code>, or statutory regulator domain above before submitting KYC details or paying statutory fees.
-          </div>
+          <section class="p-4 bg-amber-50 rounded-xl border border-amber-200 text-sm text-amber-950 space-y-2">
+            <h2 class="font-bold text-base text-amber-950">How to Verify Authenticity &amp; Apply Safely on ${escapeHtml(src.name)}</h2>
+            <ol class="list-decimal pl-5 space-y-1 text-xs sm:text-sm">
+              <li>Confirm that your browser address bar displays HTTPS encryption and the exact authenticated government domain (<code>${escapeHtml(portalHref)}</code>) before entering Aadhaar, PAN, or bank details.</li>
+              <li>Ensure your bank account is NPCI Aadhaar-seeded (DBT enabled) and mobile number is linked with UIDAI for instant e-KYC OTP verification on government welfare and subsidy applications.</li>
+              <li>Never pay middlemen or unofficial third-party websites claiming expedited approvals; official statutory fees, if any, are collected solely through the portal's integrated e-Treasury / BharatKosh gateway or authorized Common Service Centres (CSCs).</li>
+            </ol>
+          </section>
+          ${portalSubsidiesHtml}
+          ${portalGrantsHtml}
+          ${siblingPortalsHtml}
+          ${portalGuidesHtml}
           <div class="pt-4 border-t border-gray-200 flex flex-wrap gap-4 text-sm font-medium">
             <a href="/official-sources" class="text-blue-700 underline font-bold">← All ${officialSources.length} Verified Official Portals</a>
-            ${stateSlug ? `<a href="/opportunities/state/${escapeHtml(stateSlug)}" class="text-blue-700 underline font-bold">${escapeHtml(srcAny.state)} Opportunities &amp; Schemes</a>` : ''}
+            ${stateSlug ? `<a href="/opportunities/state/${escapeHtml(stateSlug)}" class="text-blue-700 underline font-bold">${escapeHtml(stateName)} Opportunities &amp; Schemes</a>` : ''}
+            <a href="/guides/verify-official-gov-in-portals-avoid-sarkari-yojana-scams" class="text-blue-700 underline font-bold">Anti-Scam Portal Verification Guide</a>
             <a href="/subsidies" class="text-blue-700 underline font-bold">Central &amp; State Subsidies</a>
             <a href="/tenders" class="text-blue-700 underline font-bold">Public Tenders</a>
           </div>
@@ -1325,7 +1744,6 @@ function runPrerender(): void {
   }
 
   // 7. State & Sector Landing Pages (STRICTLY Curated Indexable Opportunities + Verified Subsidies — ZERO synthetic boilerplate templates!)
-  const curatedOpportunities = opportunities.filter((o) => isIndexableOpportunity(o));
 
   for (const st of stateOfficialSources) {
     if (!st.state) continue;
@@ -1484,7 +1902,8 @@ function runPrerender(): void {
   const targetOpportunities = [...indexableOpportunities, ...legacyNoIndexOpportunities];
 
   const seenOpps = new Set<string>();
-  for (const opp of targetOpportunities) {
+  for (let oppIdx = 0; oppIdx < targetOpportunities.length; oppIdx++) {
+    const opp = targetOpportunities[oppIdx];
     const oppAny = opp as any;
     const slug = opp.slug || opp.id;
     if (!slug || seenOpps.has(slug)) continue;
@@ -1514,6 +1933,45 @@ function runPrerender(): void {
       oppAny.howToEvaluate ? renderListSection('How Applicants Should Evaluate This Grant', oppAny.howToEvaluate) : '',
     ].filter(Boolean).join('\n');
 
+    const curatedIdx = curatedOpportunities.findIndex((c) => (c.slug || c.id) === slug);
+    const siblingOpps = isIndexed && curatedIdx !== -1
+      ? pickCircularSiblings(curatedOpportunities, curatedIdx, 4, (x) => x.sector === opp.sector)
+      : curatedOpportunities.slice(0, 4);
+    const oppGuides = pickRelatedGuides(`${opp.title} ${sectorVal} ${authorityVal} ${opp.description || ''}`, 2);
+    const siblingOppHtml = renderRelatedLinksSection(
+      'Related Curated National Grants & Innovation Programs',
+      siblingOpps.map((so) => ({
+        href: `/opportunities/${so.slug || so.id}`,
+        label: so.title,
+        meta: `${so.authority || 'Government of India'} (${(so as any).fundingAmount || so.sector || 'National Program'})`,
+      }))
+    );
+    const oppGuideHtml = renderRelatedLinksSection(
+      'Recommended Editorial Handbooks & Compliance Guides',
+      oppGuides.map((g) => ({
+        href: `/guides/${g.slug}`,
+        label: g.title,
+        meta: `${g.readTimeMinutes} min read`,
+      }))
+    );
+
+    const oppSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'GovernmentService',
+      name: opp.title,
+      serviceType: oppAny.opportunityType || 'Government Grant / Fellowship',
+      description: opp.description || `${opp.title} administered by ${authorityVal}.`,
+      url: `${PRODUCTION_DOMAIN}${routePath}`,
+      provider: {
+        '@type': 'GovernmentOrganization',
+        name: authorityVal,
+      },
+      areaServed: {
+        '@type': 'AdministrativeArea',
+        name: opp.state || 'India',
+      },
+    };
+
     writeRouteHtml(templateHtml, {
       routePath,
       title: `${opp.title} (${opp.state || 'India'}) — Grant Details, Eligibility & Official Portal | SarkarSaathi`,
@@ -1525,6 +1983,7 @@ function runPrerender(): void {
         { name: 'Opportunities', path: '/opportunities' },
         { name: opp.title, path: routePath },
       ],
+      jsonLd: oppSchema,
       bodyHtml: `
         <article class="bg-white p-6 sm:p-8 rounded-xl border border-gray-200 shadow-sm space-y-5">
           <div class="text-xs font-semibold text-blue-700 uppercase tracking-wide">${escapeHtml(oppAny.opportunityType || 'Government Grant / Call')} · ${escapeHtml(sectorVal)} · ${escapeHtml(statusVal)}</div>
@@ -1545,6 +2004,9 @@ function runPrerender(): void {
             <span class="font-bold text-blue-900">Official Source Citation: </span>
             <a href="${escapeHtml(opp.sourceUrl || '#')}" class="text-blue-700 font-bold underline" target="_blank" rel="noopener noreferrer">${escapeHtml(opp.sourceAuthority || opp.sourceName || authorityVal)}</a>
           </div>
+
+          ${siblingOppHtml}
+          ${oppGuideHtml}
 
           <div class="pt-4 border-t border-gray-200 flex flex-wrap gap-4 text-sm font-medium">
             <a href="/opportunities" class="text-blue-700 underline font-bold">← All Curated National Grants</a>
