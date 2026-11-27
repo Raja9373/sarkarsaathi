@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { FileQuestion, Home, ArrowLeft } from 'lucide-react';
-import { logNotFoundHit } from '../utils/notFoundLogger';
+import { logNotFoundHit } from '../utils/404Logger';
 
 interface NotFoundViewProps {
   onNavigate: (route: string, slug?: string) => void;

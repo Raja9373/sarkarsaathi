@@ -5,9 +5,9 @@ import {
   getRecordedNotFoundHits,
   clearRecordedNotFoundHits,
   resetNotFoundLoggerDedupeState,
-} from '../src/utils/notFoundLogger';
+} from '../src/utils/404Logger';
 
-describe('NotFoundView 404 Hit Logger', () => {
+describe('NotFoundView 404 Hit Logger (src/utils/404Logger.ts)', () => {
   const originalWindow = (globalThis as any).window;
   const originalDocument = (globalThis as any).document;
   const originalNavigator = (globalThis as any).navigator;
@@ -80,13 +80,14 @@ describe('NotFoundView 404 Hit Logger', () => {
     });
   });
 
-  it('1. Logs structured 404 event to console.warn, localStorage, gtag, and dataLayer', () => {
+  it('1. Captures URL, referrer, and timestamp to localStorage, console.warn, gtag, and dataLayer when no external endpoint is set', () => {
     const hit = logNotFoundHit({ routeContext: 'unmatched-route' });
     assert.ok(hit);
     assert.equal(hit.statusCode, 404);
     assert.equal(hit.pathname, '/missing/gsc-route');
     assert.equal(hit.requestedUrl, 'https://sarkarsaathi.org/missing/gsc-route?ref=google');
     assert.equal(hit.referrer, 'https://www.google.com/');
+    assert.ok(!Number.isNaN(Date.parse(hit.timestamp)));
     assert.equal(warnCalls.length, 1);
     assert.equal(gtagCalls.length, 1);
     assert.equal(gtagCalls[0][1], 'page_not_found_404');
@@ -109,13 +110,38 @@ describe('NotFoundView 404 Hit Logger', () => {
     assert.equal(warnCalls.length, 1);
   });
 
-  it('3. Dispatches beacon to safe monitoring endpoint and blocks unsafe schemes', () => {
+  it('3. Skips external network dispatch and logs to console when no monitoring endpoint is configured', () => {
+    let fetchCalled = false;
+    const origFetch = (globalThis as any).fetch;
+    (globalThis as any).fetch = () => {
+      fetchCalled = true;
+      return Promise.resolve({ ok: true });
+    };
+    try {
+      const hit = logNotFoundHit({
+        requestedUrl: 'https://sarkarsaathi.org/missing-without-endpoint',
+        routeContext: 'unmatched-route',
+      });
+      assert.ok(hit);
+      assert.equal(beaconCalls.length, 0);
+      assert.equal(fetchCalled, false);
+      assert.equal(warnCalls.length, 1);
+      assert.equal(getRecordedNotFoundHits().length, 1);
+      assert.equal(gtagCalls.length, 1);
+      assert.equal(dataLayerItems.length, 1);
+    } finally {
+      (globalThis as any).fetch = origFetch;
+    }
+  });
+
+  it('4. Dispatches beacon to safe monitoring endpoint (without redundant console warn by default) and blocks unsafe schemes', () => {
     const blocked = logNotFoundHit({
       requestedUrl: 'https://sarkarsaathi.org/bad-1',
       monitoringEndpoint: 'javascript:alert(1)',
     });
     assert.ok(blocked);
     assert.equal(beaconCalls.length, 0);
+    assert.equal(warnCalls.length, 1);
 
     const allowed = logNotFoundHit({
       requestedUrl: 'https://sarkarsaathi.org/bad-2',
@@ -124,5 +150,6 @@ describe('NotFoundView 404 Hit Logger', () => {
     assert.ok(allowed);
     assert.equal(beaconCalls.length, 1);
     assert.equal(beaconCalls[0].url, 'https://monitoring.sarkarsaathi.org/404-events');
+    assert.equal(warnCalls.length, 1);
   });
 });
